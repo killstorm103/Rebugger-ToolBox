@@ -1,1 +1,1 @@
-1: Dont install PSN Logos for Rebug 4.84.2 or Evilnat 4.91.2 (4.91.2s PackManagers PSN Logo's fine to install)
+No known bugs right now
