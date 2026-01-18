@@ -1,6 +1,0 @@
-1: Remake all rcos for Evilnat 4.91.2 & 4.92.2
-2: Remake English.pkg for Languages
-
-// Done:
-4.91.2: Normal, InGame, Sign in, Package Manager
-4.92.2: Normal, InGame, Sign in
