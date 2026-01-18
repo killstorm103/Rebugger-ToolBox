@@ -4,14 +4,15 @@
 4: Added live warning list, press Warnings inside Rebugger Toolbox!
 5: Added more ISP Bypasses!
 6: Added 16 18? your first coldboot
-7: Remade PSN Logos Menu so its now: Category (New PSN, Old PSN, Other PSN) > Logo > category (normal, ingame, sign in, package manager) > choose your firmware (Evilnat 4.92.2, Evilnat 4.91.2, Rebug 4.84.2)
+7: Remade PSN Logos Menu so its now: Category (New PSN, Old PSN, Other PSN) > Logo > category (normal, ingame, sign in, package manager) > firmware (Evilnat, Rebug) > Version
 8: Added a Updater inside Settings
 9: Made Version shower & Github inside Infomation take you to update Rebugger Toolbox!
 10: Added English langue to Langues inside Settings!
 11: Added Toggle /dev_blind
 12: Added Mods/Game Cheats Installer
 13: Added a Live TODO List for showing what i need to do before i release the next Update!
-14: Started making Themes: Rebugger Toolbox > Custom > Themes
+14: Started making Themes: Rebugger Toolbox > Custom > Themes, (Normal is done)
 15: Improved the psp image inside: Rebugger Toolbox > Infomation > Game & Movie/Show Infomation > Game & Movie/Shows Locations
 16: Made the Rom Sites inside: Infomation > Game & Movie/Show Infomation Take you to the website when you press x on it (if it doesn't work, it's up to the site to add support for the website on ps3, if a site doesn't load read the ISP Bypasses)
 17: Added Live Changelog
+18: Remade PSN Installers so its now: type > firmware (Evilnat, Rebug) > firmwares (Rebug: 4.84.2, Evilnat: 4.91.2, 4.92.2)
