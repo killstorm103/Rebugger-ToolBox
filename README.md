@@ -15,10 +15,10 @@
 - Then restart your ps3 and go to the PSN/PlayStation Network Category and then you'll see Rebugger Toolbox
 
 - Previews:
-<img src="Images/Toolbox.jpg"
-<img src="Images/Main.jpg"
-<img src="Images/Info.jpg"
-<img src="Images/Mods.jpg"
-<img src="Images/Customisation.jpg"
-<img src="Images/PSNs.jpg"
-<img src="Images/Stores.jpg"
+<img src="Images/Toolbox.jpg">
+<img src="Images/Main.jpg">
+<img src="Images/Info.jpg">
+<img src="Images/Mods.jpg">
+<img src="Images/Customisation.jpg">
+<img src="Images/PSNs.jpg">
+<img src="Images/Stores.jpg">
