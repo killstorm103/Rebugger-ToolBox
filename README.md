@@ -13,3 +13,12 @@
 - then go to your package manager > Install Package Files > (PS3 System Storage or Standard) >:
 - Install in this order: Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg > Rebugger.Toolbox.Installer_(CFW or HEN).pkg
 - Then restart your ps3 and go to the PSN/PlayStation Network Category and then you'll see Rebugger Toolbox
+
+- Previews:
+<img src="Images/Toolbox.jpg"
+<img src="Images/Main.jpg"
+<img src="Images/Info.jpg"
+<img src="Images/Mods.jpg"
+<img src="Images/Customisation.jpg"
+<img src="Images/PSNs.jpg"
+<img src="Images/Stores.jpg"
