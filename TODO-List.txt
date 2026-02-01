@@ -1,4 +1,7 @@
 v1.0.3:
 1: Make Ingame PSN Logos Themed!
 2: Remake Ingame PSN Logos so the ones inside PSN LOGO > Ingame are normal without theme 
-3: Update lang again
+3: Fix Fury Stores DLC (If possible)
+
+
+Last Thing: Update language again
