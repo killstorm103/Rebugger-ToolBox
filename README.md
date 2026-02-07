@@ -11,7 +11,8 @@
 - Put the Installers in a USB and plug it into your ps3 or put it in your ps3's: /dev_hdd0/packages using FileZilla
 - On your ps3 mount dev_blind
 - then go to your package manager > Install Package Files > (PS3 System Storage or Standard) >:
-- Install in this order: Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg > Rebugger.Toolbox.Installer_(CFW or HEN).pkg
+- Install in this order: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg
+- then lastly install: Rebugger.Toolbox.Installer_(CFW or HEN).pkg
 - Then restart your ps3 and go to the PSN/PlayStation Network Category and then you'll see Rebugger Toolbox
 
 - Previews:
