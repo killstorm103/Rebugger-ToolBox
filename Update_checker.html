@@ -2,85 +2,155 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Rebugger ToolBox Update Checker</title>
+<title>Rebugger ToolBox Update Checker (PS3)</title>
 <style>
-body { font-family: Arial; color: white; background: black; }
-.ok { color: #00ff00; }
-.warn { color: #ffaa00; }
-.err { color: #ff4444; }
-pre { background:#111; padding:8px; }
+  body { font-family: Arial; color: white; background: #000; padding:14px; }
+  .ok { color:#00ff00; } .warn { color:#ffaa00; } .err { color:#ff4444; }
+  pre { background:#111; padding:8px; white-space:pre-wrap; }
+  .mono { font-family:monospace; }
+  ul { color:#ddd; }
 </style>
 </head>
 <body>
-
-<h2>Rebugger ToolBox Update Checker</h2>
-<button onclick="checkUpdate()">Check Version</button>
-
-<div id="out"></div>
+<h2>Rebugger ToolBox — Update Checker</h2>
+<p>This must live inside <code>USRDIR</code>. It will try relative paths to read your local version file.</p>
+<button id="check">Check Version</button>
+<div id="out" style="margin-top:12px"></div>
 
 <script>
-var REMOTE_URL = "https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/xml/settings/version.txt";
-var LOCAL_URL  = "/dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt";
+const REMOTE_URL = "https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/xml/settings/version.txt";
+
+// PS3: try these relative paths (in order). If browser blocks file access, place a local copy named "local_version.txt" in the same folder as this HTML.
+const LOCAL_TRIES = [
+  "/dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt", "xml/settings/version.txt",
+  "./xml/settings/version.txt",
+  "local_version.txt"
+];
+
+function log(msg, cls){
+  const out = document.getElementById('out');
+  const el = document.createElement('div');
+  if(cls) el.className = cls;
+  el.innerHTML = msg;
+  out.appendChild(el);
+}
+
+function clearOut(){ document.getElementById('out').innerHTML = ''; }
 
 function loadText(url, cb) {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200 || xhr.status === 0) {
-        cb(null, xhr.responseText);
-      } else {
-        cb("Failed to load: " + url);
+  try {
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        // On PS3 local file reads may return status 0 or 200 depending on context
+        if (xhr.status === 200 || xhr.status === 0) {
+          cb(null, {text: xhr.responseText, status: xhr.status});
+        } else {
+          cb(new Error("HTTP " + xhr.status + " (url: " + url + ")"));
+        }
       }
-    }
-  };
-  xhr.send(null);
+    };
+    xhr.send(null);
+  } catch (ex) {
+    cb(ex);
+  }
 }
 
 function parseVersion(txt) {
+  if(!txt) return {};
   return {
-    version: (txt.match(/Version:\s*([0-9.]+)/i)||[])[1],
-    dev: (txt.match(/is Dev Build:\s*(true|false)/i)||[])[1],
-    devNum: (txt.match(/Dev.*Number:\s*#?(\d+)/i)||[])[1]
+    version: (txt.match(/Version:\s*([0-9.]+)/i)||[])[1] || null,
+    dev:    (txt.match(/is\s*Dev\s*Build:\s*(true|false)/i)||[])[1] || null,
+    devNum: (txt.match(/Dev.*Number:\s*#?(\d+)/i)||[])[1] || null,
+    raw: txt
   };
 }
 
-function cmp(a,b){
-  a=a.split('.'); b=b.split('.');
-  for(var i=0;i<3;i++){
-    var x=parseInt(a[i]||0), y=parseInt(b[i]||0);
-    if(x>y) return 1;
-    if(x<y) return -1;
+function cmpVersion(a,b){
+  if(!a || !b) return 0;
+  const pa = String(a).split('.').map(x=>parseInt(x)||0);
+  const pb = String(b).split('.').map(x=>parseInt(x)||0);
+  const L = Math.max(pa.length, pb.length);
+  for(let i=0;i<L;i++){
+    const va = pa[i]||0, vb = pb[i]||0;
+    if(va>vb) return 1;
+    if(va<vb) return -1;
   }
   return 0;
 }
 
-function checkUpdate() {
-  var out = document.getElementById("out");
-  out.innerHTML = "Checking…";
+function tryLoadLocalSequential(paths, onDone) {
+  let i = 0;
+  function next() {
+    if(i >= paths.length) { onDone(new Error("All local attempts failed")); return; }
+    const p = paths[i++];
+    log("<b>Trying local path:</b> <span class='mono'>" + p + "</span>");
+    loadText(p, function(err, res){
+      if(!err) {
+        log("<span class='ok'>Success reading local file (status: " + res.status + ")</span>");
+        onDone(null, {url:p, text: res.text, status: res.status});
+      } else {
+        log("<span class='warn'>Failed: " + escapeHtml(String(err.message||err)) + "</span>");
+        next();
+      }
+    });
+  }
+  next();
+}
 
-  loadText(LOCAL_URL, function(err, localTxt){
-    if(err){ out.innerHTML="<div class='err'>Cannot read local version.txt</div>"; return; }
+function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    loadText(REMOTE_URL, function(err2, remoteTxt){
-      if(err2){ out.innerHTML="<div class='err'>Cannot read remote version.txt</div>"; return; }
+document.getElementById('check').addEventListener('click', function(){
+  clearOut();
+  log("Starting check... (remote: " + REMOTE_URL + ")");
+  // 1) load local (try a few relative options)
+  tryLoadLocalSequential(LOCAL_TRIES, function(errLocal, localResult){
+    if(errLocal){
+      log("<div class='err'><b>Could not read any local file.</b></div>");
+      log("<div class='warn'>Hints: Put this HTML at <code>/dev_hdd0/game/Rebugger_Tool/USRDIR/update_checker.html</code> and ensure <code>xml/settings/version.txt</code> exists relative to it.<br>Or have your homebrew write a <code>local_version.txt</code> into the same folder as this HTML.</div>");
+      // still fetch remote so you can at least see remote version
+      loadText(REMOTE_URL, function(errR, resR){
+        if(errR){ log("<div class='err'>Also failed to fetch remote: " + escapeHtml(String(errR.message||errR)) + "</div>"); return; }
+        log("<h3>Remote file (fetched)</h3><pre>" + escapeHtml(resR.text) + "</pre>");
+      });
+      return;
+    }
 
-      var L = parseVersion(localTxt);
-      var R = parseVersion(remoteTxt);
+    // parse local
+    const L = parseVersion(localResult.text);
+    log("<h3>Local (" + escapeHtml(localResult.url) + ")</h3><pre>" + escapeHtml(localResult.text) + "</pre>");
 
-      var html = "<h3>Local</h3><pre>"+localTxt+"</pre>";
-      html += "<h3>Remote</h3><pre>"+remoteTxt+"</pre>";
+    // fetch remote
+    loadText(REMOTE_URL, function(errR, resR){
+      if(errR){ log("<div class='err'>Failed to fetch remote: " + escapeHtml(String(errR.message||errR)) + "</div>"); return; }
+      const R = parseVersion(resR.text);
+      log("<h3>Remote</h3><pre>" + escapeHtml(resR.text) + "</pre>");
 
-      if(cmp(R.version, L.version) > 0)
-        html += "<div class='warn'>Update available</div>";
-      else
-        html += "<div class='ok'>You are up to date</div>";
-
-      out.innerHTML = html;
+      // compare
+      if(!R.version || !L.version){
+        log("<div class='warn'>Could not parse version fields. Make sure files contain lines like: <code>Version: 1.03</code></div>");
+        return;
+      }
+      const cmp = cmpVersion(R.version, L.version);
+      if(cmp > 0) {
+        log("<div class='warn'><b>Update available:</b> remote " + escapeHtml(R.version) + " &rarr; local " + escapeHtml(L.version) + "</div>");
+      } else if(cmp < 0) {
+        log("<div class='ok'><b>Local version is newer than remote.</b></div>");
+      } else {
+        // same release: check dev numbers if dev builds
+        if(R.dev && L.dev) {
+          const rdev = parseInt(R.devNum)||0, ldev = parseInt(L.devNum)||0;
+          if(rdev > ldev) log("<div class='warn'><b>Remote dev build #" + rdev + " is newer than local #" + ldev + ".</b></div>");
+          else if(rdev < ldev) log("<div class='ok'><b>You have the latest dev build (#" + ldev + ").</b></div>");
+          else log("<div class='ok'><b>Release & dev build match — up to date.</b></div>");
+        } else {
+          log("<div class='ok'><b>You are up to date (release " + escapeHtml(L.version) + ").</b></div>");
+        }
+      }
     });
   });
-}
+});
 </script>
-
 </body>
 </html>
