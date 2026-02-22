@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rebugger ToolBox — Update Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 18px; color: #111 }
+    .card { border: 1px solid #ddd; padding: 14px; border-radius: 8px; max-width: 720px }
+    h1 { margin: 0 0 10px 0; font-size: 20px }
+    pre { background:#f7f7f7; padding:10px; border-radius:6px; overflow:auto }
+    .ok { color: green; font-weight:700 }
+    .warn { color: #e65c00; font-weight:700 }
+    .error { color: red; font-weight:700 }
+    .small { font-size: 0.9rem; color: #555 }
+    button { margin-top:8px; padding:8px 12px; border-radius:6px; border:1px solid #888; background:white; cursor:pointer }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Rebugger ToolBox — Update Checker</h1>
+    <div class="small">Compares local <code>version.txt</code> to a remote one in your GitHub project.</div>
+
+    <div style="margin-top:12px">
+      <label>Remote version file URL (edit if needed):</label><br />
+      <input id="remoteUrl" style="width:100%" value="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/xml/settings/version.txt" />
+      <div class="small" style="margin-top:6px">Example: <code>https://raw.githubusercontent.com/.../dev/xml/settings/version.txt</code> or use raw.githack URL.</div>
+    </div>
+
+    <div style="margin-top:10px">
+      <label>Local path to version file (tries relative then absolute):</label><br />
+      <input id="localRel" style="width:100%" value="xml/settings/version.txt" />
+      <div class="small">If the page is in <code>USRDIR</code>, keep relative path like above. Absolute example: <code>/dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt</code></div>
+    </div>
+
+    <div style="margin-top:12px">
+      <button id="checkBtn">Check for update</button>
+    </div>
+
+    <div id="output" style="margin-top:12px"></div>
+  </div>
+
+<script>
+/* ----- Utilities ----- */
+
+function parseVersionTxt(text) {
+  // tolerant parsing: finds "Version:", "is Dev Build:", "Dev Build Number:" (accepts misspellings like "Bulid")
+  const lines = text.split(/\r?\n/).map(l => l.trim());
+  const out = { rawText: text, version: null, isDev: false, devNumber: null };
+
+  for (const line of lines) {
+    // Version:
+    let m = line.match(/^\s*Version\s*:\s*(.+)$/i);
+    if (m) { out.version = m[1].trim(); continue; }
+
+    // is Dev Build: true/false (allow "is Dev Build" or "isDev Build" etc)
+    m = line.match(/^\s*is\s*dev\s*build\s*:\s*(true|false)/i);
+    if (m) { out.isDev = (m[1].toLowerCase() === 'true'); continue; }
+
+    // Dev Build Number: #3 or 3
+    m = line.match(/^\s*dev\s*(?:bulid|build)\s*number\s*:\s*(#?\d+)/i);
+    if (m) { out.devNumber = m[1].replace('#','').trim(); continue; }
+
+    // try looser matches (in case of different formatting)
+    m = line.match(/dev.*#?(\d{1,6})/i);
+    if (m && out.devNumber == null) out.devNumber = m[1];
+  }
+
+  // normalize devNumber as integer if present
+  if (out.devNumber != null) {
+    const n = parseInt(out.devNumber, 10);
+    out.devNumber = Number.isNaN(n) ? null : n;
+  }
+
+  return out;
+}
+
+function compareSemver(a, b) {
+  if (a == null || b == null) return 0;
+  const pa = String(a).split('.').map(s => parseInt(s,10)||0);
+  const pb = String(b).split('.').map(s => parseInt(s,10)||0);
+  const L = Math.max(pa.length, pb.length);
+  for (let i=0;i<L;i++){
+    const va = pa[i]||0;
+    const vb = pb[i]||0;
+    if (va > vb) return 1;
+    if (va < vb) return -1;
+  }
+  return 0;
+}
+
+/* ----- DOM & IO ----- */
+
+const outEl = document.getElementById('output');
+function logHtml(html) { outEl.innerHTML = html; }
+function appendHtml(html) { outEl.innerHTML += html; }
+
+async function fetchText(url) {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.text();
+  } catch (err) {
+    throw new Error('Fetch failed: ' + err.message);
+  }
+}
+
+/* Try to get local file:
+   1) relative path (as typed)
+   2) absolute file:/// path using provided absolute path
+*/
+async function tryReadLocal(relOrAbs) {
+  // If the path begins with /dev_hdd0 or file:// attempt absolute file url too
+  const tries = [];
+
+  // add relative attempt
+  tries.push(relOrAbs);
+
+  // if user gave absolute path without file://, try prepending file://
+  if (relOrAbs.startsWith('/') && !relOrAbs.startsWith('file://')) {
+    tries.push('file://' + relOrAbs);
+  }
+
+  // Also try one very explicit absolute as the user's provided path
+  tries.push('/dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt');
+
+  for (const url of tries) {
+    try {
+      const txt = await fetchText(url);
+      return { url, text: txt };
+    } catch (e) {
+      // continue to next option
+    }
+  }
+  throw new Error('Could not read local file using the tried paths. You may need to open this page from within USRDIR so relative reads work, or have your homebrew provide the file contents to the page.');
+}
+
+/* ----- Core comparison logic ----- */
+
+async function doCheck() {
+  outEl.innerHTML = '<div class="small">Checking…</div>';
+  const remoteUrl = document.getElementById('remoteUrl').value.trim();
+  const localPath = document.getElementById('localRel').value.trim();
+
+  // fetch remote first
+  let remoteTxt = null;
+  try {
+    remoteTxt = await fetchText(remoteUrl);
+  } catch (err) {
+    logHtml('<div class="error">Error fetching remote version file: ' + escapeHtml(err.message) + '</div>');
+    return;
+  }
+  const remote = parseVersionTxt(remoteTxt);
+
+  // fetch local
+  let localResult;
+  try {
+    localResult = await tryReadLocal(localPath);
+  } catch (err) {
+    // Can't read local: show remote info and explain
+    logHtml(`<div class="warn">Could not read local version file.</div>
+      <div style="margin-top:8px"><b>Remote version (from ${escapeHtml(remoteUrl)}):</b>
+      <pre>${escapeHtml(remoteTxt)}</pre></div>
+      <div class="small" style="margin-top:8px">Hints:
+        <ul>
+          <li>Place this HTML file inside <code>/dev_hdd0/game/Rebugger_Tool/USRDIR/</code> and use the relative path <code>xml/settings/version.txt</code></li>
+          <li>Or have your homebrew write the local version file into the same folder as this page</li>
+          <li>If PS3 browser blocks file access, modify your app to inject the local file contents into this page (e.g. write local version to a local JSON or text file accessible via HTTP)</li>
+        </ul>
+      </div>`);
+    return;
+  }
+
+  const local = parseVersionTxt(localResult.text);
+
+  // compare
+  const vcmp = compareSemver(remote.version, local.version);
+  let status = '';
+  if (vcmp > 0) {
+    status = `<div class="warn">A new RELEASE version is available: remote ${escapeHtml(remote.version)} &rarr; local ${escapeHtml(local.version)}</div>`;
+  } else if (vcmp < 0) {
+    status = `<div class="ok">Local version is newer than remote (local ${escapeHtml(local.version)} / remote ${escapeHtml(remote.version)})</div>`;
+  } else {
+    // same release version — check dev build numbers if dev
+    if (remote.isDev && local.isDev) {
+      const rdev = remote.devNumber || 0;
+      const ldev = local.devNumber || 0;
+      if (rdev > ldev) status = `<div class="warn">Remote dev build #${rdev} is newer than local #${ldev}.</div>`;
+      else if (rdev < ldev) status = `<div class="ok">Local dev build #${ldev} is newer than remote #${rdev}.</div>`;
+      else status = `<div class="ok">You have the latest dev build (#${ldev}).</div>`;
+    } else {
+      status = `<div class="ok">You have the latest release version (${escapeHtml(local.version)}).</div>`;
+    }
+  }
+
+  logHtml(`
+    <div><b>Local file (read from):</b> ${escapeHtml(localResult.url)}</div>
+    <div style="margin-top:8px"><b>Local parsed:</b>
+      <pre>${escapeHtml(formatParsed(local))}</pre>
+    </div>
+    <div style="margin-top:8px"><b>Remote parsed:</b>
+      <pre>${escapeHtml(formatParsed(remote))}</pre>
+    </div>
+    <div style="margin-top:10px">${status}</div>
+  `);
+}
+
+function formatParsed(p) {
+  return `Version: ${p.version}\nisDev: ${p.isDev}\ndevNumber: ${p.devNumber}\n\nraw:\n${p.rawText}`;
+}
+
+function escapeHtml(s) {
+  return String(s==null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ----- Wire up ----- */
+document.getElementById('checkBtn').addEventListener('click', doCheck);
+
+// optional: run on load
+// doCheck();
+</script>
+</body>
+</html>
