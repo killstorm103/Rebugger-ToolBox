@@ -1,80 +1,81 @@
 <!doctype html>
-      if(fileInput.files && fileInput.files.length>0){
-        const f = fileInput.files[0];
-        const txt = await new Promise((res,rej)=>{
-          const r = new FileReader();
-          r.onload = ()=>res(String(r.result).trim());
-          r.onerror = ()=>rej(r.error);
-          r.readAsText(f);
-        });
-        return {source: 'file', value: txt};
-      }
-      const localUrl = localEl.value.trim();
-      if(localUrl){
-        try{
-          const txt = await fetchText(localUrl);
-          return {source: 'localHttp', value: txt};
-        }catch(e){
-          throw new Error(`Could not fetch local endpoint (${localUrl}): ${e.message}`);
-        }
-      }
-      throw new Error('No local version provided. Either select a file or enter a local endpoint URL.');
-    }
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Version Checker — GitHub ↔ PS3 Homebrew</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Arial;max-width:820px;margin:28px auto;padding:18px}
+    label{display:block;margin-top:12px}
+    input[type=text], input[type=url]{width:100%;padding:8px;margin-top:6px}
+    button{margin-top:12px;padding:8px 12px}
+    pre{background:#f4f4f6;padding:10px;border-radius:6px;overflow:auto}
+    .ok{color:green}
+    .warn{color:orange}
+    .bad{color:red}
+    .note{font-size:0.9rem;color:#444}
+  </style>
+</head>
+<body>
+  <h1>Version Checker</h1>
+  <p class="note">This page fetches a plain-text version file from GitHub (or GitHub Pages) and compares it to a local version you provide (via local HTTP endpoint or file upload). Use whichever method your PS3 homebrew supports.</p>
 
-    async function checkVersions(){
-      resultEl.innerHTML = '<em>Checking…</em>';
-      rawEl.textContent = '---';
-      try{
-        const remoteUrl = remoteEl.value.trim();
-        if(!remoteUrl) throw new Error('Please enter the GitHub raw URL of your version.txt');
-        const remoteTxt = await fetchText(remoteUrl);
-        const local = await readLocalVersion();
-        const localTxtRaw = local.value;
-        const localParsed = parsePs3Version(localTxtRaw);
-        const localVersion = localParsed.version;
-        const cmp = compareVersions(localVersion, remoteTxt);
+  <label>GitHub raw URL (example: https://raw.githubusercontent.com/USER/REPO/BRANCH/path/version.txt)
+    <input id="remoteUrl" type="hidden" value="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/version.txt" />
+  <p class="note">Remote version source:<br><code>http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/version.txt</code></p>
 
-        rawEl.textContent = `Remote (${remoteUrl}):
-${remoteTxt}
+  <label>Local PS3 endpoint URL (if your homebrew serves the file over HTTP, e.g. http://192.168.1.50/version.txt)
+    <input id="localUrl" type="hidden" value="file:///dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt" />
+  <p class="note">Local PS3 version path:<br><code>/dev_hdd0/game/Rebugger_Tool/USRDIR/xml/settings/version.txt</code></p>
 
-Local (${local.source}):
-${localTxtRaw}
+  <label>Or choose a local version file from device (drag / drop or pick file)
+    <input id="fileInput" type="file" accept=".txt" />
+  </label>
 
-Parsed Local:
-Version: ${localParsed.version}
-Dev build: ${localParsed.isDev}
-Dev build number: ${localParsed.devBuild}`;
-
-        if(cmp===0){
-          resultEl.innerHTML = `<strong class="ok">Up to date — installed version ${localParsed.version} matches remote.</strong>`;
-        } else if(cmp < 0){
-          resultEl.innerHTML = `<strong class="bad">Outdated — installed ${localParsed.version} is older than remote ${remoteTxt}.</strong>`;
-        } else {
-          resultEl.innerHTML = `<strong class="warn">Local ahead — installed ${localParsed.version} is newer than remote ${remoteTxt}.</strong>`;
-        }
-
-      }catch(err){
-        resultEl.innerHTML = `<span class="bad">Error: ${err.message}</span>`;
-        rawEl.textContent = `Error details:\n${err.stack||err.message}`;
-      }
-    }
-
-    checkBtn.addEventListener('click', checkVersions);
-
+  <div>
+    <button id="checkBtn">Check for Updates</button>
     
-      }
-    });
+  </div>
 
-    // Simple drag & drop support for file input
-    document.addEventListener('dragover', e=>e.preventDefault());
-    document.addEventListener('drop', e=>{
-      e.preventDefault();
-      if(e.dataTransfer.files && e.dataTransfer.files.length>0){
-        fileInput.files = e.dataTransfer.files;
-      }
-    });
+  <h3>Result</h3>
+  <div id="result"><em>No check performed yet.</em></div>
 
-    // Auto-check immediately on page load
-    window.addEventListener('load', ()=>{
-      checkVersions().catch(()=>{});
+  <h3>Raw values</h3>
+  <pre id="raw">---</pre>
+
+  <script>
+    // Simple semver-ish comparator. Works with numeric versions like 1.2.3, 1.2, 2, or strings like "2025-02-01"
+    function normalizeParts(v){
+      // Split on non-digit chars but keep numeric segments; fallback to whole string
+      const parts = (v||"").trim().split(/[^0-9]+/).filter(Boolean).map(n=>parseInt(n,10));
+      if(parts.length===0) return [v||""];
+      return parts;
+    }
+
+    function compareVersions(a,b){
+      // returns 1 if a>b, 0 if equal, -1 if a<b
+      const pa = normalizeParts(a);
+      const pb = normalizeParts(b);
+      // if parts are arrays of numbers, compare numeric
+      const numericA = pa.every(x=>typeof x==='number' && !Number.isNaN(x));
+      const numericB = pb.every(x=>typeof x==='number' && !Number.isNaN(x));
+      if(numericA && numericB){
+        const L = Math.max(pa.length,pb.length);
+        for(let i=0;i<L;i++){
+          const na = pa[i]||0;
+          const nb = pb[i]||0;
+          if(na>nb) return 1;
+          if(na<nb) return -1;
+        }
+        return 0;
+      }
+      // Fallback to trimmed string compare
+      const sa = (a||"").trim();
+      const sb = (b||"").trim();
+      if(sa===sb) return 0;
+      return sa>sb?1:-1;
+    }
+
+    async function fetchText(url){
+      const resp = await fetch(url, {cache: 'no-store'});
     });
