@@ -1,0 +1,80 @@
+<!doctype html>
+      if(fileInput.files && fileInput.files.length>0){
+        const f = fileInput.files[0];
+        const txt = await new Promise((res,rej)=>{
+          const r = new FileReader();
+          r.onload = ()=>res(String(r.result).trim());
+          r.onerror = ()=>rej(r.error);
+          r.readAsText(f);
+        });
+        return {source: 'file', value: txt};
+      }
+      const localUrl = localEl.value.trim();
+      if(localUrl){
+        try{
+          const txt = await fetchText(localUrl);
+          return {source: 'localHttp', value: txt};
+        }catch(e){
+          throw new Error(`Could not fetch local endpoint (${localUrl}): ${e.message}`);
+        }
+      }
+      throw new Error('No local version provided. Either select a file or enter a local endpoint URL.');
+    }
+
+    async function checkVersions(){
+      resultEl.innerHTML = '<em>Checking…</em>';
+      rawEl.textContent = '---';
+      try{
+        const remoteUrl = remoteEl.value.trim();
+        if(!remoteUrl) throw new Error('Please enter the GitHub raw URL of your version.txt');
+        const remoteTxt = await fetchText(remoteUrl);
+        const local = await readLocalVersion();
+        const localTxtRaw = local.value;
+        const localParsed = parsePs3Version(localTxtRaw);
+        const localVersion = localParsed.version;
+        const cmp = compareVersions(localVersion, remoteTxt);
+
+        rawEl.textContent = `Remote (${remoteUrl}):
+${remoteTxt}
+
+Local (${local.source}):
+${localTxtRaw}
+
+Parsed Local:
+Version: ${localParsed.version}
+Dev build: ${localParsed.isDev}
+Dev build number: ${localParsed.devBuild}`;
+
+        if(cmp===0){
+          resultEl.innerHTML = `<strong class="ok">Up to date — installed version ${localParsed.version} matches remote.</strong>`;
+        } else if(cmp < 0){
+          resultEl.innerHTML = `<strong class="bad">Outdated — installed ${localParsed.version} is older than remote ${remoteTxt}.</strong>`;
+        } else {
+          resultEl.innerHTML = `<strong class="warn">Local ahead — installed ${localParsed.version} is newer than remote ${remoteTxt}.</strong>`;
+        }
+
+      }catch(err){
+        resultEl.innerHTML = `<span class="bad">Error: ${err.message}</span>`;
+        rawEl.textContent = `Error details:\n${err.stack||err.message}`;
+      }
+    }
+
+    checkBtn.addEventListener('click', checkVersions);
+
+    
+      }
+    });
+
+    // Simple drag & drop support for file input
+    document.addEventListener('dragover', e=>e.preventDefault());
+    document.addEventListener('drop', e=>{
+      e.preventDefault();
+      if(e.dataTransfer.files && e.dataTransfer.files.length>0){
+        fileInput.files = e.dataTransfer.files;
+      }
+    });
+
+    // Auto-check immediately on page load
+    window.addEventListener('load', ()=>{
+      checkVersions().catch(()=>{});
+    });
