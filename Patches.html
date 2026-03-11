@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rebugger - ToolBox Patches</title>
+  <style>
+    /* basic / PS3-friendly CSS */
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000000; /* black background */
+      color: #ffffff; /* default page text color */
+    }
+
+    .container {
+      max-width: 900px;           /* safer than max-content for older browsers */
+      padding: 20px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: left;
+      font-size: 40px;
+      margin: 0 0 16px 0;
+      color: #ffffff;             /* white, compatible format */
+    }
+
+    .changelogs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .changelogs li {
+      background-color: #ffffff;  /* white card */
+      color: #000000;             /* black text on card */
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 7px;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.08);
+      font-size: 17px;
+    }
+
+    .changelogs h2 {
+      margin: 0 0 10px 0;
+      color: #000000;
+      font-size: 20px;
+    }
+
+    .patch-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* link styled as button (works on older browsers) */
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 14px;
+      font-size: 16px;
+      border: 0;
+      border-radius: 6px;
+      background-color: #2e8b57;   /* green button */
+      color: #ffffff;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .btn-secondary {
+      background-color: #555555;   /* grey secondary button */
+    }
+
+    .note {
+      font-size: 13px;
+      color: #333333;
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* small helper for showing raw link (if button fails on PS3) */
+    .raw-link {
+      margin-top: 8px;
+      display: block;
+      color: #0066cc;
+      word-break: break-all;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Rebugger - ToolBox ChangeLogs</h1>
+
+    <ul class="changelogs">
+      <li class="bloc">
+        <h2>Version 1.0.3 (DEV Build #3)</h2>
+
+        <div class="patch-row">
+          <!-- Main download button (uses the URL you provided) -->
+          <a class="btn" href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/test.pkg"
+             target="_blank" rel="noopener noreferrer" aria-label="Download Test Patch">
+            Download Test Patch (test.pkg)
+          </a>
+
+          <!-- Example additional button, duplicate and change href to add more patches -->
+          <a class="btn btn-secondary" href="https://github.com/killstorm103/Rebugger-ToolBox/releases"
+             target="_blank" rel="noopener noreferrer">
+            All Releases
+          </a>
+        </div>
+
+        <!-- Visible raw link in case the PS3 browser does not trigger download from the button -->
+        <a class="raw-link" href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/test.pkg"
+           target="_blank" rel="noopener noreferrer">
+          https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/test.pkg
+        </a>
+
+        <span class="note">If the PS3 browser doesn't auto-download, open the link and follow the PS3's download/open prompt.</span>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
