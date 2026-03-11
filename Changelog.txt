@@ -1,7 +1,0 @@
-1: Added Official Eboots for Baguette HVH (Bo2) (DEX & CEX/HEN)
-2: Made Ingame XMB Themed (Including PSN Logo: xmb_ingame.rco) (Some files are done, DO NOT USE This Yet!)
-3: Added Fury Store
-4: Changed the HEN icon
-5: Added Homebrew Information inside Information!
-6: Moved Social Medias into Social Media Tab!
-7: Made it so the updater is now: (CFW or HEN) > (Latest Stable Build or Latest Dev Build)
