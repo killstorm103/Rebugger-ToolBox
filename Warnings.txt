@@ -1,1 +1,1 @@
-No known bugs right now
+1: DO NOT Install PSN Logo RCOs on HFW, Only Normal (The ps3s xmb/home screen) is done dont install the others
