@@ -1,5 +1,9 @@
 # Rebugger-ToolBox
 
+- ChangeLogs: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Changelog.html
+- Known cunts list: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Known.html
+- Services: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Services.html
+
 - How to Update:
 - Go into Rebugger Toolbox > Settings > Update Rebugger Toolbox > Updater > CFW (Latest Stable Or Dev Build) Download the file to /dev_hdd0/packages or /dev_hdd0/dev_usb000 (number might be different for you)
 - Then if your on HEN/HFW Go into: Rebugger Toolbox > Settings > Update Rebugger Toolbox > HEN > HEN (Latest Stable Or Dev Build)
