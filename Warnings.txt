@@ -1,1 +1,2 @@
 1: DO NOT Install PSN Logo RCOs on HFW, Only Normal (The ps3s xmb/home screen) is done dont install the others
+2: Downloading Firmwares and ToolBox Updates etc is currently broken on CFWs other than Evilnat 4.93 i'll try working on a fix!
