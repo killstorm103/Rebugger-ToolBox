@@ -25,6 +25,7 @@
 - Previews:
 <img src="Images/Toolbox.jpg">
 <img src="Images/Main.jpg">
+<img src="Images/Extra Tools.jpg">
 <img src="Images/Info.jpg">
 <img src="Images/Mods.jpg">
 <img src="Images/Customisation.jpg">
