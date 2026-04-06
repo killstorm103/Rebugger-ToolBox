@@ -15,7 +15,7 @@
 - How to install: 
 - Download the latest Stable or Dev Build from Releases
 - Put the Installers in a USB and plug it into your ps3 or put it in your ps3's: /dev_hdd0/packages or  /dev_hdd0/dev_usb000 (number might be different for you) using FileZilla
-- On your ps3 mount dev_blind (use webman mod, weMAN Games > webMAN Setup > Enable /dev_blind)
+- On your ps3 mount dev_blind (use WebMan Mod, weMAN Games > webMAN Setup > Enable /dev_blind)
 - then go to your package manager > Install Package Files > (PS3 System Storage or Standard) >:
 - Install in this order: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg
 - then lastly install: Rebugger.Toolbox.Installer_CFW.pkg
