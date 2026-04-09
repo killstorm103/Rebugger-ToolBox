@@ -119,7 +119,7 @@ h1_under
             <li class="bloc">
                 <h2>Information<span class="size"></span></h2>
                 <ul>
-                    <li>Page Version 1.0</li>
+                    <li>Debugging Page Version 1.1</li>
                     <div id="ps3Checker" class="image-gallery"></div>
                     <li>Requirements:</li>
                     <span class="space">└ 1: I Must know you or know of you because of a mate or someone else who paid for my services!</span><br>
@@ -140,51 +140,33 @@ h1_under
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
                     function isPlayStationBrowser() {
-    var ua = navigator.userAgent;
-    
-    // Check for explicit PlayStation markers
-    if (ua.indexOf('PLAYSTATION 3') > -1) return true;   // PS3
-    if (ua.indexOf('PSP') > -1) return true;            // PSP
-    if (ua.indexOf('PlayStation Portable') > -1) return true; // PSP alternative
-    
-    // PS3 can also report as MSIE 6.0 (legacy mode). Check for that combo.
-    if (ua.indexOf('MSIE 6.0') > -1 && ua.indexOf('Windows NT 5.1') > -1) {
-        // Additional check: if it's really a PS3, it may have "PLAYSTATION" in the string
-        // but it's safer to return true only if we see both MSIE 6.0 and NT 5.1.
-        // Modern Windows won't have this combination.
-        return true;
+        var ua = navigator.userAgent;
+        if (ua.indexOf('PLAYSTATION 3') > -1) return true;
+        if (ua.indexOf('PSP') > -1) return true;
+        if (ua.indexOf('PlayStation Portable') > -1) return true;
+        if (ua.indexOf('MSIE 6.0') > -1 && ua.indexOf('Windows NT 5.1') > -1) return true;
+        return false;
     }
-    
-    return false;
-}
-                    const test = document.getElementById('ps3Checker');
-                    const status = isPlayStationBrowser() ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Broken PS3.png`
-                    const jet = document.createElement('jet');
-                    jet.src = imageUrl;
-                    jet.width = 300;
-                    jet.height = 200;
-                    jet.loading = 'lazy';
-                    jet.alt = `Service image ${i}`;
-                    jet.className = 'profile-img'; 
-                    container.appendChild(jet);
-                    if (!isPlayStationBrowser()) 
-                    {
-                       const container = document.getElementById('imageContainer');
-                    for (let i = 0; i <= 7; i++) 
-                    {
-                     const paddedNum = i.toString().padStart(3, '0'),
-                     imageUrl = i == 0 ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/${paddedNum}.jpg`;;
-               
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.width = 300;
-                    img.height = 200;
-                    img.loading = 'lazy';
-                    img.alt = `Service image ${i}`;
-                    img.className = 'profile-img'; 
-                    container.appendChild(img);
-                    } 
-                    }
+
+    // Get the container div
+    var container = document.getElementById('ps3Checker');
+
+    // Choose image URL based on detection result
+    var imageUrl = isPlayStationBrowser() 
+        ? 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3.png'
+        : 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Broken%20PS3.png'; // %20 for space
+
+    // Create the image element
+    var img = document.createElement('img');  // Correct element type
+    img.src = imageUrl;
+    img.width = 300;
+    img.height = 200;
+    img.setAttribute('loading', 'lazy');     // PS3-safe attribute setting
+    img.alt = 'Browser compatibility check';
+    img.className = 'profile-img';
+
+    // Add to the page
+    container.appendChild(img);
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
