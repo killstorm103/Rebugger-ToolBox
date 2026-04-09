@@ -7,6 +7,15 @@
 </head>
 <body>
 <style>
+.image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .image-gallery img {
+            border-radius: 8px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+        }
     body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -125,7 +134,24 @@ h1_under
                 </ul>
                 <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
                 <h2>PS3 Services<span class="size"></span></h2>
-                <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" width=300 height=200 loading="lazy">
+                <div id="imageContainer" class="image-gallery"></div>
+                <script>
+                    const container = document.getElementById('imageContainer');
+                    for (let i = 0; i <= 7; i++) 
+                    {
+                     const paddedNum = i.toString().padStart(3, '0'),
+                     imageUrl = i == 0 ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/${paddedNum}.jpg`;;
+               
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.width = 300;
+                    img.height = 200;
+                    img.loading = 'lazy';
+                    img.alt = `Service image ${i}`;
+                    img.className = 'profile-img'; 
+                    container.appendChild(img);
+                    }
+                </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
                     <span class="space">└ Recommendation: replace the old hard drive with a Samsung 870 EVO/QVO SATA III 2.5" SSD before jailbreaking</span><br>
