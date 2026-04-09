@@ -136,20 +136,27 @@ h1_under
                 <h2>PS3 Services<span class="size"></span></h2>
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
-                    const container = document.getElementById('imageContainer');
-                    for (let i = 0; i <= 7; i++) 
-                    {
-                     const paddedNum = i.toString().padStart(3, '0'),
-                     imageUrl = i == 0 ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/${paddedNum}.jpg`;;
-               
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.width = 300;
-                    img.height = 200;
-                    img.loading = 'lazy';
-                    img.alt = `Service image ${i}`;
-                    img.className = 'profile-img'; 
-                    container.appendChild(img);
+                    var container = document.getElementById('imageContainer');
+    var i, paddedNum, imageUrl, img;
+
+    for (i = 0; i <= 7; i++) {
+        paddedNum = (i < 10 ? '00' : (i < 100 ? '0' : '')) + i;
+
+        if (i === 0) {
+            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
+        } else {
+            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
+        }
+
+        img = document.createElement('img');
+        img.src = imageUrl;
+        img.width = 300;
+        img.height = 200;
+        img.setAttribute('loading', 'lazy'); 
+        img.alt = 'Service image ' + i;
+        img.className = 'profile-img';
+
+        container.appendChild(img);
                     }
                 </script>
                 <ul>
