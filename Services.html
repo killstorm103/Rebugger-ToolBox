@@ -119,8 +119,7 @@ h1_under
             <li class="bloc">
                 <h2>Information<span class="size"></span></h2>
                 <ul>
-                    <li>Debugging Page Version 1.2</li>
-                    <div id="ps3Checker" class="image-gallery"></div>
+                    <li id="Status">Checking Browser ....</li>
                     <li>Requirements:</li>
                     <span class="space">└ 1: I Must know you or know of you because of a mate or someone else who paid for my services!</span><br>
                     <span class="space">└ 2: Being in Australia (WA) and handing over the Device in person (i Will Not Do Shipping!)</span><br>
@@ -139,7 +138,7 @@ h1_under
                 <h2>PS3 Services<span class="size"></span></h2>
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
-                   function isPlayStationBrowser() {
+                   function isPS3 () {
         var ua = navigator.userAgent;
         if (ua.indexOf('PLAYSTATION 3') > -1) return true;
         if (ua.indexOf('PSP') > -1) return true;
@@ -148,25 +147,29 @@ h1_under
         return false;
     }
 
-    // Get the container div
-    var container = document.getElementById('ps3Checker');
+    var listItem = document.getElementById('Status');
+    var statusText = isPS3() ? 'Legacy (PS3)' : 'Modern Browser';
+    listItem.innerHTML = 'Detected Browser: ' + statusText;
 
-    // Choose image URL based on detection result
-    var imageUrl = isPlayStationBrowser() 
-        ? 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3.png'
-        : 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Broken%20PS3.png'; // %20 for space
+   
+     var container = document.getElementById('imageContainer'), paddedNum, imageUrl, img;
 
-    // Create the image element
-    var img = document.createElement('img');  // Correct element type
-    img.src = imageUrl;
-    img.width = 300;
-    img.height = 200;
-    img.setAttribute('loading', 'lazy');     // PS3-safe attribute setting
-    img.alt = 'Browser compatibility check';
-    img.className = 'profile-img';
+    for (let i = 0; i < 7; i++) 
+    {
+        paddedNum = (i < 10 ? '00' : (i < 100 ? '0' : '')) + i;
 
-    // Add to the page
-    container.appendChild(img);
+        imageUrl = i == 0 ? 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png' : 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
+
+        img = document.createElement('img');
+        img.src = imageUrl;
+        img.width = 300;
+        img.height = 200;
+        img.setAttribute('loading', 'lazy'); // Using setAttribute for better compatibility
+        img.alt = 'Service image ' + i;
+        img.className = 'profile-img';
+
+        container.appendChild(img);
+    }
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
