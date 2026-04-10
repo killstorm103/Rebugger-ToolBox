@@ -213,8 +213,13 @@ h1_under
         var nextTimer = null;
         var maxWaitTimer = null;
         var isLoading = false;
-        var retryCount = 0;          // Track retries for current image
-        var MAX_RETRIES = 1;          // Try once more after first failure
+        var retryCount = 0;
+        var MAX_RETRIES = 5;
+
+        // Reduced timers (40% decrease)
+        var DISPLAY_TIME = 3500;   // 18s → 11s
+        var SKIP_DELAY = 7000;      // 12s → 7s
+        var MAX_WAIT = 10000;       // 20s → 12s
 
         function clearAllTimers() {
             if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
@@ -224,20 +229,19 @@ h1_under
         function showNextImage() {
             clearAllTimers();
             isLoading = true;
-            retryCount = 0;           // Reset retry counter for new image
+            retryCount = 0;
             index++;
             if (index >= total) index = 0;
             img.src = images[index];
             counter.innerHTML = (index + 1) + ' / ' + total;
             if (debugSpan) debugSpan.innerHTML = 'Loading: ' + images[index];
-            // Set safety timeout
             maxWaitTimer = setTimeout(function() {
                 if (isLoading) {
                     isLoading = false;
                     if (debugSpan) debugSpan.innerHTML = 'Timeout: ' + images[index];
-                    scheduleNext(12000);
+                    scheduleNext(SKIP_DELAY);
                 }
-            }, 20000);
+            }, MAX_WAIT);
         }
 
         function scheduleNext(delay) {
@@ -250,7 +254,7 @@ h1_under
                 isLoading = false;
                 clearAllTimers();
                 if (debugSpan) debugSpan.innerHTML = 'OK: ' + images[index];
-                scheduleNext(18000);
+                scheduleNext(DISPLAY_TIME);
             }
         };
 
@@ -258,26 +262,22 @@ h1_under
             if (!isLoading) return;
             retryCount++;
             if (retryCount <= MAX_RETRIES) {
-                // Retry the same image after a short pause
-                if (debugSpan) debugSpan.innerHTML = 'Retry ' + retryCount + ': ' + images[index];
+                if (debugSpan) debugSpan.innerHTML = 'Retry ' + retryCount + '/' + MAX_RETRIES + ': ' + images[index];
                 clearAllTimers();
-                // Reload the same image
-                img.src = images[index];
-                // Reset safety timeout
+                img.src = images[index];  // reload same image
                 maxWaitTimer = setTimeout(function() {
                     if (isLoading) {
                         isLoading = false;
                         if (debugSpan) debugSpan.innerHTML = 'Timeout (retry): ' + images[index];
-                        scheduleNext(12000);
+                        scheduleNext(SKIP_DELAY);
                     }
-                }, 20000);
+                }, MAX_WAIT);
             } else {
-                // Failed after retries – skip it
                 isLoading = false;
                 clearAllTimers();
                 counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
-                if (debugSpan) debugSpan.innerHTML = 'FAILED: ' + images[index];
-                scheduleNext(12000);
+                if (debugSpan) debugSpan.innerHTML = 'FAILED after ' + MAX_RETRIES + ' retries: ' + images[index];
+                scheduleNext(SKIP_DELAY);
             }
         };
 
@@ -291,9 +291,9 @@ h1_under
             if (isLoading) {
                 isLoading = false;
                 if (debugSpan) debugSpan.innerHTML = 'Timeout: ' + images[0];
-                scheduleNext(12000);
+                scheduleNext(SKIP_DELAY);
             }
-        }, 20000);
+        }, MAX_WAIT);
     }
 
     if (window.addEventListener) {
