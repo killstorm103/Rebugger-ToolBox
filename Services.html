@@ -189,29 +189,47 @@ h1_under
                     {
                         window.onload = updateStatus;
                     }
-                    (function() 
-                    {
-                        var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
+                    function startSlider() {
+        var images = [
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
+            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
+        ];
 
-    var total = images.length;
-    var index = 0;
-    var img = document.getElementById('sliderImage');
-    var counter = document.getElementById('imageCounter');
+        var img = document.getElementById('sliderImage');
+        var counter = document.getElementById('imageCounter');
 
-    // Set first image immediately
-    img.src = images[0];
-    counter.innerHTML = '1 / ' + total;
+        if (!img || !counter) return;
 
-    // Change image every 4 seconds
-    setInterval(function() {
-        index++;
-        if (index >= total) {
-            index = 0;
+        var total = images.length;
+        var index = 0;
+
+        function showNextImage() {
+            index++;
+            if (index >= total) {
+                index = 0;
+            }
+            img.src = images[index];
+            counter.innerHTML = (index + 1) + ' / ' + total;
         }
-        img.src = images[index];
-        counter.innerHTML = (index + 1) + ' / ' + total;
-    }, 4000);
-})();
+
+        img.src = images[0];
+        counter.innerHTML = '1 / ' + total;
+
+        setInterval(showNextImage, 4000);
+    }
+
+    if (window.addEventListener) {
+        window.addEventListener('load', startSlider, false);
+    } else if (window.attachEvent) {
+        window.attachEvent('onload', startSlider);
+    } else {
+        window.onload = startSlider;
+    }
                     
                 </script>
                 <ul>
