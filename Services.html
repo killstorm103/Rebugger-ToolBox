@@ -129,7 +129,7 @@ h1_under
                 <h2>Platform<span class="size"></span></h2>
                 <ul>
                     <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
-                    <li>Firmware: <span id="fwSpan">Checking...</span></li>
+                    <li>Firmware Version: <span id="fwSpan">Checking...</span></li>
                     <li>User Agent: <span id="uaSpan"></span></li>
                 </ul>
                 <h2>Information<span class="size"></span></h2>
@@ -179,8 +179,8 @@ h1_under
                         window.onload = updateStatus;
                     }
                     var container = document.getElementById('imageContainer');
-
-                    function padNumber(num, size) 
+                    var i = 0, maxImages = 7;
+                    function padNumber(num, size)
                     {
                         var s = String(num);
                         while (s.length < size) 
@@ -189,27 +189,45 @@ h1_under
                             
                         }
                         return s;
+                        
                     }
-                    var i, paddedNum, imageUrl, img;
-                    for (i = 0; i <= 7; i++) 
+                    function loadNextImage ()
                     {
-                        paddedNum = padNumber(i, 3);
+                        if (i >= maxImages) return;
+                        var paddedNum = padNumber(i, 3);
+                        var imageUrl;
                         if (i === 0) 
                         {
                             imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
+                            
                         }
                         else 
                         {
                             imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
                             
                         }
-                        img = document.createElement('img');
-                        img.src = imageUrl;
+                        var img = document.createElement('img');
                         img.width = 300;
                         img.height = 200;
                         img.alt = 'Service image ' + i;
+                        if (!window.isPS3) img.loading = 'lazy';
+                        img.onerror = function ()
+                        {
+                            this.alt = 'Missing: ' + this.src;
+                            i++;
+                            loadNextImage();
+                        };
+                        img.onload = function ()
+                        {
+                            i++;
+                            loadNextImage();
+                            
+                        };
+                        img.src = imageUrl;
                         container.appendChild(img);
+                        
                     }
+                    loadNextImage();
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
