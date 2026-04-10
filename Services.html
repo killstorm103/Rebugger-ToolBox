@@ -151,7 +151,18 @@ h1_under
                 </ul>
                 <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
                 <h2>PS3 Services<span class="size"></span></h2>
-                <div id="imageContainer" class="image-gallery"></div>
+                <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+    <!-- Static image (left) -->
+    <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+
+    <!-- Slider container (right) -->
+    <div style="margin: 0 0 10px 0;">
+        <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+        <div style="margin-top: 10px; color: #fff;">
+            <span id="imageCounter">1 / 6</span>
+        </div>
+    </div>
+</div>
                 <script>
                     function updateStatus()
                     {
@@ -178,76 +189,30 @@ h1_under
                     {
                         window.onload = updateStatus;
                     }
-                    var container = document.getElementById('imageContainer');
-var i = 0;
-var maxImages = 7;
-var loadTimeout;
-var IMAGE_TIMEOUT = 5000; // 5 seconds per image
+                    (function() 
+                    {
+                        var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
 
-function padNumber(num, size) {
-    var s = String(num);
-    while (s.length < size) {
-        s = '0' + s;
-    }
-    return s;
-}
+    var total = images.length;
+    var index = 0;
+    var img = document.getElementById('sliderImage');
+    var counter = document.getElementById('imageCounter');
 
-function loadNextImage() {
-    if (i >= maxImages) return;
+    // Set first image immediately
+    img.src = images[0];
+    counter.innerHTML = '1 / ' + total;
 
-    // Clear any pending timeout from previous image
-    if (loadTimeout) {
-        clearTimeout(loadTimeout);
-        loadTimeout = null;
-    }
-
-    var paddedNum = padNumber(i, 3);
-    var imageUrl;
-
-    if (i === 0) {
-        imageUrl = 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
-    } else {
-        imageUrl = 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
-    }
-
-    var img = document.createElement('img');
-    img.width = 300;
-    img.height = 200;
-    img.alt = 'Service image ' + i;
-    if (!window.isPS3) {
-        img.loading = 'lazy';
-    }
-
-    var loaded = false;
-
-    function advance() {
-        if (loaded) return;
-        loaded = true;
-        if (loadTimeout) {
-            clearTimeout(loadTimeout);
-            loadTimeout = null;
+    // Change image every 4 seconds
+    setInterval(function() {
+        index++;
+        if (index >= total) {
+            index = 0;
         }
-        i++;
-        loadNextImage();
-    }
-
-    img.onload = advance;
-    img.onerror = function() {
-        this.alt = 'Missing: ' + this.src;
-        advance();
-    };
-
-    // Safety timeout: if onload/onerror never fire, force advance
-    loadTimeout = setTimeout(function() {
-        advance();
-    }, IMAGE_TIMEOUT);
-
-    img.src = imageUrl;
-    container.appendChild(img);
-}
-
-// Start loading
-loadNextImage();
+        img.src = images[index];
+        counter.innerHTML = (index + 1) + ' / ' + total;
+    }, 4000);
+})();
+                    
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
