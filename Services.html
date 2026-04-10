@@ -191,7 +191,7 @@ h1_under
                         return s;
                     }
                     var i, paddedNum, imageUrl, img;
-                    for (i = 0; i < 7; i++) 
+                    for (i = 0; i <= 7; i++) 
                     {
                         paddedNum = padNumber(i, 3);
                         if (i === 0) 
@@ -207,7 +207,6 @@ h1_under
                         img.src = imageUrl;
                         img.width = 300;
                         img.height = 200;
-                        img.setAttribute('loading', 'lazy');
                         img.alt = 'Service image ' + i;
                         container.appendChild(img);
                     }
