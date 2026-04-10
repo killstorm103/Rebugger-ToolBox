@@ -151,6 +151,9 @@ h1_under
                 </ul>
                 <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
                 <h2>PS3 Services<span class="size"></span></h2>
+                <div style="color: yellow; background: black; padding: 5px; margin: 10px 0;">
+    Debug: <span id="debugInfo">(waiting...)</span>
+</div>
                 <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
     <!-- Static image (left) -->
     <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
@@ -189,7 +192,7 @@ h1_under
                     {
                         window.onload = updateStatus;
                     }
-                    function startSlider() {
+                    function startSlider() { 
         var images = [
             'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
             'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
@@ -202,60 +205,74 @@ h1_under
 
         var img = document.getElementById('sliderImage');
         var counter = document.getElementById('imageCounter');
+        var debugSpan = document.getElementById('debugInfo');   // <-- NEW
+
         if (!img || !counter) return;
 
         var total = images.length;
         var index = 0;
-        var timer = null;
-        var skipTimeout = null;
+        var nextTimer = null;
+        var maxWaitTimer = null;
+        var isLoading = false;
 
-        function clearTimers() {
-            if (timer) {
-                clearInterval(timer);
-                timer = null;
+        function clearAllTimers() {
+            if (nextTimer) {
+                clearTimeout(nextTimer);
+                nextTimer = null;
             }
-            if (skipTimeout) {
-                clearTimeout(skipTimeout);
-                skipTimeout = null;
+            if (maxWaitTimer) {
+                clearTimeout(maxWaitTimer);
+                maxWaitTimer = null;
             }
         }
 
-        function showImage(i) {
-            // Clear any pending error skip
-            if (skipTimeout) {
-                clearTimeout(skipTimeout);
-                skipTimeout = null;
-            }
-            img.src = images[i];
-            counter.innerHTML = (i + 1) + ' / ' + total;
-        }
-
-        function nextImage() {
+        function showNextImage() {
+            clearAllTimers();
+            isLoading = true;
             index++;
             if (index >= total) index = 0;
-            showImage(index);
+            img.src = images[index];
+            counter.innerHTML = (index + 1) + ' / ' + total;
+            debugSpan.innerHTML = 'Loading: ' + images[index];   // <-- NEW
         }
 
-        // Error handler: if image fails, skip to next after 2 seconds
-        img.onerror = function() {
-            if (skipTimeout) return; // already waiting to skip
-            skipTimeout = setTimeout(function() {
-                skipTimeout = null;
-                nextImage();
-            }, 2000);
-        };
+        function scheduleNext(delay) {
+            clearAllTimers();
+            nextTimer = setTimeout(showNextImage, delay);
+        }
 
-        // When image loads successfully, restart the interval timer
         img.onload = function() {
-            clearTimers();
-            timer = setInterval(nextImage, 4000);
+            if (isLoading) {
+                isLoading = false;
+                clearAllTimers();
+                debugSpan.innerHTML = 'OK: ' + images[index];   // <-- NEW
+                scheduleNext(18000);
+            }
         };
 
-        // Start by showing first image (this will trigger onload/onerror)
-        showImage(0);
+        img.onerror = function() {
+            if (isLoading) {
+                isLoading = false;
+                clearAllTimers();
+                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed, skipping)';
+                debugSpan.innerHTML = 'FAILED: ' + images[index];   // <-- NEW
+                scheduleNext(12000);
+            }
+        };
+
+        // Load first image
+        isLoading = true;
+        img.src = images[0];
+        counter.innerHTML = '1 / ' + total;
+        if (debugSpan) debugSpan.innerHTML = 'Loading: ' + images[0];   // <-- NEW
+        maxWaitTimer = setTimeout(function() {
+            if (isLoading) {
+                isLoading = false;debugSpan.innerHTML = 'Timeout: ' + images[index];   // <-- NEW
+                scheduleNext(12000);
+            }
+        }, 20000);
     }
 
-    // Run after page load
     if (window.addEventListener) {
         window.addEventListener('load', startSlider, false);
     } else if (window.attachEvent) {
@@ -263,7 +280,7 @@ h1_under
     } else {
         window.onload = startSlider;
     }
-</script>
+    
                     
                 </script>
                 <ul>
