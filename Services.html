@@ -179,55 +179,75 @@ h1_under
                         window.onload = updateStatus;
                     }
                     var container = document.getElementById('imageContainer');
-                    var i = 0, maxImages = 7;
-                    function padNumber(num, size)
-                    {
-                        var s = String(num);
-                        while (s.length < size) 
-                        {
-                            s = '0' + s;
-                            
-                        }
-                        return s;
-                        
-                    }
-                    function loadNextImage ()
-                    {
-                        if (i >= maxImages) return;
-                        var paddedNum = padNumber(i, 3);
-                        var imageUrl;
-                        if (i === 0) 
-                        {
-                            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
-                            
-                        }
-                        else 
-                        {
-                            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
-                            
-                        }
-                        var img = document.createElement('img');
-                        img.width = 300;
-                        img.height = 200;
-                        img.alt = 'Service image ' + i;
-                        if (!window.isPS3) img.loading = 'lazy';
-                        img.onerror = function ()
-                        {
-                            this.alt = 'Missing: ' + this.src;
-                            i++;
-                            loadNextImage();
-                        };
-                        img.onload = function ()
-                        {
-                            i++;
-                            loadNextImage();
-                            
-                        };
-                        img.src = imageUrl;
-                        container.appendChild(img);
-                        
-                    }
-                    loadNextImage();
+var i = 0;
+var maxImages = 7;
+var loadTimeout;
+var IMAGE_TIMEOUT = 5000; // 5 seconds per image
+
+function padNumber(num, size) {
+    var s = String(num);
+    while (s.length < size) {
+        s = '0' + s;
+    }
+    return s;
+}
+
+function loadNextImage() {
+    if (i >= maxImages) return;
+
+    // Clear any pending timeout from previous image
+    if (loadTimeout) {
+        clearTimeout(loadTimeout);
+        loadTimeout = null;
+    }
+
+    var paddedNum = padNumber(i, 3);
+    var imageUrl;
+
+    if (i === 0) {
+        imageUrl = 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
+    } else {
+        imageUrl = 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
+    }
+
+    var img = document.createElement('img');
+    img.width = 300;
+    img.height = 200;
+    img.alt = 'Service image ' + i;
+    if (!window.isPS3) {
+        img.loading = 'lazy';
+    }
+
+    var loaded = false;
+
+    function advance() {
+        if (loaded) return;
+        loaded = true;
+        if (loadTimeout) {
+            clearTimeout(loadTimeout);
+            loadTimeout = null;
+        }
+        i++;
+        loadNextImage();
+    }
+
+    img.onload = advance;
+    img.onerror = function() {
+        this.alt = 'Missing: ' + this.src;
+        advance();
+    };
+
+    // Safety timeout: if onload/onerror never fire, force advance
+    loadTimeout = setTimeout(function() {
+        advance();
+    }, IMAGE_TIMEOUT);
+
+    img.src = imageUrl;
+    container.appendChild(img);
+}
+
+// Start loading
+loadNextImage();
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
