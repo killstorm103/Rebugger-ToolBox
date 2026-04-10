@@ -138,18 +138,85 @@ h1_under
                 <h2>PS3 Services<span class="size"></span></h2>
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
-                   function isPS3 () {
+                   function detectPS3WithFallback(callback) {
+    var isPS3Detected = false;
+
+    // Modern Detection: User Agent (Fragile on PS3)
+    function checkUserAgent() {
         var ua = navigator.userAgent;
-        if (ua.indexOf('PLAYSTATION 3') > -1) return true;
-        if (ua.indexOf('PSP') > -1) return true;
-        if (ua.indexOf('PlayStation Portable') > -1) return true;
-        if (ua.indexOf('MSIE 6.0') > -1 && ua.indexOf('Windows NT 5.1') > -1) return true;
+        if (ua.indexOf('PLAYSTATION 3') > -1 || ua.indexOf('PS3') > -1) {
+            return true;
+        }
+        // Additional legacy checks...
+        if (ua.indexOf('MSIE 6.0') > -1 && ua.indexOf('Windows NT 5.1') > -1) {
+            return true;
+        }
         return false;
     }
 
-    var listItem = document.getElementById('Status');
-    var statusText = isPS3() ? 'Legacy (PS3)' : 'Modern Browser';
-    listItem.innerHTML = 'Detected Browser: ' + statusText;
+    // Robust Fallback: Feature/Performance Detection
+    function runCapabilityTests() {
+        var testImg = new Image();
+        var startTime = new Date().getTime();
+        var isFeatureSupported = false;
+        var timeoutReached = false;
+
+        // Test 1: Does the browser support a modern image format?
+        testImg.onload = function() {
+            if (!timeoutReached) {
+                var loadTime = new Date().getTime() - startTime;
+                // A very slow load time might also indicate PS3, but we can use it.
+                console.log('Image loaded in: ' + loadTime + 'ms');
+                isFeatureSupported = true;
+                callback(isFeatureSupported);
+            }
+        };
+        
+        testImg.onerror = function() {
+            if (!timeoutReached) {
+                // The image failed to load - a hallmark of an older browser.
+                isFeatureSupported = false;
+                callback(isFeatureSupported);
+            }
+        };
+
+        // Use a tiny WebP image - a format PS3's NetFront browser likely won't support.
+        testImg.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/vpAAA==';
+
+        // Fallback Timer: If neither onload nor onerror fires after 2 seconds,
+        // assume the browser is severely limited (like PS3).
+        setTimeout(function() {
+            if (!isFeatureSupported) {
+                timeoutReached = true;
+                console.log('Fallback timer triggered. Assuming legacy browser.');
+                callback(false); // Report as not feature-rich (i.e., PS3)
+            }
+        }, 2000);
+    }
+
+    // Primary check
+    if (checkUserAgent()) {
+        console.log('PS3 detected via User Agent.');
+        callback(true);
+    } else {
+        console.log('User Agent check failed. Running capability tests...');
+        runCapabilityTests();
+    }
+}
+
+// Usage Example
+detectPS3WithFallback(function(isPS3) 
+{
+    var statusElement = document.getElementById('Status');
+    statusElement.style.display = 'block';
+    if (isPS3) {
+        console.log('Running PS3 compatibility mode.');
+         statusElement.innerHTML = 'Detected Browser: Legacy (PS3)';
+    } else {
+        console.log('Modern browser detected. Running full experience.');
+            statusElement.innerHTML = 'Detected Browser: Modern Browser';
+    }
+});
 
    
      var container = document.getElementById('imageContainer'), paddedNum, imageUrl, img;
