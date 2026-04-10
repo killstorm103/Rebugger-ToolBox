@@ -130,7 +130,7 @@ h1_under
                 <ul>
                     <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
                     <li>Firmware: <span id="fwSpan">Checking...</span></li>
-                    <li>User Agent: <span id="uaSpan" style="word-break:break-all;"></span></li>
+                    <li>User Agent: <span id="uaSpan"></span></li>
                 </ul>
                 <h2>Information<span class="size"></span></h2>
                 <ul>
@@ -179,14 +179,37 @@ h1_under
                         window.onload = updateStatus;
                     }
                     var container = document.getElementById('imageContainer');
-                    for (var i = 0; i < 7; i++) 
+
+                    function padNumber(num, size) 
                     {
-                        var paddedNum = i.toString().padStart(3, '0'), imageUrl = i == 0 ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/${paddedNum}.jpg`,  img = document.createElement('img');
+                        var s = String(num);
+                        while (s.length < size) 
+                        {
+                            s = '0' + s;
+                            
+                        }
+                        return s;
+                    }
+                    var i, paddedNum, imageUrl, img;
+                    for (i = 0; i < 7; i++) 
+                    {
+                        paddedNum = padNumber(i, 3);
+                        if (i === 0) 
+                        {
+                            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png';
+                        }
+                        else 
+                        {
+                            imageUrl = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
+                            
+                        }
+                        img = document.createElement('img');
                         img.src = imageUrl;
-                       img.width = 300;
-                       img.height = 200;
-                       img.loading = 'lazy';
-                       container.appendChild(img);
+                        img.width = 300;
+                        img.height = 200;
+                        img.setAttribute('loading', 'lazy');
+                        img.alt = 'Service image ' + i;
+                        container.appendChild(img);
                     }
                 </script>
                 <ul>
