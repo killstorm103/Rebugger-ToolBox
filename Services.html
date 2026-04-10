@@ -202,27 +202,60 @@ h1_under
 
         var img = document.getElementById('sliderImage');
         var counter = document.getElementById('imageCounter');
-
         if (!img || !counter) return;
 
         var total = images.length;
         var index = 0;
+        var timer = null;
+        var skipTimeout = null;
 
-        function showNextImage() {
-            index++;
-            if (index >= total) {
-                index = 0;
+        function clearTimers() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
             }
-            img.src = images[index];
-            counter.innerHTML = (index + 1) + ' / ' + total;
+            if (skipTimeout) {
+                clearTimeout(skipTimeout);
+                skipTimeout = null;
+            }
         }
 
-        img.src = images[0];
-        counter.innerHTML = '1 / ' + total;
+        function showImage(i) {
+            // Clear any pending error skip
+            if (skipTimeout) {
+                clearTimeout(skipTimeout);
+                skipTimeout = null;
+            }
+            img.src = images[i];
+            counter.innerHTML = (i + 1) + ' / ' + total;
+        }
 
-        setInterval(showNextImage, 4000);
+        function nextImage() {
+            index++;
+            if (index >= total) index = 0;
+            showImage(index);
+        }
+
+        // Error handler: if image fails, skip to next after 2 seconds
+        img.onerror = function() {
+            if (skipTimeout) return; // already waiting to skip
+            skipTimeout = setTimeout(function() {
+                skipTimeout = null;
+                nextImage();
+            }, 2000);
+        };
+
+        // When image loads successfully, restart the interval timer
+        img.onload = function() {
+            clearTimers();
+            timer = setInterval(nextImage, 4000);
+        };
+
+        // Start by showing first image (this will trigger onload/onerror)
+        showImage(0);
     }
 
+    // Run after page load
     if (window.addEventListener) {
         window.addEventListener('load', startSlider, false);
     } else if (window.attachEvent) {
@@ -230,6 +263,7 @@ h1_under
     } else {
         window.onload = startSlider;
     }
+</script>
                     
                 </script>
                 <ul>
