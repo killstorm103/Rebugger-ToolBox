@@ -192,7 +192,7 @@ h1_under
                     {
                         window.onload = updateStatus;
                     }
-                    function startSlider() { 
+                    function startSlider() {
         var images = [
             'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
             'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
@@ -205,8 +205,7 @@ h1_under
 
         var img = document.getElementById('sliderImage');
         var counter = document.getElementById('imageCounter');
-        var debugSpan = document.getElementById('debugInfo');   // <-- NEW
-
+        var debugSpan = document.getElementById('debugInfo');
         if (!img || !counter) return;
 
         var total = images.length;
@@ -214,26 +213,31 @@ h1_under
         var nextTimer = null;
         var maxWaitTimer = null;
         var isLoading = false;
+        var retryCount = 0;          // Track retries for current image
+        var MAX_RETRIES = 1;          // Try once more after first failure
 
         function clearAllTimers() {
-            if (nextTimer) {
-                clearTimeout(nextTimer);
-                nextTimer = null;
-            }
-            if (maxWaitTimer) {
-                clearTimeout(maxWaitTimer);
-                maxWaitTimer = null;
-            }
+            if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
+            if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
         }
 
         function showNextImage() {
             clearAllTimers();
             isLoading = true;
+            retryCount = 0;           // Reset retry counter for new image
             index++;
             if (index >= total) index = 0;
             img.src = images[index];
             counter.innerHTML = (index + 1) + ' / ' + total;
-            debugSpan.innerHTML = 'Loading: ' + images[index];   // <-- NEW
+            if (debugSpan) debugSpan.innerHTML = 'Loading: ' + images[index];
+            // Set safety timeout
+            maxWaitTimer = setTimeout(function() {
+                if (isLoading) {
+                    isLoading = false;
+                    if (debugSpan) debugSpan.innerHTML = 'Timeout: ' + images[index];
+                    scheduleNext(12000);
+                }
+            }, 20000);
         }
 
         function scheduleNext(delay) {
@@ -245,29 +249,48 @@ h1_under
             if (isLoading) {
                 isLoading = false;
                 clearAllTimers();
-                debugSpan.innerHTML = 'OK: ' + images[index];   // <-- NEW
+                if (debugSpan) debugSpan.innerHTML = 'OK: ' + images[index];
                 scheduleNext(18000);
             }
         };
 
         img.onerror = function() {
-            if (isLoading) {
+            if (!isLoading) return;
+            retryCount++;
+            if (retryCount <= MAX_RETRIES) {
+                // Retry the same image after a short pause
+                if (debugSpan) debugSpan.innerHTML = 'Retry ' + retryCount + ': ' + images[index];
+                clearAllTimers();
+                // Reload the same image
+                img.src = images[index];
+                // Reset safety timeout
+                maxWaitTimer = setTimeout(function() {
+                    if (isLoading) {
+                        isLoading = false;
+                        if (debugSpan) debugSpan.innerHTML = 'Timeout (retry): ' + images[index];
+                        scheduleNext(12000);
+                    }
+                }, 20000);
+            } else {
+                // Failed after retries – skip it
                 isLoading = false;
                 clearAllTimers();
-                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed, skipping)';
-                debugSpan.innerHTML = 'FAILED: ' + images[index];   // <-- NEW
+                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                if (debugSpan) debugSpan.innerHTML = 'FAILED: ' + images[index];
                 scheduleNext(12000);
             }
         };
 
         // Load first image
         isLoading = true;
+        retryCount = 0;
         img.src = images[0];
         counter.innerHTML = '1 / ' + total;
-        if (debugSpan) debugSpan.innerHTML = 'Loading: ' + images[0];   // <-- NEW
+        if (debugSpan) debugSpan.innerHTML = 'Loading: ' + images[0];
         maxWaitTimer = setTimeout(function() {
             if (isLoading) {
-                isLoading = false;debugSpan.innerHTML = 'Timeout: ' + images[index];   // <-- NEW
+                isLoading = false;
+                if (debugSpan) debugSpan.innerHTML = 'Timeout: ' + images[0];
                 scheduleNext(12000);
             }
         }, 20000);
