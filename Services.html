@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <script src="https://github.com/killstorm103/Rebugger-ToolBox/blob/dev/ps3checker.js"></script>
 </head>
+  
 <body>
 <style>
 .image-gallery {
@@ -111,18 +113,28 @@ h1_under
     background-color: #b02a37;
     cursor: pointer;
 }
-
+.detection-item {
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    list-style: none;
+}
 </style>
     <div class="container">
         <h1>Dillans Services</h1>
         <ul class="main">
             <li class="bloc">
+                <h2>Platform<span class="size"></span></h2>
+                <ul>
+                    <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
+                    <li>Firmware: <span id="fwSpan">Checking...</span></li>
+                    <li>User Agent: <span id="uaSpan" style="word-break:break-all;"></span></li>
+                </ul>
                 <h2>Information<span class="size"></span></h2>
                 <ul>
-                     <li>Testtt:</li>
-                    <li id="Status">Detected Browser: Legacy (PS3)</li>
-                    <meta http-equiv="refresh" content="0;url=?modern=1">
-
+                    
                     <li>Requirements:</li>
                     <span class="space">└ 1: I Must know you or know of you because of a mate or someone else who paid for my services!</span><br>
                     <span class="space">└ 2: Being in Australia (WA) and handing over the Device in person (i Will Not Do Shipping!)</span><br>
@@ -141,31 +153,41 @@ h1_under
                 <h2>PS3 Services<span class="size"></span></h2>
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
-                   if (window.location.search.indexOf('modern=1') === -1) {
-        document.write('<meta http-equiv="refresh" content="0;url=?modern=1">');
-    } else {
-        // After refresh, update the text
-        document.getElementById('Status').innerHTML = 'Detected Browser: Modern Browser';
-    }
-   
-     var container = document.getElementById('imageContainer'), paddedNum, imageUrl, img;
+                    function updateStatus()
+                    {
+                       var isPs3Elem = document.getElementById('isPs3Span'), fwElem = document.getElementById('fwSpan'), uaElem = document.getElementById('uaSpan');
 
-    for (let i = 0; i < 7; i++) 
-    {
-        paddedNum = (i < 10 ? '00' : (i < 100 ? '0' : '')) + i;
+                       if (window.isPS3) 
+                       {
+                           isPs3Elem.innerHTML = '✔️ Yes';
+                           fwElem.innerHTML = window.ps3Firmware || 'Unknown (could not parse)';
+                       }
+                       else
+                       {
+                           isPs3Elem.innerHTML = '❌ No (standard browser)';
+                           fwElem.innerHTML = 'N/A';
+                       }
+                       uaElem.innerHTML = window.ps3UserAgent || navigator.userAgent;
+                    }
 
-        imageUrl = i == 0 ? 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png' : 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/' + paddedNum + '.jpg';
-
-        img = document.createElement('img');
-        img.src = imageUrl;
-        img.width = 300;
-        img.height = 200;
-        img.setAttribute('loading', 'lazy');
-        img.alt = 'Service image ' + i;
-        img.className = 'profile-img';
-
-        container.appendChild(img);
-    }
+                    if (document.readyState === 'complete') 
+                    {
+                        updateStatus();
+                    }
+                    else 
+                    {
+                        window.onload = updateStatus;
+                    }
+                    var container = document.getElementById('imageContainer');
+                    for (var i = 0; i < 7; i++) 
+                    {
+                        var paddedNum = i.toString().padStart(3, '0'), imageUrl = i == 0 ? `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png` : `https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/${paddedNum}.jpg`,  img = document.createElement('img');
+                        img.src = imageUrl;
+                       img.width = 300;
+                       img.height = 200;
+                       img.loading = 'lazy';
+                       container.appendChild(img);
+                    }
                 </script>
                 <ul>
                     <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
