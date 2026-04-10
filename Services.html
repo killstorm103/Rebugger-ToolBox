@@ -119,12 +119,9 @@ h1_under
             <li class="bloc">
                 <h2>Information<span class="size"></span></h2>
                 <ul>
-                    <li id="Status">Checking Browser ....</li>
-                    <li id="StatusNoScript">No Script Detected Browser: Modern Browser</li>
-                    <noscript>
-    <style>#StatusNoScript { display: none; }</style>
-    <li>Detected Browser: Legacy (PS3)</li>
-</noscript>
+                    <li id="Status">Detected Browser: Legacy (PS3)</li>
+                    <meta http-equiv="refresh" content="0;url=?modern=1">
+
                     <li>Requirements:</li>
                     <span class="space">└ 1: I Must know you or know of you because of a mate or someone else who paid for my services!</span><br>
                     <span class="space">└ 2: Being in Australia (WA) and handing over the Device in person (i Will Not Do Shipping!)</span><br>
@@ -143,26 +140,9 @@ h1_under
                 <h2>PS3 Services<span class="size"></span></h2>
                 <div id="imageContainer" class="image-gallery"></div>
                 <script>
-                   function isModernBrowser() {
-        try { eval('let test = 1;'); } catch (e) { return false; }
-        try { eval('() => {}'); } catch (e) { return false; }
-        if (typeof String.prototype.includes !== 'function') return false;
-        if (typeof window.addEventListener !== 'function') return false;
-        return true;
+                   if (window.location.search.indexOf('modern=1') > -1) {
+        document.getElementById('Status').innerHTML = 'Detected Browser: Modern Browser';
     }
-
-    function isPS3Browser() {
-        return !isModernBrowser();
-    }
-
-    // Update the status element instantly
-    var statusEl = document.getElementById('Status');
-    if (isPS3Browser()) {
-        statusEl.innerHTML = 'Detected Browser: Legacy (PS3)';
-    } else {
-        statusEl.innerHTML = 'Detected Browser: Modern Browser';
-    }
-
    
      var container = document.getElementById('imageContainer'), paddedNum, imageUrl, img;
 
