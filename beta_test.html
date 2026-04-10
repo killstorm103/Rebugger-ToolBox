@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PS3 Checker Demo</title>
+    <!-- Load the detection script -->
+    <script src="ps3checker.js"></script>
+</head>
+<body>
+    <h1>Browser Detection</h1>
+    <ul>
+        <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
+        <li>Firmware: <span id="fwSpan">Checking...</span></li>
+    </ul>
+
+    <script>
+        // Wait for the DOM to be ready (simple approach)
+        function updateStatus() {
+            var isPs3Elem = document.getElementById('isPs3Span');
+            var fwElem = document.getElementById('fwSpan');
+
+            if (window.isPS3) {
+                isPs3Elem.innerHTML = '✅ Yes';
+                fwElem.innerHTML = window.ps3Firmware || 'Unknown version';
+            } else {
+                isPs3Elem.innerHTML = '❌ No (standard browser)';
+                fwElem.innerHTML = 'N/A';
+            }
+        }
+
+        // Run after the page loads
+        if (document.readyState === 'complete') {
+            updateStatus();
+        } else {
+            window.onload = updateStatus;
+        }
+    </script>
+</body>
+</html>
