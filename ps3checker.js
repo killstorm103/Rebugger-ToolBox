@@ -1,10 +1,6 @@
 /**
  * PS3 Browser & Firmware Detection
  * Compatible with PS3 NetFront browser (ES3/ES5 only)
- * 
- * This script sets two global variables:
- *   - isPS3          (boolean) true if a PlayStation 3 browser is detected
- *   - ps3Firmware    (string)  firmware version (e.g. "4.90") or empty string if not PS3
  */
 
 (function() {
@@ -19,41 +15,46 @@
         return false;
     }
 
-    // 2. Extract firmware version from user agent string
+    // 2. Extract firmware version using multiple reliable methods
     function getFirmwareVersion() {
-        // The PS3 user agent looks like:
-        // Mozilla/5.0 (PLAYSTATION 3; 4.90) AppleWebKit/...
-        // We need to find the number between the semicolon and the closing parenthesis
+        // Method A: Standard pattern "PLAYSTATION 3; X.XX)"
         var start = ua.indexOf('PLAYSTATION 3;');
-        if (start === -1) {
-            start = ua.indexOf('PS3;');
+        if (start === -1) start = ua.indexOf('PS3;');
+        if (start !== -1) {
+            start = ua.indexOf(';', start) + 1;
+            while (ua.charAt(start) === ' ') start++;
+            var end = ua.indexOf(')', start);
+            if (end !== -1) {
+                var version = ua.substring(start, end).replace(/^\s+|\s+$/g, '');
+                if (version.length > 0) return version;
+            }
         }
-        if (start === -1) return '';
 
-        // Move past the semicolon and any space
-        start = ua.indexOf(';', start) + 1;
-        while (ua.charAt(start) === ' ') start++;
+        // Method B: HEN installer offset method (works on all known PS3 firmwares)
+        // Format: "Mozilla/5.0 (PLAYSTATION 3; 4.90) AppleWebKit/..."
+        var prefix = '5.0 (';
+        var suffix = ') Apple';
+        var idxStart = ua.indexOf(prefix);
+        var idxEnd = ua.indexOf(suffix);
+        if (idxStart !== -1 && idxEnd !== -1) {
+            // The firmware starts 19 characters after the beginning of "5.0 ("
+            var fwStart = idxStart + 19;
+            var version = ua.substring(fwStart, idxEnd);
+            version = version.replace(/^\s+|\s+$/g, '');
+            if (version.length > 0) return version;
+        }
 
-        var end = ua.indexOf(')', start);
-        if (end === -1) return '';
+        // Method C: Last resort – extract any number after "PLAYSTATION 3"
+        var match = ua.match(/PLAYSTATION 3[; ]+([\d.]+)/i);
+        if (match && match[1]) return match[1];
+        match = ua.match(/PS3[; ]+([\d.]+)/i);
+        if (match && match[1]) return match[1];
 
-        // Extract and trim the version string
-        var version = ua.substring(start, end);
-        // Remove any trailing spaces or extra characters
-        version = version.replace(/^\s+|\s+$/g, '');
-        return version;
+        return ''; // Could not determine firmware
     }
 
     // 3. Set global variables
     window.isPS3 = detectPS3();
     window.ps3Firmware = window.isPS3 ? getFirmwareVersion() : '';
-
-    // 4. Optional: Log to console (will be ignored on PS3 if console not available)
-    if (window.isPS3) {
-        // Use a simple fallback for older browsers that lack console
-        var logMsg = 'PS3 detected. Firmware: ' + window.ps3Firmware;
-        if (typeof console !== 'undefined' && console.log) {
-            console.log(logMsg);
-        }
-    }
+    window.ps3UserAgent = ua; // Expose full UA for debugging
 })();
