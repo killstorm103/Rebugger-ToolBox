@@ -2,38 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>PS3 Checker Demo</title>
-    <script src="ps3checker.js"></script>
+    <title>Downloads</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial; padding: 20px; }
+        a { color: #ffa500; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .file-list { list-style: none; padding: 0; }
+        .file-list li { margin: 10px 0; }
+    </style>
 </head>
 <body>
-    <h1>Browser Detection</h1>
-    <ul>
-        <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
-        <li>Firmware: <span id="fwSpan">Checking...</span></li>
-        <li>User Agent: <span id="uaSpan" style="word-break:break-all;"></span></li>
+    <h2>Available Downloads</h2>
+    <ul class="file-list">
+        <li><a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg">Rebugger ToolBox Installer_CFW.pkg (Test)</a></li>
     </ul>
-
-    <script>
-        function updateStatus() {
-            var isPs3Elem = document.getElementById('isPs3Span');
-            var fwElem = document.getElementById('fwSpan');
-            var uaElem = document.getElementById('uaSpan');
-
-            if (window.isPS3) {
-                isPs3Elem.innerHTML = '✔️ Yes';
-                fwElem.innerHTML = window.ps3Firmware || 'Unknown (could not parse)';
-            } else {
-                isPs3Elem.innerHTML = '❌ No (standard browser)';
-                fwElem.innerHTML = 'N/A';
-            }
-            uaElem.innerHTML = window.UserAgent || navigator.userAgent;
-        }
-
-        if (document.readyState === 'complete') {
-            updateStatus();
-        } else {
-            window.onload = updateStatus;
-        }
-    </script>
 </body>
 </html>
