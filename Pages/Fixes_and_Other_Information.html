@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
 </head>
 <body>
 <style>
@@ -19,6 +20,23 @@
 {
     max-width: max-content;
     padding: 20px 20px 10px 20px;
+    margin-top: 160px;  
+}
+.fixed-header 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    padding: 10px 20px;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container
+{
+  margin-top: 10px;
 }
 .bloc-header
 {
@@ -78,19 +96,56 @@ h1_under
     margin-bottom: 5px;
 }
 
-.space
+.space 
 {
     display: block;
     margin: 0 0 0 20px;
+}
+.space2 
+{
+    display: block;
+    margin: 0 0 0 34px;
 }
 
 .size 
 {
     font-size: 16px;
 }
+.nav-button
+{
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.nav-button:hover 
+{
+    background-color: #b02a37;
+    cursor: pointer;
+}
 </style>
-    <div class="container">
+    <div class="fixed-header">
         <h1>Rebugger - ToolBox: Fixes & Other Information</h1>
+        <div class="nav-container">
+            <div class="nav-container">
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
+</div>
+        </div>
+    </div> 
+    <div class="container">
         <ul class="main">
             <li class="bloc">
                 <h2>Other Information & Fixes<span class="size"></span></h2>
@@ -120,29 +175,30 @@ h1_under
 				<li>Random Freezing/Crashing Fix</li>
                     <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Broken PS3.png" width=165 height=165 loading="lazy">
                      <span class="space">└ Reinstall your Firmware most of the time this fixes it!
-				it could be freezing cause of overheating fixes:
-				1: change the thermal paste 
-				2: Change your fan settings (WebMan Mod)
-				3: Delidding maybe required (Fat Models Only)
-				4: It maybe be the game itself or a cheat/mod your using
-				5: Restore File System/Default Settings or Rebuild Database or Restore PS3 System
-				6: Failing Hard drive replace it with a: Samsung 870 EVO SATA III 2.5" SSD, DO Not
-				get bigger than 1TB it causes the Restore File System Function to Break!</span><br>
+				it could be freezing cause of overheating fixes:</span>
+				<span class="space">└ 1: change the thermal paste</span>
+				<span class="space">└ 2: Change your fan settings (WebMan Mod)</span>
+				<span class="space">└ 3: Delidding maybe required (Fat Models Only)</span>
+				<span class="space">└ 4: It maybe be the game itself or a cheat/mod your using</span>
+				<span class="space">└ 5: It might be another Modder Freezing you!, play a few games in private/custom games to see if you crash/freeze</span>
+				<span class="space">└ 6: Restore File System or Restore Default Settings or Rebuild Database or Restore PS3 System</span>
+				<span class="space">└ 7: Failing Hard drive replace it with a: Samsung 870 EVO SATA III 2.5" SSD, DO Not
+				get bigger than 1TB it causes the Restore File System Function to Break!</span>
 				
 				
 				<li>Bricked HDD/SSD Fix</li>
                     <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Broken PS3.png" width=165 height=165 loading="lazy">
-                     <span class="space">└ Advanced Users will come across this only Normal Users likely won't this
-				can happen when modifying the Flash Memory files like vsh.self, this
+                     <span class="space">└ Advanced Users will come across this only Normal Users likely won't this can happen when modifying the Flash Memory</span><br>
+				<span class="space">└ files like vsh.self, this
 				will cause the ps3 to black screen and not do anything when turning it on
-				and Safe Mode will not work either it will black screen after you try reinstalling firmware or
-				anything! fix: you need a: replacement HDD/SSD or Simplecom SE109 Tool-Free 2.5' SATA to USB-C 
+				and Safe Mode will not work either it will black screen after you try reinstalling firmware or anything! fix: you need a: replacement HDD/SSD or</span>
+				<span class="space">└ Simplecom SE109 Tool-Free 2.5' SATA to USB-C 
 				Enclosure take your hdd out of your ps3 and put it in this
 				Plug into the Enclosure & pc/laptop
-				Open Command Prompt (run as admin)
-				type in these (Do not put >): diskpart > list disk > select disk (number make sure your selecting the right one)
+				Open Command Prompt (run as admin)</span>
+				<span class="space">└ type in these (Do not put >): diskpart > list disk > select disk (number make sure your selecting the right one)
 				> clean all (this will do its thing it will take awhile and theres no progress bar)
-				there are other ways to do this but this is how i did it!</span><br>
+				there are other ways to do this but this is how i did it!</span>
 				
 				
 				<li>Rebug 4.82.2 CFW Error: 80028ED6 Fix</li>
