@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
 </head>
 <body>
 <style>
@@ -17,8 +18,24 @@
 .container {
     max-width: max-content;
     padding: 20px 20px 10px 20px;
+    margin-top: 160px;  
+}
+.fixed-header 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    padding: 10px 20px;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
 }
 
+.nav-container
+{
+  margin-top: 10px;
+}
 h1 {
     text-align: left;
     font-size: 40px;
@@ -58,18 +75,54 @@ h1 {
     margin-bottom: 5px;
 }
 
-.space
+.space 
 {
     display: block;
     margin: 0 0 0 20px;
 }
+.space2 
+{
+    display: block;
+    margin: 0 0 0 34px;
+}
 
-.size {
+.size
+{
     font-size: 16px;
 }
+.nav-button
+{
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.nav-button:hover 
+{
+    background-color: #b02a37;
+    cursor: pointer;
+}
 </style>
-    <div class="container">
+    <div class="fixed-header">
         <h1>Rebugger - ToolBox: ChangeLogs</h1>
+            <div class="nav-container">
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
+               </div>
+    </div> 
+    <div class="container">
         <ul class="changelogs">
 
             <li class="bloc">
