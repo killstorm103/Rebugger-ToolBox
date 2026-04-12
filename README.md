@@ -1,6 +1,6 @@
 # Rebugger-ToolBox
 
-- ChangeLogs: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Changelog.html
+- [ChangeLogs]([https://www.example.com](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Changelog.html))
 - Known cunts list: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Known.html
 - Services: http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Services.html
 
