@@ -1,5 +1,6 @@
 (function() {
     // Just the fucking buttons. No <h1>, no bullshit subtitles.
+    console.log('nav.js loaded');
     var buttonsHTML = '' +
         '<div class="nav-container">' +
             '<a href="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/README.md" class="nav-button" target="_blank">How to install</a>' +
