@@ -10,10 +10,10 @@
 
 - Previews:
 <img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Toolbox.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Main.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Extra Tools.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Info.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Mods.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Customisation.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/PSNs.jpg">
-<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Previews/Stores.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Main.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Extra Tools.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Info.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Mods.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Customisation.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/PSNs.jpg">
+<img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Stores.jpg">
