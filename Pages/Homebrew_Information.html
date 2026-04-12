@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebugger - ToolBox</title>
+    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
+</head>
+<body>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+.container {
+    max-width: max-content;
+    padding: 20px 20px 10px 20px;
+    margin-top: 160px;  
+}
+.fixed-header 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    padding: 10px 20px;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container
+{
+  margin-top: 10px;
+}
+h1 {
+    text-align: left;
+    font-size: 40px;
+    margin: 0;
+    color: #ffffff;
+}
+
+.changelogs {
+    list-style-type: none;
+    padding: 0;
+}
+
+.changelogs li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: .5px solid rgba(0,0,0,0.1);
+    border-radius: 7px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    font-size: 17px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.changelogs h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.changelogs ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.changelogs ul li {
+    margin-bottom: 5px;
+}
+
+.space 
+{
+    display: block;
+    margin: 0 0 0 20px;
+}
+.space2 
+{
+    display: block;
+    margin: 0 0 0 34px;
+}
+
+.size
+{
+    font-size: 16px;
+}
+.nav-button
+{
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.nav-button:hover 
+{
+    background-color: #b02a37;
+    cursor: pointer;
+}
+</style>
+    <div class="fixed-header">
+        <h1>Rebugger - ToolBox: Homebrew Information</h1>
+            <div class="nav-container">
+                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
+               </div>
+    </div> 
+    <div class="container">
+        <ul class="changelogs">
+            <li class="bloc">
+                <h2>Information<span class="size"></span></h2>
+                <ul>
+                    <li>WebMAN Mod</li>
+                    <a href="https://github.com/aldostools/webMAN-MOD/wiki/~-Uninstalling-webMAN-MOD" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Homebrew/WebMan.png" width="165" height="165" loading="lazy"></a>
+                    <span class="space">└ How to manually delete Webman when its corrupted use mmCM or FileZilla to delete it, You will need to reput your wm_ignore.txt 
+				in: /dev_hdd0/tmp/wm_res After reinstalling WebMan Mod <a href="https://github.com/aldostools/webMAN-MOD/wiki/~-Uninstalling-webMAN-MOD" target="_blank" class="inline-link">Uninstalling Tutorial [Link]</a></span>
+                    <span class="space">└ You can reinstall wm_ignore.txt from within my ToolBox, after installing the wm_ignore.txt go into: webMAN Games > webMAN Setup > Refresh webMAN Games & XMB</span><br>
+                    
+                    <li>Control Console Api (CCApi) (CFW Only)</li>
+                    <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Homebrew/CCApi.PNG" width=165 height=165 loading="lazy">
+                    <span class="space">└  DO NOT Install this At ALL it's broken and unstable AS FUCK!
+				Use: ProDG Target Manager for PS3 (TMAPi) Instead! (DEX CFW & DEV Kit PS3s Only)</span>
+				    <span class="space">└ Installed on your PC/Laptop Only!</span>
+				    
+				    <li>PKGi PS3 Setup</li>
+                    <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Homebrew/PKGi_PS3.PNG" width=350 height=165 loading="lazy" style="margin-left: -91px;">
+                    <span class="space">└ Install the config files from within my ToolBox and then Sign into PSN go into: Account Managemnt > System Activation
+				> PS3 System > (Game & Video) > Activate System
+				Open PKGi PS3 press  and go to: Refresh...</span>
+				
+				
+				  <li>How to Install Game Mods/Cheats</li>
+				  <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/Homebrew/Homebrew.png" width=165 height=165 loading="lazy" style="filter: sepia(1) hue-rotate(880deg);">
+				  <span class="space">└ Create a backup of your games EBOOT.BIN and then replace the eboot with the modded one
+				install the mods files in /dev_hdd0/tmp if there are any, .sprx files usually go in /dev_hdd0/tmp but</span>
+				<span class="space">└ some go in tmp/ModName or ModName/GameName, make sure you put your licence key in your
+				key.txt or licence.txt if it is a Premium Mod/Cheat</span>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
