@@ -7,6 +7,7 @@
 - [View Services](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html)
 - [Known cunts list](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html)
 - [Fixes & Other Information](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html)
+- [Homebrew Information](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html)
 
 - Previews:
 <img src="https://github.com/killstorm103/Rebugger-ToolBox/blob/main/Previews/Toolbox.jpg">
