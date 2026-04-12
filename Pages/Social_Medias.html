@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
 </head>
 <body>
 <style>
@@ -19,6 +20,23 @@
 {
     max-width: max-content;
     padding: 20px 20px 10px 20px;
+    margin-top: 170px;  
+}
+.fixed-header 
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    padding: 10px 20px;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container
+{
+  margin-top: 10px;
 }
 h1 
 {
@@ -71,7 +89,7 @@ h1_under
     margin-bottom: 5px;
 }
 
-.space
+.space 
 {
     display: block;
     margin: 0 0 0 20px;
@@ -81,6 +99,7 @@ h1_under
     display: block;
     margin: 0 0 0 34px;
 }
+
 .size 
 {
     font-size: 16px;
@@ -100,18 +119,28 @@ h1_under
     transition: background-color 0.2s;
 }
 
-.nav-button:hover {
+.nav-button:hover 
+{
     background-color: #b02a37;
     cursor: pointer;
 }
 </style>
+    <div class="fixed-header">
+         <h1>Social Medias</h1>
+        <div class="nav-container">
+            <div class="nav-container">
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
+    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
+</div>
+        </div>
+    </div> 
     <div class="container">
-        
-        <h1>Social Medias</h1>
         <ul class="main">
-            
             <li class="bloc">
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Services.html" class="nav-button" target="_blank">🛠️ View Servicse</a>
                 <h2>Mains (Most active on)<span class="size"></span></h2>
                 <ul>
                      <li>Github</li>
@@ -174,7 +203,7 @@ h1_under
                     <li>My Setup</li>
                     <img class="profile-img" src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/user_profiles.jpg" width=165 height=165 loading="lazy">
                      <span class="space">└ PS3's:</span><br>
-                     <span class="space2">└ 2 Fat Models (Rebug 4.84.2 DEX, Evilnat 4.93 D-PEX)</span>
+                     <span class="space2">└ 2 Fat Models (Rebug 4.84.2 DEX, Rebug 4.82/4.2/Evilnat 4.93 D-PEX etc its always changing during development)</span>
                      <span class="space2">└ 2 Slim Models (HFW 4.93 but can be CFW) OFW 4.93</span>
                      <span class="space">└ PS4's:</span><br>
                      <span class="space2">└ 2 OFWs (on Latest)</span>
