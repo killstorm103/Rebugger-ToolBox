@@ -157,7 +157,7 @@ h1_under
     <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
     <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
     <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">⚠️ Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">&#x26A0; Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
 </div>
     </div> 
     <div id="mainContainer" class="container">
@@ -326,60 +326,49 @@ h1_under
         if (valueDisplay) valueDisplay.innerHTML = num;
         input.value = num;
     }
-
-    // Block non‑digit keys (keeps input clean)
     input.onkeypress = function(e) {
         e = e || window.event;
         var keyCode = e.keyCode || e.which;
         var char = String.fromCharCode(keyCode);
 
         var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8   // backspace
-                     || keyCode === 46  // delete
-                     || keyCode === 13  // enter
-                     || keyCode === 9   // tab
-                     || keyCode === 37  // left arrow
-                     || keyCode === 39  // right arrow
-                     || keyCode === 38  // up arrow
-                     || keyCode === 40; // down arrow
+        var isControl = keyCode === 8  
+                     || keyCode === 46 
+                     || keyCode === 13  
+                     || keyCode === 9   
+                     || keyCode === 37  
+                     || keyCode === 39  
+                     || keyCode === 38  
+                     || keyCode === 40; 
 
         if (!isDigit && !isControl) {
             if (e.preventDefault) e.preventDefault();
             return false;
         }
 
-        // Handle Enter: use a short delay so the input's value is fully updated
         if (keyCode === 13) {
+            updateMargin(input.value);
             if (e.preventDefault) e.preventDefault();
-            // PS3 sometimes needs a moment for the last typed digit to register
-            setTimeout(function() {
-                updateMargin(input.value);
-            }, 10);
             return false;
         }
 
         return true;
     };
 
-    // Clean any pasted or dropped text
     input.oninput = function() {
         var clean = this.value.replace(/[^0-9]/g, '');
         this.value = clean;
     };
 
-    // Apply button click
     applyBtn.onclick = function() {
         updateMargin(input.value);
     };
-
-    // Initialize with the default value
     var initial = input.value;
     if (initial !== '') {
         updateMargin(initial);
     }
 }
 
-// Run after page loads
 if (window.addEventListener) {
     window.addEventListener('load', initMarginControl, false);
 } else if (window.attachEvent) {
