@@ -257,12 +257,16 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ========== BUILD DROPDOWNS ==========
+// ========== BUILD DROPDOWNS (called after DOM ready) ==========
 function buildDropdowns() {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
-    if (!cfwContainer || !fixesContainer || !henContainer) return;
+    if (!cfwContainer || !fixesContainer || !henContainer) {
+        // Retry once after a short delay if containers aren't found
+        setTimeout(buildDropdowns, 50);
+        return;
+    }
 
     if (isSilk) {
         cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
@@ -275,7 +279,7 @@ function buildDropdowns() {
     }
 }
 
-// ========== MARGIN CONTROL (Silk + PC compatible) ==========
+// ========== MARGIN CONTROL ==========
 window.applyMargin = function() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -288,15 +292,11 @@ window.applyMargin = function() {
     if (isNaN(num)) num = 300;
     if (num < 0) num = 0;
 
-    // Primary method: marginTop on container
     container.style.marginTop = num + 'px';
-
-    // Fallback for Silk: also set paddingTop on body (if container margin fails)
     if (isSilk) {
         document.body.style.paddingTop = num + 'px';
     }
 
-    // Force a repaint on older engines
     container.style.zoom = '1';
     setTimeout(function() { container.style.zoom = ''; }, 10);
 
@@ -324,8 +324,8 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ========== INITIALIZATION ==========
-buildDropdowns();
+// ========== INITIALIZATION (with retry for dropdowns) ==========
+setTimeout(buildDropdowns, 10);
 
 // Margin init
 var marginInput = document.getElementById('marginInput');
@@ -333,10 +333,8 @@ if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
     if (initVal !== '') {
         marginInput.value = initVal;
-        // Slight delay ensures container is ready
-        setTimeout(function() { window.applyMargin(); }, 20);
+        setTimeout(function() { window.applyMargin(); }, 30);
     }
-    // PC: Enter key support
     if (!isSilk) {
         marginInput.onkeypress = function(e) {
             e = e || window.event;
@@ -347,7 +345,6 @@ if (marginInput) {
             return true;
         };
     }
-    // Clean input on blur
     marginInput.onblur = function() {
         var clean = this.value.replace(/[^0-9]/g, '');
         if (clean !== '') this.value = clean;
