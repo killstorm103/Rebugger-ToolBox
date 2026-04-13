@@ -168,18 +168,20 @@
     
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
     <label for="marginInput">Header Offset (px):</label>
-    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-    <!-- Use an <a> tag instead of <button> for Silk compatibility -->
+    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center; vertical-align: middle;">
     <a href="javascript:void(0);" 
        id="applyMarginBtn" 
        class="nav-button" 
-       style="margin-left: 5px; padding: 4px 12px;" 
+       style="margin-left: 5px; padding: 4px 12px; vertical-align: middle;" 
        onclick="applyMargin(); return false;">
         Apply
     </a>
-    <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+    <span style="margin-left: 10px; font-size: 12px; color: #aaa; vertical-align: middle;">(Current: <span id="marginValue">300</span>px)</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500; vertical-align: middle;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
 </div>
+<form onsubmit="applyMargin(); return false;" style="display: inline;">
+    <button type="submit" class="nav-button" style="margin-left: 5px; padding: 4px 12px; vertical-align: middle; border: none; background: #dc3545; color: white; font-weight: bold; font-size: 16px; border-radius: 6px;">Apply Button for Silk Engine</button>
+</form>
 </div>
 
 <div id="mainContainer" class="container">
@@ -217,6 +219,12 @@
 </div>
 
 <script>
+    // Silk debug: confirm button click works
+var oldApply = window.applyMargin;
+window.applyMargin = function() {
+    alert('Apply clicked! Value: ' + document.getElementById('marginInput').value);
+    if (oldApply) oldApply();
+};
 (function() {
     // ----- DETECTION & VERSION CONSTANTS -----
     var isSilk = window.isPS3SilkBrowserEngine || false;
