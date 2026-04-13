@@ -151,13 +151,13 @@ h1_under
     <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
                 <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
 </div>
-
         </div>
        <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
     <label for="marginInput">Header Offset (px):</label>
     <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
     <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
     <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">⚠️ Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
 </div>
     </div> 
     <div id="mainContainer" class="container">
@@ -280,7 +280,7 @@ h1_under
             <!--
             // Base ToolBox 
             -->
-            var menu = document.getElementById('downloadMenu_Stable_CFW');
+            var menu = document.getElementById('downloadMenu_CFW_Base');
             if (menu && img.tagName !== 'IMG' || (img.tagName === 'IMG' && img.src.indexOf('CFW.png') === -1)) 
                 menu.style.display = 'none';
                 
