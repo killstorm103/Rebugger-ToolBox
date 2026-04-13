@@ -220,10 +220,39 @@
 
 <script>
     // Silk debug: confirm button click works
-var oldApply = window.applyMargin;
 window.applyMargin = function() {
-    alert('Apply clicked! Value: ' + document.getElementById('marginInput').value);
-    if (oldApply) oldApply();
+    var input = document.getElementById('marginInput');
+    var span = document.getElementById('marginValue');
+    var container = document.getElementById('mainContainer');
+
+    alert('Step 1: Elements found - input:' + !!input + ', span:' + !!span + ', container:' + !!container);
+
+    if (!input || !span || !container) return;
+
+    var raw = input.value;
+    alert('Step 2: Raw value = "' + raw + '"');
+
+    var clean = raw.replace(/[^0-9]/g, '');
+    alert('Step 3: Clean value = "' + clean + '"');
+
+    var num = parseInt(clean, 10);
+    if (isNaN(num)) {
+        alert('Step 4: Not a number, using 300');
+        num = 300;
+    }
+    if (num < 0) {
+        alert('Step 4: Negative, using 0');
+        num = 0;
+    }
+
+    alert('Step 5: Setting marginTop to ' + num + 'px');
+    container.style.marginTop = num + 'px';
+
+    alert('Step 6: Updating display span');
+    span.innerHTML = num;
+    input.value = num;
+
+    alert('Step 7: Done. Container style.marginTop now: ' + container.style.marginTop);
 };
 (function() {
     // ----- DETECTION & VERSION CONSTANTS -----
