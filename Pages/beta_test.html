@@ -167,18 +167,18 @@
     </div>
     
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-    <label for="marginInput">Header Offset (px):</label>
-    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center; vertical-align: middle;">
-    <a href="javascript:void(0);" 
-       id="applyMarginBtn" 
-       class="nav-button" 
-       style="margin-left: 5px; padding: 4px 12px; vertical-align: middle;" 
-       onclick="applyMargin(); return false;">
-        Apply
-    </a>
-    <span style="margin-left: 10px; font-size: 12px; color: #aaa; vertical-align: middle;">(Current: <span id="marginValue">300</span>px)</span>
-    <span style="margin-left: 15px; font-size: 15px; color: #ffa500; vertical-align: middle;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-</div>
+        <label for="marginInput">Header Offset (px):</label>
+        <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center; vertical-align: middle;">
+        <a href="javascript:void(0);" 
+           id="applyMarginBtn" 
+           class="nav-button" 
+           style="margin-left: 5px; padding: 4px 12px; vertical-align: middle;" 
+           onclick="applyMargin(); return false;">
+            Apply
+        </a>
+        <span style="margin-left: 10px; font-size: 12px; color: #aaa; vertical-align: middle;">(Current: <span id="marginValue">300</span>px)</span>
+        <span style="margin-left: 15px; font-size: 15px; color: #ffa500; vertical-align: middle;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+    </div>
 </div>
 
 <div id="mainContainer" class="container">
@@ -257,16 +257,12 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ========== BUILD DROPDOWNS (called after DOM ready) ==========
+// ========== BUILD DROPDOWNS ==========
 function buildDropdowns() {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
-    if (!cfwContainer || !fixesContainer || !henContainer) {
-        // Retry once after a short delay if containers aren't found
-        setTimeout(buildDropdowns, 50);
-        return;
-    }
+    if (!cfwContainer || !fixesContainer || !henContainer) return;
 
     if (isSilk) {
         cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
@@ -279,7 +275,7 @@ function buildDropdowns() {
     }
 }
 
-// ========== MARGIN CONTROL ==========
+// ========== MARGIN CONTROL (Silk + PC compatible) ==========
 window.applyMargin = function() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -324,16 +320,15 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ========== INITIALIZATION (with retry for dropdowns) ==========
-setTimeout(buildDropdowns, 10);
+// ========== INITIALIZATION ==========
+buildDropdowns();
 
-// Margin init
 var marginInput = document.getElementById('marginInput');
 if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
     if (initVal !== '') {
         marginInput.value = initVal;
-        setTimeout(function() { window.applyMargin(); }, 30);
+        setTimeout(function() { window.applyMargin(); }, 20);
     }
     if (!isSilk) {
         marginInput.onkeypress = function(e) {
