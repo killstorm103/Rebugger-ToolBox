@@ -102,12 +102,6 @@
             padding: 4px;
             font-size: 14px;
         }
-        #applyMarginBtn {
-            font-weight: bold;
-        }
-        #applyMarginBtn:hover {
-            background: #b02a37;
-        }
         /* Dropdown shared styles */
         .dropdown-menu {
             background: #222;
@@ -115,6 +109,7 @@
             border-radius: 5px;
             padding: 10px;
             white-space: nowrap;
+            display: none;
         }
         .dropdown-menu a {
             color: #fff;
@@ -126,19 +121,7 @@
             border: none;
             border-top: 1px solid #dc3545;
         }
-        /* Silk‑safe table layout */
-        .dropdown-table {
-            display: inline-table;
-            border-collapse: collapse;
-        }
-        .dropdown-cell-img {
-            vertical-align: top;
-        }
-        .dropdown-cell-menu {
-            vertical-align: top;
-            padding-left: 10px;
-        }
-        /* Absolute positioning (normal) */
+        /* Absolute positioning (normal) – we use this for both engines now, it works */
         .dropdown-absolute {
             position: relative;
             display: inline-block;
@@ -197,16 +180,50 @@
             <h2>Updates<span class="size"></span></h2>
             <ul>
                 <li>Rebugger - ToolBox (Base)</li>
-                <li id="dropdown-container-cfw"></li>
+                <li>
+                    <!-- HARDCODED DROPDOWN 1 -->
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu('downloadMenu_CFW_Base')">
+                        <div id="downloadMenu_CFW_Base" class="dropdown-menu">
+                            <a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: <span class="dev-build-placeholder">%dev_build%</span></a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: <span class="stable-build-placeholder">%stable_build%</span></a>
+                        </div>
+                    </div>
+                </li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
-                <li id="dropdown-container-fixes"></li>
+                <li>
+                    <!-- HARDCODED DROPDOWN 2 -->
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu('downloadMenu_Fixes')">
+                        <div id="downloadMenu_Fixes" class="dropdown-menu">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Dev Build)</a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Stable Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Stable Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Stable Build)</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </li>
         <li class="bloc">
             <h2>Patches<span class="size"></span></h2>
             <ul>
                 <li>HEN Patch</li>
-                <li id="dropdown-container-hen"></li>
+                <li>
+                    <!-- HARDCODED DROPDOWN 3 -->
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu('downloadMenu_HEN_Patch')">
+                        <div id="downloadMenu_HEN_Patch" class="dropdown-menu">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: <span class="dev-build-placeholder">%dev_build%</span></a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: <span class="stable-build-placeholder">%stable_build%</span></a>
+                        </div>
+                    </div>
+                </li>
                 <li>Online Access Bypass (<span id="latestFirmwareSpan">%latest_firmware%</span>)</li>
                 <li><span class="space">└ Up to date by default no need to Patch!</span></li>
                 <li><a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy"></a></li>
@@ -216,39 +233,6 @@
 </div>
 
 <script>
-// ========== DETECTION & VERSION CONSTANTS ==========
-var isSilk = window.isPS3SilkBrowserEngine || false;
-var devBuild = '1.0.4 #1';
-var stableBuild = '1.0.3';
-var latestFirmware = '4.93';
-
-// ========== DROPDOWN HTML (placeholders already filled) ==========
-function getMenuCFW() {
-    return '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display: none;">' +
-        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + devBuild + '</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
-        '</div>';
-}
-function getMenuFixes() {
-    return '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display: none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Dev Build)</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Stable Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Stable Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Stable Build)</a>' +
-        '</div>';
-}
-function getMenuHEN() {
-    return '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display: none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: ' + devBuild + '</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
-        '</div>';
-}
-
 // ========== GLOBAL TOGGLE FUNCTION ==========
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
@@ -256,53 +240,6 @@ window.toggleMenu = function(menuId) {
         menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
     }
 };
-
-// ========== BUILD DROPDOWNS ==========
-function buildDropdowns() {
-    var cfwContainer = document.getElementById('dropdown-container-cfw');
-    var fixesContainer = document.getElementById('dropdown-container-fixes');
-    var henContainer = document.getElementById('dropdown-container-hen');
-    if (!cfwContainer || !fixesContainer || !henContainer) return;
-
-    if (isSilk) {
-        cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
-        fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + getMenuFixes() + '</td></tr></table>';
-        henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + getMenuHEN() + '</td></tr></table>';
-    } else {
-        cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + getMenuCFW() + '</div>';
-        fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
-        henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN() + '</div>';
-    }
-}
-
-// ========== MARGIN CONTROL (Silk + PC compatible) ==========
-window.applyMargin = function() {
-    var input = document.getElementById('marginInput');
-    var span = document.getElementById('marginValue');
-    var container = document.getElementById('mainContainer');
-    if (!input || !span || !container) return;
-
-    var raw = input.value;
-    var clean = raw.replace(/[^0-9]/g, '');
-    var num = parseInt(clean, 10);
-    if (isNaN(num)) num = 300;
-    if (num < 0) num = 0;
-
-    container.style.marginTop = num + 'px';
-    if (isSilk) {
-        document.body.style.paddingTop = num + 'px';
-    }
-
-    container.style.zoom = '1';
-    setTimeout(function() { container.style.zoom = ''; }, 10);
-
-    span.innerHTML = num;
-    input.value = num;
-};
-
-// ========== REPLACE FIRMWARE PLACEHOLDER ==========
-var fwSpan = document.getElementById('latestFirmwareSpan');
-if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
 // ========== CLICK OUTSIDE TO CLOSE DROPDOWNS ==========
 document.body.addEventListener('click', function(e) {
@@ -320,9 +257,45 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ========== INITIALIZATION ==========
-buildDropdowns();
+// ========== PLACEHOLDER REPLACEMENT ==========
+var devBuild = '1.0.4 #1';
+var stableBuild = '1.0.3';
+var latestFirmware = '4.93';
+var isSilk = window.isPS3SilkBrowserEngine || false;
 
+function replacePlaceholders() {
+    // Replace spans with class
+    var devSpans = document.getElementsByClassName('dev-build-placeholder');
+    var stableSpans = document.getElementsByClassName('stable-build-placeholder');
+    for (var i = 0; i < devSpans.length; i++) devSpans[i].innerHTML = devBuild;
+    for (var i = 0; i < stableSpans.length; i++) stableSpans[i].innerHTML = stableBuild;
+    var fwSpan = document.getElementById('latestFirmwareSpan');
+    if (fwSpan) fwSpan.innerHTML = latestFirmware;
+}
+replacePlaceholders();
+
+// ========== MARGIN CONTROL ==========
+window.applyMargin = function() {
+    var input = document.getElementById('marginInput');
+    var span = document.getElementById('marginValue');
+    var container = document.getElementById('mainContainer');
+    if (!input || !span || !container) return;
+
+    var raw = input.value;
+    var clean = raw.replace(/[^0-9]/g, '');
+    var num = parseInt(clean, 10);
+    if (isNaN(num)) num = 300;
+    if (num < 0) num = 0;
+
+    container.style.marginTop = num + 'px';
+    if (isSilk) {
+        document.body.style.paddingTop = num + 'px';
+    }
+    span.innerHTML = num;
+    input.value = num;
+};
+
+// Margin init
 var marginInput = document.getElementById('marginInput');
 if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
