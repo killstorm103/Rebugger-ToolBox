@@ -55,7 +55,7 @@
         match = ua.match(/PS3[; ]+([\d.]+)/i);
         if (match && match[1]) return match[1];
 
-        return 'Unknown (could not parse)'; // Could not determine firmware
+        return ''; // Could not determine firmware
     }
     function getPS4FirmwareVersion () // Untested
     {
@@ -95,8 +95,8 @@
     // Set global variables
     window.isPS3 = DetectPS3();
     window.isPS4 = DetectPS4();
-    window.ps3Firmware = window.isPS3 ? getPS3FirmwareVersion() : '';
-    window.ps4Firmware = window.isPS4 ? getPS4FirmwareVersion() : '';
+    window.ps3Firmware = window.isPS3 ? getPS3FirmwareVersion() : 'Unknown (could not parse)';
+    window.ps4Firmware = window.isPS4 ? getPS4FirmwareVersion() : 'Unknown (could not parse)';
     window.isPS3SilkBrowserEngine = window.isPS3 && window.ps3Firmware.indexOf('1') === 0;
     window.UserAgent = ua; 
 })();
