@@ -165,14 +165,24 @@
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
     </div>
+    
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-        <label for="marginInput">Header Offset (px):</label>
-        <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-        <!-- Button with hardcoded onclick (Silk compatible) -->
-        <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="applyMargin()">Apply</button>
-        <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-        <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-    </div>
+    <label for="marginInput">Header Offset (px):</label>
+    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
+    <!-- 3D button with press effect for Silk compatibility -->
+    <button id="applyMarginBtn" 
+            style="margin-left: 5px; padding: 4px 12px; background: #dc3545; color: #fff; 
+                   border: 2px outset #ff6b7a; border-radius: 6px; font-weight: bold; 
+                   font-size: 16px;" 
+            onclick="applyMargin()"
+            onmousedown="this.style.border='2px inset #8b1e2a'; this.style.background='#b02a37';"
+            onmouseup="this.style.border='2px outset #ff6b7a'; this.style.background='#dc3545';"
+            onmouseout="this.style.border='2px outset #ff6b7a'; this.style.background='#dc3545';">
+        Apply
+    </button>
+    <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+</div>
 </div>
 
 <div id="mainContainer" class="container">
