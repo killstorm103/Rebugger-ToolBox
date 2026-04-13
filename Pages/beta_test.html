@@ -275,32 +275,70 @@ h1_under
     if (!input || !applyBtn || !container)
         return;
 
+    // Helper: update the margin only if the value is a valid number
     function updateMargin(value) {
-        // Remove spaces and dots from the input
+        // Remove spaces and dots
         var cleanValue = String(value).replace(/[ .]/g, '');
+        if (cleanValue === '') return; // Do nothing if empty
+
         var num = parseInt(cleanValue, 10);
-        if (isNaN(num)) num = 500;
+        if (isNaN(num)) return;        // Do nothing if not a number
         if (num < 0) num = 0;
 
         container.style.marginTop = num + 'px';
         if (valueDisplay) valueDisplay.innerHTML = num;
+        // Update the input box to show the clean number (only if it was valid)
         input.value = num;
     }
 
-    // Apply button
+    // Block any key that is NOT a digit (0-9) or a control key
+    input.onkeypress = function(e) {
+        e = e || window.event;
+        var keyCode = e.keyCode || e.which;
+        var char = String.fromCharCode(keyCode);
+
+        var isDigit = /[0-9]/.test(char);
+        var isControl = keyCode === 8   // backspace
+                     || keyCode === 46  // delete
+                     || keyCode === 13  // enter
+                     || keyCode === 9   // tab
+                     || keyCode === 37  // left arrow
+                     || keyCode === 39  // right arrow
+                     || keyCode === 38  // up arrow
+                     || keyCode === 40; // down arrow
+
+        if (!isDigit && !isControl) {
+            if (e.preventDefault) e.preventDefault();
+            return false;
+        }
+
+        // Handle Enter key separately
+        if (keyCode === 13) {
+            updateMargin(input.value);
+            if (e.preventDefault) e.preventDefault();
+            return false;
+        }
+
+        return true;
+    };
+
+    // Clean up any pasted content (remove non‑digits)
+    input.oninput = function() {
+        var clean = this.value.replace(/[^0-9]/g, '');
+        // Do NOT auto‑fill with a default – leave it empty if it was cleaned to empty
+        this.value = clean;
+    };
+
+    // Apply button click
     applyBtn.onclick = function() {
         updateMargin(input.value);
     };
 
-    // Enter key
-    input.onkeypress = function(e) {
-        e = e || window.event;
-        if (e.keyCode === 13) {
-            updateMargin(input.value);
-            return false;
-        }
-        return true;
-    };
+    // Initialize with the default value from the HTML (e.g., 160)
+    var initial = input.value;
+    if (initial !== '') {
+        updateMargin(initial);
+    }
 }
 
 // Run after page loads
