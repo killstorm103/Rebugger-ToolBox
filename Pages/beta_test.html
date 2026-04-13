@@ -166,13 +166,19 @@
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
     </div>
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-        <label for="marginInput">Header Offset (px):</label>
-        <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-        <!-- Button with hardcoded onclick (Silk compatible) -->
-        <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="applyMargin()">Apply</button>
-        <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-        <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-    </div>
+    <label for="marginInput">Header Offset (px):</label>
+    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center; vertical-align: middle;">
+    <!-- Use an <a> tag instead of <button> for Silk compatibility -->
+    <a href="javascript:void(0);" 
+       id="applyMarginBtn" 
+       class="nav-button" 
+       style="margin-left: 5px; padding: 4px 12px; vertical-align: middle;" 
+       onclick="applyMargin(); return false;">
+        Apply
+    </a>
+    <span style="margin-left: 10px; font-size: 12px; color: #aaa; vertical-align: middle;">(Current: <span id="marginValue">300</span>px)</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500; vertical-align: middle;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+</div>
 </div>
 
 <div id="mainContainer" class="container">
@@ -289,21 +295,28 @@
         }
     }, false);
 
-    // ----- MARGIN CONTROL (global) -----
-    window.applyMargin = function() {
-        var input = document.getElementById('marginInput');
-        var span = document.getElementById('marginValue');
-        var container = document.getElementById('mainContainer');
-        if (!input || !span || !container) return;
-        var raw = input.value;
-        var clean = raw.replace(/[^0-9]/g, '');
-        var num = parseInt(clean, 10);
-        if (isNaN(num)) num = 300;
-        if (num < 0) num = 0;
-        container.style.marginTop = num + 'px';
-        span.innerHTML = num;
-        input.value = num;
-    };
+    // ----- MARGIN CONTROL (Silk + PC compatible) -----
+window.applyMargin = function() {
+    var input = document.getElementById('marginInput');
+    var span = document.getElementById('marginValue');
+    var container = document.getElementById('mainContainer');
+    if (!input || !span || !container) return;
+
+    var raw = input.value;
+    var clean = raw.replace(/[^0-9]/g, '');
+    var num = parseInt(clean, 10);
+    if (isNaN(num)) num = 300;
+    if (num < 0) num = 0;
+
+    container.style.marginTop = num + 'px';
+    // Silk fallback: also set body padding
+    if (isSilk) {
+        document.body.style.paddingTop = num + 'px';
+    }
+
+    span.innerHTML = num;
+    input.value = num;
+};
 
     // Initialize margin input
     var marginInput = document.getElementById('marginInput');
