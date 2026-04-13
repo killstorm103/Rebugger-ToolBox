@@ -176,38 +176,56 @@ h1_under
             <li class="bloc">
                 <h2>Updates<span class="size"></span></h2>
                 <ul>
-                    <li>Latest Dev Builds</li>
-                    <div style="position: relative; display: inline-block;">
-    <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleDownloadMenuDevBuilds_CFW()">
-
-    <!-- Download Menu - width adjusts to fit the longest link text -->
-    <div id="downloadMenu_Dev_Builds_CFW" style="display: none; position: absolute; left: 100%; top: 0; margin-left: 10px; background: #222; border: 3px solid #dc3545; border-radius: 5px; padding: 10px; z-index: 1001; white-space: nowrap;">
-        <a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank" style="color: #fff; display: block; padding: 5px;">Dev Build: %dev_build% (Part 1 / 2)</a>
-        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Dev Build: %dev_build% (Part 2 / 2)</a>
-    </div>
-</div>
+                    <li>Rebugger - ToolBox (Base)</li>
+                    <div style="position: relative; display: inline-block;"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleDownloadMenu_CFW_Base()">
                     
-                    <li>Latest Stable Builds</li>
-                    <div style="position: relative; display: inline-block;">
-                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleDownloadMenuStableCFW()">
-                        
-                        
-                        <!-- Download Menu  -->
-                        <div id="downloadMenu_Stable_CFW" style="display: none; position: absolute; left: 100%; top: 0; margin-left: 10px; background: #222; border: 3px solid #dc3545; border-radius: 5px; padding: 10px; z-index: 1001; min-width: 240px;">
-                            
-                            
-                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Stable Build: %stable_build% (Part 1 / 1)</a>
-                            </div>
+                    <!-- Download Menu -->
+                    <div id="downloadMenu_CFW_Base" style="display: none; position: absolute; left: 100%; top: 0; margin-left: 10px; background: #222; border: 3px solid #dc3545; border-radius: 5px; padding: 10px; z-index: 1001; white-space: nowrap;">
+                        <!-- Dev Builds -->
+                        <a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank" style="color: #fff; display: block; padding: 5px;">Dev Build: %dev_build%</a>
+                        <!-- Separater here -->
+                        <hr style="margin: 8px -10px; border: none; border-top: 1px solid #dc3545;">
+                        <!-- Stable Builds -->
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Stable Build: %stable_build%</a>
+                        </div>
+                    </div>
+                    
+                    <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
+                    <div style="position: relative; display: inline-block;"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleDownloadMenuFixes()">
+                    
+                    <!-- Download Menu -->
+                    <div id="downloadMenu_Fixes" style="display: none; position: absolute; left: 100%; top: 0; margin-left: 10px; background: #222; border: 3px solid #dc3545; border-radius: 5px; padding: 10px; z-index: 1001; white-space: nowrap;">
+                        <!-- Dev Builds -->
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Both Fixes Combined (Dev Build)</a>
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Category Fix (Dev Build)</a>
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Plugin Installer (Dev Build)</a>
+                         
+                         <!-- Separater here -->
+                         <hr style="margin: 8px -10px; border: none; border-top: 1px solid #dc3545;">
+                         <!-- Stable Builds -->
+                         <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Both Fixes Combined (Stable Build)</a>
+                         <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Category Fix (Stable Build)</a>
+                         <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Plugin Installer (Stable Build)</a>
+                         </div>
                     </div>
             </ul>
             </li>
             <li class="bloc">
                 <h2>Patches<span class="size"></span></h2>
                 <ul>
-                     <li>Latest Dev Build: %dev_build% (HEN)</li>
-                    <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" loading="lazy"></a>
-                    <li>Latest Stable Build %stable_build% (HEN)</li>
-                    <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" loading="lazy"></a>
+                    <li>HEN Patch</li>
+                    <div style="position: relative; display: inline-block;"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleDownloadMenu_HEN_Patch()">
+                    
+                    <!-- Download Menu -->
+                    <div id="downloadMenu_HEN_Patch" style="display: none; position: absolute; left: 100%; top: 0; margin-left: 10px; background: #222; border: 3px solid #dc3545; border-radius: 5px; padding: 10px; z-index: 1001; white-space: nowrap;">
+                        <!-- Dev Builds -->
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Dev Build: %dev_build%</a>
+                        <!-- Separater here -->
+                        <hr style="margin: 8px -10px; border: none; border-top: 1px solid #dc3545;">
+                        <!-- Stable Builds -->
+                        <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank" style="color: #fff; display: block; padding: 5px;">Stable Build: %stable_build%</a>
+                        </div>
+                    </div>
                     
                     <li>Online Access Bypass (%latest_firmware%)</li>
                     <span class="space">└ Up to date by defult no need to Patch!</span>
@@ -217,9 +235,9 @@ h1_under
         </ul>
     </div>
     <script>
-        function toggleDownloadMenuDevBuilds_CFW () 
+        function toggleDownloadMenuFixes () 
         {
-            var menu = document.getElementById('downloadMenu_Dev_Builds_CFW');
+            var menu = document.getElementById('downloadMenu_Fixes');
             if (menu.style.display === 'none' || menu.style.display === '') 
             {
                 menu.style.display = 'block';
@@ -229,9 +247,9 @@ h1_under
                 menu.style.display = 'none';
             }
         }
-        function toggleDownloadMenuStableCFW () 
+        function toggleDownloadMenu_CFW_Base () 
         {
-            var menu = document.getElementById('downloadMenu_Stable_CFW');
+            var menu = document.getElementById('downloadMenu_CFW_Base');
             if (menu.style.display === 'none' || menu.style.display === '') 
             {
                 menu.style.display = 'block';
@@ -241,6 +259,20 @@ h1_under
                 menu.style.display = 'none';
             }
         }
+        function toggleDownloadMenu_HEN_Patch () 
+        {
+            var menu = document.getElementById('downloadMenu_HEN_Patch');
+            if (menu.style.display === 'none' || menu.style.display === '') 
+            {
+                menu.style.display = 'block';
+            }
+            else
+            {
+                menu.style.display = 'none';
+            }
+        }
+        
+        
         document.body.addEventListener('click', function(e) 
         {
             var img = e.target;
@@ -252,10 +284,17 @@ h1_under
             if (menu && img.tagName !== 'IMG' || (img.tagName === 'IMG' && img.src.indexOf('CFW.png') === -1)) 
                 menu.style.display = 'none';
                 
-            menu = document.getElementById('downloadMenu_Dev_Builds_CFW');
-            if (menu && img.tagName !== 'IMG' || (img.tagName === 'IMG' && img.src.indexOf('CFW.png') === -1)) 
+            <!--
+            //HEN Patch 
+            -->
+            menu = document.getElementById('downloadMenu_HEN_Patch');
+            if (menu && img.tagName !== 'IMG' || (img.tagName === 'IMG' && img.src.indexOf('HEN.png') === -1)) 
                 menu.style.display = 'none';
-                
+            
+            menu = document.getElementById('downloadMenu_Fixes');
+            if (menu && img.tagName !== 'IMG' || (img.tagName === 'IMG' && img.src.indexOf('toolbox.png') === -1)) 
+                menu.style.display = 'none';
+            
         }, false);
         
         
@@ -275,44 +314,38 @@ h1_under
     if (!input || !applyBtn || !container)
         return;
 
-    // Helper: update the margin only if the value is a valid number
     function updateMargin(value) {
-        // Remove spaces and dots
         var cleanValue = String(value).replace(/[ .]/g, '');
-        if (cleanValue === '') return; // Do nothing if empty
+        if (cleanValue === '') return; 
 
         var num = parseInt(cleanValue, 10);
-        if (isNaN(num)) return;        // Do nothing if not a number
+        if (isNaN(num)) return; 
         if (num < 0) num = 0;
 
         container.style.marginTop = num + 'px';
         if (valueDisplay) valueDisplay.innerHTML = num;
-        // Update the input box to show the clean number (only if it was valid)
         input.value = num;
     }
-
-    // Block any key that is NOT a digit (0-9) or a control key
     input.onkeypress = function(e) {
         e = e || window.event;
         var keyCode = e.keyCode || e.which;
         var char = String.fromCharCode(keyCode);
 
         var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8   // backspace
-                     || keyCode === 46  // delete
-                     || keyCode === 13  // enter
-                     || keyCode === 9   // tab
-                     || keyCode === 37  // left arrow
-                     || keyCode === 39  // right arrow
-                     || keyCode === 38  // up arrow
-                     || keyCode === 40; // down arrow
+        var isControl = keyCode === 8  
+                     || keyCode === 46 
+                     || keyCode === 13  
+                     || keyCode === 9   
+                     || keyCode === 37  
+                     || keyCode === 39  
+                     || keyCode === 38  
+                     || keyCode === 40; 
 
         if (!isDigit && !isControl) {
             if (e.preventDefault) e.preventDefault();
             return false;
         }
 
-        // Handle Enter key separately
         if (keyCode === 13) {
             updateMargin(input.value);
             if (e.preventDefault) e.preventDefault();
@@ -322,26 +355,20 @@ h1_under
         return true;
     };
 
-    // Clean up any pasted content (remove non‑digits)
     input.oninput = function() {
         var clean = this.value.replace(/[^0-9]/g, '');
-        // Do NOT auto‑fill with a default – leave it empty if it was cleaned to empty
         this.value = clean;
     };
 
-    // Apply button click
     applyBtn.onclick = function() {
         updateMargin(input.value);
     };
-
-    // Initialize with the default value from the HTML (e.g., 160)
     var initial = input.value;
     if (initial !== '') {
         updateMargin(initial);
     }
 }
 
-// Run after page loads
 if (window.addEventListener) {
     window.addEventListener('load', initMarginControl, false);
 } else if (window.attachEvent) {
