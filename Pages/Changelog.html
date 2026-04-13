@@ -110,6 +110,20 @@ h1 {
     background-color: #b02a37;
     cursor: pointer;
 }
+#marginInput {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+}
+#applyMarginBtn {
+    font-weight: bold;
+}
+#applyMarginBtn:hover {
+    background: #b02a37;
+}
 </style>
     <div class="fixed-header">
         <h1>Rebugger - ToolBox: ChangeLogs</h1>
@@ -122,8 +136,15 @@ h1 {
                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
                 <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
                </div>
+               <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
+    <label for="marginInput">Header Offset (px):</label>
+    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
+    <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
+    <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
+    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
+</div>
     </div> 
-    <div class="container">
+    <div id="mainContainer" class="container">
         <ul class="changelogs">
             <li class="bloc">
                 <h2>Version 1.0.4 Dev Build: #1<span class="size"></span></h2>
@@ -210,5 +231,87 @@ h1 {
             </li>
         </ul>
     </div>
+    <script>
+       function initMarginControl () 
+       {
+           var input = document.getElementById('marginInput');
+           var applyBtn = document.getElementById('applyMarginBtn');
+           var valueDisplay = document.getElementById('marginValue');
+           var container = document.getElementById('mainContainer'); 
+           if (!input || !applyBtn || !container) return;
+           
+           function updateMargin(value) 
+           {
+               var cleanValue = String(value).replace(/[ .]/g, '');
+               if (cleanValue === '') return; 
+               
+               var num = parseInt(cleanValue, 10);
+               
+               if (isNaN(num)) return; 
+               if (num < 0) num = 0;
+               
+               container.style.marginTop = num + 'px';
+               if (valueDisplay) valueDisplay.innerHTML = num;
+               
+               input.value = num;
+    }
+    input.onkeypress = function(e)
+    {
+        e = e || window.event;
+        var keyCode = e.keyCode || e.which;
+        var char = String.fromCharCode(keyCode);
+
+        var isDigit = /[0-9]/.test(char);
+        var isControl = keyCode === 8  
+                     || keyCode === 46 
+                     || keyCode === 13  
+                     || keyCode === 9   
+                     || keyCode === 37  
+                     || keyCode === 39  
+                     || keyCode === 38  
+                     || keyCode === 40; 
+
+        if (!isDigit && !isControl) {
+            if (e.preventDefault) e.preventDefault();
+            return false;
+        }
+
+        if (keyCode === 13) {
+            updateMargin(input.value);
+            if (e.preventDefault) e.preventDefault();
+            return false;
+        }
+
+        return true;
+    };
+
+    input.oninput = function() 
+    {
+        var clean = this.value.replace(/[^0-9]/g, '');
+        this.value = clean;
+    };
+
+    applyBtn.onclick = function() 
+    {
+        updateMargin(input.value);
+    };
+    var initial = input.value;
+    if (initial !== '') {
+        updateMargin(initial);
+    }
+}
+if (window.addEventListener) 
+{
+    window.addEventListener('load', initMarginControl, false);
+} 
+else if (window.attachEvent) 
+{
+    window.attachEvent('onload', initMarginControl);
+} 
+else
+{
+    window.onload = initMarginControl;
+}
+    </script>
 </body>
 </html>
