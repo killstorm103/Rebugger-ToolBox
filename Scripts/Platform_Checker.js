@@ -55,7 +55,7 @@
         match = ua.match(/PS3[; ]+([\d.]+)/i);
         if (match && match[1]) return match[1];
 
-        return ''; // Could not determine firmware
+        return 'Unknown (could not parse)'; // Could not determine firmware
     }
     function getPS4FirmwareVersion () // Untested
     {
