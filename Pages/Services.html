@@ -151,6 +151,7 @@ h1_under
                 <h2>Platform<span class="size"></span></h2>
                 <ul>
                     <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
+                    <li>is PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></li>
                     <li>Firmware Version: <span id="fwSpan">Checking...</span></li>
                     <li>User Agent: <span id="uaSpan"></span></li>
                 </ul>
@@ -196,21 +197,29 @@ h1_under
     function updateStatus() {
         var isPs3Elem = document.getElementById('isPs3Span'),
             fwElem = document.getElementById('fwSpan'),
-            uaElem = document.getElementById('uaSpan');
+            uaElem = document.getElementById('uaSpan'), Engine = document.getElementById('EngineSpan');
 
-        if (window.isPS3) {
+        if (window.isPS3) 
+        {
             isPs3Elem.innerHTML = '✔️ Yes';
-            fwElem.innerHTML = window.ps3Firmware || 'Unknown (could not parse)';
-        } else {
+            Engine.innerHTML = '❌ No ';
+        } 
+        else 
+        {
             isPs3Elem.innerHTML = '❌ No (standard browser)';
-            fwElem.innerHTML = 'N/A';
+            Engine.innerHTML = '❌ No ';
         }
+        fwElem.innerHTML = window.isPS3 ? window.ps3Firmware || 'Unknown (could not parse)' : 'N/A';
+        Engine.innerHTML = window.isPS3SilkBrowserEngine || "No";
         uaElem.innerHTML = window.UserAgent || navigator.userAgent;
     }
 
-    if (document.readyState === 'complete') {
+    if (document.readyState === 'complete') 
+    {
         updateStatus();
-    } else {
+    } 
+    else
+    {
         window.onload = updateStatus;
     }
 
@@ -237,9 +246,9 @@ h1_under
         var retryCount = 0;
         var MAX_RETRIES = 5;
 
-        var DISPLAY_TIME = 1500;
-        var SKIP_DELAY = 3000;
-        var MAX_WAIT = 5500;
+        var DISPLAY_TIME = window.isPS3 ? 10000 : 1500;
+        var SKIP_DELAY = window.isPS3 ? 11500 : 3000;
+        var MAX_WAIT = window.isPS3 ? 8500 : 5500;
 
         function clearAllTimers() {
             if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
