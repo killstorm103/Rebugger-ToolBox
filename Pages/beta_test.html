@@ -252,7 +252,8 @@
 </div>
 
 <script>
-    // ----- Universal toggle (works with table layout) -----
+   <script>
+    // ----- Universal toggle (unchanged) -----
     function toggleMenu(menuId) {
         var menu = document.getElementById(menuId);
         if (menu) {
@@ -260,14 +261,13 @@
         }
     }
 
-    // Click outside to close (preserved for convenience)
+    // Click outside to close
     document.body.addEventListener('click', function(e) {
         var target = e.target;
         var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
         for (var i = 0; i < menus.length; i++) {
             var menu = document.getElementById(menus[i]);
             if (menu && menu.style.display === 'block') {
-                // Close if click is outside the image and the menu itself
                 var imgSrc = '';
                 if (menus[i] === 'downloadMenu_CFW_Base') imgSrc = 'CFW.png';
                 else if (menus[i] === 'downloadMenu_HEN_Patch') imgSrc = 'HEN.png';
@@ -279,59 +279,43 @@
         }
     }, false);
 
-    // ----- Placeholder replacement (Silk‑safe) -----
-    (function() {
+    // ----- PLACEHOLDER REPLACEMENT (Silk‑safe) -----
+    function replacePlaceholdersEverywhere() {
         var devBuild = '1.0.4 #1',
             stableBuild = '1.0.3',
             latestFirmware = '4.93';
 
-        // Replace placeholders in all elements with class 'placeholder-text'
-        function replacePlaceholders() {
-            var elements = document.getElementsByClassName('placeholder-text');
-            for (var i = 0; i < elements.length; i++) {
-                var el = elements[i];
-                var html = el.innerHTML;
-                if (html.indexOf('%dev_build%') !== -1) {
-                    el.innerHTML = html.replace(/%dev_build%/g, devBuild);
-                }
-                if (html.indexOf('%stable_build%') !== -1) {
-                    el.innerHTML = html.replace(/%stable_build%/g, stableBuild);
-                }
-                if (html.indexOf('%latest_firmware%') !== -1) {
-                    el.innerHTML = html.replace(/%latest_firmware%/g, latestFirmware);
-                }
+        // 1) Elements with class 'placeholder-text'
+        var elements = document.getElementsByClassName('placeholder-text');
+        for (var i = 0; i < elements.length; i++) {
+            var el = elements[i];
+            if (el.innerHTML.indexOf('%') !== -1) {
+                el.innerHTML = el.innerHTML.replace(/%dev_build%/g, devBuild)
+                                           .replace(/%stable_build%/g, stableBuild)
+                                           .replace(/%latest_firmware%/g, latestFirmware);
             }
         }
 
-        // Also handle plain text nodes that contain placeholders (fallback)
-        function replaceInTextNodes() {
-            var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            var node;
-            while (node = walker.nextNode()) {
-                var text = node.nodeValue;
-                if (text.indexOf('%dev_build%') !== -1 || text.indexOf('%stable_build%') !== -1 || text.indexOf('%latest_firmware%') !== -1) {
-                    text = text.replace(/%dev_build%/g, devBuild)
-                               .replace(/%stable_build%/g, stableBuild)
-                               .replace(/%latest_firmware%/g, latestFirmware);
-                    node.nodeValue = text;
+        // 2) Walk all text nodes (Silk fallback)
+        function walkTextNodes(node) {
+            if (node.nodeType === 3) { // Text node
+                var txt = node.nodeValue;
+                if (txt.indexOf('%') !== -1) {
+                    txt = txt.replace(/%dev_build%/g, devBuild)
+                             .replace(/%stable_build%/g, stableBuild)
+                             .replace(/%latest_firmware%/g, latestFirmware);
+                    node.nodeValue = txt;
+                }
+            } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+                for (var j = 0; j < node.childNodes.length; j++) {
+                    walkTextNodes(node.childNodes[j]);
                 }
             }
         }
+        walkTextNodes(document.body);
+    }
 
-        // Silk‑safe method: target specific elements + text nodes
-        if (window.isPS3SilkBrowserEngine) {
-            replacePlaceholders();
-            replaceInTextNodes();
-        } else {
-            // Original method (works on standard PS3 browser)
-            document.body.innerHTML = document.body.innerHTML
-                .replace(/%latest_firmware%/g, latestFirmware)
-                .replace(/%dev_build%/g, devBuild)
-                .replace(/%stable_build%/g, stableBuild);
-        }
-    })();
-
-    // ----- Margin control (unchanged) -----
+    // ----- MARGIN CONTROL (Silk‑safe, no 'oninput') -----
     function initMarginControl() {
         var input = document.getElementById('marginInput');
         var applyBtn = document.getElementById('applyMarginBtn');
@@ -340,20 +324,49 @@
 
         if (!input || !applyBtn || !container) return;
 
-        function updateMargin(value) {
-            var cleanValue = String(value).replace(/[ .]/g, '');
-            if (cleanValue === '') return;
-            var num = parseInt(cleanValue, 10);
-            if (isNaN(num)) return;
+        // Helper to sanitize and apply margin
+        function applyMarginFromInput() {
+            var raw = input.value;
+            // Remove any non‑digit characters
+            var clean = raw.replace(/[^0-9]/g, '');
+            if (clean === '') {
+                // If empty, restore last valid value (or default 300)
+                clean = valueDisplay.innerHTML;
+                if (clean === '') clean = '300';
+            }
+            var num = parseInt(clean, 10);
+            if (isNaN(num)) num = 300;
             if (num < 0) num = 0;
+
             container.style.marginTop = num + 'px';
-            if (valueDisplay) valueDisplay.innerHTML = num;
-            input.value = num;
+            valueDisplay.innerHTML = num;
+            input.value = num;   // keep displayed number clean
         }
 
+        // Use onkeyup to clean the field after each keystroke (Silk compatible)
+        input.onkeyup = function() {
+            var raw = this.value;
+            var clean = raw.replace(/[^0-9]/g, '');
+            if (clean !== raw) {
+                this.value = clean;
+            }
+        };
+
+        // Apply button
+        applyBtn.onclick = function() {
+            applyMarginFromInput();
+        };
+
+        // Enter key inside the textbox also applies
         input.onkeypress = function(e) {
             e = e || window.event;
             var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { // Enter
+                applyMarginFromInput();
+                if (e.preventDefault) e.preventDefault();
+                return false;
+            }
+            // Allow only digits and control keys
             var char = String.fromCharCode(keyCode);
             var isDigit = /[0-9]/.test(char);
             var isControl = keyCode === 8 || keyCode === 46 || keyCode === 13 ||
@@ -363,25 +376,25 @@
                 if (e.preventDefault) e.preventDefault();
                 return false;
             }
-            if (keyCode === 13) {
-                updateMargin(input.value);
-                if (e.preventDefault) e.preventDefault();
-                return false;
-            }
             return true;
         };
 
-        input.oninput = function() {
-            var clean = this.value.replace(/[^0-9]/g, '');
-            this.value = clean;
-        };
-
-        applyBtn.onclick = function() { updateMargin(input.value); };
-
+        // Initialize with the default value
         var initial = input.value;
-        if (initial !== '') updateMargin(initial);
+        if (initial !== '') {
+            var cleanInit = initial.replace(/[^0-9]/g, '');
+            if (cleanInit !== '') {
+                input.value = cleanInit;
+                applyMarginFromInput();
+            }
+        }
     }
 
+    // ----- EXECUTION -----
+    // 1) Replace placeholders (run immediately, but after DOM is built)
+    replacePlaceholdersEverywhere();
+
+    // 2) Start margin control after page fully loads (ensures container is ready)
     if (window.addEventListener) {
         window.addEventListener('load', initMarginControl, false);
     } else if (window.attachEvent) {
