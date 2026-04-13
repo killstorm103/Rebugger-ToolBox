@@ -253,14 +253,21 @@ function toggleMenu(menuId) {
     }
 }
 
-// ========== PLACEHOLDER REPLACEMENT (Silk‑safe: rewrite only specific containers) ==========
+// ========== PLACEHOLDER REPLACEMENT (works on both) ==========
 function replacePlaceholders() {
-    // For Silk, we avoid touching body.innerHTML. Instead, we rebuild the dropdown containers
-    // and also update any other visible text that contains placeholders.
+    // For Silk: we'll directly rewrite the dropdown containers and any element with class 'placeholder-text'
     if (isSilk) {
-        // Rebuild dropdowns (they contain placeholders)
+        // Rebuild dropdowns (they contain placeholders) – this also rewrites their innerHTML
         buildDropdowns();
-        // Additionally, scan all text nodes and replace (fallback for other placeholders)
+        // Also handle any other element that might have placeholders (like the Online Access Bypass line)
+        var placeholders = document.getElementsByClassName('placeholder-text');
+        for (var i = 0; i < placeholders.length; i++) {
+            var el = placeholders[i];
+            el.innerHTML = el.innerHTML.replace(/%dev_build%/g, devBuild)
+                                       .replace(/%stable_build%/g, stableBuild)
+                                       .replace(/%latest_firmware%/g, latestFirmware);
+        }
+        // Fallback: walk text nodes for any remaining placeholders
         function walk(node) {
             if (node.nodeType === 3) {
                 var txt = node.nodeValue;
@@ -271,7 +278,7 @@ function replacePlaceholders() {
                     node.nodeValue = txt;
                 }
             } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
-                for (var i = 0; i < node.childNodes.length; i++) walk(node.childNodes[i]);
+                for (var j = 0; j < node.childNodes.length; j++) walk(node.childNodes[j]);
             }
         }
         walk(document.body);
@@ -302,7 +309,7 @@ function buildDropdowns() {
         henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN() + '</div>';
     }
 
-    // Click outside to close
+    // Click outside to close (works for both)
     document.body.addEventListener('click', function(e) {
         var target = e.target;
         var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -319,36 +326,50 @@ function buildDropdowns() {
     }, false);
 }
 
-// ========== MARGIN CONTROL (Silk‑safe: button only, no fancy events) ==========
+// ========== MARGIN CONTROL (inline onclick for Silk) ==========
+function applyMargin() {
+    var input = document.getElementById('marginInput');
+    var span = document.getElementById('marginValue');
+    var container = document.getElementById('mainContainer');
+    if (!input || !span || !container) return;
+
+    var raw = input.value;
+    var clean = raw.replace(/[^0-9]/g, '');
+    var num = parseInt(clean, 10);
+    if (isNaN(num)) num = 300;
+    if (num < 0) num = 0;
+    container.style.marginTop = num + 'px';
+    span.innerHTML = num;
+    input.value = num;
+}
+
 function initMarginControl() {
     var input = document.getElementById('marginInput');
     var btn = document.getElementById('applyMarginBtn');
-    var span = document.getElementById('marginValue');
-    var container = document.getElementById('mainContainer');
+    if (!input || !btn) return;
 
-    if (!input || !btn || !container) return;
+    // Use inline onclick for maximum compatibility (Silk works)
+    btn.setAttribute('onclick', 'applyMargin()');
 
-    function applyMargin() {
-        var raw = input.value;
-        var clean = raw.replace(/[^0-9]/g, '');
-        var num = parseInt(clean, 10);
-        if (isNaN(num)) num = 300;
-        if (num < 0) num = 0;
-        container.style.marginTop = num + 'px';
-        span.innerHTML = num;
-        input.value = num;
+    // For PC/normal browsers, add Enter key support
+    if (!isSilk) {
+        input.onkeypress = function(e) {
+            e = e || window.event;
+            if (e.keyCode === 13) {
+                applyMargin();
+                return false;
+            }
+            return true;
+        };
     }
 
-    // Remove any existing listeners to avoid duplicates
-    btn.onclick = applyMargin;
-
-    // Optional: clean the input when it loses focus (Silk safe)
+    // Clean input on blur (optional)
     input.onblur = function() {
         var clean = this.value.replace(/[^0-9]/g, '');
         if (clean !== '') this.value = clean;
     };
 
-    // Initialize with default
+    // Initialize with default value
     var initVal = input.value.replace(/[^0-9]/g, '');
     if (initVal !== '') {
         input.value = initVal;
@@ -358,12 +379,9 @@ function initMarginControl() {
 
 // ========== INITIALIZATION ==========
 window.onload = function() {
-    // Build dropdowns first (they contain placeholders)
-    buildDropdowns();
-    // Then replace any remaining placeholders (especially in normal engine)
-    replacePlaceholders();
-    // Finally, init margin control
-    initMarginControl();
+    buildDropdowns();      // creates the correct layout (with placeholders still present)
+    replacePlaceholders(); // replaces %dev_build% etc.
+    initMarginControl();   // sets up margin controls
 };
 </script>
 
