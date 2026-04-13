@@ -95,8 +95,8 @@
     // Set global variables
     window.isPS3 = DetectPS3();
     window.isPS4 = DetectPS4();
-    window.ps3Firmware = window.isPS3 ? getPS3FirmwareVersion() : 'Unknown (could not parse)';
-    window.ps4Firmware = window.isPS4 ? getPS4FirmwareVersion() : 'Unknown (could not parse)';
+    window.ps3Firmware = window.isPS3 ? getPS3FirmwareVersion() : '';
+    window.ps4Firmware = window.isPS4 ? getPS4FirmwareVersion() : '';
     window.isPS3SilkBrowserEngine = window.isPS3 && window.ps3Firmware.indexOf('1') === 0;
     window.UserAgent = ua; 
 })();
