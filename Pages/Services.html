@@ -210,7 +210,7 @@ h1_under
             Engine.innerHTML = '❌ No ';
         }
         fwElem.innerHTML = window.isPS3 ? window.ps3Firmware || 'Unknown (could not parse)' : 'N/A';
-        Engine.innerHTML = window.isPS3SilkBrowserEngine || "No";
+        Engine.innerHTML = window.isPS3SilkBrowserEngine ? "Yes" : "No" || "No";
         uaElem.innerHTML = window.UserAgent || navigator.userAgent;
     }
 
