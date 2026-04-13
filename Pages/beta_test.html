@@ -138,7 +138,7 @@
             vertical-align: top;
             padding-left: 10px;
         }
-        /* Absolute positioning (normal PS3) */
+        /* Absolute positioning (normal) */
         .dropdown-absolute {
             position: relative;
             display: inline-block;
@@ -168,7 +168,8 @@
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
         <label for="marginInput">Header Offset (px):</label>
         <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-        <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
+        <!-- Button with hardcoded onclick (Silk compatible) -->
+        <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;" onclick="applyMargin()">Apply</button>
         <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
         <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
     </div>
@@ -208,7 +209,6 @@
     </ul>
 </div>
 
-<!-- The script runs immediately after the containers are defined -->
 <script>
 (function() {
     // ----- DETECTION & VERSION CONSTANTS -----
@@ -244,7 +244,7 @@
             '</div>';
     }
 
-    // ----- GLOBAL TOGGLE FUNCTION (called by onclick) -----
+    // ----- GLOBAL TOGGLE FUNCTION -----
     window.toggleMenu = function(menuId) {
         var menu = document.getElementById(menuId);
         if (menu) {
@@ -259,12 +259,10 @@
 
     if (cfwContainer && fixesContainer && henContainer) {
         if (isSilk) {
-            // Silk: table layout (no absolute positioning bugs)
             cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
             fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + getMenuFixes() + '</td></tr></table>';
             henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + getMenuHEN() + '</td></tr></table>';
         } else {
-            // Normal PS3: absolute positioning
             cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + getMenuCFW() + '</div>';
             fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
             henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN() + '</div>';
@@ -291,7 +289,7 @@
         }
     }, false);
 
-    // ----- MARGIN CONTROL -----
+    // ----- MARGIN CONTROL (global) -----
     window.applyMargin = function() {
         var input = document.getElementById('marginInput');
         var span = document.getElementById('marginValue');
@@ -307,19 +305,15 @@
         input.value = num;
     };
 
-    var applyBtn = document.getElementById('applyMarginBtn');
+    // Initialize margin input
     var marginInput = document.getElementById('marginInput');
-    if (applyBtn) {
-        applyBtn.setAttribute('onclick', 'applyMargin()');
-    }
     if (marginInput) {
-        // Set initial value
         var initVal = marginInput.value.replace(/[^0-9]/g, '');
         if (initVal !== '') {
             marginInput.value = initVal;
             window.applyMargin();
         }
-        // PC: Enter key support (disabled on Silk to avoid conflicts)
+        // PC: Enter key support (not for Silk)
         if (!isSilk) {
             marginInput.onkeypress = function(e) {
                 e = e || window.event;
@@ -330,7 +324,7 @@
                 return true;
             };
         }
-        // Clean input when focus leaves
+        // Clean input on blur
         marginInput.onblur = function() {
             var clean = this.value.replace(/[^0-9]/g, '');
             if (clean !== '') this.value = clean;
