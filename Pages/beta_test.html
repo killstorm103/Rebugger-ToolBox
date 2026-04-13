@@ -276,7 +276,9 @@ h1_under
         return;
 
     function updateMargin(value) {
-        var num = parseInt(value, 10);
+        // Remove spaces and dots from the input
+        var cleanValue = String(value).replace(/[ .]/g, '');
+        var num = parseInt(cleanValue, 10);
         if (isNaN(num)) num = 500;
         if (num < 0) num = 0;
 
