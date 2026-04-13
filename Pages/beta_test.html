@@ -218,7 +218,7 @@ var latestFirmware = '4.93';
 // ========== DETECT SILK ENGINE ==========
 var isSilk = window.isPS3SilkBrowserEngine || false;
 
-// ========== DROPDOWN MENU HTML (identical content for both engines) ==========
+// ========== DROPDOWN MENU HTML (identical for both) ==========
 function getMenuCFW() {
     return '<div id="downloadMenu_CFW_Base" class="dropdown-menu">' +
         '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: %dev_build%</a>' +
@@ -245,7 +245,7 @@ function getMenuHEN() {
         '</div>';
 }
 
-// ========== TOGGLE FUNCTIONS ==========
+// ========== TOGGLE FUNCTION (simple) ==========
 function toggleMenu(menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
@@ -253,10 +253,14 @@ function toggleMenu(menuId) {
     }
 }
 
-// ========== PLACEHOLDER REPLACEMENT (conditional) ==========
+// ========== PLACEHOLDER REPLACEMENT (Silk‑safe: rewrite only specific containers) ==========
 function replacePlaceholders() {
+    // For Silk, we avoid touching body.innerHTML. Instead, we rebuild the dropdown containers
+    // and also update any other visible text that contains placeholders.
     if (isSilk) {
-        // Silk‑safe: walk text nodes only
+        // Rebuild dropdowns (they contain placeholders)
+        buildDropdowns();
+        // Additionally, scan all text nodes and replace (fallback for other placeholders)
         function walk(node) {
             if (node.nodeType === 3) {
                 var txt = node.nodeValue;
@@ -280,25 +284,25 @@ function replacePlaceholders() {
     }
 }
 
-// ========== BUILD DROPDOWNS (chooses layout based on engine) ==========
+// ========== BUILD DROPDOWNS (table for Silk, absolute for normal) ==========
 function buildDropdowns() {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
 
+    if (!cfwContainer || !fixesContainer || !henContainer) return;
+
     if (isSilk) {
-        // Silk: table layout
         cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
         fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + getMenuFixes() + '</td></tr></table>';
         henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + getMenuHEN() + '</td></tr></table>';
     } else {
-        // Normal PS3: absolute positioning
         cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + getMenuCFW() + '</div>';
         fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
         henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor: pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN() + '</div>';
     }
 
-    // Click outside to close (works for both layouts)
+    // Click outside to close
     document.body.addEventListener('click', function(e) {
         var target = e.target;
         var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -315,59 +319,51 @@ function buildDropdowns() {
     }, false);
 }
 
-// ========== MARGIN CONTROL (unchanged) ==========
+// ========== MARGIN CONTROL (Silk‑safe: button only, no fancy events) ==========
 function initMarginControl() {
     var input = document.getElementById('marginInput');
-    var applyBtn = document.getElementById('applyMarginBtn');
-    var valueDisplay = document.getElementById('marginValue');
-    var container = document.getElementById('mainContainer'); 
+    var btn = document.getElementById('applyMarginBtn');
+    var span = document.getElementById('marginValue');
+    var container = document.getElementById('mainContainer');
 
-    if (!input || !applyBtn || !container) return;
+    if (!input || !btn || !container) return;
 
-    function updateMargin(value) {
-        var cleanValue = String(value).replace(/[ .]/g, '');
-        if (cleanValue === '') return; 
-        var num = parseInt(cleanValue, 10);
-        if (isNaN(num)) return; 
+    function applyMargin() {
+        var raw = input.value;
+        var clean = raw.replace(/[^0-9]/g, '');
+        var num = parseInt(clean, 10);
+        if (isNaN(num)) num = 300;
         if (num < 0) num = 0;
         container.style.marginTop = num + 'px';
-        if (valueDisplay) valueDisplay.innerHTML = num;
+        span.innerHTML = num;
         input.value = num;
     }
 
-    input.onkeypress = function(e) {
-        e = e || window.event;
-        var keyCode = e.keyCode || e.which;
-        var char = String.fromCharCode(keyCode);
-        var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8 || keyCode === 46 || keyCode === 13 || keyCode === 9 || keyCode === 37 || keyCode === 39 || keyCode === 38 || keyCode === 40; 
-        if (!isDigit && !isControl) {
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-        if (keyCode === 13) {
-            updateMargin(input.value);
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-        return true;
-    };
+    // Remove any existing listeners to avoid duplicates
+    btn.onclick = applyMargin;
 
-    input.oninput = function() {
+    // Optional: clean the input when it loses focus (Silk safe)
+    input.onblur = function() {
         var clean = this.value.replace(/[^0-9]/g, '');
-        this.value = clean;
+        if (clean !== '') this.value = clean;
     };
 
-    applyBtn.onclick = function() { updateMargin(input.value); };
-    var initial = input.value;
-    if (initial !== '') updateMargin(initial);
+    // Initialize with default
+    var initVal = input.value.replace(/[^0-9]/g, '');
+    if (initVal !== '') {
+        input.value = initVal;
+        applyMargin();
+    }
 }
 
 // ========== INITIALIZATION ==========
 window.onload = function() {
-    buildDropdowns();       // create the correct layout first
-    replacePlaceholders();  // then fill in %dev_build% etc.
-    initMarginControl();    // margin adjuster
+    // Build dropdowns first (they contain placeholders)
+    buildDropdowns();
+    // Then replace any remaining placeholders (especially in normal engine)
+    replacePlaceholders();
+    // Finally, init margin control
+    initMarginControl();
 };
 </script>
 
