@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Downloader</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial; padding: 20px; }
+        input { width: 80%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; background: #dc3545; color: #fff; border: none; }
+        h1 { text-align: left; font-size: 40px; margin: 0; color: #fff; }
+    </style>
+</head>
+<body>
+    <h1>Rebugger - ToolBox: File Downloader</h1>
+    <h1>Enter File URL</h1>
+    <input type="text" id="urlInput" placeholder="https://example.com/file.pkg">
+    <button onclick="DownloadFile()">Download</button>
+    <p id="status"></p>
+    <script>
+        function DownloadFile()
+        {
+            var url = document.getElementById('urlInput').value;
+            if (!url) return;
+            
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
