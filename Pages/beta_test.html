@@ -164,12 +164,15 @@
 </div>
 
 <script>
-// ----- GLOBAL VARS -----
+// ----- 全局变量 -----
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
-var remoteLoaded = false;
 
-// ----- DROPDOWN HTML GENERATORS (accept parameters) -----
+// 硬编码回退版本（当远程获取失败时使用）
+var FALLBACK_STABLE = '1.0.3';
+var FALLBACK_DEV = '1.0.4 #1';
+
+// ----- 下拉菜单 HTML 生成器（接受参数）-----
 function getMenuCFW(stableBuild, devBuild) {
     return '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
         '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + devBuild + '</a>' +
@@ -196,7 +199,7 @@ function getMenuHEN(stableBuild, devBuild) {
         '</div>';
 }
 
-// ----- GLOBAL TOGGLE -----
+// ----- 全局开关菜单 -----
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
@@ -204,7 +207,7 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ----- BUILD DROPDOWNS WITH GIVEN VERSIONS -----
+// ----- 构建下拉菜单（使用给定的版本号）-----
 function buildDropdowns(stableBuild, devBuild) {
     var cfw = document.getElementById('dropdown-container-cfw');
     var fixes = document.getElementById('dropdown-container-fixes');
@@ -220,35 +223,53 @@ function buildDropdowns(stableBuild, devBuild) {
         fixes.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
         hen.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN(stableBuild, devBuild) + '</div>';
     }
-    remoteLoaded = true;
 }
 
-// ----- FETCH REMOTE VERSION.TXT -----
-(function() {
+// ----- 远程获取 version.txt（使用 webMAN 代理，带超时和回退）-----
+function fetchRemoteVersions() {
     var xhr = new XMLHttpRequest();
+    var timedOut = false;
+    var timeoutId = setTimeout(function() {
+        timedOut = true;
+        xhr.abort();
+        // 超时：使用回退版本
+        buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
+    }, 8000); // 8 秒超时
+
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var text = xhr.responseText;
-            var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
-            var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
-            var stableBuild = stableMatch ? stableMatch[1] : '';
-            var devVersion = devMatch ? devMatch[1] : '';
-            var devBuildNum = devMatch ? devMatch[2] : '';
-            var devBuild = devVersion + (devBuildNum ? ' #' + devBuildNum : '');
-            if (stableBuild && devBuild) {
+        if (xhr.readyState === 4) {
+            clearTimeout(timeoutId);
+            if (!timedOut && xhr.status === 200) {
+                var text = xhr.responseText;
+                var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
+                var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
+                var stableBuild = stableMatch ? stableMatch[1] : FALLBACK_STABLE;
+                var devVersion = devMatch ? devMatch[1] : '1.0.4';
+                var devBuildNum = devMatch ? devMatch[2] : '1';
+                var devBuild = devVersion + ' #' + devBuildNum;
                 buildDropdowns(stableBuild, devBuild);
+            } else {
+                // 请求失败：使用回退版本
+                buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
             }
         }
     };
-    xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
-    xhr.send();
-})();
+    xhr.onerror = function() {
+        clearTimeout(timeoutId);
+        buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
+    };
 
-// ----- PLACEHOLDER REPLACEMENT -----
+    // 优先使用 webMAN 代理（如果可用），否则直连
+    var url = 'http://127.0.0.1/http/raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+
+// ----- 占位符替换 -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
-// ----- CLICK OUTSIDE CLOSES MENUS -----
+// ----- 点击外部关闭菜单 -----
 document.body.addEventListener('click', function(e) {
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -264,7 +285,7 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ----- MARGIN CONTROL (Silk + PC) -----
+// ----- 边距控制（Silk + PC）-----
 function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -284,7 +305,7 @@ function applyMargin() {
 }
 window.applyMargin = applyMargin;
 
-// ----- MARGIN INIT -----
+// ----- 边距初始化 -----
 var marginInput = document.getElementById('marginInput');
 if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
@@ -305,7 +326,7 @@ if (marginInput) {
     };
 }
 
-// ----- SILK IMAGE FIX (HTTP) -----
+// ----- Silk 图片 HTTP 重写 -----
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
@@ -315,6 +336,9 @@ if (isSilk) {
         }
     }
 }
+
+// ----- 启动：获取远程版本（带超时回退）-----
+fetchRemoteVersions();
 </script>
 
 </body>
