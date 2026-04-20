@@ -92,6 +92,10 @@
             top: 0;
             margin-left: 10px;
         }
+        .version-failed {
+            color: #ffa500;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -107,6 +111,7 @@
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
+        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Tutorials.html" class="nav-button" target="_blank">Tutorials</a>
     </div>
 
     <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
@@ -138,14 +143,15 @@
                 <li><span class="space2">└ Enable internet browser debug in your PS3's Debug Settings!</span></li>
                 <li><span class="space2">└ You'll find this in the CEX Debug Settings Menu Or you could download and install: <a href="https://store.brewology.com/get/homebrew.php?id=191&amp;fid=779" target="_blank">Web Browser Plus [Link]</a></span></li>
                <li><span class="space2">└ This Browser always use the Silk Engine!</span></li>
-               <li><span class="space2">└ If you choose to use the internet debug press Triangle on the Internet Browser item in the xmb and change the Engine to: Silk!</span></li>
+               <li><span class="space2">└ If you choose to use the internet browser debug press Triangle on the Internet Browser item in the xmb and change the Engine to: Silk!</span></li>
             </ul>
         </li>
         <li class="bloc">
             <h2>Updates<span class="size"></span></h2>
             <ul>
-                <li>Rebugger - ToolBox (Base)</li>
-                <li id="dropdown-container-cfw"></li>
+                <li>Rebugger - ToolBox (Base) (CFW)</li>
+                <li id="dropdown-container-cfw">
+                </li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
                 <li id="dropdown-container-fixes"></li>
             </ul>
@@ -164,22 +170,40 @@
 </div>
 
 <script>
-// ----- GLOBAL VARS -----
 var isSilk = window.isPS3SilkBrowserEngine || false;
-var devBuild = '1.0.4 #1';
-var stableBuild = '1.0.3';
 var latestFirmware = '4.93';
 
-// ----- DROPDOWN HTML GENERATORS -----
-function getMenuCFW() {
-    return '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + devBuild + '</a>' +
+
+var FALLBACK_DEV = 'Failed to fetch dev build';
+var FALLBACK_STABLE = 'Failed to fetch';
+var SILK_VERSION_TEXT = 'Unable to Fetch Version on Silk Browser Engine';
+
+
+window.toggleMenu = function (menuId) 
+{
+    var menu = document.getElementById(menuId);
+    if (menu) 
+    {
+        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+    }
+};
+function buildDropdowns (devBuild, stableBuild) 
+{
+    var cfwContainer = document.getElementById('dropdown-container-cfw');
+    var fixesContainer = document.getElementById('dropdown-container-fixes');
+    var henContainer = document.getElementById('dropdown-container-hen');
+    if (!cfwContainer || !fixesContainer || !henContainer) return;
+
+    var displayDev = isSilk ? SILK_VERSION_TEXT : devBuild;
+    var displayStable = isSilk ? SILK_VERSION_TEXT : stableBuild;
+
+    var menuCFW = '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
+        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + displayDev + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: ' + displayStable + '</a>' +
         '</div>';
-}
-function getMenuFixes() {
-    return '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
+
+    var menuFixes = '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Dev Build)</a>' +
@@ -188,61 +212,103 @@ function getMenuFixes() {
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Stable Build)</a>' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Stable Build)</a>' +
         '</div>';
-}
-function getMenuHEN() {
-    return '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: ' + devBuild + '</a>' +
+
+    var menuHEN = '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: ' + displayDev + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + displayStable + '</a>' +
         '</div>';
-}
 
-// ----- GLOBAL TOGGLE -----
-window.toggleMenu = function(menuId) {
-    var menu = document.getElementById(menuId);
-    if (menu) {
-        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+    if (isSilk) 
+    {
+        cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + menuCFW + '</td></tr></table>';
+        fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + menuFixes + '</td></tr></table>';
+        henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + menuHEN + '</td></tr></table>';
     }
-};
-
-// ----- BUILD DROPDOWNS (engine‑aware) -----
-var cfw = document.getElementById('dropdown-container-cfw');
-var fixes = document.getElementById('dropdown-container-fixes');
-var hen = document.getElementById('dropdown-container-hen');
-if (cfw && fixes && hen) {
-    if (isSilk) {
-        cfw.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW() + '</td></tr></table>';
-        fixes.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + getMenuFixes() + '</td></tr></table>';
-        hen.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + getMenuHEN() + '</td></tr></table>';
-    } else {
-        cfw.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + getMenuCFW() + '</div>';
-        fixes.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
-        hen.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN() + '</div>';
+    else
+    {
+        cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + menuCFW + '</div>';
+        fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + menuFixes + '</div>';
+        henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + menuHEN + '</div>';
     }
 }
 
-// ----- PLACEHOLDER REPLACEMENT -----
+function fetchAndUpdateVersions () 
+{
+    if (isSilk) 
+    {
+        buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
+        return;
+    }
+
+    var url = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
+    var xhr = new XMLHttpRequest();
+    var timeoutId = setTimeout(function() {
+        xhr.abort();
+        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
+    }, 8000);
+
+    xhr.onreadystatechange = function () 
+    {
+        if (xhr.readyState === 4)
+        {
+            clearTimeout(timeoutId);
+            var devBuild = FALLBACK_DEV;
+            var stableBuild = FALLBACK_STABLE;
+            if (xhr.status === 200) 
+            {
+                var text = xhr.responseText;
+                var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
+                var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
+                if (stableMatch) stableBuild = stableMatch[1];
+                if (devMatch) devBuild = devMatch[1] + ' #' + devMatch[2];
+            }
+            buildDropdowns(devBuild, stableBuild);
+        }
+    };
+    xhr.onerror = function () 
+    {
+        clearTimeout(timeoutId);
+        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+
+if (isSilk) 
+{
+    buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
+}
+else
+{
+    buildDropdowns('loading...', 'loading...');
+    fetchAndUpdateVersions();
+}
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
-// ----- CLICK OUTSIDE CLOSES MENUS -----
-document.body.addEventListener('click', function(e) {
+
+document.body.addEventListener('click', function (e) 
+{
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
-    for (var i = 0; i < menus.length; i++) {
+    for (var i = 0; i < menus.length; i++) 
+    {
         var menu = document.getElementById(menus[i]);
-        if (menu && menu.style.display === 'block') {
+        if (menu && menu.style.display === 'block') 
+        {
             var imgPart = (menus[i] === 'downloadMenu_CFW_Base') ? 'CFW.png' :
                           (menus[i] === 'downloadMenu_HEN_Patch') ? 'HEN.png' : 'toolbox.png';
-            if (target.tagName !== 'IMG' || target.src.indexOf(imgPart) === -1) {
+            if (target.tagName !== 'IMG' || target.src.indexOf(imgPart) === -1) 
+            {
                 menu.style.display = 'none';
             }
         }
     }
 }, false);
 
-// ----- MARGIN CONTROL (Silk + PC) -----
-function applyMargin() {
+function applyMargin () 
+{
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
     var container = document.getElementById('mainContainer');
@@ -261,33 +327,41 @@ function applyMargin() {
 }
 window.applyMargin = applyMargin;
 
-// ----- MARGIN INIT -----
 var marginInput = document.getElementById('marginInput');
-if (marginInput) {
+if (marginInput) 
+{
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
-    if (initVal !== '') {
+    if (initVal !== '') 
+    {
         marginInput.value = initVal;
         applyMargin();
     }
-    if (!isSilk) {
-        marginInput.onkeypress = function(e) {
+    if (!isSilk) 
+    {
+        marginInput.onkeypress = function (e) 
+        {
             e = e || window.event;
-            if (e.keyCode === 13) { applyMargin(); return false; }
+            if (e.keyCode === 13) 
+            {
+                applyMargin(); return false; 
+            }
             return true;
         };
     }
-    marginInput.onblur = function() {
+    marginInput.onblur = function ()
+    {
         var clean = this.value.replace(/[^0-9]/g, '');
         if (clean !== '') this.value = clean;
     };
 }
-
-// ----- SILK IMAGE FIX (HTTP) -----
-if (isSilk) {
+if (isSilk) 
+{
     var imgs = document.getElementsByTagName('img');
-    for (var i = 0; i < imgs.length; i++) {
+    for (var i = 0; i < imgs.length; i++)
+    {
         var src = imgs[i].src;
-        if (src && src.indexOf('https://') === 0) {
+        if (src && src.indexOf('https://') === 0) 
+        {
             imgs[i].src = src.replace('https://', 'http://');
         }
     }
