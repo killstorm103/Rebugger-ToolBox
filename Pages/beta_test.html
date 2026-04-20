@@ -174,33 +174,27 @@
 </div>
 
 <script>
-// ----- GLOBAL VARS -----
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
 
-// ----- FALLBACK TEXT (shown if remote fetch fails on non-Silk) -----
+
 var FALLBACK_DEV = 'Failed to fetch dev build';
 var FALLBACK_STABLE = 'Failed to fetch';
+var SILK_VERSION_TEXT = 'Unable to Fetch Version on Silk Browser Engine';
 
-// ----- SILK VERSION PLACEHOLDER -----
-var SILK_VERSION_TEXT = 'Unable to Fetch on Silk Browser Engine';
 
-// ----- TOGGLE MENU -----
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
         menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
     }
 };
-
-// ----- BUILD DROPDOWNS (with appropriate version text) -----
 function buildDropdowns(devBuild, stableBuild) {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
     if (!cfwContainer || !fixesContainer || !henContainer) return;
 
-    // On Silk, show the special Silk message; otherwise use provided versions
     var displayDev = isSilk ? SILK_VERSION_TEXT : devBuild;
     var displayStable = isSilk ? SILK_VERSION_TEXT : stableBuild;
 
@@ -237,9 +231,7 @@ function buildDropdowns(devBuild, stableBuild) {
     }
 }
 
-// ----- FETCH REMOTE VERSIONS (non-Silk only; Silk immediately shows placeholder) -----
 function fetchAndUpdateVersions() {
-    // Silk never attempts to fetch – we just keep the placeholder
     if (isSilk) {
         buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
         return;
@@ -275,21 +267,16 @@ function fetchAndUpdateVersions() {
     xhr.send();
 }
 
-// ----- INITIAL BUILD -----
-// Silk: show placeholder immediately, no fetch
-// Non-Silk: show 'loading...' then fetch
 if (isSilk) {
     buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
 } else {
     buildDropdowns('loading...', 'loading...');
     fetchAndUpdateVersions();
 }
-
-// ----- PLACEHOLDER REPLACEMENT -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
-// ----- CLICK OUTSIDE CLOSES MENUS -----
+
 document.body.addEventListener('click', function(e) {
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -305,7 +292,6 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ----- MARGIN CONTROL (Silk + PC) -----
 function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -325,7 +311,6 @@ function applyMargin() {
 }
 window.applyMargin = applyMargin;
 
-// ----- MARGIN INIT -----
 var marginInput = document.getElementById('marginInput');
 if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
@@ -345,8 +330,6 @@ if (marginInput) {
         if (clean !== '') this.value = clean;
     };
 }
-
-// ----- SILK IMAGE FIX (HTTP) -----
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
