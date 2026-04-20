@@ -167,41 +167,9 @@
 // ----- GLOBAL VARS -----
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
+var remoteLoaded = false;
 
-// ----- FETCH REMOTE VERSION DATA -----
-function fetchVersionData(callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var text = xhr.responseText;
-                // Parse the single-line format:
-                // "stable build: version 1.0.3 dev build: version 1.0.4 build: 2"
-                var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
-                var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
-                
-                var stableBuild = stableMatch ? stableMatch[1] : '1.0';      // fallback
-                var devVersion = devMatch ? devMatch[1] : '1.0 dev';
-                var devBuildNum = devMatch ? devMatch[2] : '1';
-                var devBuild = devVersion + ' #' + devBuildNum;
-                
-                callback(stableBuild, devBuild);
-            } else {
-                // Fallback to hardcoded values if remote fails
-                console.warn('Remote version fetch failed, using defaults.');
-                callback('1.0 stable', '1.0 dev');
-            }
-        }
-    };
-    xhr.onerror = function() {
-        console.warn('Remote version fetch error, using defaults.');
-        callback('Unknown', 'Unknown');
-    };
-    xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
-    xhr.send();
-}
-
-// ----- DROPDOWN HTML GENERATORS (now accept parameters) -----
+// ----- DROPDOWN HTML GENERATORS (accept parameters) -----
 function getMenuCFW(stableBuild, devBuild) {
     return '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
         '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + devBuild + '</a>' +
@@ -210,7 +178,6 @@ function getMenuCFW(stableBuild, devBuild) {
         '</div>';
 }
 function getMenuFixes() {
-    // (unchanged – no version strings here)
     return '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>' +
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>' +
@@ -237,7 +204,7 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ----- BUILD DROPDOWNS (now called after fetch) -----
+// ----- BUILD DROPDOWNS WITH GIVEN VERSIONS -----
 function buildDropdowns(stableBuild, devBuild) {
     var cfw = document.getElementById('dropdown-container-cfw');
     var fixes = document.getElementById('dropdown-container-fixes');
@@ -253,7 +220,29 @@ function buildDropdowns(stableBuild, devBuild) {
         fixes.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
         hen.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN(stableBuild, devBuild) + '</div>';
     }
+    remoteLoaded = true;
 }
+
+// ----- FETCH REMOTE VERSION.TXT -----
+(function() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var text = xhr.responseText;
+            var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
+            var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
+            var stableBuild = stableMatch ? stableMatch[1] : '';
+            var devVersion = devMatch ? devMatch[1] : '';
+            var devBuildNum = devMatch ? devMatch[2] : '';
+            var devBuild = devVersion + (devBuildNum ? ' #' + devBuildNum : '');
+            if (stableBuild && devBuild) {
+                buildDropdowns(stableBuild, devBuild);
+            }
+        }
+    };
+    xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
+    xhr.send();
+})();
 
 // ----- PLACEHOLDER REPLACEMENT -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
@@ -326,11 +315,6 @@ if (isSilk) {
         }
     }
 }
-
-// ----- START: FETCH REMOTE VERSIONS, THEN BUILD DROPDOWNS -----
-fetchVersionData(function(stableBuild, devBuild) {
-    buildDropdowns(stableBuild, devBuild);
-});
 </script>
 
 </body>
