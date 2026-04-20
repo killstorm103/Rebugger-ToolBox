@@ -145,16 +145,48 @@
             <h2>Updates<span class="size"></span></h2>
             <ul>
                 <li>Rebugger - ToolBox (Base)</li>
-                <li id="dropdown-container-cfw"></li>
+                <li id="dropdown-container-cfw">
+                    <!-- 静态下拉结构 -->
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu('downloadMenu_CFW_Base')">
+                        <div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">
+                            <a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: <span id="cfw-dev-build">1.0.4 #1</span></a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: <span id="cfw-stable-build">1.0.3</span></a>
+                        </div>
+                    </div>
+                </li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
-                <li id="dropdown-container-fixes"></li>
+                <li id="dropdown-container-fixes">
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu('downloadMenu_Fixes')">
+                        <div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Dev Build)</a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Stable Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Stable Build)</a>
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Stable Build)</a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </li>
         <li class="bloc">
             <h2>Patches<span class="size"></span></h2>
             <ul>
                 <li>HEN Patch</li>
-                <li id="dropdown-container-hen"></li>
+                <li id="dropdown-container-hen">
+                    <div class="dropdown-absolute">
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu('downloadMenu_HEN_Patch')">
+                        <div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: <span id="hen-dev-build">1.0.4 #1</span></a>
+                            <hr class="dropdown-separator">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: <span id="hen-stable-build">1.0.3</span></a>
+                        </div>
+                    </div>
+                </li>
                 <li>Online Access Bypass (<span id="latestFirmwareSpan">%latest_firmware%</span>)</li>
                 <li><span class="space">└ Up to date by default no need to Patch!</span></li>
                 <li><a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy"></a></li>
@@ -168,38 +200,7 @@
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
 
-// 硬编码回退版本（当远程获取失败时使用）
-var FALLBACK_STABLE = '1.0.3';
-var FALLBACK_DEV = '1.0.4 #1';
-
-// ----- 下拉菜单 HTML 生成器（接受参数）-----
-function getMenuCFW(stableBuild, devBuild) {
-    return '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + devBuild + '</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
-        '</div>';
-}
-function getMenuFixes() {
-    return '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Dev Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Dev Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Dev Build)</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg" target="_blank">Both Fixes Combined (Stable Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg" target="_blank">Category Fix (Stable Build)</a>' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg" target="_blank">Plugin Installer (Stable Build)</a>' +
-        '</div>';
-}
-function getMenuHEN(stableBuild, devBuild) {
-    return '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: ' + devBuild + '</a>' +
-        '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + stableBuild + '</a>' +
-        '</div>';
-}
-
-// ----- 全局开关菜单 -----
+// ----- 开关菜单 -----
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
@@ -207,34 +208,30 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ----- 构建下拉菜单（使用给定的版本号）-----
-function buildDropdowns(stableBuild, devBuild) {
-    var cfw = document.getElementById('dropdown-container-cfw');
-    var fixes = document.getElementById('dropdown-container-fixes');
-    var hen = document.getElementById('dropdown-container-hen');
-    if (!cfw || !fixes || !hen) return;
+// ----- 更新版本号到对应的 span -----
+function updateVersionText(stableBuild, devBuild) {
+    // CFW
+    var cfwDev = document.getElementById('cfw-dev-build');
+    var cfwStable = document.getElementById('cfw-stable-build');
+    if (cfwDev) cfwDev.textContent = devBuild;
+    if (cfwStable) cfwStable.textContent = stableBuild;
 
-    if (isSilk) {
-        cfw.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + getMenuCFW(stableBuild, devBuild) + '</td></tr></table>';
-        fixes.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + getMenuFixes() + '</td></tr></table>';
-        hen.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + getMenuHEN(stableBuild, devBuild) + '</td></tr></table>';
-    } else {
-        cfw.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + getMenuCFW(stableBuild, devBuild) + '</div>';
-        fixes.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + getMenuFixes() + '</div>';
-        hen.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + getMenuHEN(stableBuild, devBuild) + '</div>';
-    }
+    // HEN
+    var henDev = document.getElementById('hen-dev-build');
+    var henStable = document.getElementById('hen-stable-build');
+    if (henDev) henDev.textContent = devBuild;
+    if (henStable) henStable.textContent = stableBuild;
 }
 
-// ----- 远程获取 version.txt（使用 webMAN 代理，带超时和回退）-----
+// ----- 远程获取 version.txt（webMAN 代理 + 回退）-----
 function fetchRemoteVersions() {
     var xhr = new XMLHttpRequest();
     var timedOut = false;
     var timeoutId = setTimeout(function() {
         timedOut = true;
         xhr.abort();
-        // 超时：使用回退版本
-        buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
-    }, 8000); // 8 秒超时
+        // 超时：不做任何更新，保留静态默认值
+    }, 8000);
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
@@ -243,29 +240,28 @@ function fetchRemoteVersions() {
                 var text = xhr.responseText;
                 var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
                 var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
-                var stableBuild = stableMatch ? stableMatch[1] : FALLBACK_STABLE;
-                var devVersion = devMatch ? devMatch[1] : '1.0.4';
-                var devBuildNum = devMatch ? devMatch[2] : '1';
-                var devBuild = devVersion + ' #' + devBuildNum;
-                buildDropdowns(stableBuild, devBuild);
-            } else {
-                // 请求失败：使用回退版本
-                buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
+                if (stableMatch && devMatch) {
+                    var stableBuild = stableMatch[1];
+                    var devBuild = devMatch[1] + ' #' + devMatch[2];
+                    updateVersionText(stableBuild, devBuild);
+                }
+                // 如果解析失败，保留默认值
             }
+            // 请求失败或超时：保留默认值
         }
     };
     xhr.onerror = function() {
         clearTimeout(timeoutId);
-        buildDropdowns(FALLBACK_STABLE, FALLBACK_DEV);
+        // 出错时保留默认值
     };
 
-    // 优先使用 webMAN 代理（如果可用），否则直连
+    // 优先 webMAN 代理
     var url = 'http://127.0.0.1/http/raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
     xhr.open('GET', url, true);
     xhr.send();
 }
 
-// ----- 占位符替换 -----
+// ----- 占位符替换（固件版本）-----
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
@@ -285,7 +281,7 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ----- 边距控制（Silk + PC）-----
+// ----- 边距控制 -----
 function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -326,7 +322,7 @@ if (marginInput) {
     };
 }
 
-// ----- Silk 图片 HTTP 重写 -----
+// ----- Silk 图片 HTTP 重写（必须尽早执行）-----
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
@@ -337,7 +333,7 @@ if (isSilk) {
     }
 }
 
-// ----- 启动：获取远程版本（带超时回退）-----
+// ----- 启动远程版本获取（不影响图片显示）-----
 fetchRemoteVersions();
 </script>
 
