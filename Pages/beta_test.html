@@ -80,22 +80,22 @@
         hr.dropdown-separator {
             margin: 8px -10px;
             border: none;
-            border-top: 1px solid #222;
+            border-top: 1px solid #dc3545;
         }
-        /* Silk-safe table layout */
-        .dropdown-table {
-            display: inline-table;
-            border-collapse: collapse;
-        }
+        .dropdown-table { display: inline-table; border-collapse: collapse; }
         .dropdown-cell-img { vertical-align: top; }
         .dropdown-cell-menu { vertical-align: top; padding-left: 10px; }
-        /* Absolute positioning for normal browsers */
         .dropdown-absolute { position: relative; display: inline-block; }
         .dropdown-absolute .dropdown-menu {
             position: absolute;
             left: 100%;
             top: 0;
             margin-left: 10px;
+        }
+        /* Silk version placeholder */
+        .silk-version-placeholder {
+            color: #aaa;
+            font-style: italic;
         }
     </style>
 </head>
@@ -149,13 +149,13 @@
         <li class="bloc">
             <h2>Updates<span class="size"></span></h2>
             <ul>
-                <li>Rebugger - ToolBox (Base)</li>
+                <li>Rebugger - ToolBox (Base) (CFW)</li>
                 <li id="dropdown-container-cfw">
-                    <!-- 占位，脚本会根据引擎填充 -->
+                    <!-- Populated by script -->
                 </li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
                 <li id="dropdown-container-fixes">
-                    <!-- 占位 -->
+                    <!-- Populated by script -->
                 </li>
             </ul>
         </li>
@@ -164,7 +164,7 @@
             <ul>
                 <li>HEN Patch</li>
                 <li id="dropdown-container-hen">
-                    <!-- 占位 -->
+                    <!-- Populated by script -->
                 </li>
                 <li>Online Access Bypass (<span id="latestFirmwareSpan">%latest_firmware%</span>)</li>
                 <li><span class="space">└ Up to date by default no need to Patch!</span></li>
@@ -179,10 +179,6 @@
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
 
-// ----- FALLBACK VERSIONS -----
-var FALLBACK_DEV = '1.0.4 #1';
-var FALLBACK_STABLE = '1.0.3';
-
 // ----- TOGGLE MENU -----
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
@@ -191,18 +187,21 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ----- 构建下拉菜单 HTML（根据引擎选择布局）-----
+// ----- BUILD DROPDOWNS (with optional version text) -----
 function buildDropdowns(devBuild, stableBuild) {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
     if (!cfwContainer || !fixesContainer || !henContainer) return;
 
-    // 生成菜单内容（与版本无关的部分）
+    // On Silk, show placeholder instead of version numbers
+    var displayDev = isSilk ? '--' : devBuild;
+    var displayStable = isSilk ? '--' : stableBuild;
+
     var menuCFW = '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: <span id="cfw-dev-build">' + devBuild + '</span></a>' +
+        '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + displayDev + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: <span id="cfw-stable-build">' + stableBuild + '</span></a>' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg" target="_blank">Stable Build: ' + displayStable + '</a>' +
         '</div>';
 
     var menuFixes = '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
@@ -216,29 +215,26 @@ function buildDropdowns(devBuild, stableBuild) {
         '</div>';
 
     var menuHEN = '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: <span id="hen-dev-build">' + devBuild + '</span></a>' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Dev Build: ' + displayDev + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: <span id="hen-stable-build">' + stableBuild + '</span></a>' +
+        '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + displayStable + '</a>' +
         '</div>';
 
     if (isSilk) {
-        // Silk: 使用表格布局，避免绝对定位错位
         cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + menuCFW + '</td></tr></table>';
         fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + menuFixes + '</td></tr></table>';
         henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + menuHEN + '</td></tr></table>';
     } else {
-        // 正常浏览器：绝对定位
         cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + menuCFW + '</div>';
         fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + menuFixes + '</div>';
         henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + menuHEN + '</div>';
     }
 }
 
-// ----- 获取远程版本并更新（Silk 用代理，普通用直连）-----
+// ----- FETCH REMOTE VERSIONS (Silk uses proxy, others direct) -----
 function fetchAndUpdateVersions() {
     var url;
     if (isSilk) {
-        // Silk 下使用 webMAN 代理，避免 HTTPS 卡死
         url = 'http://127.0.0.1/http/raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
     } else {
         url = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
@@ -247,15 +243,15 @@ function fetchAndUpdateVersions() {
     var xhr = new XMLHttpRequest();
     var timeoutId = setTimeout(function() {
         xhr.abort();
-        // 超时：使用回退版本构建菜单
-        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
-    }, isSilk ? 5000 : 8000); // Silk 超时更短
+        // On timeout, build with fallback values (but Silk will still see '--')
+        buildDropdowns('1.0.4 #1', '1.0.3');
+    }, isSilk ? 5000 : 8000);
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             clearTimeout(timeoutId);
-            var devBuild = FALLBACK_DEV;
-            var stableBuild = FALLBACK_STABLE;
+            var devBuild = '1.0.4 #1';
+            var stableBuild = '1.0.3';
             if (xhr.status === 200) {
                 var text = xhr.responseText;
                 var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
@@ -263,29 +259,32 @@ function fetchAndUpdateVersions() {
                 if (stableMatch) stableBuild = stableMatch[1];
                 if (devMatch) devBuild = devMatch[1] + ' #' + devMatch[2];
             }
-            // 无论成功与否，都用获取到的（或回退）版本构建菜单
             buildDropdowns(devBuild, stableBuild);
         }
     };
     xhr.onerror = function() {
         clearTimeout(timeoutId);
-        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
+        buildDropdowns('1.0.4 #1', '1.0.3');
     };
     xhr.open('GET', url, true);
     xhr.send();
 }
 
-// ----- 先立即用回退版本构建菜单，保证图片立刻显示 -----
-buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
+// ----- INITIAL BUILD WITH PLACEHOLDER (Silk sees '--', others see loading) -----
+if (isSilk) {
+    buildDropdowns('--', '--');
+} else {
+    buildDropdowns('loading...', 'loading...');
+}
 
-// ----- 然后异步获取最新版本（获取成功后会重新构建，更新版本号）-----
+// ----- START REMOTE FETCH (will update versions if successful) -----
 fetchAndUpdateVersions();
 
-// ----- 固件占位符 -----
+// ----- PLACEHOLDER REPLACEMENT -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
-// ----- 点击外部关闭菜单 -----
+// ----- CLICK OUTSIDE CLOSES MENUS -----
 document.body.addEventListener('click', function(e) {
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -301,7 +300,7 @@ document.body.addEventListener('click', function(e) {
     }
 }, false);
 
-// ----- 边距控制 (Silk + PC) -----
+// ----- MARGIN CONTROL (Silk + PC) -----
 function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -321,7 +320,7 @@ function applyMargin() {
 }
 window.applyMargin = applyMargin;
 
-// ----- 边距初始化 -----
+// ----- MARGIN INIT -----
 var marginInput = document.getElementById('marginInput');
 if (marginInput) {
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
@@ -342,7 +341,7 @@ if (marginInput) {
     };
 }
 
-// ----- Silk 图片 HTTP 重写 -----
+// ----- SILK IMAGE FIX (HTTP) -----
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
