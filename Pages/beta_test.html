@@ -92,9 +92,8 @@
             top: 0;
             margin-left: 10px;
         }
-        /* Silk version placeholder */
-        .silk-version-placeholder {
-            color: #aaa;
+        .version-failed {
+            color: #ffa500;
             font-style: italic;
         }
     </style>
@@ -149,7 +148,7 @@
         <li class="bloc">
             <h2>Updates<span class="size"></span></h2>
             <ul>
-                <li>Rebugger - ToolBox (Base) (CFW)</li>
+                <li>Rebugger - ToolBox (Base)</li>
                 <li id="dropdown-container-cfw">
                     <!-- Populated by script -->
                 </li>
@@ -179,6 +178,13 @@
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
 
+// ----- FALLBACK TEXT (shown if remote fetch fails on non-Silk) -----
+var FALLBACK_DEV = 'Failed to fetch dev build';
+var FALLBACK_STABLE = 'Failed to fetch';
+
+// ----- SILK VERSION PLACEHOLDER -----
+var SILK_VERSION_TEXT = 'Unable to Fetch on Silk Browser Engine';
+
 // ----- TOGGLE MENU -----
 window.toggleMenu = function(menuId) {
     var menu = document.getElementById(menuId);
@@ -187,16 +193,16 @@ window.toggleMenu = function(menuId) {
     }
 };
 
-// ----- BUILD DROPDOWNS (with optional version text) -----
+// ----- BUILD DROPDOWNS (with appropriate version text) -----
 function buildDropdowns(devBuild, stableBuild) {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
     if (!cfwContainer || !fixesContainer || !henContainer) return;
 
-    // On Silk, show placeholder instead of version numbers
-    var displayDev = isSilk ? '--' : devBuild;
-    var displayStable = isSilk ? '--' : stableBuild;
+    // On Silk, show the special Silk message; otherwise use provided versions
+    var displayDev = isSilk ? SILK_VERSION_TEXT : devBuild;
+    var displayStable = isSilk ? SILK_VERSION_TEXT : stableBuild;
 
     var menuCFW = '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
         '<a href="https://www.mediafire.com/file/gs5vz5nqoimxqat/Rebugger.Toolbox.Installer_CFW.pkg/file" target="_blank">Dev Build: ' + displayDev + '</a>' +
@@ -231,27 +237,26 @@ function buildDropdowns(devBuild, stableBuild) {
     }
 }
 
-// ----- FETCH REMOTE VERSIONS (Silk uses proxy, others direct) -----
+// ----- FETCH REMOTE VERSIONS (non-Silk only; Silk immediately shows placeholder) -----
 function fetchAndUpdateVersions() {
-    var url;
+    // Silk never attempts to fetch – we just keep the placeholder
     if (isSilk) {
-        url = 'http://127.0.0.1/http/raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
-    } else {
-        url = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
+        buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
+        return;
     }
 
+    var url = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
     var xhr = new XMLHttpRequest();
     var timeoutId = setTimeout(function() {
         xhr.abort();
-        // On timeout, build with fallback values (but Silk will still see '--')
-        buildDropdowns('1.0.4 #1', '1.0.3');
-    }, isSilk ? 5000 : 8000);
+        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
+    }, 8000);
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             clearTimeout(timeoutId);
-            var devBuild = '1.0.4 #1';
-            var stableBuild = '1.0.3';
+            var devBuild = FALLBACK_DEV;
+            var stableBuild = FALLBACK_STABLE;
             if (xhr.status === 200) {
                 var text = xhr.responseText;
                 var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
@@ -264,21 +269,21 @@ function fetchAndUpdateVersions() {
     };
     xhr.onerror = function() {
         clearTimeout(timeoutId);
-        buildDropdowns('1.0.4 #1', '1.0.3');
+        buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
     };
     xhr.open('GET', url, true);
     xhr.send();
 }
 
-// ----- INITIAL BUILD WITH PLACEHOLDER (Silk sees '--', others see loading) -----
+// ----- INITIAL BUILD -----
+// Silk: show placeholder immediately, no fetch
+// Non-Silk: show 'loading...' then fetch
 if (isSilk) {
-    buildDropdowns('--', '--');
+    buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
 } else {
     buildDropdowns('loading...', 'loading...');
+    fetchAndUpdateVersions();
 }
-
-// ----- START REMOTE FETCH (will update versions if successful) -----
-fetchAndUpdateVersions();
 
 // ----- PLACEHOLDER REPLACEMENT -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
