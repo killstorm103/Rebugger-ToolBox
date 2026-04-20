@@ -8,6 +8,7 @@
 - [Known cunts list](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html)
 - [Fixes & Other Information](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html)
 - [Homebrew Information](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html)
+- [Tutorials](http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Tutorials.html)
 
 - Previews:
 <img src="Previews/Toolbox.jpg">
