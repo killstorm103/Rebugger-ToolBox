@@ -148,23 +148,18 @@
         <li class="bloc">
             <h2>Updates<span class="size"></span></h2>
             <ul>
-                <li>Rebugger - ToolBox (Base)</li>
+                <li>Rebugger - ToolBox (Base) (CFW)</li>
                 <li id="dropdown-container-cfw">
-                    <!-- Populated by script -->
                 </li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
-                <li id="dropdown-container-fixes">
-                    <!-- Populated by script -->
-                </li>
+                <li id="dropdown-container-fixes"></li>
             </ul>
         </li>
         <li class="bloc">
             <h2>Patches<span class="size"></span></h2>
             <ul>
                 <li>HEN Patch</li>
-                <li id="dropdown-container-hen">
-                    <!-- Populated by script -->
-                </li>
+                <li id="dropdown-container-hen"></li>
                 <li>Online Access Bypass (<span id="latestFirmwareSpan">%latest_firmware%</span>)</li>
                 <li><span class="space">└ Up to date by default no need to Patch!</span></li>
                 <li><a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy"></a></li>
@@ -183,13 +178,16 @@ var FALLBACK_STABLE = 'Failed to fetch';
 var SILK_VERSION_TEXT = 'Unable to Fetch Version on Silk Browser Engine';
 
 
-window.toggleMenu = function(menuId) {
+window.toggleMenu = function (menuId) 
+{
     var menu = document.getElementById(menuId);
-    if (menu) {
+    if (menu) 
+    {
         menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
     }
 };
-function buildDropdowns(devBuild, stableBuild) {
+function buildDropdowns (devBuild, stableBuild) 
+{
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
@@ -220,19 +218,24 @@ function buildDropdowns(devBuild, stableBuild) {
         '<a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg" target="_blank">Stable Build: ' + displayStable + '</a>' +
         '</div>';
 
-    if (isSilk) {
+    if (isSilk) 
+    {
         cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + menuCFW + '</td></tr></table>';
         fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + menuFixes + '</td></tr></table>';
         henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + menuHEN + '</td></tr></table>';
-    } else {
+    }
+    else
+    {
         cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + menuCFW + '</div>';
         fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + menuFixes + '</div>';
         henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + menuHEN + '</div>';
     }
 }
 
-function fetchAndUpdateVersions() {
-    if (isSilk) {
+function fetchAndUpdateVersions () 
+{
+    if (isSilk) 
+    {
         buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
         return;
     }
@@ -244,12 +247,15 @@ function fetchAndUpdateVersions() {
         buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
     }, 8000);
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
+    xhr.onreadystatechange = function () 
+    {
+        if (xhr.readyState === 4)
+        {
             clearTimeout(timeoutId);
             var devBuild = FALLBACK_DEV;
             var stableBuild = FALLBACK_STABLE;
-            if (xhr.status === 200) {
+            if (xhr.status === 200) 
+            {
                 var text = xhr.responseText;
                 var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
                 var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
@@ -259,7 +265,8 @@ function fetchAndUpdateVersions() {
             buildDropdowns(devBuild, stableBuild);
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () 
+    {
         clearTimeout(timeoutId);
         buildDropdowns(FALLBACK_DEV, FALLBACK_STABLE);
     };
@@ -267,9 +274,12 @@ function fetchAndUpdateVersions() {
     xhr.send();
 }
 
-if (isSilk) {
+if (isSilk) 
+{
     buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT);
-} else {
+}
+else
+{
     buildDropdowns('loading...', 'loading...');
     fetchAndUpdateVersions();
 }
@@ -277,22 +287,27 @@ var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
 
-document.body.addEventListener('click', function(e) {
+document.body.addEventListener('click', function (e) 
+{
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
-    for (var i = 0; i < menus.length; i++) {
+    for (var i = 0; i < menus.length; i++) 
+    {
         var menu = document.getElementById(menus[i]);
-        if (menu && menu.style.display === 'block') {
+        if (menu && menu.style.display === 'block') 
+        {
             var imgPart = (menus[i] === 'downloadMenu_CFW_Base') ? 'CFW.png' :
                           (menus[i] === 'downloadMenu_HEN_Patch') ? 'HEN.png' : 'toolbox.png';
-            if (target.tagName !== 'IMG' || target.src.indexOf(imgPart) === -1) {
+            if (target.tagName !== 'IMG' || target.src.indexOf(imgPart) === -1) 
+            {
                 menu.style.display = 'none';
             }
         }
     }
 }, false);
 
-function applyMargin() {
+function applyMargin () 
+{
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
     var container = document.getElementById('mainContainer');
@@ -312,29 +327,40 @@ function applyMargin() {
 window.applyMargin = applyMargin;
 
 var marginInput = document.getElementById('marginInput');
-if (marginInput) {
+if (marginInput) 
+{
     var initVal = marginInput.value.replace(/[^0-9]/g, '');
-    if (initVal !== '') {
+    if (initVal !== '') 
+    {
         marginInput.value = initVal;
         applyMargin();
     }
-    if (!isSilk) {
-        marginInput.onkeypress = function(e) {
+    if (!isSilk) 
+    {
+        marginInput.onkeypress = function (e) 
+        {
             e = e || window.event;
-            if (e.keyCode === 13) { applyMargin(); return false; }
+            if (e.keyCode === 13) 
+            {
+                applyMargin(); return false; 
+            }
             return true;
         };
     }
-    marginInput.onblur = function() {
+    marginInput.onblur = function ()
+    {
         var clean = this.value.replace(/[^0-9]/g, '');
         if (clean !== '') this.value = clean;
     };
 }
-if (isSilk) {
+if (isSilk) 
+{
     var imgs = document.getElementsByTagName('img');
-    for (var i = 0; i < imgs.length; i++) {
+    for (var i = 0; i < imgs.length; i++)
+    {
         var src = imgs[i].src;
-        if (src && src.indexOf('https://') === 0) {
+        if (src && src.indexOf('https://') === 0) 
+        {
             imgs[i].src = src.replace('https://', 'http://');
         }
     }
