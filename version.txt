@@ -1,5 +1,9 @@
 stable build:
   version 1.0.3
+  cfw_download: https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg
+  hen_patch_download: https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg
 dev build:
   version 1.0.4
   build: 2
+  cfw_download: https://www.mediafire.com/file/riji2ie35dk4j3a/Rebugger.Toolbox.Installer_CFW.pkg/file
+  hen_patch_download: https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg
