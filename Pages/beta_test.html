@@ -173,9 +173,9 @@
 var isSilk = window.isPS3SilkBrowserEngine;
 var latestFirmware = '4.93';
 
-// Silk placeholder text – no download links are available
-var SILK_VERSION_TEXT = 'Download unavailable on Silk';
+var SILK_VERSION_TEXT = 'Download unavailable on Silk';   // shown on Silk
 
+// ----- Toggle menu -----
 window.toggleMenu = function (menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
@@ -183,23 +183,70 @@ window.toggleMenu = function (menuId) {
     }
 };
 
-function buildDropdowns(devBuild, stableBuild, urls) {
+// ----- Parse version.txt into a structured object -----
+function parseVersionData(text) {
+    var data = {
+        stable: { version: null, cfwDownload: null, henPatchDownload: null },
+        dev:    { version: null, build: null, cfwDownload: null, henPatchDownload: null }
+    };
+    var lines = text.split('\n');
+    var currentSection = null;   // 'stable' or 'dev'
+
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line === '') continue;
+
+        // Detect section headers
+        if (line.indexOf('stable build:') !== -1) {
+            currentSection = 'stable';
+            continue;
+        }
+        if (line.indexOf('dev build:') !== -1) {
+            currentSection = 'dev';
+            continue;
+        }
+
+        if (currentSection === 'stable') {
+            var verMatch = line.match(/^version\s+(.+)$/i);
+            if (verMatch) data.stable.version = verMatch[1].trim();
+            var cfwMatch = line.match(/^download_base_cfw:\s*(.+)$/i);
+            if (cfwMatch) data.stable.cfwDownload = cfwMatch[1].trim();
+            var henMatch = line.match(/^download_hen_patch:\s*(.+)$/i);
+            if (henMatch) data.stable.henPatchDownload = henMatch[1].trim();
+        }
+        else if (currentSection === 'dev') {
+            var verMatch = line.match(/^version\s+(.+)$/i);
+            if (verMatch) data.dev.version = verMatch[1].trim();
+            var buildMatch = line.match(/^build:\s*(\d+)$/i);
+            if (buildMatch) data.dev.build = buildMatch[1];
+            var cfwMatch = line.match(/^download_base_cfw:\s*(.+)$/i);
+            if (cfwMatch) data.dev.cfwDownload = cfwMatch[1].trim();
+            var henMatch = line.match(/^download_hen_patch:\s*(.+)$/i);
+            if (henMatch) data.dev.henPatchDownload = henMatch[1].trim();
+        }
+    }
+    return data;
+}
+
+// ----- Build dropdowns with given text and URLs -----
+function buildDropdowns(devText, stableText, urls) {
     var cfwContainer = document.getElementById('dropdown-container-cfw');
     var fixesContainer = document.getElementById('dropdown-container-fixes');
     var henContainer = document.getElementById('dropdown-container-hen');
     if (!cfwContainer || !fixesContainer || !henContainer) return;
 
-    var displayDev = isSilk ? SILK_VERSION_TEXT : devBuild;
-    var displayStable = isSilk ? SILK_VERSION_TEXT : stableBuild;
+    // For Silk: no links, just the message; for others: use provided URLs or '#'
+    var displayDev = isSilk ? SILK_VERSION_TEXT : devText;
+    var displayStable = isSilk ? SILK_VERSION_TEXT : stableText;
 
-    // On Silk, use "#" to avoid any real download link; on WebKit, use the fetched URLs or show an error
-    var cfwDevUrl = (isSilk || !urls || !urls.cfwDevUrl) ? '#' : urls.cfwDevUrl;
-    var cfwStableUrl = (isSilk || !urls || !urls.cfwStableUrl) ? '#' : urls.cfwStableUrl;
-    var henDevUrl = (isSilk || !urls || !urls.henDevUrl) ? '#' : urls.henDevUrl;
-    var henStableUrl = (isSilk || !urls || !urls.henStableUrl) ? '#' : urls.henStableUrl;
+    // Use URLs only if not Silk and if they exist; otherwise '#'
+    var cfwDevUrl = (!isSilk && urls && urls.cfwDevUrl) ? urls.cfwDevUrl : '#';
+    var cfwStableUrl = (!isSilk && urls && urls.cfwStableUrl) ? urls.cfwStableUrl : '#';
+    var henDevUrl = (!isSilk && urls && urls.henDevUrl) ? urls.henDevUrl : '#';
+    var henStableUrl = (!isSilk && urls && urls.henStableUrl) ? urls.henStableUrl : '#';
 
-    // Clicking on a Silk link shows an alert
-    var silkOnClick = isSilk ? ' onclick="alert(\'Download is not available on the Silk browser engine. Please use the standard WebKit browser or update your firmware certificates.\'); return false;"' : '';
+    // On Silk clicking a link shows an alert
+    var silkOnClick = isSilk ? ' onclick="alert(\'Download is not available on the Silk browser engine.\'); return false;"' : '';
 
     var menuCFW = '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
         '<a href="' + cfwDevUrl + '" target="_blank"' + silkOnClick + '>Dev Build: ' + displayDev + '</a>' +
@@ -234,71 +281,32 @@ function buildDropdowns(devBuild, stableBuild, urls) {
     }
 }
 
-// Parse version.txt including URLs
-function parseVersionData(text) {
-    var data = {
-        stable: { version: null, cfwDownload: null, henPatchDownload: null },
-        dev: { version: null, build: null, cfwDownload: null, henPatchDownload: null }
-    };
-    var lines = text.split('\n');
-    var currentSection = null;
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (line === '') continue;
-        if (line.indexOf('stable build:') !== -1) { currentSection = 'stable'; continue; }
-        if (line.indexOf('dev build:') !== -1) { currentSection = 'dev'; continue; }
-        if (currentSection === 'stable') {
-            var verMatch = line.match(/^version\s+(.+)$/i);
-            if (verMatch) data.stable.version = verMatch[1].trim();
-            var cfwMatch = line.match(/^cfw_download:\s*(.+)$/i);
-            if (cfwMatch) data.stable.cfwDownload = cfwMatch[1].trim();
-            var henMatch = line.match(/^hen_patch_download:\s*(.+)$/i);
-            if (henMatch) data.stable.henPatchDownload = henMatch[1].trim();
-        } else if (currentSection === 'dev') {
-            var verMatch = line.match(/^version\s+(.+)$/i);
-            if (verMatch) data.dev.version = verMatch[1].trim();
-            var buildMatch = line.match(/^build:\s*(\d+)$/i);
-            if (buildMatch) data.dev.build = buildMatch[1];
-            var cfwMatch = line.match(/^cfw_download:\s*(.+)$/i);
-            if (cfwMatch) data.dev.cfwDownload = cfwMatch[1].trim();
-            var henMatch = line.match(/^hen_patch_download:\s*(.+)$/i);
-            if (henMatch) data.dev.henPatchDownload = henMatch[1].trim();
-        }
-    }
-    return data;
-}
-
+// ----- Fetch version.txt and update UI -----
 function fetchAndUpdateVersions() {
     if (isSilk) {
-        // Silk never fetches – build with placeholder and no links
         buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT, {});
         return;
     }
+
     var url = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt';
     var xhr = new XMLHttpRequest();
     var timeoutId = setTimeout(function() {
         xhr.abort();
-        // On timeout, show error and provide no links
         buildDropdowns('Failed to fetch', 'Failed to fetch', {});
     }, 8000);
+
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             clearTimeout(timeoutId);
             if (xhr.status === 200) {
                 var data = parseVersionData(xhr.responseText);
-                var devBuild = 'Failed to fetch dev build';
-                var stableBuild = 'Failed to fetch';
-                if (data.dev.version && data.dev.build) {
-                    devBuild = data.dev.version + ' #' + data.dev.build;
-                }
-                if (data.stable.version) {
-                    stableBuild = data.stable.version;
-                }
+                var devBuild = data.dev.version ? (data.dev.version + ' #' + (data.dev.build || '?')) : 'Failed to fetch dev build';
+                var stableBuild = data.stable.version || 'Failed to fetch';
                 var urls = {
-                    cfwDevUrl: data.dev.cfwDownload,
-                    cfwStableUrl: data.stable.cfwDownload,
-                    henDevUrl: data.dev.henPatchDownload,
-                    henStableUrl: data.stable.henPatchDownload
+                    cfwDevUrl: data.dev.cfwDownload || null,
+                    cfwStableUrl: data.stable.cfwDownload || null,
+                    henDevUrl: data.dev.henPatchDownload || null,
+                    henStableUrl: data.stable.henPatchDownload || null
                 };
                 buildDropdowns(devBuild, stableBuild, urls);
             } else {
@@ -314,7 +322,7 @@ function fetchAndUpdateVersions() {
     xhr.send();
 }
 
-// Initial build
+// ----- Initial build -----
 if (isSilk) {
     buildDropdowns(SILK_VERSION_TEXT, SILK_VERSION_TEXT, {});
 } else {
@@ -322,9 +330,11 @@ if (isSilk) {
     fetchAndUpdateVersions();
 }
 
+// ----- Firmware placeholder -----
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
+// ----- Click-outside closes menus -----
 document.body.addEventListener('click', function (e) {
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -340,7 +350,8 @@ document.body.addEventListener('click', function (e) {
     }
 }, false);
 
-function applyMargin () {
+// ----- Margin control -----
+function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
     var container = document.getElementById('mainContainer');
@@ -380,6 +391,8 @@ if (marginInput) {
         if (clean !== '') this.value = clean;
     };
 }
+
+// ----- Silk image HTTP fix -----
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
