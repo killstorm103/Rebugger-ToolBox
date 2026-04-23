@@ -147,7 +147,22 @@ h1 {
     <div id="mainContainer" class="container">
         <ul class="changelogs">
             <li class="bloc">
-                <h2>Version 1.0.4 Dev Build: #2<span class="size"></span></h2>
+                <h2>Upcoming Release</h2>
+                <ul>
+                    <li>Made Firmware Installers so the ToolBox comes with PUP Files and this moves those to your USB</li>
+                    <li>Fixed a mistake in Bradleys Preset Flash Setup</li>
+                    <li>Made Multiple things into html Pages</li>
+                    <li>Reworked/improved some html Pages</li>
+                    <li>Made some html Page openers use WebKit or Silk Engine (You choose) (Silk allows for you to download files on old firmwares that have outdated Certificates, Silk doesn't work on all websites!)</li>
+                    <li>Made &amp; Added a working File Downloader</li>
+                    <li>Made Check For Updates</li>
+                    <li>Made a Tutorial Page</li>
+                    <li>Added a Debug Settings Togglers</li>
+                    <li>Removed somethings and put them in a html page</li>
+                    <li>Added a XMB Reloader in Extra Tools Tab!</li>
+                </ul>
+                
+                <h2>Version <span id="latest_dev_build_span">Checking version info</span><span class="size"></span></h2>
                 <ul>
                     <li>Made Firmware Installers so the ToolBox comes with PUP Files and this moves those to your USB</li>
                     <li>Fixed a mistake in Bradleys Preset Flash Setup</li>
@@ -162,7 +177,7 @@ h1 {
                 </ul>
             </li>
             <li class="bloc">
-                <h2>Version 1.0.3<span class="size"></span></h2>
+                <h2>Version <span id="latest_stable_build_span">Checking version info</span><span class="size"></span></h2>
                 <ul>
                     <li>Added Official Eboots for Baguette HVH (Bo2) (DEX & CEX/HEN)</li>
                     <li>Made Ingame XMB Themed (Including PSN Logo: xmb_ingame.rco) (Some files are done, DO NOT USE THIS YET!!)</li>
@@ -238,7 +253,70 @@ h1 {
         </ul>
     </div>
     <script>
-       function initMarginControl () 
+        // ----- FETCH VERSION INFO FROM REMOTE version.txt -----
+        function fetchVersionInfo()
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function()
+            {
+                if (xhr.readyState === 4)
+                {
+                    if (xhr.status === 200)
+                    {
+                        var text = xhr.responseText;
+                        var stableMatch = text.match(/stable build:\s*version\s*([\d.]+)/i);
+                        var devMatch = text.match(/dev build:\s*version\s*([\d.]+)\s*build:\s*(\d+)/i);
+                        
+                        var stableSpan = document.getElementById('latest_stable_build_span');
+                        var devSpan = document.getElementById('latest_dev_build_span');
+                        
+                        if (stableMatch && stableSpan)
+                        {
+                            stableSpan.textContent = stableMatch[1];
+                        }
+                        else if (stableSpan)
+                        {
+                            stableSpan.textContent = 'Failed to fetch version info';
+                        }
+                        
+                        if (devMatch && devSpan)
+                        {
+                            devSpan.textContent = devMatch[1] + ' Dev Build: ' + devMatch[2];
+                        }
+                        else if (devSpan)
+                        {
+                            devSpan.textContent = 'Failed to fetch version info';
+                        }
+                    }
+                    else
+                    {
+                        var stableSpan = document.getElementById('latest_stable_build_span');
+                        var devSpan = document.getElementById('latest_dev_build_span');
+                        if (stableSpan) stableSpan.textContent = 'Failed to fetch version info';
+                        if (devSpan) devSpan.textContent = 'Failed to fetch version info';
+                    }
+                }
+            };
+            xhr.onerror = function()
+            {
+                var stableSpan = document.getElementById('latest_stable_build_span');
+                var devSpan = document.getElementById('latest_dev_build_span');
+                if (stableSpan) stableSpan.textContent = 'Failed to fetch version info';
+                if (devSpan) devSpan.textContent = 'Failed to fetch version info';
+            };
+            xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
+            xhr.send();
+        }
+
+        // Call fetch when page loads
+        window.addEventListener('load', fetchVersionInfo, false);
+        // Fallback for older browsers (PS3)
+        if (window.attachEvent)
+        {
+            window.attachEvent('onload', fetchVersionInfo);
+        }
+
+       function initMarginControl() 
        {
            var input = document.getElementById('marginInput');
            var applyBtn = document.getElementById('applyMarginBtn');
