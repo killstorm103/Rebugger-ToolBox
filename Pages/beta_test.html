@@ -92,10 +92,6 @@
             top: 0;
             margin-left: 10px;
         }
-        .version-failed {
-            color: #ffa500;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
@@ -150,8 +146,7 @@
             <h2>Updates<span class="size"></span></h2>
             <ul>
                 <li>Rebugger - ToolBox (Base) (CFW)</li>
-                <li id="dropdown-container-cfw">
-                </li>
+                <li id="dropdown-container-cfw"></li>
                 <li>Fixes (Stable & Dev are pretty much the same but they may change at some point)</li>
                 <li id="dropdown-container-fixes"></li>
             </ul>
@@ -172,9 +167,16 @@
 <script>
 var isSilk = window.isPS3SilkBrowserEngine || false;
 var latestFirmware = '4.93';
-var SILK_TEXT = 'Download unavailable on Silk';
 
-// Toggle menus
+// Silk placeholder text – no downloads available
+var SILK_VERSION_TEXT = 'Download unavailable on Silk';
+
+// Static download URLs (hardcoded – the only reliable method)
+var DEV_CFW_URL   = 'https://www.mediafire.com/file/riji2ie35dk4j3a/Rebugger.Toolbox.Installer_CFW.pkg/file';
+var STABLE_CFW_URL = 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Installer_CFW.pkg';
+var DEV_HEN_URL    = 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger.Toolbox.Patch_HEN.pkg';
+var STABLE_HEN_URL = 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger.Toolbox.Patch_HEN.pkg';
+
 window.toggleMenu = function (menuId) {
     var menu = document.getElementById(menuId);
     if (menu) {
@@ -182,56 +184,23 @@ window.toggleMenu = function (menuId) {
     }
 };
 
-// Parse version.txt – matches your actual keys
-function parseVersionData(text) {
-    var data = {
-        stable: { version: null, cfwDownload: null, henPatchDownload: null },
-        dev:    { version: null, build: null, cfwDownload: null, henPatchDownload: null }
-    };
-    var lines = text.split('\n');
-    var currentSection = null;
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
-        if (line === '') continue;
-        if (line.indexOf('stable build:') !== -1) { currentSection = 'stable'; continue; }
-        if (line.indexOf('dev build:') !== -1)   { currentSection = 'dev';    continue; }
+function buildDropdowns() {
+    var cfwContainer = document.getElementById('dropdown-container-cfw');
+    var fixesContainer = document.getElementById('dropdown-container-fixes');
+    var henContainer = document.getElementById('dropdown-container-hen');
+    if (!cfwContainer || !fixesContainer || !henContainer) return;
 
-        if (currentSection === 'stable') {
-            var m = line.match(/^version\s+(.+)$/i);          if (m) data.stable.version = m[1].trim();
-            m = line.match(/^download_base_cfw:\s*(.+)$/i);    if (m) data.stable.cfwDownload = m[1].trim();
-            m = line.match(/^download_hen_patch:\s*(.+)$/i);   if (m) data.stable.henPatchDownload = m[1].trim();
-        } else if (currentSection === 'dev') {
-            var m = line.match(/^version\s+(.+)$/i);          if (m) data.dev.version = m[1].trim();
-            m = line.match(/^build:\s*(\d+)$/i);              if (m) data.dev.build = m[1];
-            m = line.match(/^download_base_cfw:\s*(.+)$/i);    if (m) data.dev.cfwDownload = m[1].trim();
-            m = line.match(/^download_hen_patch:\s*(.+)$/i);   if (m) data.dev.henPatchDownload = m[1].trim();
-        }
-    }
-    return data;
-}
-
-// Build the three dropdown containers
-function buildDropdowns(devText, stableText, urls) {
-    var cfwCont = document.getElementById('dropdown-container-cfw');
-    var fixCont = document.getElementById('dropdown-container-fixes');
-    var henCont = document.getElementById('dropdown-container-hen');
-    if (!cfwCont || !fixCont || !henCont) return;
-
-    // On Silk: no links, just the message; otherwise use provided URLs or '#'
-    var displayDev    = isSilk ? SILK_TEXT : devText;
-    var displayStable = isSilk ? SILK_TEXT : stableText;
-
-    var cfwDev    = (!isSilk && urls && urls.cfwDevUrl)    ? urls.cfwDevUrl    : '#';
-    var cfwStable = (!isSilk && urls && urls.cfwStableUrl) ? urls.cfwStableUrl : '#';
-    var henDev    = (!isSilk && urls && urls.henDevUrl)    ? urls.henDevUrl    : '#';
-    var henStable = (!isSilk && urls && urls.henStableUrl) ? urls.henStableUrl : '#';
-
-    var silkClick = isSilk ? ' onclick="alert(\'Download not available on Silk. Use WebKit or update certificates.\'); return false;"' : '';
+    // Silk uses # links and shows an alert; WebKit/PC use hardcoded URLs
+    var cfwDevUrl    = isSilk ? '#' : DEV_CFW_URL;
+    var cfwStableUrl = isSilk ? '#' : STABLE_CFW_URL;
+    var henDevUrl    = isSilk ? '#' : DEV_HEN_URL;
+    var henStableUrl = isSilk ? '#' : STABLE_HEN_URL;
+    var silkClick = isSilk ? ' onclick="alert(\'Download not available on Silk browser engine.\'); return false;"' : '';
 
     var menuCFW = '<div id="downloadMenu_CFW_Base" class="dropdown-menu" style="display:none;">' +
-        '<a href="' + cfwDev    + '" target="_blank"' + silkClick + '>Dev Build: '    + displayDev    + '</a>' +
+        '<a href="' + cfwDevUrl    + '" target="_blank"' + silkClick + '>Dev Build: '    + SILK_VERSION_TEXT + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="' + cfwStable + '" target="_blank"' + silkClick + '>Stable Build: ' + displayStable + '</a>' +
+        '<a href="' + cfwStableUrl + '" target="_blank"' + silkClick + '>Stable Build: ' + SILK_VERSION_TEXT + '</a>' +
         '</div>';
 
     var menuFixes = '<div id="downloadMenu_Fixes" class="dropdown-menu" style="display:none;">' +
@@ -245,64 +214,30 @@ function buildDropdowns(devText, stableText, urls) {
         '</div>';
 
     var menuHEN = '<div id="downloadMenu_HEN_Patch" class="dropdown-menu" style="display:none;">' +
-        '<a href="' + henDev    + '" target="_blank"' + silkClick + '>Dev Build: '    + displayDev    + '</a>' +
+        '<a href="' + henDevUrl    + '" target="_blank"' + silkClick + '>Dev Build: '    + SILK_VERSION_TEXT + '</a>' +
         '<hr class="dropdown-separator">' +
-        '<a href="' + henStable + '" target="_blank"' + silkClick + '>Stable Build: ' + displayStable + '</a>' +
+        '<a href="' + henStableUrl + '" target="_blank"' + silkClick + '>Stable Build: ' + SILK_VERSION_TEXT + '</a>' +
         '</div>';
 
     if (isSilk) {
-        cfwCont.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + menuCFW + '</td></tr></table>';
-        fixCont.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + menuFixes + '</td></tr></table>';
-        henCont.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + menuHEN + '</td></tr></table>';
+        cfwContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')"></td><td class="dropdown-cell-menu">' + menuCFW + '</td></tr></table>';
+        fixesContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')"></td><td class="dropdown-cell-menu">' + menuFixes + '</td></tr></table>';
+        henContainer.innerHTML = '<table class="dropdown-table"><tr><td class="dropdown-cell-img"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')"></td><td class="dropdown-cell-menu">' + menuHEN + '</td></tr></table>';
     } else {
-        cfwCont.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + menuCFW + '</div>';
-        fixCont.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + menuFixes + '</div>';
-        henCont.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + menuHEN + '</div>';
+        cfwContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_CFW_Base\')">' + menuCFW + '</div>';
+        fixesContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_Fixes\')">' + menuFixes + '</div>';
+        henContainer.innerHTML = '<div class="dropdown-absolute"><img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png" width="150" height="150" style="cursor:pointer;" onclick="toggleMenu(\'downloadMenu_HEN_Patch\')">' + menuHEN + '</div>';
     }
 }
 
-// Main update function – identical flow as your working Update Checker
-function checkUpdates() {
-    if (isSilk) {
-        buildDropdowns(SILK_TEXT, SILK_TEXT, {});
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var data = parseVersionData(xhr.responseText);
-                var devText    = data.dev.version    ? (data.dev.version + ' #' + (data.dev.build || '?')) : 'Failed to fetch dev build';
-                var stableText = data.stable.version ? data.stable.version : 'Failed to fetch';
-                var urls = {
-                    cfwDevUrl:    data.dev.cfwDownload    || null,
-                    cfwStableUrl: data.stable.cfwDownload || null,
-                    henDevUrl:    data.dev.henPatchDownload    || null,
-                    henStableUrl: data.stable.henPatchDownload || null
-                };
-                buildDropdowns(devText, stableText, urls);
-            } else {
-                buildDropdowns('Failed to fetch', 'Failed to fetch', {});
-            }
-        }
-    };
-    xhr.onerror = function () {
-        buildDropdowns('Failed to fetch', 'Failed to fetch', {});
-    };
-    xhr.send();
-}
-
-// Initial placeholders
-buildDropdowns('loading...', 'loading...', {});
-checkUpdates();
+// Build the dropdowns immediately (no async fetching)
+buildDropdowns();
 
 // Firmware placeholder
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
-// Click-outside closes menus (unchanged)
+// Click-outside closes menus
 document.body.addEventListener('click', function (e) {
     var target = e.target;
     var menus = ['downloadMenu_CFW_Base', 'downloadMenu_HEN_Patch', 'downloadMenu_Fixes'];
@@ -318,7 +253,7 @@ document.body.addEventListener('click', function (e) {
     }
 }, false);
 
-// Margin control (unchanged)
+// Margin control
 function applyMargin() {
     var input = document.getElementById('marginInput');
     var span = document.getElementById('marginValue');
@@ -358,7 +293,7 @@ if (marginInput) {
     };
 }
 
-// Silk image HTTP fix (unchanged)
+// Silk image HTTP fix
 if (isSilk) {
     var imgs = document.getElementsByTagName('img');
     for (var i = 0; i < imgs.length; i++) {
