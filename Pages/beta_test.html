@@ -151,8 +151,9 @@
                <li><span class="space2">└ If you choose to use the internet browser debug press Triangle on the Internet Browser item in the xmb and change the Engine to: Silk!</span></li>
                
                
-               <li id="silk-download-link" style="display:none;">
-    Direct Download links for Silk PS3 Browser Engine!
+               
+              <li id="silk-download-link" style="display:none;">
+    Direct Download links for Silk PS3 Browser Engine! &nbsp;
     <a href="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt" target="_blank">version.txt</a>
 </li>
             </ul>
@@ -180,6 +181,13 @@
 </div>
 
 <script>
+    function updateSilkLinkVisibility() {
+    var silkLi = document.getElementById('silk-download-link');
+    if (silkLi) {
+        silkLi.style.display = isSilk ? 'list-item' : 'none';
+    }
+}
+    
 var isSilk = window.isPS3SilkBrowserEngine || false;
 
 var latestFirmware = '4.93';
@@ -386,6 +394,7 @@ function fetchAndUpdateVersions ()
 }
 buildDropdowns('loading…', 'loading…', {});
 fetchAndUpdateVersions();
+updateSilkLinkVisibility();
 var fwSpan = document.getElementById('latestFirmwareSpan');
 if (fwSpan) fwSpan.innerHTML = latestFirmware;
 
@@ -463,11 +472,6 @@ if (isSilk)
         {
             imgs[i].src = src.replace('https://', 'http://');
         }
-    }
-    var silkLi = document.getElementById('silk-download-link');
-    if (silkLi) 
-    {
-        silkLi.style.display = 'list-item'; 
     }
 }
 </script>
