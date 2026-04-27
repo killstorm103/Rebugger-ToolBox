@@ -177,44 +177,84 @@ window.toggleMenu = function (menuId) {
     }
 };
 
-// ----- PS3‑safe parser (no regex) -----
+// ----- PS3‑safe parser – no inner functions, no regex -----
 function parseVersionData(text) {
     var data = {
         stable: { version: null, cfwDownload: null, henPatchDownload: null },
         dev:    { version: null, build: null, cfwDownload: null, henPatchDownload: null }
     };
 
-    var lines = text.split(/\r?\n|\r/);
-    var currentSection = null;
+    // Normalise all line endings to '\n'
+    var normalText = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    var lines = normalText.split('\n');
+    var currentSection = '';   // 'stable' or 'dev'
+    var i;
 
-    for (var i = 0; i < lines.length; i++) {
+    for (i = 0; i < lines.length; i++) {
         var line = lines[i].trim();
         if (line === '') continue;
 
-        if (line.indexOf('stable build:') === 0) { currentSection = 'stable'; continue; }
-        if (line.indexOf('dev build:') === 0)   { currentSection = 'dev';    continue; }
-
-        function extract(line, key) {
-            if (line.indexOf(key) !== 0) return null;
-            var start = key.length;
-            while (start < line.length && line.charAt(start) === ' ') start++;
-            return line.substring(start).trim();
+        // Detect section headers
+        if (line.indexOf('stable build:') === 0) {
+            currentSection = 'stable';
+            continue;
+        }
+        if (line.indexOf('dev build:') === 0) {
+            currentSection = 'dev';
+            continue;
         }
 
+        // --- Stable section ---
         if (currentSection === 'stable') {
-            var v;
-            v = extract(line, 'version ');              if (v) { data.stable.version = v; continue; }
-            v = extract(line, 'download_base_cfw:');    if (v) { data.stable.cfwDownload = v; continue; }
-            v = extract(line, 'download_hen_patch:');   if (v) { data.stable.henPatchDownload = v; continue; }
+            // "version 1.0.3"
+            if (line.indexOf('version ') === 0) {
+                var ver = line.substring('version '.length).trim();
+                if (ver) data.stable.version = ver;
+                continue;
+            }
+            // "download_base_cfw: https://..."
+            if (line.indexOf('download_base_cfw:') === 0) {
+                var url = line.substring('download_base_cfw:'.length).trim();
+                if (url) data.stable.cfwDownload = url;
+                continue;
+            }
+            // "download_hen_patch: https://..."
+            if (line.indexOf('download_hen_patch:') === 0) {
+                var url = line.substring('download_hen_patch:'.length).trim();
+                if (url) data.stable.henPatchDownload = url;
+                continue;
+            }
         }
+
+        // --- Dev section ---
         if (currentSection === 'dev') {
-            var v;
-            v = extract(line, 'version ');              if (v) { data.dev.version = v; continue; }
-            v = extract(line, 'build:');               if (v) { data.dev.build = v; continue; }
-            v = extract(line, 'download_base_cfw:');    if (v) { data.dev.cfwDownload = v; continue; }
-            v = extract(line, 'download_hen_patch:');   if (v) { data.dev.henPatchDownload = v; continue; }
+            // "version 1.0.4"
+            if (line.indexOf('version ') === 0) {
+                var ver = line.substring('version '.length).trim();
+                if (ver) data.dev.version = ver;
+                continue;
+            }
+            // "build: 2"
+            if (line.indexOf('build:') === 0) {
+                var buildStr = line.substring('build:'.length).trim();
+                if (buildStr) data.dev.build = buildStr;
+                continue;
+            }
+            // "download_base_cfw: https://..."
+            if (line.indexOf('download_base_cfw:') === 0) {
+                var url = line.substring('download_base_cfw:'.length).trim();
+                if (url) data.dev.cfwDownload = url;
+                continue;
+            }
+            // "download_hen_patch: https://..."
+            if (line.indexOf('download_hen_patch:') === 0) {
+                var url = line.substring('download_hen_patch:'.length).trim();
+                if (url) data.dev.henPatchDownload = url;
+                continue;
+            }
         }
     }
+
     return data;
 }
 
@@ -306,7 +346,8 @@ function fetchAndUpdateVersions() {
                     };
                     buildDropdowns(devText, stableText, urls);
                 } catch (e) {
-                    buildDropdowns('Error parsing version', 'Error parsing version', {});
+                    // If parsing fails, show the real error so we can debug
+                    buildDropdowns('Error: ' + e.message, 'Error: ' + e.message, {});
                 }
             } else {
                 buildDropdowns('Failed to fetch', 'Failed to fetch', {});
