@@ -181,14 +181,14 @@
 </div>
 
 <script>
-    function updateSilkLinkVisibility() {
+var isSilk = window.isPS3SilkBrowserEngine || false;
+function updateSilkLinkVisibility() {
     var silkLi = document.getElementById('silk-download-link');
     if (silkLi) {
         silkLi.style.display = isSilk ? 'list-item' : 'none';
     }
 }
-    
-var isSilk = window.isPS3SilkBrowserEngine || false;
+
 
 var latestFirmware = '4.93';
 var SILK_TEXT = 'Download unavailable on Silk';
