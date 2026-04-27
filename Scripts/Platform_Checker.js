@@ -97,6 +97,6 @@
     window.isPS4 = DetectPS4();
     window.ps3Firmware = window.isPS3 ? getPS3FirmwareVersion() : '';
     window.ps4Firmware = window.isPS4 ? getPS4FirmwareVersion() : '';
-    window.isPS3SilkBrowserEngine = window.isPS3 && window.ps3Firmware.indexOf('1') === 0;
-    window.UserAgent = ua; 
+    window.isPS3SilkBrowserEngine = window.isPS3 && navigator.userAgent.indexOf('AppleWebKit') === -1;
+    window.UserAgent = ua;
 })();
