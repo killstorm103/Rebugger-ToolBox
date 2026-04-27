@@ -165,7 +165,9 @@
 </div>
 
 <script>
-var isSilk = window.isPS3SilkBrowserEngine;
+// Trust the external script exactly as you wanted
+var isSilk = window.isPS3SilkBrowserEngine || false;
+
 var latestFirmware = '4.93';
 var SILK_TEXT = 'Download unavailable on Silk';
 
@@ -177,50 +179,54 @@ window.toggleMenu = function (menuId) {
     }
 };
 
-// ----- PS3‑safe parser – no inner functions, no regex -----
+// ----- Manual whitespace trim (PS3 has no String.trim) -----
+function manualTrim(str) {
+    var start = 0;
+    var end = str.length - 1;
+    while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
+    while (end >= start && (str.charAt(end) === ' ' || str.charAt(end) === '\t')) end--;
+    return str.substring(start, end + 1);
+}
+
+// ----- PS3‑safe parser – no .trim(), no regex on lines -----
 function parseVersionData(text) {
     var data = {
         stable: { version: null, cfwDownload: null, henPatchDownload: null },
         dev:    { version: null, build: null, cfwDownload: null, henPatchDownload: null }
     };
 
-    // Normalise all line endings to '\n'
+    // Normalise line endings
     var normalText = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
     var lines = normalText.split('\n');
     var currentSection = '';   // 'stable' or 'dev'
     var i;
 
     for (i = 0; i < lines.length; i++) {
-        var line = lines[i].trim();
+        // Remove leading/trailing whitespace manually
+        var line = manualTrim(lines[i]);
         if (line === '') continue;
 
-        // Detect section headers
-        if (line.indexOf('stable build:') === 0) {
-            currentSection = 'stable';
-            continue;
-        }
-        if (line.indexOf('dev build:') === 0) {
-            currentSection = 'dev';
-            continue;
-        }
+        // Section headers
+        if (line.indexOf('stable build:') === 0) { currentSection = 'stable'; continue; }
+        if (line.indexOf('dev build:') === 0)    { currentSection = 'dev';    continue; }
 
         // --- Stable section ---
         if (currentSection === 'stable') {
             // "version 1.0.3"
             if (line.indexOf('version ') === 0) {
-                var ver = line.substring('version '.length).trim();
+                var ver = manualTrim(line.substring('version '.length));
                 if (ver) data.stable.version = ver;
                 continue;
             }
             // "download_base_cfw: https://..."
             if (line.indexOf('download_base_cfw:') === 0) {
-                var url = line.substring('download_base_cfw:'.length).trim();
+                var url = manualTrim(line.substring('download_base_cfw:'.length));
                 if (url) data.stable.cfwDownload = url;
                 continue;
             }
             // "download_hen_patch: https://..."
             if (line.indexOf('download_hen_patch:') === 0) {
-                var url = line.substring('download_hen_patch:'.length).trim();
+                var url = manualTrim(line.substring('download_hen_patch:'.length));
                 if (url) data.stable.henPatchDownload = url;
                 continue;
             }
@@ -230,25 +236,25 @@ function parseVersionData(text) {
         if (currentSection === 'dev') {
             // "version 1.0.4"
             if (line.indexOf('version ') === 0) {
-                var ver = line.substring('version '.length).trim();
+                var ver = manualTrim(line.substring('version '.length));
                 if (ver) data.dev.version = ver;
                 continue;
             }
             // "build: 2"
             if (line.indexOf('build:') === 0) {
-                var buildStr = line.substring('build:'.length).trim();
+                var buildStr = manualTrim(line.substring('build:'.length));
                 if (buildStr) data.dev.build = buildStr;
                 continue;
             }
             // "download_base_cfw: https://..."
             if (line.indexOf('download_base_cfw:') === 0) {
-                var url = line.substring('download_base_cfw:'.length).trim();
+                var url = manualTrim(line.substring('download_base_cfw:'.length));
                 if (url) data.dev.cfwDownload = url;
                 continue;
             }
             // "download_hen_patch: https://..."
             if (line.indexOf('download_hen_patch:') === 0) {
-                var url = line.substring('download_hen_patch:'.length).trim();
+                var url = manualTrim(line.substring('download_hen_patch:'.length));
                 if (url) data.dev.henPatchDownload = url;
                 continue;
             }
@@ -346,7 +352,6 @@ function fetchAndUpdateVersions() {
                     };
                     buildDropdowns(devText, stableText, urls);
                 } catch (e) {
-                    // If parsing fails, show the real error so we can debug
                     buildDropdowns('Error: ' + e.message, 'Error: ' + e.message, {});
                 }
             } else {
