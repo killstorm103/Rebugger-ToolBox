@@ -11,4 +11,4 @@ consoles:
       replaced:
         thermal paste: yes
         hard drive: no
-      known issues: none
+      issues: none
