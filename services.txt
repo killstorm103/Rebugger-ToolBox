@@ -1,13 +1,14 @@
 consoles:
   PS3:
-    stock: 2
     console-1:
+      price: not set yet!
       images: [http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg]
       console-type: CFW
-      model-number: Cech-2102A
+      firmware: Evilnat 4.93 PEX
+      model-number: CECH-2102A
       accessories: none console and power cord Only!
       hard drive: 120GB
       replaced:
         thermal paste: yes
         hard drive: no
-      price: not set yet!
+      known issues: none
