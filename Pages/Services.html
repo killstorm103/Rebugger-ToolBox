@@ -8,7 +8,6 @@
 </head>
 <body>
 <style>
-    /* Your existing CSS (unchanged) */
     #marginInput {
     background: #333;
     color: #fff;
@@ -129,7 +128,6 @@
 <div class="fixed-header">
     <h1>Dillans Services</h1>
     <div class="nav-container">
-        <!-- Removed duplicate nav-container div -->
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
         <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
@@ -686,9 +684,42 @@
                     {
                         if (!consolesList) return;
                         consolesList.innerHTML = '';
-                        var stockLi = document.createElement('li');
-                        stockLi.innerHTML = 'PS3\'s in stock: ' + consoles.length;
+                        var stockLi = document.createElement('li'), cfw_stock = document.createElement('li'), qcfw_stock = document.createElement('li'), hen_stock = document.createElement('li'), ofw_stock = document.createElement('li');
+                        stockLi.innerHTML = 'Toal Available PS3s:' + consoles.length;
                         consolesList.appendChild(stockLi);
+                        var CFW_Count = 0, qCFW_Count = 0, HEN_Count = 0, OFW_Count = 0;
+                        for (var counting = 0; counting < consoles.length; counting ++)
+                        {
+                            var type = consoles[counting].type;
+                            if (!type) continue;
+                            
+                            switch (type.toUpperCase())
+                            {
+                                case 'CFW':   
+                                    CFW_Count += 1;   
+                                    break;
+                                
+                                case 'QCFW':
+                                    qCFW_Count += 1;  
+                                    break;
+                                
+                                case 'HEN':
+                                    HEN_Count += 1; 
+                                    break;
+                                
+                                case 'OFW':
+                                    OFW_Count += 1; 
+                                    break;
+                            }
+                        }
+                        cfw_stock.innerHTML = 'CFWs:' + CFW_Count;
+                        qcfw_stock.innerHTML = 'qCFWs:' + qCFW_Count;
+                        hen_stock.innerHTML = 'HENs:' + HEN_Count;
+                        ofw_stock.innerHTML = 'OFWs:' + OFW_Count;
+                        consolesList.appendChild(cfw_stock);
+                        consolesList.appendChild(qcfw_stock);
+                        consolesList.appendChild(hen_stock);
+                        consolesList.appendChild(ofw_stock);
                         for (var i = 0; i < consoles.length; i++) 
                         {
                             var c = consoles[i];
