@@ -150,13 +150,6 @@
 <div id="mainContainer" class="container">
     <ul class="main">
         <li class="bloc">
-            <h2>Platform<span class="size"></span></h2>
-            <ul>
-                <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
-                <li>is PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></li>
-                <li>Firmware Version: <span id="fwSpan">Checking...</span></li>
-                <li>User Agent: <span id="uaSpan"></span></li>
-            </ul>
             <h2>Information<span class="size"></span></h2>
             <ul>
                 <li>Requirements:</li>
@@ -167,15 +160,13 @@
                 <li><span class="space">└ 5: You must bring obviously the device and the power and hdmi cords and a controller (and the charging cord if its not a wired controller)</span></li>
                 
                 <li>Disclaimers & Information:</li>
-                <li><span class="space">└ 1: You will not get to watch me do the service(s) your paying for me doing it not to teach you how to!</span></li>
+                <li><span class="space">└ 1: You will not get to watch me do the service(s), your paying for me doing it not to teach you how to!</span></li>
                 <li><span class="space">└ 2: i will do it on the spot for you if possible</span></li>
                 <li><span class="space">└ 3: Prices are none negotiable!</span></li>
                 <li><span class="space">└ 4: i'm free to do these services most Monday-Saturdays from 5:30-6 PM we'll discuss and arrange a day and time before you come you can reach out to me on social media or get whoever put you onto me to get you in contact with me!</span></li>
                 <li><span class="space">└ 5: There is always a risk when working on devices: i take no responsibility for any damages, if something goes wrong you will be given a full refund or a certain amount will be deducted from the total (Depending on if its fully or somewhat broken), The only thing that i've ever broke is one of my slim ps3s Ribbon cables and thats only due to it being severely old and fragile!</span></li>
             </ul>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
             <h2>PS3 Services<span class="size"></span></h2>
-            
             <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
                 <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
                     <tr>
@@ -194,37 +185,9 @@
                     </tr>
                 </table>
             </div>
-            
             <script>
-                function updateStatus() {
-                    var isPs3Elem = document.getElementById('isPs3Span'),
-                        fwElem = document.getElementById('fwSpan'),
-                        uaElem = document.getElementById('uaSpan'),
-                        engineElem = document.getElementById('EngineSpan');
-
-                    if (window.isPS3) {
-                        isPs3Elem.innerHTML = '✔️ Yes';
-                    } else {
-                        isPs3Elem.innerHTML = '❌ No (standard browser)';
-                    }
-                    
-                    fwElem.innerHTML = window.isPS3 ? (window.ps3Firmware || 'Unknown') : 'N/A';
-                    if (window.isPS3SilkBrowserEngine) {
-                        engineElem.innerHTML = '✔️ Yes';
-                    } else {
-                        engineElem.innerHTML = '❌ No' ;
-                    }
-                    
-                    uaElem.innerHTML = window.UserAgent || navigator.userAgent;
-                }
-
-                if (document.readyState === 'complete') {
-                    updateStatus();
-                } else {
-                    window.onload = updateStatus;
-                }
-
-                function startSlider() {
+                function startSlider () 
+                {
                     var images = [
                         'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
                         'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
@@ -235,28 +198,29 @@
                         'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
                     ];
 
-                    var img = document.getElementById('sliderImage');
-                    var counter = document.getElementById('imageCounter');
+                    var img = document.getElementById('sliderImage'), counter = document.getElementById('imageCounter');
                     if (!img || !counter) return;
 
-                    var total = images.length;
-                    var index = 0;
-                    var nextTimer = null;
-                    var maxWaitTimer = null;
+                    var total = images.length, index = 0;
+                    var nextTimer = null, maxWaitTimer = null;
                     var isLoading = false;
-                    var retryCount = 0;
-                    var MAX_RETRIES = 5;
+                    var retryCount = 0, MAX_RETRIES = 5;
 
-                    var DISPLAY_TIME = window.isPS3 ? 10000 : 1500;
-                    var SKIP_DELAY = window.isPS3 ? 11500 : 3000;
-                    var MAX_WAIT = window.isPS3 ? 8500 : 5500;
+                    var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
 
-                    function clearAllTimers() {
-                        if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
-                        if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
+                    function clearAllTimers () 
+                    {
+                        if (nextTimer) 
+                        {
+                            clearTimeout(nextTimer); nextTimer = null;
+                        }
+                        if (maxWaitTimer) 
+                        {
+                            clearTimeout(maxWaitTimer); maxWaitTimer = null;
+                        }
                     }
-
-                    function showNextImage() {
+                    function showNextImage () 
+                    {
                         clearAllTimers();
                         isLoading = true;
                         retryCount = 0;
@@ -264,151 +228,157 @@
                         if (index >= total) index = 0;
                         img.src = images[index];
                         counter.innerHTML = (index + 1) + ' / ' + total;
-                        maxWaitTimer = setTimeout(function() {
-                            if (isLoading) {
+                        maxWaitTimer = setTimeout(function()
+                        {
+                            if (isLoading) 
+                            {
                                 isLoading = false;
                                 scheduleNext(SKIP_DELAY);
                             }
                         }, MAX_WAIT);
                     }
-
-                    function scheduleNext(delay) {
+                    function scheduleNext (delay)
+                    {
                         clearAllTimers();
                         nextTimer = setTimeout(showNextImage, delay);
                     }
-
-                    img.onload = function() {
+                    img.onload = function () 
+                    {
                         if (isLoading) {
                             isLoading = false;
                             clearAllTimers();
                             scheduleNext(DISPLAY_TIME);
                         }
                     };
-
-                    img.onerror = function() {
+                    img.onerror = function () 
+                    {
                         if (!isLoading) return;
+                        
                         retryCount++;
-                        if (retryCount <= MAX_RETRIES) {
+                        if (retryCount <= MAX_RETRIES) 
+                        {
                             clearAllTimers();
                             img.src = images[index];
-                            maxWaitTimer = setTimeout(function() {
-                                if (isLoading) {
+                            maxWaitTimer = setTimeout(function() 
+                            {
+                                if (isLoading) 
+                                {
                                     isLoading = false;
                                     scheduleNext(SKIP_DELAY);
                                 }
                             }, MAX_WAIT);
-                        } else {
+                        }
+                        else
+                        {
                             isLoading = false;
                             clearAllTimers();
                             counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
                             scheduleNext(SKIP_DELAY);
                         }
                     };
-
                     isLoading = true;
                     retryCount = 0;
                     img.src = images[0];
                     counter.innerHTML = '1 / ' + total;
-                    maxWaitTimer = setTimeout(function() {
-                        if (isLoading) {
+                    maxWaitTimer = setTimeout(function() 
+                    {
+                        if (isLoading) 
+                        {
                             isLoading = false;
                             scheduleNext(SKIP_DELAY);
                         }
                     }, MAX_WAIT);
                 }
-
-                if (window.addEventListener) {
+                if (window.addEventListener)
+                {
                     window.addEventListener('load', startSlider, false);
-                } else if (window.attachEvent) {
+                }
+                else if (window.attachEvent)
+                {
                     window.attachEvent('onload', startSlider);
-                } else {
+                }
+                else
+                {
                     window.onload = startSlider;
                 }
-                
                 function initMarginControl () 
-       {
-           var input = document.getElementById('marginInput');
-           var applyBtn = document.getElementById('applyMarginBtn');
-           var valueDisplay = document.getElementById('marginValue');
-           var container = document.getElementById('mainContainer'); 
-           if (!input || !applyBtn || !container) return;
-           
-           function updateMargin(value) 
-           {
-               var cleanValue = String(value).replace(/[ .]/g, '');
-               if (cleanValue === '') return; 
-               
-               var num = parseInt(cleanValue, 10);
-               
-               if (isNaN(num)) return; 
-               if (num < 0) num = 0;
-               
-               container.style.marginTop = num + 'px';
-               if (valueDisplay) valueDisplay.innerHTML = num;
-               
-               input.value = num;
-    }
-    input.onkeypress = function(e)
-    {
-        e = e || window.event;
-        var keyCode = e.keyCode || e.which;
-        var char = String.fromCharCode(keyCode);
-
-        var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8  
-                     || keyCode === 46 
-                     || keyCode === 13  
-                     || keyCode === 9   
-                     || keyCode === 37  
-                     || keyCode === 39  
-                     || keyCode === 38  
-                     || keyCode === 40; 
-
-        if (!isDigit && !isControl) {
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        if (keyCode === 13) {
-            updateMargin(input.value);
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        return true;
-    };
-
-    input.oninput = function() 
-    {
-        var clean = this.value.replace(/[^0-9]/g, '');
-        this.value = clean;
-    };
-
-    applyBtn.onclick = function() 
-    {
-        updateMargin(input.value);
-    };
-    var initial = input.value;
-    if (initial !== '') {
-        updateMargin(initial);
-    }
-}
-if (window.addEventListener) 
-{
-    window.addEventListener('load', initMarginControl, false);
-} 
-else if (window.attachEvent) 
-{
-    window.attachEvent('onload', initMarginControl);
-} 
-else
-{
-    window.onload = initMarginControl;
-}
+                {
+                    var input = document.getElementById('marginInput'), applyBtn = document.getElementById('applyMarginBtn'), valueDisplay = document.getElementById('marginValue'), container = document.getElementById('mainContainer'); 
+                    if (!input || !applyBtn || !container) return;
+                    
+                    function updateMargin (value) 
+                    {
+                        var cleanValue = String(value).replace(/[ .]/g, '');
+                        if (cleanValue === '') return; 
+                        
+                        var num = parseInt(cleanValue, 10);
+                        if (isNaN(num)) return; 
+                        
+                        if (num < 0) num = 0;
+                        
+                        container.style.marginTop = num + 'px';
+                        if (valueDisplay) valueDisplay.innerHTML = num;
+                        
+                        input.value = num;
+                    }
+                    input.onkeypress = function(e) 
+                    {
+                        e = e || window.event;
+                        var keyCode = e.keyCode || e.which;
+                        var char = String.fromCharCode(keyCode);
+                        var isDigit = /[0-9]/.test(char);
+                        var isControl = keyCode === 8  || keyCode === 46 || keyCode === 13  || keyCode === 9  || keyCode === 37  || keyCode === 39  || keyCode === 38  || keyCode === 40; 
+                        
+                        if (!isDigit && !isControl) 
+                        {
+                            if (e.preventDefault) e.preventDefault();
+                            return false;
+                        }
+                        if (keyCode === 13)
+                        {
+                            updateMargin(input.value);
+                            if (e.preventDefault) e.preventDefault();
+                            
+                            return false;
+                        }
+                        return true;
+                    };
+                    input.oninput = function () 
+                    {
+                        var clean = this.value.replace(/[^0-9]/g, '');
+                        this.value = clean;
+                    };
+                    applyBtn.onclick = function () 
+                    {
+                        updateMargin(input.value);
+                    };
+                    var initial = input.value;
+                    if (initial !== '') 
+                    {
+                        updateMargin(initial);
+                    }
+                }
+                if (window.addEventListener) 
+                {
+                    window.addEventListener('load', initMarginControl, false);
+                }
+                else if (window.attachEvent) 
+                {
+                    window.attachEvent('onload', initMarginControl);
+                } 
+                else
+                {
+                    window.onload = initMarginControl;
+                }
+                
+                
+                // Consoles for Sale
+                
+                
             </script>
-            
             <ul>
                 <li>Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</li>
+                <li><span class="space">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span></li>
                 <li><span class="space">└ Recommendation: replace the old hard drive with a Samsung 870 EVO/QVO SATA III 2.5" SSD before jailbreaking</span></li>
                 <li><span class="space2">└ up to a 1TB do not go over 1TB cause the restore file system function breaks!</span></li>
                 <li><span class="space">└ Jailbreak Types:</span></li>
@@ -429,19 +399,20 @@ else
                 <li>Opening and Cleaning (1: 20$, 2: 35$, 3: 50$)</li>
                 <li><span class="space">└ 1: Just a basic normal open and cleaning</span></li>
                 <li><span class="space">└ 2: 1 + Thermal paste replacement (You Must Provide the Thermal Paste)</span></li>
-                <li><span class="space">└ 3: 2, alot of slim models motherboards get stuck cause of the old dried up thermal paste that glues it in place this requires a heat gun and more time to get the motherboard out so i'm charging a little bit more because of this!</span></li>
+                <li><span class="space">└ 3: 2, alot of slim models motherboards get stuck cause of the old dried up thermal paste that glues it in place this requires a heat gun and more time to get the motherboard out safely so i'm charging a little bit more because of this!</span></li>
                 
                 <li>Games (Install games on your ps3s Hard Drive) (5-50$)</li>
                 <li><span class="space">└ PS1 &amp; 2 &amp; 3, PSP and Rom Games, You Do Not get a physical copy!</span></li>
                 <li><span class="space">└ Prices are per game!</span></li>
                 <li><span class="space">└ Games 1GB or less: 5$</span></li>
-                <li><span class="space">└ Games &larr; 6GB: 10$</span></li>
-                <li><span class="space">└ Games &larr; 11GB: 20$</span></li>
-                <li><span class="space">└ Games &larr; 21GB: 30$</span></li>
-                <li><span class="space">└ Games &larr; 31GB: 40$</span></li>
-                <li><span class="space">└ Games &rarr; 31GB: 50$</span></li>
+                <li><span class="space">└ Games &larr;= 6GB: 10$</span></li>
+                <li><span class="space">└ Games &larr;= 11GB: 20$</span></li>
+                <li><span class="space">└ Games &larr;= 21GB: 30$</span></li>
+                <li><span class="space">└ Games &larr;= 31GB: 40$</span></li>
+                <li><span class="space">└ Games &rarr;= 31GB: 50$</span></li>
                 <li><span class="space">└ if your unsure of how big your games your wanting are tell me them and i absolutetly can find out and tell you the total!</span></li>
                 <li><span class="space">└ i'll test the games or let you test them before you leave if you want we'll only go as far as making sure they boot up(playing acouple of minutes of each of them will take to long)!</span></li>
+                <li><span class="space2">└ If you end up taking the console home and find out that a game is in the wrong language and you can't change it from within the games options, you can bring it back and i'll try finding 1 of it in English make sure one in English exists before wasting my and your time!, no refunds will be given for games not in English!</span></li>
                 
                 <li>Replace Hard drive (20-40$)</li>
                 <li><span class="space">└ Note: You Must Provide the HDD/SSD Replacement</span></li>
@@ -460,6 +431,317 @@ else
                 <li><span class="space">└ and i have successfully jailbroken and opened and cleaned 2 of my other mates consoles!</span></li>
                 <li><span class="space">└ i have successfully gotten the dried up glued motherboards out of 2 slim model ps3s!</span></li>
             </ul>
+        </li>
+        <li class="bloc">
+            <h2>Consoles for sale<span class="size"></span></h2>
+            <ul>
+                <li>Information</li>
+                <li><span class="space">└ No Warranty can be offered for PS3s that haven't had their hard drives replaced!</span></li>
+                <li><span class="space2">└ If something goes wrong with the hard drive i do offer a replacement hard drive service which you can read about by scrolling up!</span></li>
+                <li><span class="space">└ ABSOLUTELY NO Warranty Can Be Offered For Fat Model PS3s that have a NAND Flash Memory Type these Consoles are an absolute piece of shit!, and i will likely never sell them unless i get one for Really cheap or get given one for free!</span></li>
+            </ul>
+            <ul id="consoles-list"></ul>
+            <script>
+                (function () 
+                {
+                    var REMOTE_URL = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/services.txt';
+                    var consolesList = document.getElementById('consoles-list');
+                    function trim (str) 
+                    {
+                        var start = 0, end = str.length - 1;
+                        while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
+                        while (end >= start && (str.charAt(end) === ' ' || str.charAt(end) === '\t')) end--;
+                        return str.substring(start, end + 1);
+                    }
+                    function parseImageArray (line) 
+                    {
+                        var imgStart = line.indexOf('['), imgEnd = line.indexOf(']');
+                        if (imgStart === -1 || imgEnd === -1) return [];
+                        
+                        var arrStr = line.substring(imgStart + 1, imgEnd);
+                        var urls = [];
+                        var parts = arrStr.split(',');
+                        for (var i = 0; i < parts.length; i++) 
+                        {
+                            var url = trim(parts[i].replace(/['"]/g, ''));
+                            if (url) urls.push(url);
+                        }
+                        return urls;
+                    }
+                    function parseServices (text) 
+                    {
+                        var consoles = [];
+                        var lines = text.split('\n');
+                        var currentConsole = null;
+                        var insideReplaced = false;
+                        for (var i = 0; i < lines.length; i++) 
+                        {
+                            var raw = lines[i], line = trim(raw);
+                            if (line === '') continue;
+                            
+                            var consoleMatch = line.match(/^console-(\d+):/);
+                            if (consoleMatch) 
+                            {
+                                if (currentConsole) consoles.push(currentConsole);
+                                
+                                currentConsole = {images: [], type: '', firmware: '', model: '', accessories: '', hardDrive: '', replacedThermalPaste: 'no', replacedHardDrive: 'no', price: '', issues: '', additionalInfo: ''};
+                                insideReplaced = false;
+                                continue;
+                            }
+                            if (!currentConsole) continue;
+                            
+                            if (insideReplaced) 
+                            {
+                                if (line.indexOf('thermal paste:') === 0) 
+                                {
+                                    var tp = trim(line.substring('thermal paste:'.length));
+                                    currentConsole.replacedThermalPaste = (tp === 'yes') ? 'Yes' : 'No';
+                                }
+                                else if (line.indexOf('hard drive:') === 0) 
+                                {
+                                    var hd = trim(line.substring('hard drive:'.length));
+                                    currentConsole.replacedHardDrive = (hd === 'yes') ? 'Yes' : 'No';
+                                }
+                                else
+                                {
+                                    insideReplaced = false;
+                                }
+                                if (insideReplaced) continue; 
+                            }
+                            if (line.indexOf('images:') === 0) 
+                            {
+                                currentConsole.images = parseImageArray(line);
+                            }
+                            else if (line.indexOf('additional Info:') === 0) 
+                            {
+                                currentConsole.additionalInfo = trim(line.substring('additional Info:'.length));
+                            }
+                            else if (line.indexOf('console-type:') === 0) 
+                            {
+                                currentConsole.type = trim(line.substring('console-type:'.length));
+                            }
+                            else if (line.indexOf('firmware:') === 0) 
+                            {
+                                currentConsole.firmware = trim(line.substring('firmware:'.length));
+                            }
+                            else if (line.indexOf('issues:') === 0) 
+                            {
+                                currentConsole.issues = trim(line.substring('issues:'.length));
+                            }
+                            else if (line.indexOf('model-number:') === 0) 
+                            {
+                                currentConsole.model = trim(line.substring('model-number:'.length));
+                            }
+                            else if (line.indexOf('accessories:') === 0) 
+                            {
+                                currentConsole.accessories = trim(line.substring('accessories:'.length));
+                            } 
+                            else if (line.indexOf('hard drive:') === 0 && line.indexOf('hard drive:') === 0) 
+                            {
+                                currentConsole.hardDrive = trim(line.substring('hard drive:'.length));
+                            } 
+                            else if (line.indexOf('price:') === 0)
+                            {
+                                currentConsole.price = trim(line.substring('price:'.length));
+                            } 
+                            else if (line.indexOf('replaced:') === 0) 
+                            {
+                                insideReplaced = true;
+                            }
+                        }
+                        if (currentConsole) consoles.push(currentConsole); 
+                        
+                        return consoles;
+                    }
+                    function createConsoleSlider (container, images) 
+                    {
+                        var sliderHTML = '';
+                        sliderHTML += '<div style="position:relative; display:inline-block; margin-bottom:10px;">';
+                        sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
+                        sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
+                        sliderHTML += '</div>';
+                        container.innerHTML = sliderHTML;
+                        
+                        var img = container.querySelector('.cons-slider-img'), counter = container.querySelector('.cons-slider-counter');
+                        var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
+                        
+                        var isLoading = false, retryCount = 0;
+                        var MAX_RETRIES = 5;
+                        var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
+                        function clearAllTimers () 
+                        {
+                            if (nextTimer) 
+                            { 
+                                clearTimeout(nextTimer); nextTimer = null; 
+                            }
+                            if (maxWaitTimer) 
+                            {
+                                clearTimeout(maxWaitTimer); maxWaitTimer = null; 
+                            }
+                        }
+                        function showNextImage () 
+                        {
+                            clearAllTimers();
+                            isLoading = true;
+                            retryCount = 0;
+                            index = (index + 1) % total;
+                            img.src = images[index];
+                            counter.innerHTML = (index + 1) + ' / ' + total;
+                            maxWaitTimer = setTimeout(function ()
+                            {
+                                if (isLoading) 
+                                {
+                                    isLoading = false;
+                                    scheduleNext(SKIP_DELAY);
+                                }
+                            }, MAX_WAIT);
+                        }
+                        function scheduleNext (delay) 
+                        {
+                            clearAllTimers();
+                            nextTimer = setTimeout(showNextImage, delay);
+                        }
+                        img.onload = function () 
+                        {
+                            if (isLoading) 
+                            {
+                                isLoading = false;
+                                clearAllTimers();
+                                scheduleNext(DISPLAY_TIME);
+                            }
+                        };
+                        img.onerror = function () 
+                        {
+                            if (!isLoading) return;
+                            
+                            retryCount++;
+                            if (retryCount <= MAX_RETRIES) 
+                            {
+                                clearAllTimers();
+                                img.src = images[index];  
+                                maxWaitTimer = setTimeout(function () 
+                                {
+                                    if (isLoading) 
+                                    {
+                                        isLoading = false;
+                                        scheduleNext(SKIP_DELAY);
+                                    }
+                                }, MAX_WAIT);
+                            }
+                            else
+                            {
+                                isLoading = false;
+                                clearAllTimers();
+                                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                                scheduleNext(SKIP_DELAY);
+                            }
+                        };
+                        isLoading = true;
+                        retryCount = 0;
+                        img.src = images[0];
+                        counter.innerHTML = '1 / ' + total;
+                        maxWaitTimer = setTimeout(function () 
+                        {
+                            if (isLoading) 
+                            {
+                                isLoading = false;
+                                scheduleNext(SKIP_DELAY);
+                            }
+                        }, MAX_WAIT);
+                    }
+                    function getPS3Model (model) 
+                    {
+                        if (!model || model === '?') return '?';
+                        
+                        var cleaned = '';
+                        for (var i = 0; i < model.length; i++) 
+                        {
+                            var ch = model.charAt(i);
+                            if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch === '-') 
+                            {
+                                cleaned += ch;
+                            }
+                        }
+                        var m = cleaned.toUpperCase();
+                        if (m.indexOf('CECH-4') === 0) return 'Super Slim';
+                        
+                        if (m.indexOf('CECH-2') === 0 || m.indexOf('CECH-3') === 0) return 'Slim';
+                        
+                        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'Fat'
+                        
+                        return 'Unknown';
+                    }
+                    function getFlashType (model) 
+                    {
+                        if (!model || model === '?') return 'Unknown';
+                        
+                        var m = model.toUpperCase();
+                        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'NAND';
+                        
+                        if ((m.indexOf('CECH-40') === 0 || m.indexOf('CECH-42') === 0 || m.indexOf('CECH-43') === 0) && m.charAt(m.length - 1) === 'A') return 'eMMC';
+                        
+                        return 'NOR';
+                    }
+                    function buildConsolesUI (consoles) 
+                    {
+                        if (!consolesList) return;
+                        consolesList.innerHTML = '';
+                        var stockLi = document.createElement('li');
+                        stockLi.innerHTML = 'PS3\'s in stock: ' + consoles.length;
+                        consolesList.appendChild(stockLi);
+                        for (var i = 0; i < consoles.length; i++) 
+                        {
+                            var c = consoles[i];
+                            var li = document.createElement('li');
+                            li.style.marginBottom = '10px';
+                            li.style.listStyle = 'none'; 
+                            var info = '';
+                            
+                            var sliderDiv = document.createElement('div');
+                            sliderDiv.className = 'cons-slider-' + i;
+                            info += '<strong>PS3 #' + (i + 1) + '</strong><br>';
+                            var displayIssues = c.issues ? c.issues : 'None', displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!', displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
+                            
+                            
+                            info += 'Price: ' + displayPrice + '<br>';
+                            info += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
+                            info += 'Firmware: ' + c.firmware + '<br>';
+                            info += 'Model Number: ' + (c.model ? c.model.toUpperCase() : '?') + '<br>';
+                            info += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
+                            info += 'Model: ' + getPS3Model(c.model) + '<br>';
+                            info += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
+                            info += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
+                            info += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
+                            info += 'Known issues: ' + displayIssues + '<br>';
+                            info += 'Accessories: ' + displayAccessories + '<br>';
+                            if (c.additionalInfo)
+                            {
+                                info += 'Additional Info:<br>';
+                                var addLines = c.additionalInfo.split('\n');
+                                for (var j = 0; j < addLines.length; j++) 
+                                {
+                                    info += addLines[j] + '<br>';
+                                }
+                            }
+                            li.innerHTML = info;
+                            li.appendChild(sliderDiv);
+                            consolesList.appendChild(li);
+                            createConsoleSlider(sliderDiv, c.images);
+                        }
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', REMOTE_URL, true);
+                    xhr.onreadystatechange = function () 
+                    {
+                        if (xhr.readyState === 4 && xhr.status === 200) 
+                        {
+                            var consoles = parseServices(xhr.responseText);
+                            buildConsolesUI(consoles);
+                        }
+                    };
+                    xhr.send();
+                })();
+                </script>
         </li>
     </ul>
 </div>
