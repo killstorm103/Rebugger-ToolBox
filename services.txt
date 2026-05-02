@@ -10,3 +10,4 @@ consoles:
       replaced:
         thermal paste: yes
         hard drive: no
+      price: not set yet!
