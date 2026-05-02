@@ -1,0 +1,11 @@
+consoles:
+  PS3:
+    stock: 2
+    console-1:
+      console-type: CFW
+      model-number: ?
+      accessories: none console and power cord Only!
+      hard drive: 120GB
+      replaced:
+        thermal paste: yes
+        hard drive: no
