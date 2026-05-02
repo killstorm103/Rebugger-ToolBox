@@ -12,3 +12,4 @@ consoles:
         thermal paste: yes
         hard drive: no
       issues: none
+      additional Info: test, test2
