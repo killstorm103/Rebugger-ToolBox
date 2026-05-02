@@ -4,7 +4,7 @@ consoles:
     console-1:
       images: [http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg]
       console-type: CFW
-      model-number: ?
+      model-number: Cech-2102A
       accessories: none console and power cord Only!
       hard drive: 120GB
       replaced:
