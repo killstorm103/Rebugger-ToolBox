@@ -2,6 +2,7 @@ consoles:
   PS3:
     stock: 2
     console-1:
+      images: [http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg]
       console-type: CFW
       model-number: ?
       accessories: none console and power cord Only!
