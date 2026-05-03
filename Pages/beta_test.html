@@ -913,12 +913,32 @@
                     };
                     xhr.send();
                 })();
-                if (window.isPS3)
+                if (window.isPS3) 
                 {
-                    var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
-                    for (var i = 0; i < darkBoxes.length; i++) 
+                    function addBoxGaps () 
                     {
-                        darkBoxes[i].style.marginBottom = '4px';
+                        var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
+                        for (var i = 0; i < darkBoxes.length; i++) 
+                        {
+                            darkBoxes[i].style.marginBottom = '4px';
+                        }
+                    }
+                    if (window.addEventListener) 
+                    {
+                        window.addEventListener('load', addBoxGaps, false);
+                    }
+                    else if (window.attachEvent) 
+                    {
+                        window.attachEvent('onload', addBoxGaps);
+                    } 
+                    else 
+                    {
+                        window.onload = function () 
+                        {
+                            if (window._oldOnload) window._oldOnload();
+                            
+                            addBoxGaps();
+                        };
                     }
                 }
                 </script>
