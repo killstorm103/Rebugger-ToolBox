@@ -597,7 +597,7 @@
                         
                         var isLoading = false, retryCount = 0;
                         var MAX_RETRIES = 5;
-                        var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
+                        var DISPLAY_TIME = window.isPS3 ? 20000 : 1500, SKIP_DELAY = window.isPS3 ? 8000 : 3000, MAX_WAIT = window.isPS3 ? 12000 : 5500;
                         function clearAllTimers () 
                         {
                             if (nextTimer) 
@@ -805,6 +805,14 @@
                     };
                     xhr.send();
                 })();
+                if (window.isPS3)
+                {
+                    var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
+                    for (var i = 0; i < darkBoxes.length; i++) 
+                    {
+                        darkBoxes[i].style.marginBottom = '8px';
+                    }
+                }
                 </script>
         </li>
     </ul>
