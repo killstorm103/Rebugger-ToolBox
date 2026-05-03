@@ -360,18 +360,6 @@
                 {
                     window.onload = startSlider;
                 }
-                if (window.addEventListener)
-                {
-                    window.addEventListener('load', startSlider, false);
-                }
-                else if (window.attachEvent)
-                {
-                    window.attachEvent('onload', startSlider);
-                }
-                else
-                {
-                    window.onload = startSlider;
-                }
                 function initMarginControl () 
                 {
                     var input = document.getElementById('marginInput'), applyBtn = document.getElementById('applyMarginBtn'), valueDisplay = document.getElementById('marginValue'), container = document.getElementById('mainContainer'); 
