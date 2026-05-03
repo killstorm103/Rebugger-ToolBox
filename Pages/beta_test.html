@@ -175,41 +175,65 @@
             <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:15px; margin-left:60px; display:inline-block;">
                 <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr><td style="vertical-align: top; padding-right: 20px;">
                     <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);"></td>
-                    <td style="vertical-align: top;"><div id="sliderContainer" style="margin: 0;">
-                        <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);"><div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span><span id="debugInfo" style="color: #aaa; margin-left: 15px;"></span></div>
-                        <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button></div></td></tr>
+                    <td style="vertical-align: top;"><div id="sliderContainer" style="margin: 0;"><img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+                    <div style="margin-top: 10px;">
+                        <span id="imageCounter">1 / 7</span>
+                        <span id="debugInfo" style="color: #aaa; margin-left: 15px;"></span>
+                    </div>
+                    <div id="manualBtns" style="display:none; margin-top:8px;"><button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
+                    <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button></div>
+                    <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button></div>
                 </table>
             </div>
             <script>
                 function startSlider () 
                 {
-                    var images = [
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
-                        'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
-                    ];
-
+                    var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
+                    
                     var img = document.getElementById('sliderImage'), counter = document.getElementById('imageCounter');
                     if (!img || !counter) return;
-
+                    
+                    if (window.isPS3)
+                    {
+                        var manualBtns = document.getElementById('manualBtns');
+                        if (manualBtns) manualBtns.style.display = 'block';
+                        var prevBtn = document.getElementById('prevBtn');
+                        var nextBtn = document.getElementById('nextBtn');
+                        
+                        var currentIndex = 0, total = images.length;
+                        
+                        function showImage (idx)
+                        {
+                            if (idx < 0) idx = total - 1;
+                            if (idx >= total) idx = 0;
+                            
+                            currentIndex = idx;
+                            img.src = images[currentIndex];
+                            counter.innerHTML = (currentIndex + 1) + ' / ' + total;
+                        }
+                        prevBtn.onclick = function () 
+                        {
+                            showImage(currentIndex - 1); 
+                        };
+                        nextBtn.onclick = function () 
+                        {
+                            showImage(currentIndex + 1);
+                        };
+                        showImage(0);
+                        return;
+                    }
                     var total = images.length, index = 0;
                     var nextTimer = null, maxWaitTimer = null;
-                    var isLoading = false;
+                    var isLoading = false, isPaused = false;
                     var retryCount = 0, MAX_RETRIES = 5;
-
-                    var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
                     
-                    var isPaused = false;  
+                    var DISPLAY_TIME = 1500, SKIP_DELAY = 3000,MAX_WAIT = 5500;
                     var pauseBtn = document.getElementById('pauseBtn');
                     
-                    if (pauseBtn && !window.isPS3) 
+                    if (pauseBtn) 
                     {
                         pauseBtn.style.display = 'inline-block';
-                        pauseBtn.onclick = function () 
+                        pauseBtn.onclick = function ()
                         {
                             isPaused = !isPaused;
                             if (isPaused) 
@@ -228,26 +252,30 @@
                     {
                         if (nextTimer) 
                         {
-                            clearTimeout(nextTimer); nextTimer = null;
+                            clearTimeout(nextTimer);
+                            nextTimer = null;
                         }
                         if (maxWaitTimer) 
                         {
-                            clearTimeout(maxWaitTimer); maxWaitTimer = null;
+                            clearTimeout(maxWaitTimer);
+                            maxWaitTimer = null;
                         }
                     }
                     function showNextImage () 
                     {
-                        if (isPaused) return;   
+                        if (isPaused) return;
+                        
                         clearAllTimers();
                         isLoading = true;
                         retryCount = 0;
-                        index++;
+                        index ++;
                         if (index >= total) index = 0;
+                        
                         img.src = images[index];
                         counter.innerHTML = (index + 1) + ' / ' + total;
                         maxWaitTimer = setTimeout(function()
                         {
-                            if (isLoading) 
+                            if (isLoading && !isPaused) 
                             {
                                 isLoading = false;
                                 scheduleNext(SKIP_DELAY);
@@ -257,12 +285,14 @@
                     function scheduleNext (delay)
                     {
                         if (isPaused) return;
+                        
                         clearAllTimers();
                         nextTimer = setTimeout(showNextImage, delay);
                     }
                     img.onload = function () 
                     {
-                        if (isLoading) {
+                        if (isLoading && !isPaused)
+                        {
                             isLoading = false;
                             clearAllTimers();
                             scheduleNext(DISPLAY_TIME);
@@ -272,14 +302,14 @@
                     {
                         if (!isLoading || isPaused) return;
                         
-                        retryCount++;
+                        retryCount ++;
                         if (retryCount <= MAX_RETRIES) 
                         {
                             clearAllTimers();
                             img.src = images[index];
                             maxWaitTimer = setTimeout(function() 
                             {
-                                if (isLoading) 
+                                if (isLoading && !isPaused) 
                                 {
                                     isLoading = false;
                                     scheduleNext(SKIP_DELAY);
@@ -300,7 +330,7 @@
                     counter.innerHTML = '1 / ' + total;
                     maxWaitTimer = setTimeout(function() 
                     {
-                        if (isLoading) 
+                        if (isLoading && !isPaused) 
                         {
                             isLoading = false;
                             scheduleNext(SKIP_DELAY);
@@ -596,143 +626,167 @@
                         
                         return consoles;
                     }
-                    function createConsoleSlider(container, images) {
-    var sliderHTML = '';
-    sliderHTML += '<div style="position:relative; display:inline-block; margin-bottom:10px;">';
-    sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
-    sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
-
-    if (window.isPS3) {
-        // Manual slider with Prev / Next buttons (PS3 only)
-        sliderHTML += '  <div style="margin-top:8px;">';
-        sliderHTML += '    <button class="cons-prev-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">◀ Prev</button>';
-        sliderHTML += '    <button class="cons-next-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next ▶</button>';
-        sliderHTML += '  </div>';
-    } else {
-        // Auto slider with Pause button (non‑PS3)
-        sliderHTML += '  <button class="cons-pause-btn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>';
-    }
-    sliderHTML += '</div>';
-    container.innerHTML = sliderHTML;
-
-    var img = container.querySelector('.cons-slider-img'),
-        counter = container.querySelector('.cons-slider-counter');
-
-    if (window.isPS3) {
-        // Manual navigation for PS3
-        var currentIndex = 0;
-
-        function showImage(idx) {
-            if (idx < 0) idx = images.length - 1;
-            if (idx >= images.length) idx = 0;
-            currentIndex = idx;
-            img.src = images[currentIndex];
-            counter.innerHTML = (currentIndex + 1) + ' / ' + images.length;
-        }
-
-        var prevBtn = container.querySelector('.cons-prev-btn');
-        var nextBtn = container.querySelector('.cons-next-btn');
-
-        prevBtn.onclick = function () {
-            showImage(currentIndex - 1);
-        };
-        nextBtn.onclick = function () {
-            showImage(currentIndex + 1);
-        };
-
-        // Load first image
-        showImage(0);
-
-        // No timers, no automatic changes
-    } else {
-        // Auto slider with Pause (non‑PS3) – unchanged from previous version
-        var pauseBtn = container.querySelector('.cons-pause-btn');
-        var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
-        var isLoading = false, retryCount = 0;
-        var MAX_RETRIES = 5;
-        var isPaused = false;
-
-        var DISPLAY_TIME = window.isPS3 ? 10000 : 1500,
-            SKIP_DELAY = window.isPS3 ? 11500 : 3000,
-            MAX_WAIT = window.isPS3 ? 8500 : 5500;
-
-        if (pauseBtn && !window.isPS3) {
-            pauseBtn.style.display = 'inline-block';
-            pauseBtn.onclick = function () {
-                isPaused = !isPaused;
-                if (isPaused) {
-                    clearAllTimers();
-                    pauseBtn.innerHTML = 'Play';
-                } else {
-                    pauseBtn.innerHTML = 'Pause';
-                    showNextImage();
-                }
-            };
-        }
-
-        function clearAllTimers() {
-            if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
-            if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
-        }
-        function showNextImage() {
-            if (isPaused) return;
-            clearAllTimers();
-            isLoading = true;
-            retryCount = 0;
-            index = (index + 1) % total;
-            img.src = images[index];
-            counter.innerHTML = (index + 1) + ' / ' + total;
-            maxWaitTimer = setTimeout(function () {
-                if (isLoading && !isPaused) {
-                    isLoading = false;
-                    scheduleNext(SKIP_DELAY);
-                }
-            }, MAX_WAIT);
-        }
-        function scheduleNext(delay) {
-            if (isPaused) return;
-            clearAllTimers();
-            nextTimer = setTimeout(showNextImage, delay);
-        }
-        img.onload = function () {
-            if (isLoading && !isPaused) {
-                isLoading = false;
-                clearAllTimers();
-                scheduleNext(DISPLAY_TIME);
-            }
-        };
-        img.onerror = function () {
-            if (!isLoading || isPaused) return;
-            retryCount++;
-            if (retryCount <= MAX_RETRIES) {
-                clearAllTimers();
-                img.src = images[index];
-                maxWaitTimer = setTimeout(function () {
-                    if (isLoading && !isPaused) {
-                        isLoading = false;
-                        scheduleNext(SKIP_DELAY);
+                    function createConsoleSlider (container, images)
+                    {
+                        var sliderHTML = '';
+                        sliderHTML += '<div style="position:relative; display:inline-block; margin-top:10px; margin-bottom:10px;">';
+                        sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
+                        sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
+                        if (window.isPS3) 
+                        {
+                            sliderHTML += '  <div style="margin-top:8px;">';
+                            sliderHTML += '    <button class="cons-prev-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">◀ Prev</button>';
+                            sliderHTML += '    <button class="cons-next-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next ▶</button>';
+                            sliderHTML += '  </div>';
+                        } 
+                        else
+                        {
+                            sliderHTML += '  <button class="cons-pause-btn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>';
+                        }
+                        sliderHTML += '</div>';
+                        container.innerHTML = sliderHTML;
+                        var img = container.querySelector('.cons-slider-img'), counter = container.querySelector('.cons-slider-counter');
+                        if (window.isPS3) 
+                        {
+                            var currentIndex = 0;
+                            
+                            function showImage (idx)
+                            {
+                                if (idx < 0) idx = images.length - 1;
+                                
+                                if (idx >= images.length) idx = 0;
+                                currentIndex = idx;
+                                img.src = images[currentIndex];
+                                counter.innerHTML = (currentIndex + 1) + ' / ' + images.length;
+                            }
+                            var prevBtn = container.querySelector('.cons-prev-btn'), nextBtn = container.querySelector('.cons-next-btn');
+                            
+                            prevBtn.onclick = function () 
+                            {
+                                showImage(currentIndex - 1);
+                            };
+                            nextBtn.onclick = function ()
+                            {
+                                showImage(currentIndex + 1);
+                            };
+                            showImage(0);
+                        }
+                        else
+                        {
+                            var pauseBtn = container.querySelector('.cons-pause-btn');
+                            var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
+                            var isLoading = false, retryCount = 0;
+                            var MAX_RETRIES = 5;
+                            var isPaused = false;
+                            var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
+                            
+                            if (pauseBtn && !window.isPS3) 
+                            {
+                                pauseBtn.style.display = 'inline-block';
+                                pauseBtn.onclick = function () 
+                                {
+                                    isPaused = !isPaused;
+                                    if (isPaused)
+                                    {
+                                        clearAllTimers();
+                                        pauseBtn.innerHTML = 'Play';
+                                    }
+                                    else
+                                    {
+                                        pauseBtn.innerHTML = 'Pause';
+                                        showNextImage();
+                                    }
+                                };
+                            }
+                            function clearAllTimers ()
+                            {
+                                if (nextTimer) 
+                                {
+                                    clearTimeout(nextTimer);
+                                    nextTimer = null;
+                                }
+                                if (maxWaitTimer) 
+                                {
+                                    clearTimeout(maxWaitTimer);
+                                    maxWaitTimer = null;
+                                }
+                            }
+                            function showNextImage () 
+                            {
+                                if (isPaused) return;
+                                
+                                clearAllTimers();
+                                isLoading = true;
+                                retryCount = 0;
+                                index = (index + 1) % total;
+                                img.src = images[index];
+                                counter.innerHTML = (index + 1) + ' / ' + total;
+                                maxWaitTimer = setTimeout(function () 
+                                {
+                                    if (isLoading && !isPaused) 
+                                    {
+                                        isLoading = false;
+                                        scheduleNext(SKIP_DELAY);
+                                    }
+                                }, MAX_WAIT);
+                            }
+                            function scheduleNext (delay)
+                            {
+                                if (isPaused) return;
+                                
+                                clearAllTimers();
+                                nextTimer = setTimeout(showNextImage, delay);
+                            }
+                            
+                            img.onload = function () 
+                            {
+                                if (isLoading && !isPaused) 
+                                {
+                                    isLoading = false;
+                                    clearAllTimers();
+                                    scheduleNext(DISPLAY_TIME);
+                                }
+                            };
+                            img.onerror = function ()
+                            {
+                                if (!isLoading || isPaused) return;
+                                
+                                retryCount++;
+                                if (retryCount <= MAX_RETRIES) 
+                                {
+                                    clearAllTimers();
+                                    img.src = images[index];
+                                    maxWaitTimer = setTimeout(function ()
+                                    {
+                                        if (isLoading && !isPaused) 
+                                        {
+                                            isLoading = false;
+                                            scheduleNext(SKIP_DELAY);
+                                        }
+                                    }, MAX_WAIT);
+                                }
+                                else
+                                {
+                                    isLoading = false;
+                                    clearAllTimers();
+                                    counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                                    scheduleNext(SKIP_DELAY);
+                                }
+                            };
+                            isLoading = true;
+                            retryCount = 0;
+                            img.src = images[0];
+                            counter.innerHTML = '1 / ' + total;
+                            maxWaitTimer = setTimeout(function () 
+                            {
+                                if (isLoading && !isPaused) 
+                                {
+                                    isLoading = false;
+                                    scheduleNext(SKIP_DELAY);
+                                }
+                            }, MAX_WAIT);
+                        }
                     }
-                }, MAX_WAIT);
-            } else {
-                isLoading = false;
-                clearAllTimers();
-                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
-                scheduleNext(SKIP_DELAY);
-            }
-        };
-
-        isLoading = true;
-        retryCount = 0;
-        img.src = images[0];
-        counter.innerHTML = '1 / ' + total;
-        maxWaitTimer = setTimeout(function () {
-            if (isLoading && !isPaused) {
-                isLoading = false;
-                scheduleNext(SKIP_DELAY);
-            }
-        }, MAX_WAIT);
-    }
-}
                     function getPS3Model (model) 
                     {
                         if (!model || model === '?') return '?';
