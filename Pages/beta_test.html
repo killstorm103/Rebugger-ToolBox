@@ -172,22 +172,12 @@
                 </li>
             </ul>
             <h2>PS3 Services<span class="size"></span></h2>
-            <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
-                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="vertical-align: top; padding-right: 20px;">
-                            <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div id="sliderContainer" style="margin: 0;">
-                                <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-                                <div style="margin-top: 10px; color: #fff;">
-                                    <span id="imageCounter">1 / 7</span>
-                                    <span id="debugInfo" style="color: #aaa; margin-left: 15px;"></span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+            <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:15px; margin-left:60px; display:inline-block;">
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr><td style="vertical-align: top; padding-right: 20px;">
+                    <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);"></td>
+                    <td style="vertical-align: top;"><div id="sliderContainer" style="margin: 0;">
+                        <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);"><div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span><span id="debugInfo" style="color: #aaa; margin-left: 15px;"></span></div>
+                        <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button></div></td></tr>
                 </table>
             </div>
             <script>
@@ -212,7 +202,28 @@
                     var retryCount = 0, MAX_RETRIES = 5;
 
                     var DISPLAY_TIME = window.isPS3 ? 10000 : 1500, SKIP_DELAY = window.isPS3 ? 11500 : 3000, MAX_WAIT = window.isPS3 ? 8500 : 5500;
-
+                    
+                    var isPaused = false;  
+                    var pauseBtn = document.getElementById('pauseBtn');
+                    
+                    if (pauseBtn && !window.isPS3) 
+                    {
+                        pauseBtn.style.display = 'inline-block';
+                        pauseBtn.onclick = function () 
+                        {
+                            isPaused = !isPaused;
+                            if (isPaused) 
+                            {
+                                clearAllTimers();
+                                pauseBtn.innerHTML = 'Play';
+                            }
+                            else
+                            {
+                                pauseBtn.innerHTML = 'Pause';
+                                showNextImage();
+                            }
+                        };
+                    }
                     function clearAllTimers () 
                     {
                         if (nextTimer) 
@@ -226,6 +237,7 @@
                     }
                     function showNextImage () 
                     {
+                        if (isPaused) return;   
                         clearAllTimers();
                         isLoading = true;
                         retryCount = 0;
@@ -244,6 +256,7 @@
                     }
                     function scheduleNext (delay)
                     {
+                        if (isPaused) return;
                         clearAllTimers();
                         nextTimer = setTimeout(showNextImage, delay);
                     }
@@ -257,7 +270,7 @@
                     };
                     img.onerror = function () 
                     {
-                        if (!isLoading) return;
+                        if (!isLoading || isPaused) return;
                         
                         retryCount++;
                         if (retryCount <= MAX_RETRIES) 
@@ -810,7 +823,7 @@
                     var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
                     for (var i = 0; i < darkBoxes.length; i++) 
                     {
-                        darkBoxes[i].style.marginBottom = '5px';
+                        darkBoxes[i].style.marginBottom = '4px';
                     }
                 }
                 </script>
