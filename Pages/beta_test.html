@@ -185,232 +185,406 @@
                 </table>
             </div>
             <script>
-    // ----- Manual slider for PS3 -----
-    function startSliderManual() {
-        var images = [
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
-        ];
-
-        var img = document.getElementById('sliderImage'),
-            counter = document.getElementById('imageCounter');
-        if (!img || !counter) return;
-
-        var manualBtns = document.getElementById('manualBtns');
-        if (manualBtns) manualBtns.style.display = 'block';
-
-        var prevBtn = document.getElementById('prevBtn'),
-            nextBtn = document.getElementById('nextBtn'),
-            currentIndex = 0,
-            total = images.length;
-
-        function showImage(idx) {
-            if (idx < 0) idx = total - 1;
-            if (idx >= total) idx = 0;
-            currentIndex = idx;
-            img.src = images[currentIndex];
-            counter.innerHTML = (currentIndex + 1) + ' / ' + total;
+    (function () {
+        // ── Services slider ──
+        function startSliderManual() {
+            var images = [
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
+            ];
+            var img = document.getElementById('sliderImage'),
+                counter = document.getElementById('imageCounter');
+            if (!img || !counter) return;
+            var manualBtns = document.getElementById('manualBtns');
+            if (manualBtns) manualBtns.style.display = 'block';
+            var prevBtn = document.getElementById('prevBtn'),
+                nextBtn = document.getElementById('nextBtn'),
+                currentIndex = 0,
+                total = images.length;
+            function showImage(idx) {
+                if (idx < 0) idx = total - 1;
+                if (idx >= total) idx = 0;
+                currentIndex = idx;
+                img.src = images[currentIndex];
+                counter.innerHTML = (currentIndex + 1) + ' / ' + total;
+            }
+            prevBtn.onclick = function() { showImage(currentIndex - 1); };
+            nextBtn.onclick = function() { showImage(currentIndex + 1); };
+            showImage(0);
         }
 
-        prevBtn.onclick = function() { showImage(currentIndex - 1); };
-        nextBtn.onclick = function() { showImage(currentIndex + 1); };
-
-        showImage(0);
-    }
-
-    // ----- Auto slider for PC / other browsers -----
-    function startSliderAuto() {
-        var images = [
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
-            'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
-        ];
-
-        var img = document.getElementById('sliderImage'),
-            counter = document.getElementById('imageCounter');
-        if (!img || !counter) return;
-
-        var total = images.length, index = 0;
-        var nextTimer = null, maxWaitTimer = null;
-        var isLoading = false, isPaused = false;
-        var retryCount = 0, MAX_RETRIES = 5;
-
-        var DISPLAY_TIME = 1500,
-            SKIP_DELAY     = 3000,
-            MAX_WAIT       = 5500;
-
-        var pauseBtn = document.getElementById('pauseBtn');
-        if (pauseBtn) {
-            pauseBtn.style.display = 'inline-block';
-            pauseBtn.onclick = function() {
-                isPaused = !isPaused;
-                if (isPaused) {
-                    clearAllTimers();
-                    pauseBtn.innerHTML = 'Play';
-                } else {
-                    pauseBtn.innerHTML = 'Pause';
-                    showNextImage();
-                }
+        function startSliderAuto() {
+            var images = [
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg',
+                'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'
+            ];
+            var img = document.getElementById('sliderImage'),
+                counter = document.getElementById('imageCounter');
+            if (!img || !counter) return;
+            var total = images.length, index = 0,
+                nextTimer = null, maxWaitTimer = null,
+                isLoading = false, isPaused = false,
+                retryCount = 0, MAX_RETRIES = 5;
+            var DISPLAY_TIME = 1500, SKIP_DELAY = 3000, MAX_WAIT = 5500;
+            var pauseBtn = document.getElementById('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.style.display = 'inline-block';
+                pauseBtn.onclick = function() {
+                    isPaused = !isPaused;
+                    if (isPaused) { clearAllTimers(); pauseBtn.innerHTML = 'Play'; }
+                    else { pauseBtn.innerHTML = 'Pause'; showNextImage(); }
+                };
+            }
+            function clearAllTimers() {
+                if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
+                if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
+            }
+            function showNextImage() {
+                if (isPaused) return;
+                clearAllTimers(); isLoading = true; retryCount = 0;
+                index++; if (index >= total) index = 0;
+                img.src = images[index];
+                counter.innerHTML = (index + 1) + ' / ' + total;
+                maxWaitTimer = setTimeout(function() {
+                    if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                }, MAX_WAIT);
+            }
+            function scheduleNext(delay) {
+                if (isPaused) return;
+                clearAllTimers(); nextTimer = setTimeout(showNextImage, delay);
+            }
+            img.onload = function() {
+                if (isLoading && !isPaused) { isLoading = false; clearAllTimers(); scheduleNext(DISPLAY_TIME); }
             };
-        }
-
-        function clearAllTimers() {
-            if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
-            if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
-        }
-
-        function showNextImage() {
-            if (isPaused) return;
-            clearAllTimers();
-            isLoading = true;
-            retryCount = 0;
-            index++;
-            if (index >= total) index = 0;
-            img.src = images[index];
-            counter.innerHTML = (index + 1) + ' / ' + total;
-            maxWaitTimer = setTimeout(function() {
-                if (isLoading && !isPaused) {
-                    isLoading = false;
+            img.onerror = function() {
+                if (!isLoading || isPaused) return;
+                retryCount++;
+                if (retryCount <= MAX_RETRIES) {
+                    clearAllTimers(); img.src = images[index];
+                    maxWaitTimer = setTimeout(function() {
+                        if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                    }, MAX_WAIT);
+                } else {
+                    isLoading = false; clearAllTimers();
+                    counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
                     scheduleNext(SKIP_DELAY);
                 }
+            };
+            isLoading = true; retryCount = 0; img.src = images[0];
+            counter.innerHTML = '1 / ' + total;
+            maxWaitTimer = setTimeout(function() {
+                if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
             }, MAX_WAIT);
         }
 
-        function scheduleNext(delay) {
-            if (isPaused) return;
-            clearAllTimers();
-            nextTimer = setTimeout(showNextImage, delay);
+        // ── Margin control ──
+        function initMarginControl() {
+            var input = document.getElementById('marginInput'),
+                applyBtn = document.getElementById('applyMarginBtn'),
+                valueDisplay = document.getElementById('marginValue'),
+                container = document.getElementById('mainContainer');
+            if (!input || !applyBtn || !container) return;
+            function updateMargin(value) {
+                var cleanValue = String(value).replace(/[ .]/g, '');
+                if (cleanValue === '') return;
+                var num = parseInt(cleanValue, 10);
+                if (isNaN(num)) return; if (num < 0) num = 0;
+                container.style.marginTop = num + 'px';
+                if (valueDisplay) valueDisplay.innerHTML = num;
+                input.value = num;
+            }
+            input.onkeypress = function(e) {
+                e = e || window.event;
+                var keyCode = e.keyCode || e.which;
+                var char = String.fromCharCode(keyCode);
+                var isDigit = /[0-9]/.test(char);
+                var isControl = keyCode === 8 || keyCode === 46 || keyCode === 13 ||
+                                keyCode === 9 || keyCode === 37 || keyCode === 39 ||
+                                keyCode === 38 || keyCode === 40;
+                if (!isDigit && !isControl) { if (e.preventDefault) e.preventDefault(); return false; }
+                if (keyCode === 13) { updateMargin(input.value); if (e.preventDefault) e.preventDefault(); return false; }
+                return true;
+            };
+            input.oninput = function() { var clean = this.value.replace(/[^0-9]/g, ''); this.value = clean; };
+            applyBtn.onclick = function() { updateMargin(input.value); };
+            var initial = input.value;
+            if (initial !== '') updateMargin(initial);
         }
 
-        img.onload = function() {
-            if (isLoading && !isPaused) {
-                isLoading = false;
-                clearAllTimers();
-                scheduleNext(DISPLAY_TIME);
-            }
-        };
-
-        img.onerror = function() {
-            if (!isLoading || isPaused) return;
-            retryCount++;
-            if (retryCount <= MAX_RETRIES) {
-                clearAllTimers();
-                img.src = images[index];
-                maxWaitTimer = setTimeout(function() {
-                    if (isLoading && !isPaused) {
-                        isLoading = false;
-                        scheduleNext(SKIP_DELAY);
+        // ── Console stock (unchanged logic, wrapped for deferred load) ──
+        function initConsoleStock() {
+            (function() {
+                var REMOTE_URL = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/services.txt';
+                var consolesList = document.getElementById('consoles-list');
+                function trim(str) {
+                    var start = 0, end = str.length - 1;
+                    while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
+                    while (end >= start && (str.charAt(end) === ' ' || str.charAt(end) === '\t')) end--;
+                    return str.substring(start, end + 1);
+                }
+                function parseImageArray(line) {
+                    var imgStart = line.indexOf('['), imgEnd = line.indexOf(']');
+                    if (imgStart === -1 || imgEnd === -1) return [];
+                    var arrStr = line.substring(imgStart + 1, imgEnd);
+                    var urls = [], parts = arrStr.split(',');
+                    for (var i = 0; i < parts.length; i++) {
+                        var url = trim(parts[i].replace(/['"]/g, ''));
+                        if (url) urls.push(url);
                     }
-                }, MAX_WAIT);
-            } else {
-                isLoading = false;
-                clearAllTimers();
-                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
-                scheduleNext(SKIP_DELAY);
-            }
-        };
-
-        // Start auto slider
-        isLoading = true;
-        retryCount = 0;
-        img.src = images[0];
-        counter.innerHTML = '1 / ' + total;
-        maxWaitTimer = setTimeout(function() {
-            if (isLoading && !isPaused) {
-                isLoading = false;
-                scheduleNext(SKIP_DELAY);
-            }
-        }, MAX_WAIT);
-    }
-
-    // ----- Choose the correct slider when the page loads -----
-    function initServicesSlider() {
-        if (window.isPS3) {
-            startSliderManual();
-        } else {
-            startSliderAuto();
+                    return urls;
+                }
+                function parseServices(text) {
+                    var consoles = [], lines = text.split('\n'), currentConsole = null, insideReplaced = false;
+                    for (var i = 0; i < lines.length; i++) {
+                        var raw = lines[i], line = trim(raw);
+                        if (line === '') continue;
+                        var consoleMatch = line.match(/^console-(\d+):/);
+                        if (consoleMatch) {
+                            if (currentConsole) consoles.push(currentConsole);
+                            currentConsole = { images: [], type: '', firmware: '', model: '', accessories: '', hardDrive: '', replacedThermalPaste: 'no', replacedHardDrive: 'no', price: '', issues: '', additionalInfo: '' };
+                            insideReplaced = false; continue;
+                        }
+                        if (!currentConsole) continue;
+                        if (insideReplaced) {
+                            if (line.indexOf('thermal paste:') === 0) {
+                                var tp = trim(line.substring('thermal paste:'.length));
+                                currentConsole.replacedThermalPaste = (tp === 'yes') ? 'Yes' : 'No';
+                            } else if (line.indexOf('hard drive:') === 0) {
+                                var hd = trim(line.substring('hard drive:'.length));
+                                currentConsole.replacedHardDrive = (hd === 'yes') ? 'Yes' : 'No';
+                            } else { insideReplaced = false; }
+                            if (insideReplaced) continue;
+                        }
+                        if (line.indexOf('images:') === 0) currentConsole.images = parseImageArray(line);
+                        else if (line.indexOf('additional Info:') === 0) currentConsole.additionalInfo = trim(line.substring('additional Info:'.length));
+                        else if (line.indexOf('console-type:') === 0) currentConsole.type = trim(line.substring('console-type:'.length));
+                        else if (line.indexOf('firmware:') === 0) currentConsole.firmware = trim(line.substring('firmware:'.length));
+                        else if (line.indexOf('issues:') === 0) currentConsole.issues = trim(line.substring('issues:'.length));
+                        else if (line.indexOf('model-number:') === 0) currentConsole.model = trim(line.substring('model-number:'.length));
+                        else if (line.indexOf('accessories:') === 0) currentConsole.accessories = trim(line.substring('accessories:'.length));
+                        else if (line.indexOf('hard drive:') === 0) currentConsole.hardDrive = trim(line.substring('hard drive:'.length));
+                        else if (line.indexOf('price:') === 0) currentConsole.price = trim(line.substring('price:'.length));
+                        else if (line.indexOf('replaced:') === 0) insideReplaced = true;
+                    }
+                    if (currentConsole) consoles.push(currentConsole);
+                    return consoles;
+                }
+                function createConsoleSlider(container, images) {
+                    var sliderHTML = '';
+                    sliderHTML += '<div style="position:relative; display:inline-block; margin-top:10px; margin-bottom:10px;">';
+                    sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
+                    sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
+                    if (window.isPS3) {
+                        sliderHTML += '  <div style="margin-top:8px;">';
+                        sliderHTML += '    <button class="cons-prev-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">◀ Prev</button>';
+                        sliderHTML += '    <button class="cons-next-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next ▶</button>';
+                        sliderHTML += '  </div>';
+                    } else {
+                        sliderHTML += '  <button class="cons-pause-btn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>';
+                    }
+                    sliderHTML += '</div>';
+                    container.innerHTML = sliderHTML;
+                    var img = container.querySelector('.cons-slider-img'),
+                        counter = container.querySelector('.cons-slider-counter');
+                    if (window.isPS3) {
+                        var currentIndex = 0;
+                        function showImage(idx) {
+                            if (idx < 0) idx = images.length - 1;
+                            if (idx >= images.length) idx = 0;
+                            currentIndex = idx;
+                            img.src = images[currentIndex];
+                            counter.innerHTML = (currentIndex + 1) + ' / ' + images.length;
+                        }
+                        var prevBtn = container.querySelector('.cons-prev-btn'),
+                            nextBtn = container.querySelector('.cons-next-btn');
+                        prevBtn.onclick = function() { showImage(currentIndex - 1); };
+                        nextBtn.onclick = function() { showImage(currentIndex + 1); };
+                        showImage(0);
+                    } else {
+                        var pauseBtn = container.querySelector('.cons-pause-btn');
+                        var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
+                        var isLoading = false, retryCount = 0, MAX_RETRIES = 5, isPaused = false;
+                        var DISPLAY_TIME = 1500, SKIP_DELAY = 3000, MAX_WAIT = 5500;
+                        if (pauseBtn) {
+                            pauseBtn.style.display = 'inline-block';
+                            pauseBtn.onclick = function() {
+                                isPaused = !isPaused;
+                                if (isPaused) { clearAllTimers(); pauseBtn.innerHTML = 'Play'; }
+                                else { pauseBtn.innerHTML = 'Pause'; showNextImage(); }
+                            };
+                        }
+                        function clearAllTimers() {
+                            if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
+                            if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
+                        }
+                        function showNextImage() {
+                            if (isPaused) return;
+                            clearAllTimers(); isLoading = true; retryCount = 0;
+                            index = (index + 1) % total;
+                            img.src = images[index];
+                            counter.innerHTML = (index + 1) + ' / ' + total;
+                            maxWaitTimer = setTimeout(function() {
+                                if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                            }, MAX_WAIT);
+                        }
+                        function scheduleNext(delay) {
+                            if (isPaused) return;
+                            clearAllTimers(); nextTimer = setTimeout(showNextImage, delay);
+                        }
+                        img.onload = function() {
+                            if (isLoading && !isPaused) { isLoading = false; clearAllTimers(); scheduleNext(DISPLAY_TIME); }
+                        };
+                        img.onerror = function() {
+                            if (!isLoading || isPaused) return;
+                            retryCount++;
+                            if (retryCount <= MAX_RETRIES) {
+                                clearAllTimers(); img.src = images[index];
+                                maxWaitTimer = setTimeout(function() {
+                                    if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                                }, MAX_WAIT);
+                            } else {
+                                isLoading = false; clearAllTimers();
+                                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                                scheduleNext(SKIP_DELAY);
+                            }
+                        };
+                        isLoading = true; retryCount = 0; img.src = images[0];
+                        counter.innerHTML = '1 / ' + total;
+                        maxWaitTimer = setTimeout(function() {
+                            if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                        }, MAX_WAIT);
+                    }
+                }
+                function getPS3Model(model) {
+                    if (!model || model === '?') return '?';
+                    var cleaned = '';
+                    for (var i = 0; i < model.length; i++) {
+                        var ch = model.charAt(i);
+                        if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch === '-') cleaned += ch;
+                    }
+                    var m = cleaned.toUpperCase();
+                    if (m.indexOf('CECH-4') === 0) return 'Super Slim';
+                    if (m.indexOf('CECH-2') === 0 || m.indexOf('CECH-3') === 0) return 'Slim';
+                    if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'Fat';
+                    return 'Unknown';
+                }
+                function getFlashType(model) {
+                    if (!model || model === '?') return 'Unknown';
+                    var m = model.toUpperCase();
+                    if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'NAND';
+                    if ((m.indexOf('CECH-40') === 0 || m.indexOf('CECH-42') === 0 || m.indexOf('CECH-43') === 0) && m.charAt(m.length - 1) === 'A') return 'eMMC';
+                    return 'NOR';
+                }
+                function buildConsolesUI(consoles) {
+                    if (!consolesList) return;
+                    consolesList.innerHTML = '';
+                    var CFW_Count = 0, qCFW_Count = 0, HEN_Count = 0, OFW_Count = 0;
+                    for (var counting = 0; counting < consoles.length; counting++) {
+                        var type = consoles[counting].type; if (!type) continue;
+                        switch (type.toUpperCase()) {
+                            case 'CFW': CFW_Count++; break;
+                            case 'QCFW': qCFW_Count++; break;
+                            case 'HEN': HEN_Count++; break;
+                            case 'OFW': OFW_Count++; break;
+                        }
+                    }
+                    var stockBox = document.getElementById('stock-box');
+                    if (stockBox) {
+                        stockBox.innerHTML = 'Total Available PS3s: ' + consoles.length + '<br>' +
+                            'CFWs: ' + CFW_Count + '<br>' + 'qCFWs: ' + qCFW_Count + '<br>' +
+                            'HENs: ' + HEN_Count + '<br>' + 'OFWs: ' + OFW_Count;
+                    }
+                    for (var i = 0; i < consoles.length; i++) {
+                        var c = consoles[i];
+                        var li = document.createElement('li');
+                        li.style.padding = '0'; li.style.margin = '0 0 10px 0';
+                        var displayIssues = c.issues ? c.issues : 'None',
+                            displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!',
+                            displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
+                        var infoHTML = '';
+                        infoHTML += '<strong>PS3 #' + (i + 1) + '</strong><br>';
+                        infoHTML += 'Price: ' + displayPrice + '<br>';
+                        infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
+                        infoHTML += 'Firmware: ' + c.firmware + '<br>';
+                        infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : '?') + '<br>';
+                        infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
+                        infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
+                        infoHTML += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
+                        infoHTML += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
+                        infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
+                        infoHTML += 'Known issues: ' + displayIssues + '<br>';
+                        infoHTML += 'Accessories: ' + displayAccessories + '<br>';
+                        if (c.additionalInfo) {
+                            infoHTML += 'Additional Info:<br>';
+                            var addLines = c.additionalInfo.split('\n');
+                            for (var j = 0; j < addLines.length; j++) infoHTML += addLines[j] + '<br>';
+                        }
+                        infoHTML += '<div class="cons-slider-' + i + '"></div>';
+                        var infoBox = document.createElement('div');
+                        infoBox.style.background = '#222'; infoBox.style.borderLeft = '5px solid #dc3545';
+                        infoBox.style.padding = '15px'; infoBox.style.color = '#fff'; infoBox.style.marginBottom = '0';
+                        infoBox.innerHTML = infoHTML;
+                        li.appendChild(infoBox); consolesList.appendChild(li);
+                        var sliderContainer = infoBox.querySelector('.cons-slider-' + i);
+                        createConsoleSlider(sliderContainer, c.images);
+                    }
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', REMOTE_URL, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var consoles = parseServices(xhr.responseText);
+                        buildConsolesUI(consoles);
+                    }
+                };
+                xhr.send();
+            })();
         }
-    }
 
-    if (window.addEventListener) {
-        window.addEventListener('load', initServicesSlider, false);
-    } else if (window.attachEvent) {
-        window.attachEvent('onload', initServicesSlider);
-    } else {
-        window.onload = initServicesSlider;
-    }
-
-    // Margin control (unchanged)
-    function initMarginControl() {
-        var input = document.getElementById('marginInput'),
-            applyBtn = document.getElementById('applyMarginBtn'),
-            valueDisplay = document.getElementById('marginValue'),
-            container = document.getElementById('mainContainer');
-        if (!input || !applyBtn || !container) return;
-
-        function updateMargin(value) {
-            var cleanValue = String(value).replace(/[ .]/g, '');
-            if (cleanValue === '') return;
-            var num = parseInt(cleanValue, 10);
-            if (isNaN(num)) return;
-            if (num < 0) num = 0;
-            container.style.marginTop = num + 'px';
-            if (valueDisplay) valueDisplay.innerHTML = num;
-            input.value = num;
-        }
-
-        input.onkeypress = function(e) {
-            e = e || window.event;
-            var keyCode = e.keyCode || e.which;
-            var char = String.fromCharCode(keyCode);
-            var isDigit = /[0-9]/.test(char);
-            var isControl = keyCode === 8  || keyCode === 46 || keyCode === 13 ||
-                            keyCode === 9  || keyCode === 37 || keyCode === 39 ||
-                            keyCode === 38 || keyCode === 40;
-            if (!isDigit && !isControl) {
-                if (e.preventDefault) e.preventDefault();
-                return false;
-            }
-            if (keyCode === 13) {
-                updateMargin(input.value);
-                if (e.preventDefault) e.preventDefault();
-                return false;
-            }
-            return true;
-        };
-
-        input.oninput = function() {
-            var clean = this.value.replace(/[^0-9]/g, '');
-            this.value = clean;
-        };
-
-        applyBtn.onclick = function() { updateMargin(input.value); };
-
-        var initial = input.value;
-        if (initial !== '') updateMargin(initial);
-    }
-
-    if (window.addEventListener) {
-        window.addEventListener('load', initMarginControl, false);
-    } else if (window.attachEvent) {
-        window.attachEvent('onload', initMarginControl);
-    } else {
-        window.onload = function() {
-            if (window._oldOnload) window._oldOnload();
+        // ── Main load handler ──
+        function onPageLoad() {
             initMarginControl();
-            initServicesSlider();
-        };
-    }
-            </script>
+            if (window.isPS3) {
+                startSliderManual();
+            } else {
+                startSliderAuto();
+            }
+            // Delay console stock to keep page responsive
+            setTimeout(initConsoleStock, 100);
+            // Add box gaps on PS3 after a short pause to let layout settle
+            if (window.isPS3) {
+                setTimeout(function() {
+                    var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
+                    for (var i = 0; i < darkBoxes.length; i++) {
+                        darkBoxes[i].style.marginBottom = '4px';
+                    }
+                }, 300);
+            }
+        }
+
+        // ── Attach single load event ──
+        if (window.addEventListener) {
+            window.addEventListener('load', onPageLoad, false);
+        } else if (window.attachEvent) {
+            window.attachEvent('onload', onPageLoad);
+        } else {
+            window.onload = function() {
+                if (window._oldOnload) window._oldOnload();
+                onPageLoad();
+            };
+        }
+    })();
+</script>
             <ul>
                 <li style="padding:0; margin:0;">
                     <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
