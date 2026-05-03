@@ -596,102 +596,143 @@
                         
                         return consoles;
                     }
-                    function createConsoleSlider (container, images) 
-                    {
-                        var sliderHTML = '';
-                        sliderHTML += '<div style="position:relative; display:inline-block; margin-bottom:10px;">';
-                        sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
-                        sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
-                        sliderHTML += '</div>';
-                        container.innerHTML = sliderHTML;
-                        
-                        var img = container.querySelector('.cons-slider-img'), counter = container.querySelector('.cons-slider-counter');
-                        var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
-                        
-                        var isLoading = false, retryCount = 0;
-                        var MAX_RETRIES = 5;
-                        var DISPLAY_TIME = window.isPS3 ? 20000 : 1500, SKIP_DELAY = window.isPS3 ? 8000 : 3000, MAX_WAIT = window.isPS3 ? 12000 : 5500;
-                        function clearAllTimers () 
-                        {
-                            if (nextTimer) 
-                            { 
-                                clearTimeout(nextTimer); nextTimer = null; 
-                            }
-                            if (maxWaitTimer) 
-                            {
-                                clearTimeout(maxWaitTimer); maxWaitTimer = null; 
-                            }
-                        }
-                        function showNextImage () 
-                        {
-                            clearAllTimers();
-                            isLoading = true;
-                            retryCount = 0;
-                            index = (index + 1) % total;
-                            img.src = images[index];
-                            counter.innerHTML = (index + 1) + ' / ' + total;
-                            maxWaitTimer = setTimeout(function ()
-                            {
-                                if (isLoading) 
-                                {
-                                    isLoading = false;
-                                    scheduleNext(SKIP_DELAY);
-                                }
-                            }, MAX_WAIT);
-                        }
-                        function scheduleNext (delay) 
-                        {
-                            clearAllTimers();
-                            nextTimer = setTimeout(showNextImage, delay);
-                        }
-                        img.onload = function () 
-                        {
-                            if (isLoading) 
-                            {
-                                isLoading = false;
-                                clearAllTimers();
-                                scheduleNext(DISPLAY_TIME);
-                            }
-                        };
-                        img.onerror = function () 
-                        {
-                            if (!isLoading) return;
-                            
-                            retryCount++;
-                            if (retryCount <= MAX_RETRIES) 
-                            {
-                                clearAllTimers();
-                                img.src = images[index];  
-                                maxWaitTimer = setTimeout(function () 
-                                {
-                                    if (isLoading) 
-                                    {
-                                        isLoading = false;
-                                        scheduleNext(SKIP_DELAY);
-                                    }
-                                }, MAX_WAIT);
-                            }
-                            else
-                            {
-                                isLoading = false;
-                                clearAllTimers();
-                                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
-                                scheduleNext(SKIP_DELAY);
-                            }
-                        };
-                        isLoading = true;
-                        retryCount = 0;
-                        img.src = images[0];
-                        counter.innerHTML = '1 / ' + total;
-                        maxWaitTimer = setTimeout(function () 
-                        {
-                            if (isLoading) 
-                            {
-                                isLoading = false;
-                                scheduleNext(SKIP_DELAY);
-                            }
-                        }, MAX_WAIT);
+                    function createConsoleSlider(container, images) {
+    var sliderHTML = '';
+    sliderHTML += '<div style="position:relative; display:inline-block; margin-bottom:10px;">';
+    sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
+    sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
+
+    if (window.isPS3) {
+        // Manual slider with Prev / Next buttons (PS3 only)
+        sliderHTML += '  <div style="margin-top:8px;">';
+        sliderHTML += '    <button class="cons-prev-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">◀ Prev</button>';
+        sliderHTML += '    <button class="cons-next-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next ▶</button>';
+        sliderHTML += '  </div>';
+    } else {
+        // Auto slider with Pause button (non‑PS3)
+        sliderHTML += '  <button class="cons-pause-btn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>';
+    }
+    sliderHTML += '</div>';
+    container.innerHTML = sliderHTML;
+
+    var img = container.querySelector('.cons-slider-img'),
+        counter = container.querySelector('.cons-slider-counter');
+
+    if (window.isPS3) {
+        // Manual navigation for PS3
+        var currentIndex = 0;
+
+        function showImage(idx) {
+            if (idx < 0) idx = images.length - 1;
+            if (idx >= images.length) idx = 0;
+            currentIndex = idx;
+            img.src = images[currentIndex];
+            counter.innerHTML = (currentIndex + 1) + ' / ' + images.length;
+        }
+
+        var prevBtn = container.querySelector('.cons-prev-btn');
+        var nextBtn = container.querySelector('.cons-next-btn');
+
+        prevBtn.onclick = function () {
+            showImage(currentIndex - 1);
+        };
+        nextBtn.onclick = function () {
+            showImage(currentIndex + 1);
+        };
+
+        // Load first image
+        showImage(0);
+
+        // No timers, no automatic changes
+    } else {
+        // Auto slider with Pause (non‑PS3) – unchanged from previous version
+        var pauseBtn = container.querySelector('.cons-pause-btn');
+        var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
+        var isLoading = false, retryCount = 0;
+        var MAX_RETRIES = 5;
+        var isPaused = false;
+
+        var DISPLAY_TIME = window.isPS3 ? 10000 : 1500,
+            SKIP_DELAY = window.isPS3 ? 11500 : 3000,
+            MAX_WAIT = window.isPS3 ? 8500 : 5500;
+
+        if (pauseBtn && !window.isPS3) {
+            pauseBtn.style.display = 'inline-block';
+            pauseBtn.onclick = function () {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    clearAllTimers();
+                    pauseBtn.innerHTML = 'Play';
+                } else {
+                    pauseBtn.innerHTML = 'Pause';
+                    showNextImage();
+                }
+            };
+        }
+
+        function clearAllTimers() {
+            if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
+            if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
+        }
+        function showNextImage() {
+            if (isPaused) return;
+            clearAllTimers();
+            isLoading = true;
+            retryCount = 0;
+            index = (index + 1) % total;
+            img.src = images[index];
+            counter.innerHTML = (index + 1) + ' / ' + total;
+            maxWaitTimer = setTimeout(function () {
+                if (isLoading && !isPaused) {
+                    isLoading = false;
+                    scheduleNext(SKIP_DELAY);
+                }
+            }, MAX_WAIT);
+        }
+        function scheduleNext(delay) {
+            if (isPaused) return;
+            clearAllTimers();
+            nextTimer = setTimeout(showNextImage, delay);
+        }
+        img.onload = function () {
+            if (isLoading && !isPaused) {
+                isLoading = false;
+                clearAllTimers();
+                scheduleNext(DISPLAY_TIME);
+            }
+        };
+        img.onerror = function () {
+            if (!isLoading || isPaused) return;
+            retryCount++;
+            if (retryCount <= MAX_RETRIES) {
+                clearAllTimers();
+                img.src = images[index];
+                maxWaitTimer = setTimeout(function () {
+                    if (isLoading && !isPaused) {
+                        isLoading = false;
+                        scheduleNext(SKIP_DELAY);
                     }
+                }, MAX_WAIT);
+            } else {
+                isLoading = false;
+                clearAllTimers();
+                counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                scheduleNext(SKIP_DELAY);
+            }
+        };
+
+        isLoading = true;
+        retryCount = 0;
+        img.src = images[0];
+        counter.innerHTML = '1 / ' + total;
+        maxWaitTimer = setTimeout(function () {
+            if (isLoading && !isPaused) {
+                isLoading = false;
+                scheduleNext(SKIP_DELAY);
+            }
+        }, MAX_WAIT);
+    }
+}
                     function getPS3Model (model) 
                     {
                         if (!model || model === '?') return '?';
