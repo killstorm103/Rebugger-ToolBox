@@ -12,4 +12,4 @@ consoles:
         thermal paste: yes
         hard drive: no
       issues: none
-      additional Info: includes the following games: \nPS3: The Simpsons Game, Family Guy - Back to the Multiverse \nPS2: Futurama, The Simpsons Hit and Run, The Simpsons Road Rage, Ben 10: Protector of Earth, Ben 10: Ultimate Alien: Cosmic Destruction, Ben 10 – Alien Force – Vilgax Attacks, Ben 10 – Alien Force\na Custom Simpsons Coldboot
+      additional Info: includes the following games: \nPS3: The Simpsons Game, Family Guy - Back to the Multiverse \nPS2: Futurama, The Simpsons Hit and Run, The Simpsons Road Rage, Ben 10: Protector of Earth, Ben 10: Ultimate Alien: Cosmic Destruction, Ben 10 – Alien Force – Vilgax Attacks, Ben 10 – Alien Force\na Custom Simpsons Coldboot\n\nSpecial Exclusive Warranty for this PS3: if the hard drive fails within 30 days i'll reinstall all the games listed here for free on a replacement HDD/SSD you Provide you will still need to pay for it to be replaced and rejailbroken tho 20$
