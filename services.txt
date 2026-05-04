@@ -12,4 +12,4 @@ consoles:
         thermal paste: yes
         hard drive: no
       issues: none
-      additional Info: includes the following games: \nPS3: The Simpsons Game, Family Guy - Back to the Multiverse \nPS2: Futurama, The Simpsons Hit and Run, The Simpsons Road Rage, Ben 10: Protector of Earth, Ben 10: Ultimate Alien: Cosmic Destruction, Ben 10 – Alien Force – Vilgax Attacks, Ben 10 – Alien Force
+      additional Info: includes the following games: \nPS3: The Simpsons Game, Family Guy - Back to the Multiverse \nPS2: Futurama, The Simpsons Hit and Run, The Simpsons Road Rage, Ben 10: Protector of Earth, Ben 10: Ultimate Alien: Cosmic Destruction, Ben 10 – Alien Force – Vilgax Attacks, Ben 10 – Alien Force\na Custom Simpsons Coldboot
