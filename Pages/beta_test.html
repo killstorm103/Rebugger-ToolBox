@@ -524,10 +524,10 @@
                         infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
                         infoHTML += 'Known issues: ' + displayIssues + '<br>';
                         infoHTML += 'Accessories: ' + displayAccessories + '<br>';
-                        if (c.additionalInfo) {
+                        if (c.additionalInfo)
+                        {
                             infoHTML += 'Additional Info:<br>';
-                            var addLines = c.additionalInfo.split('\n');
-                            for (var j = 0; j < addLines.length; j++) infoHTML += addLines[j] + '<br>';
+                            infoHTML += c.additionalInfo.replace(/\\n/g, '<br>') + '<br>';
                         }
                         infoHTML += '<div class="cons-slider-' + i + '"></div>';
                         var infoBox = document.createElement('div');
@@ -1047,11 +1047,7 @@
                             if (c.additionalInfo)
                             {
                                 infoHTML += 'Additional Info:<br>';
-                                var addLines = c.additionalInfo.split('\n');
-                                for (var j = 0; j < addLines.length; j++) 
-                                {
-                                    infoHTML += addLines[j] + '<br>';
-                                }
+                                infoHTML += c.additionalInfo.replace(/\\n/g, '<br>') + '<br>';
                             }
                             infoHTML += '<div class="cons-slider-' + i + '"></div>';
                             
