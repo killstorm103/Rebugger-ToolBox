@@ -721,11 +721,15 @@
     // ============================================
     // 2. Count from VALID consoles
     // ============================================
+    var unsoldConsoles = validConsoles.filter(function(c){ return !c.soldOn; });
     var CFW_Count = 0, qCFW_Count = 0, HEN_Count = 0, OFW_Count = 0;
-    for (var j = 0; j < validConsoles.length; j++) {
-        var type = validConsoles[j].type;
+    for (var j = 0; j < unsoldConsoles.length; j++) 
+    {
+        var c = unsoldConsoles[j];
+        var type = c.type;
         if (!type) continue;
-        switch (type.toUpperCase()) {
+        switch (type.toUpperCase())
+        {
             case 'CFW': CFW_Count++; break;
             case 'QCFW': qCFW_Count++; break;
             case 'HEN': HEN_Count++; break;
@@ -738,12 +742,13 @@
     // ============================================
     var stockBox = document.getElementById('stock-box');
     if (stockBox) {
+        
         stockBox.style.position = 'relative';
         var extraLeft = 20, rightExtension = 15;
         stockBox.innerHTML =
             '<div id="top-line" style="border-bottom: 3px solid #dc3545; margin: -15px 0 6px 0;"></div>' +
             '<span id="title-line"><span style="color:#dc3545;">Available PS3s</span></span><br>' +
-            'Total: ' + validConsoles.length + '<br>' +
+            'Total: ' + unsoldConsoles.length + '<br>' +
             '<div id="red-separator" style="border-bottom: 2px solid #dc3545; margin: 5px 0 0;"></div>' +
             '<div style="margin-bottom: 3px; margin-top: 5px">' +
             'CFWs: ' + CFW_Count + '<br>' +
@@ -795,7 +800,42 @@
             displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
 
         var infoHTML = '';
-        infoHTML += '<strong style="color:#dc3545;">PS3 #' + (k + 1) + '</strong><br>';
+        // Build the title text with sold-on & warranty info
+var titleText = 'PS3 #' + (k + 1);
+if (c.soldOn) {
+    titleText += ' (Sold on: ' + c.soldOn;
+    if (c.warranty) {
+        var wParts = c.soldOn.split('/');
+        if (wParts.length === 3) {
+            var wDay = parseInt(wParts[0], 10),
+                wMonth = parseInt(wParts[1], 10),
+                wYear = parseInt(wParts[2], 10);
+            if (!isNaN(wDay) && !isNaN(wMonth) && !isNaN(wYear)) {
+                var wSoldDate = new Date(wYear, wMonth - 1, wDay);
+                var durMatch = c.warranty.match(/(\d+)/);
+                var durDays = durMatch ? parseInt(durMatch[1], 10) : 0;
+                if (durDays > 0) {
+                    var wExpDate = new Date(wSoldDate);
+                    wExpDate.setDate(wSoldDate.getDate() + durDays);
+                    var todayClean = new Date();
+                    todayClean.setHours(0, 0, 0, 0);
+                    var diffTime = wExpDate.getTime() - todayClean.getTime();
+                    var daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    if (daysLeft === 1) {
+                        titleText += ' - Last day of warranty!';
+                    } else if (daysLeft > 1) {
+                        titleText += ' - Warranty: ' + daysLeft + ' days left';
+                    }
+                    // expired consoles are already filtered out
+                }
+            }
+        }
+    }
+    titleText += ')';
+}
+infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
+        
+        
         infoHTML += 'Price: ' + displayPrice + '<br>';
         infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
         infoHTML += 'Firmware: ' + c.firmware + '<br>';
@@ -807,7 +847,9 @@
         infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
         infoHTML += 'Known issues: ' + displayIssues + '<br>';
         infoHTML += 'Accessories: ' + displayAccessories + '<br>';
-        if (c.additionalInfo) {
+        if (c.additionalInfo) 
+        {
+            infoHTML += '<br>';
             infoHTML += 'Additional Info:<br>';
             infoHTML += c.additionalInfo.replace(/\\n/g, '<br>') + '<br>';
         }
