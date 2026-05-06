@@ -7,146 +7,47 @@
       <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
       <style>
          #marginInput {
-            background: #333;
-            color: #fff;
-            border: 1px solid #555;
-            border-radius: 4px;
-            padding: 4px;
-            font-size: 14px;
+            background: #333; color: #fff; border: 1px solid #555; border-radius: 4px; padding: 4px; font-size: 14px;
          }
-         #applyMarginBtn {
-            font-weight: bold;
-         }
-         #applyMarginBtn:hover {
-            background: #b02a37;
-         }
-         .image-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-         }
-         .image-gallery img {
-            border-radius: 8px;
-            box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-         }
-         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-         }
-         .container {
-            max-width: max-content;
-            padding: 20px 20px 10px 20px;
-            margin-top: 160px;
-         }
-         .fixed-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #000000;
-            padding: 10px 20px;
-            z-index: 1000;
-            border-bottom: 1px solid #333;
-         }
-         .nav-container {
-            margin-top: 10px;
-         }
-         h1 {
-            text-align: left;
-            font-size: 40px;
-            margin: 0;
-            color: #ffffff;
-         }
-         h1_under {
-            text-align: left;
-            font-size: 14px;
-            margin: 0;
-            color: #ffffff;
-         }
-         .main {
-            list-style-type: none;
-            padding: 0;
-         }
-         .main li {
-            background-color: #fff;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: .5px solid rgba(0,0,0,0.1);
-            border-radius: 7px;
-            box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            font-size: 17px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-         }
-         .main h2 {
-            margin-top: 1;
-            margin-bottom: 10px;
-            color: #000000;
-         }
-         .main ul {
-            list-style-type: disc;
-            margin-left: 20px;
-            margin-right: 30px;
-         }
-         .main ul li {
-            margin-bottom: 5px;
-         }
-         .space {
-            display: block;
-            margin: 0 0 0 20px;
-            color: #f79452;
-         }
-         .space2 {
-            display: block;
-            margin: 0 0 0 34px;
-            color: #f79452;
-         }
-         .space3 {
-            display: block;
-            margin: 0 0 0 48px;
-            color: #f79452;
-         }
-         .size {
-            font-size: 16px;
-         }
-         .nav-button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            border: none;
-            transition: background-color 0.2s;
-         }
-         .nav-button:hover {
-            background-color: #b02a37;
-            cursor: pointer;
-         }
-         .main li div[style*="background:#222"] strong {
-            color: #dc3545;
-         }
-         .console-info {
-            color: #f79452;
-         }
+         #applyMarginBtn { font-weight: bold; }
+         #applyMarginBtn:hover { background: #b02a37; }
+         .image-gallery { display: flex; flex-wrap: wrap; gap: 10px; }
+         .image-gallery img { border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3); }
+         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000000; }
+         .container { max-width: max-content; padding: 20px 20px 10px 20px; margin-top: 160px; }
+         .fixed-header { position: fixed; top: 0; left: 0; right: 0; background-color: #000000; padding: 10px 20px; z-index: 1000; border-bottom: 1px solid #333; }
+         .nav-container { margin-top: 10px; }
+         h1 { text-align: left; font-size: 40px; margin: 0; color: #ffffff; }
+         h1_under { text-align: left; font-size: 14px; margin: 0; color: #ffffff; }
+         .main { list-style-type: none; padding: 0; }
+         .main li { background-color: #fff; padding: 10px; margin-bottom: 20px; border: .5px solid rgba(0,0,0,0.1); border-radius: 7px; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); font-size: 17px; margin-top: 8px; margin-bottom: 8px; }
+         .main h2 { margin-top: 1; margin-bottom: 10px; color: #000000; }
+         .main ul { list-style-type: disc; margin-left: 20px; margin-right: 30px; }
+         .main ul li { margin-bottom: 5px; }
+         .space { display: block; margin: 0 0 0 20px; color: #f79452; }
+         .space2 { display: block; margin: 0 0 0 34px; color: #f79452; }
+         .space3 { display: block; margin: 0 0 0 48px; color: #f79452; }
+         .size { font-size: 16px; }
+         .nav-button { display: inline-block; padding: 10px 20px; margin: 10px 0; background-color: #dc3545; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; border: none; transition: background-color 0.2s; }
+         .nav-button:hover { background-color: #b02a37; cursor: pointer; }
+         .main li div[style*="background:#222"] strong { color: #dc3545; }
+         .console-info { color: #f79452; }
       </style>
    </head>
    <body>
       <div class="fixed-header">
          <h1>Dillans Services</h1>
          <div class="nav-container">
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+             <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
             <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
+                     </div>
+            
          </div>
          <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
             <label for="marginInput">Header Offset (px):</label>
@@ -192,9 +93,7 @@
                         <td style="vertical-align: top;">
                            <div id="sliderContainer" style="margin: 0;">
                               <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-                              <div style="margin-top: 10px;">
-                                 <span id="imageCounter">1 / 7</span>
-                              </div>
+                              <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
                               <div id="manualBtns" style="display:none; margin-top:8px;">
                                  <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
                                  <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
@@ -288,7 +187,7 @@
                      <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                         <strong style="display:block; margin-bottom:10px;">Compatible Jailbreak Types Checker</strong>
                         <span style="color:#f79452;">Enter your PS3 model number:</span><br>
-                        <input type="text" id="modelInput" placeholder="Example: 2002A or CECH-2501A" style="margin-top:5px; padding:5px; width:200px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
+                        <input type="text" id="modelInput" placeholder="Example: CECH-2002A" style="margin-top:5px; padding:5px; width:200px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
                         <button id="checkBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Check</button>
                         <div id="datecode-box" style="display:none; margin-top:10px;">
                            <span style="color:#f79452;">Enter your PS3's date code (found on the back sticker, e.g., 0C or 1A):</span><br>
@@ -326,6 +225,7 @@
                         <span class="space2">└ 1: Open the Console Up At All!</span>
                         <span class="space2">└ 2: Brick/Corrupt the Console or Its hard drive by modifying the Consoles System Files (The PS3s /dev_flash for example)!</span>
                         <span class="space2">└ 3: if the Console gets damaged by you or anyone else</span>
+                        <span class="space2">└ 4: if you unjailbreak the console for any reason or by mistake there's no undo or redo you will need to pay for it to be rejailbroken!</span>
                      </div>
                   </li>
                </ul>
@@ -339,9 +239,8 @@
          </ul>
       </div>
       <script>
-         (function ()
-         {
-            var CURRENT_VERSION = "1";
+         (function () {
+            var CURRENT_VERSION = "1.1";
             if (!window.isPS3) {
                 if (window.top === window.self && navigator.cookieEnabled) {
                     (function() {
@@ -375,150 +274,89 @@
                 }
             }
 
-            function startSliderManual () 
-            {
+            function startSliderManual() {
                 var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
-                
                 var img = document.getElementById('sliderImage'), counter = document.getElementById('imageCounter');
                 if (!img || !counter) return;
-                
                 var manualBtns = document.getElementById('manualBtns');
                 if (manualBtns) manualBtns.style.display = 'block';
-                
                 var prevBtn = document.getElementById('prevBtn'), nextBtn = document.getElementById('nextBtn'), currentIndex = 0, total = images.length;
-                function showImage (idx) 
-                {
+                function showImage(idx) {
                     if (idx < 0) idx = total - 1;
                     if (idx >= total) idx = 0;
-                    
                     currentIndex = idx;
                     img.src = images[currentIndex];
                     counter.innerHTML = (currentIndex + 1) + ' / ' + total;
                 }
-                prevBtn.onclick = function ()
-                { 
-                   showImage(currentIndex - 1);
-                };
-                nextBtn.onclick = function () 
-                {
-                   showImage(currentIndex + 1); 
-                };
+                prevBtn.onclick = function() { showImage(currentIndex - 1); };
+                nextBtn.onclick = function() { showImage(currentIndex + 1); };
                 showImage(0);
             }
-            function startSliderAuto ()
-            {
+
+            function startSliderAuto() {
                 var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
-                
                 var img = document.getElementById('sliderImage'), counter = document.getElementById('imageCounter');
                 if (!img || !counter) return;
-                
                 var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null, isLoading = false, isPaused = false, retryCount = 0, MAX_RETRIES = 5;
                 var DISPLAY_TIME = 1500, SKIP_DELAY = 3000, MAX_WAIT = 5500;
                 var pauseBtn = document.getElementById('pauseBtn');
-                if (pauseBtn) 
-                {
+                if (pauseBtn) {
                     pauseBtn.style.display = 'inline-block';
-                    pauseBtn.onclick = function () 
-                    {
+                    pauseBtn.onclick = function() {
                         isPaused = !isPaused;
-                        if (isPaused)
-                        {
-                           clearAllTimers();
-                           pauseBtn.innerHTML = 'Play';
-                        }
-                        else 
-                        { 
-                           pauseBtn.innerHTML = 'Pause'; 
-                           showNextImage(); 
-                        }
+                        if (isPaused) { clearAllTimers(); pauseBtn.innerHTML = 'Play'; }
+                        else { pauseBtn.innerHTML = 'Pause'; showNextImage(); }
                     };
                 }
-                function clearAllTimers () 
-                {
-                    if (nextTimer) 
-                    {
-                       clearTimeout(nextTimer); 
-                       nextTimer = null; 
-                    }
-                    if (maxWaitTimer) 
-                    {
-                       clearTimeout(maxWaitTimer);
-                       maxWaitTimer = null;
-                   }
+                function clearAllTimers() {
+                    if (nextTimer) { clearTimeout(nextTimer); nextTimer = null; }
+                    if (maxWaitTimer) { clearTimeout(maxWaitTimer); maxWaitTimer = null; }
                 }
-                function showNextImage () 
-                {
+                function showNextImage() {
                     if (isPaused) return;
-                    
                     clearAllTimers();
                     isLoading = true;
                     retryCount = 0;
                     index++; if (index >= total) index = 0;
-                    
                     img.src = images[index];
                     counter.innerHTML = (index + 1) + ' / ' + total;
-                    maxWaitTimer = setTimeout(function()
-                    {
-                        if (isLoading && !isPaused) 
-                        {
-                            isLoading = false;
-                            scheduleNext(SKIP_DELAY);
-                        }
+                    maxWaitTimer = setTimeout(function() {
+                        if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
                     }, MAX_WAIT);
                 }
-                function scheduleNext (delay) 
-                {
+                function scheduleNext(delay) {
                     if (isPaused) return;
-                    
-                    clearAllTimers(); 
+                    clearAllTimers();
                     nextTimer = setTimeout(showNextImage, delay);
                 }
-                img.onload = function () 
-                {
-                    if (isLoading && !isPaused) 
-                    {
-                       isLoading = false;
-                       clearAllTimers();
-                       scheduleNext(DISPLAY_TIME); 
-                    }
+                img.onload = function() {
+                    if (isLoading && !isPaused) { isLoading = false; clearAllTimers(); scheduleNext(DISPLAY_TIME); }
                 };
-                img.onerror = function () 
-                {
+                img.onerror = function() {
                     if (!isLoading || isPaused) return;
-                    
-                    retryCount ++;
-                    if (retryCount <= MAX_RETRIES) 
-                    {
-                       clearAllTimers();
-                       img.src = images[index];
-                       maxWaitTimer = setTimeout(function() 
-                        {
-                           if (isLoading && !isPaused) 
-                           {
-                              isLoading = false; 
-                              scheduleNext(SKIP_DELAY);
-                           }
+                    retryCount++;
+                    if (retryCount <= MAX_RETRIES) {
+                        clearAllTimers();
+                        img.src = images[index];
+                        maxWaitTimer = setTimeout(function() {
+                            if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
                         }, MAX_WAIT);
-                    }
-                    else
-                    {
-                       isLoading = false; 
-                       clearAllTimers();
-                       counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
-                       scheduleNext(SKIP_DELAY);
+                    } else {
+                        isLoading = false;
+                        clearAllTimers();
+                        counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                        scheduleNext(SKIP_DELAY);
                     }
                 };
-                isLoading = true; 
-                retryCount = 0; 
+                isLoading = true;
+                retryCount = 0;
                 img.src = images[0];
                 counter.innerHTML = '1 / ' + total;
-                maxWaitTimer = setTimeout(function() 
-                {
-                   if (isLoading && !isPaused) 
-                   {
-                       isLoading = false; scheduleNext(SKIP_DELAY); }
+                maxWaitTimer = setTimeout(function() {
+                    if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
                 }, MAX_WAIT);
             }
+
             function initMarginControl() {
                 var input = document.getElementById('marginInput'),
                     applyBtn = document.getElementById('applyMarginBtn'),
@@ -551,6 +389,34 @@
                 var initial = input.value;
                 if (initial !== '') updateMargin(initial);
             }
+
+            function getPS3Model(model) {
+                if (!model || model === '?') return '?';
+                var cleaned = '';
+                for (var i = 0; i < model.length; i++) {
+                    var ch = model.charAt(i);
+                    if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) cleaned += ch;
+                }
+                var m = cleaned.toUpperCase();
+                if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 ||
+                    m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0 || m.indexOf('CECHH') === 0 ||
+                    m.indexOf('CECHJ') === 0 || m.indexOf('CECHK') === 0 || m.indexOf('CECHL') === 0 ||
+                    m.indexOf('CECHM') === 0 || m.indexOf('CECHP') === 0 || m.indexOf('CECHQ') === 0) return 'Fat';
+                if (m.indexOf('CECH4') === 0) return 'Super Slim';
+                if (m.indexOf('CECH2') === 0 || m.indexOf('CECH3') === 0) return 'Slim';
+                return 'Unknown';
+            }
+
+            function getFlashType(model) {
+                if (!model || model === '?') return 'Unknown';
+                var m = model.toUpperCase();
+                if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 ||
+                    m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 ||
+                    m.indexOf('CECHG') === 0) return 'NAND';
+                if ((/^CECH-?42\d{2}[A-Za-z]?$/).test(m) || (/^CECH-?43\d{2}[A-Za-z]?$/).test(m)) return 'eMMC';
+                return 'NOR';
+            }
+
             function initConsoleStock() {
                 (function() {
                     var REMOTE_URL = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/services.txt';
@@ -698,26 +564,6 @@
                             }, MAX_WAIT);
                         }
                     }
-                    function getPS3Model(model) {
-                        if (!model || model === '?') return '?';
-                        var cleaned = '';
-                        for (var i = 0; i < model.length; i++) {
-                            var ch = model.charAt(i);
-                            if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch === '-') cleaned += ch;
-                        }
-                        var m = cleaned.toUpperCase();
-                        if (m.indexOf('CECH-4') === 0) return 'Super Slim';
-                        if (m.indexOf('CECH-2') === 0 || m.indexOf('CECH-3') === 0) return 'Slim';
-                        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'Fat';
-                        return 'Unknown';
-                    }
-                    function getFlashType(model) {
-                        if (!model || model === '?') return 'Unknown';
-                        var m = model.toUpperCase();
-                        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0) return 'NAND';
-                        if ((m.indexOf('CECH-40') === 0 || m.indexOf('CECH-42') === 0 || m.indexOf('CECH-43') === 0) && m.charAt(m.length - 1) === 'A') return 'eMMC';
-                        return 'NOR';
-                    }
                     function buildConsolesUI(consoles) {
                         if (!consolesList) return;
                         consolesList.innerHTML = '';
@@ -732,16 +578,11 @@
                         var validConsoles = [];
                         for (var i = 0; i < consoles.length; i++) {
                             var c = consoles[i];
-                            if (!c.soldOn) {
-                                validConsoles.push(c);
-                                continue;
-                            }
+                            if (!c.soldOn) { validConsoles.push(c); continue; }
                             if (!c.warranty) continue;
                             var parts = c.soldOn.split('/');
                             if (parts.length !== 3) continue;
-                            var day = parseInt(parts[0], 10);
-                            var month = parseInt(parts[1], 10);
-                            var year = parseInt(parts[2], 10);
+                            var day = parseInt(parts[0], 10), month = parseInt(parts[1], 10), year = parseInt(parts[2], 10);
                             if (isNaN(day) || isNaN(month) || isNaN(year)) continue;
                             var durMatch = c.warranty.match(/(\d+)/);
                             var durationDays = durMatch ? parseInt(durMatch[1], 10) : 0;
@@ -749,9 +590,7 @@
                             var soldDate = new Date(year, month - 1, day);
                             var expirationDate = new Date(soldDate);
                             expirationDate.setDate(soldDate.getDate() + durationDays);
-                            if (expirationDate >= today) {
-                                validConsoles.push(c);
-                            }
+                            if (expirationDate >= today) validConsoles.push(c);
                         }
 
                         var unsoldConsoles = validConsoles.filter(function(c){ return !c.soldOn; });
@@ -783,29 +622,16 @@
                                 'HENs: ' + HEN_Count + '<br>' +
                                 'OFWs: ' + OFW_Count + '</div>' +
                                 '<div id="bottom-line" style="border-bottom: 3px solid #dc3545; margin: 6px 0 -15px 0;"></div>';
-
                             var titleEl = document.getElementById('title-line');
                             if (titleEl) {
                                 var lineWidth = titleEl.offsetWidth + extraLeft + rightExtension;
-                                var separator = document.getElementById('red-separator');
-                                if (separator) {
-                                    separator.style.width = lineWidth + 'px';
-                                    separator.style.marginLeft = '-' + extraLeft + 'px';
-                                }
-                                var topLine = document.getElementById('top-line');
-                                if (topLine) {
-                                    topLine.style.width = lineWidth + 'px';
-                                    topLine.style.marginLeft = '-' + extraLeft + 'px';
-                                }
-                                var bottomLine = document.getElementById('bottom-line');
-                                if (bottomLine) {
-                                    bottomLine.style.width = lineWidth + 'px';
-                                    bottomLine.style.marginLeft = '-' + extraLeft + 'px';
-                                }
+                                ['red-separator', 'top-line', 'bottom-line'].forEach(function(id) {
+                                    var el = document.getElementById(id);
+                                    if (el) { el.style.width = lineWidth + 'px'; el.style.marginLeft = '-' + extraLeft + 'px'; }
+                                });
                                 var verticalLine = document.createElement('div');
                                 verticalLine.style.position = 'absolute';
-                                verticalLine.style.top    = '0';
-                                verticalLine.style.bottom = '0';
+                                verticalLine.style.top = '0'; verticalLine.style.bottom = '0';
                                 verticalLine.style.borderLeft = '2px solid #dc3545';
                                 verticalLine.style.left = (titleEl.offsetLeft + titleEl.offsetWidth + rightExtension) + 'px';
                                 stockBox.appendChild(verticalLine);
@@ -815,24 +641,18 @@
                         for (var k = 0; k < validConsoles.length; k++) {
                             var c = validConsoles[k];
                             var li = document.createElement('li');
-                            li.style.padding = '0';
-                            li.style.margin = '0 0 10px 0';
-
+                            li.style.padding = '0'; li.style.margin = '0 0 10px 0';
                             var displayIssues = c.issues ? c.issues : 'None',
                                 displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!',
                                 displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
-
                             var infoHTML = '';
-
                             var titleText = 'PS3 #' + (k + 1);
                             if (c.soldOn) {
                                 titleText += ' (Sold on: ' + c.soldOn;
                                 if (c.warranty) {
                                     var wParts = c.soldOn.split('/');
                                     if (wParts.length === 3) {
-                                        var wDay = parseInt(wParts[0], 10),
-                                            wMonth = parseInt(wParts[1], 10),
-                                            wYear = parseInt(wParts[2], 10);
+                                        var wDay = parseInt(wParts[0], 10), wMonth = parseInt(wParts[1], 10), wYear = parseInt(wParts[2], 10);
                                         if (!isNaN(wDay) && !isNaN(wMonth) && !isNaN(wYear)) {
                                             var wSoldDate = new Date(wYear, wMonth - 1, wDay);
                                             var durMatch = c.warranty.match(/(\d+)/);
@@ -843,11 +663,8 @@
                                                 var todayClean = getPerthToday();
                                                 var diffTime = wExpDate.getTime() - todayClean.getTime();
                                                 var daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                                                if (daysLeft === 1) {
-                                                    titleText += ' - Last day of warranty!';
-                                                } else if (daysLeft > 1) {
-                                                    titleText += ' - Warranty: ' + daysLeft + ' days left';
-                                                }
+                                                if (daysLeft === 1) titleText += ' - Last day of warranty!';
+                                                else if (daysLeft > 1) titleText += ' - Warranty: ' + daysLeft + ' days left';
                                             }
                                         }
                                     }
@@ -855,7 +672,6 @@
                                 titleText += ')';
                             }
                             infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
-
                             infoHTML += 'Price: ' + displayPrice + '<br>';
                             infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
                             infoHTML += 'Firmware: ' + c.firmware + '<br>';
@@ -867,41 +683,31 @@
                             infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
                             infoHTML += 'Known issues: ' + displayIssues + '<br>';
                             infoHTML += 'Accessories: ' + displayAccessories + '<br>';
-
                             if (c.additionalInfo) {
-                                infoHTML += '<br>';
-                                infoHTML += 'Additional Info:<br>';
+                                infoHTML += '<br>Additional Info:<br>';
                                 infoHTML += c.additionalInfo.replace(/\\n/g, '<br>') + '<br>';
                             }
-
                             if (c.warranty) {
-                                infoHTML += '<br>';
-                                infoHTML += 'Warranty: ' + (c.warranty.replace('d', ' Days')) + '<br>';
+                                infoHTML += '<br>Warranty: ' + (c.warranty.replace('d', ' Days')) + '<br>';
                                 if (c.warranty_note) infoHTML += (c.warranty_note.replace(/\\n/g, '<br>')) + '<br>';
                             }
-
                             infoHTML += '<div class="cons-slider-' + k + '"></div>';
-
                             var listedLine = 'Listed on: ' + (c.listed_date || 'unknown');
                             if (c.listed_date && !c.soldOn) {
                                 var listedParts = c.listed_date.split('/');
                                 if (listedParts.length === 3) {
-                                    var lDay = parseInt(listedParts[0], 10),
-                                        lMonth = parseInt(listedParts[1], 10),
-                                        lYear = parseInt(listedParts[2], 10);
+                                    var lDay = parseInt(listedParts[0], 10), lMonth = parseInt(listedParts[1], 10), lYear = parseInt(listedParts[2], 10);
                                     if (!isNaN(lDay) && !isNaN(lMonth) && !isNaN(lYear)) {
                                         var listedDate = new Date(lYear, lMonth - 1, lDay);
                                         var todayClean = getPerthToday();
                                         var diffTime = todayClean.getTime() - listedDate.getTime();
                                         var daysListed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                                        
                                         if (daysListed < 0) daysListed = 0;
                                         listedLine += ' (Up for: ' + daysListed + ' Days)';
                                     }
                                 }
                             }
                             infoHTML += listedLine + '<br>';
-
                             var infoBox = document.createElement('div');
                             infoBox.style.background = '#222';
                             infoBox.style.borderLeft = '5px solid #dc3545';
@@ -909,15 +715,12 @@
                             infoBox.style.color = '#fff';
                             infoBox.style.marginBottom = '0';
                             infoBox.innerHTML = infoHTML;
-
                             li.appendChild(infoBox);
                             consolesList.appendChild(li);
-
                             var sliderContainer = infoBox.querySelector('.cons-slider-' + k);
                             createConsoleSlider(sliderContainer, c.images);
                         }
                     }
-
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', REMOTE_URL, true);
                     xhr.onreadystatechange = function() {
@@ -929,41 +732,31 @@
                     xhr.send();
                 })();
             }
-            
+
             function checkCFWCompatibility(model, datecode) {
                 var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
-                if (!/^CECH/.test(cleaned)) {
-                    cleaned = 'CECH' + cleaned;
-                }
+                if (!/^CECH/.test(cleaned)) cleaned = 'CECH' + cleaned;
 
                 var cfw = '';
-                if (/^CECHA\d{2}$/.test(cleaned) || /^CECHB\d{2}$/.test(cleaned) ||
-                    /^CECHC\d{2}$/.test(cleaned) || /^CECHE\d{2}$/.test(cleaned) ||
-                    /^CECHG\d{2}$/.test(cleaned) || /^CECHH\d{2}$/.test(cleaned) ||
-                    /^CECHJ\d{2}$/.test(cleaned) || /^CECHK\d{2}$/.test(cleaned) ||
-                    /^CECHL\d{2}$/.test(cleaned) || /^CECHM\d{2}$/.test(cleaned) ||
-                    /^CECHP\d{2}$/.test(cleaned) || /^CECHQ\d{2}$/.test(cleaned) || /^CECH-?20\d{2}[A-Za-z]?$/.test(cleaned) || /^CECH-?21\d{2}[A-Za-z]?$/.test(cleaned)) {
+                if (/^CECHA\d{2}$/.test(cleaned) || /^CECHB\d{2}$/.test(cleaned) || /^CECHC\d{2}$/.test(cleaned) ||
+                    /^CECHE\d{2}$/.test(cleaned) || /^CECHG\d{2}$/.test(cleaned) || /^CECHH\d{2}$/.test(cleaned) ||
+                    /^CECHJ\d{2}$/.test(cleaned) || /^CECHK\d{2}$/.test(cleaned) || /^CECHL\d{2}$/.test(cleaned) ||
+                    /^CECHM\d{2}$/.test(cleaned) || /^CECHP\d{2}$/.test(cleaned) || /^CECHQ\d{2}$/.test(cleaned) || /^CECH-?20\d{2}[A-Za-z]?$/.test(cleaned) || /^CECH-?21\d{2}[A-Za-z]?$/.test(cleaned)) {
                     cfw = 'Yes';
                 } else if (/^CECH-?25\d{2}[A-Za-z]?$/.test(cleaned)) {
-                    if (!datecode) {
-                        return 'NEED_DATE';
-                    }
+                    if (!datecode) return 'NEED_DATE';
                     var dc = datecode.toUpperCase().trim();
                     var yearDigit = dc.charCodeAt(0) - 48;
                     var monthChar = dc.charAt(1);
                     var month = monthChar.charCodeAt(0) - 64;
-                    if (isNaN(yearDigit) || isNaN(month) || month < 1 || month > 12) {
+                    if (isNaN(yearDigit) || isNaN(month) || month < 1 || month > 12)
                         return '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C).</span>';
-                    }
-
-                    if (yearDigit === 1 && month === 1) {
+                    if (yearDigit === 1 && month === 1)
                         cfw = 'Maybe – Manual check required (minimum firmware version must be ≤ 3.60)';
-                    }
-                    else if (yearDigit === 0 && (month === 3 || month === 4)) {
+                    else if (yearDigit === 0 && (month === 3 || month === 4))
                         cfw = 'Yes (CECH-25xx, date code ' + dc + ' – min firmware ≤ 3.56)';
-                    } else {
+                    else
                         cfw = 'No (CECH-25xx, date code ' + dc + ' – min firmware > 3.56)';
-                    }
                 } else if (/^CECH-?30\d{2}[A-Za-z]?$/.test(cleaned) || /^CECH-?40\d{2}[A-Za-z]?$/.test(cleaned) ||
                            /^CECH-?42\d{2}[A-Za-z]?$/.test(cleaned) || /^CECH-?43\d{2}[A-Za-z]?$/.test(cleaned)) {
                     cfw = 'No';
@@ -971,72 +764,36 @@
                     return '<span style="color:#ffa500;">Unknown model – please check the number (e.g., 2501A).</span>';
                 }
 
-                function getFlashTypeFromModel(m) {
-                    if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 ||
-                        m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 ||
-                        m.indexOf('CECHG') === 0) return 'NAND';
-                    if ((/^CECH-?42\d{2}[A-Za-z]?$/).test(m) || (/^CECH-?43\d{2}[A-Za-z]?$/).test(m)) return 'eMMC';
-                    return 'NOR';
-                }
-                var flash = getFlashTypeFromModel(cleaned);
-
-                function getModelType(m) {
-                    if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 ||
-                        m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 ||
-                        m.indexOf('CECHG') === 0 || m.indexOf('CECHH') === 0 ||
-                        m.indexOf('CECHJ') === 0 || m.indexOf('CECHK') === 0 ||
-                        m.indexOf('CECHL') === 0 || m.indexOf('CECHM') === 0 ||
-                        m.indexOf('CECHP') === 0 || m.indexOf('CECHQ') === 0) return 'Fat';
-                    if (m.indexOf('CECH4') === 0) return 'Super Slim';
-                    if (m.indexOf('CECH2') === 0 || m.indexOf('CECH3') === 0) return 'Slim';
-                    return 'Unknown';
-                }
-                var modelType = getModelType(cleaned);
-
+                var flash = getFlashType(cleaned);
+                var modelType = getPS3Model(cleaned);
                 var qcfw = (flash === 'NOR') ? 'Yes (requires soldering)' : 'No';
                 var hen = 'Yes';
 
                 var cfwColor;
-                if (cfw.indexOf('Maybe') === 0) {
-                    cfwColor = '#ffa500';
-                } else {
-                    cfwColor = cfw.indexOf('No') === 0 ? '#dc3545' : '#28a745';
-                }
+                if (cfw.indexOf('Maybe') === 0) cfwColor = '#ffa500';
+                else cfwColor = cfw.indexOf('No') === 0 ? '#dc3545' : '#28a745';
                 var qcfwColor = qcfw.indexOf('No') === 0 ? '#dc3545' : '#28a745';
                 var henColor = '#28a745';
 
                 var displayModel = cleaned.slice(0,4) + '-' + cleaned.slice(4);
-
                 return '<span style="color:' + cfwColor + ';">CFW: ' + cfw + '</span><br>' +
                        '<span style="color:' + qcfwColor + ';">qCFW: ' + qcfw + '</span><br>' +
                        '<span style="color:' + henColor + ';">HEN: ' + hen + '</span>' +
                        '<br><br>' +
                        'Model Number: ' + displayModel + '<br>' +
-                       'Model Type: ' + modelType + '<br>' +
+                       'Model: ' + modelType + '<br>' +
                        'Flash Memory Type: ' + flash;
             }
 
-            function onPageLoad () 
-            {
+            function onPageLoad() {
                 initMarginControl();
-                if (window.isPS3)
-                {
-                    startSliderManual();
-                }
-                else
-                {
-                    startSliderAuto();
-                }
+                if (window.isPS3) startSliderManual();
+                else startSliderAuto();
                 setTimeout(initConsoleStock, 100);
-                if (window.isPS3) 
-                {
-                    setTimeout(function() 
-                    {
+                if (window.isPS3) {
+                    setTimeout(function() {
                         var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
-                        for (var i = 0; i < darkBoxes.length; i++)
-                        {
-                            darkBoxes[i].style.marginBottom = '4px';
-                        }
+                        for (var i = 0; i < darkBoxes.length; i++) darkBoxes[i].style.marginBottom = '4px';
                     }, 300);
                 }
 
@@ -1064,44 +821,23 @@
                 }
 
                 if (checkBtn && modelInput && resultDiv) {
-                    checkBtn.onclick = function() {
-                        datecodeBox.style.display = 'none';
-                        runChecker(null);
-                    };
-                    modelInput.onkeypress = function(e) {
-                        e = e || window.event;
-                        if (e.keyCode === 13) checkBtn.onclick();
-                    };
+                    checkBtn.onclick = function() { datecodeBox.style.display = 'none'; runChecker(null); };
+                    modelInput.onkeypress = function(e) { e = e || window.event; if (e.keyCode === 13) checkBtn.onclick(); };
                 }
-
                 if (datecodeBtn && datecodeInput && resultDiv) {
                     datecodeBtn.onclick = function() {
                         var dc = datecodeInput.value.trim();
-                        if (!dc) {
-                            resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter the date code.</span>';
-                            return;
-                        }
+                        if (!dc) { resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter the date code.</span>'; return; }
                         runChecker(dc);
                     };
-                    datecodeInput.onkeypress = function(e) {
-                        e = e || window.event;
-                        if (e.keyCode === 13) datecodeBtn.onclick();
-                    };
+                    datecodeInput.onkeypress = function(e) { e = e || window.event; if (e.keyCode === 13) datecodeBtn.onclick(); };
                 }
             }
 
-            if (window.addEventListener) 
-            {
-                window.addEventListener('load', onPageLoad, false);
-            }
-            else if (window.attachEvent)
-            {
-                window.attachEvent('onload', onPageLoad);
-            } 
-            else 
-            {
-                window.onload = function () 
-                {
+            if (window.addEventListener) window.addEventListener('load', onPageLoad, false);
+            else if (window.attachEvent) window.attachEvent('onload', onPageLoad);
+            else {
+                window.onload = function() {
                     if (window._oldOnload) window._oldOnload();
                     onPageLoad();
                 };
