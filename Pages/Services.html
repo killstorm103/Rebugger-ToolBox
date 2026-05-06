@@ -38,16 +38,15 @@
       <div class="fixed-header">
          <h1>Dillans Services</h1>
          <div class="nav-container">
-             <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-            <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-                     </div>
-            
+            <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
+               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
+            </div>
          </div>
          <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
             <label for="marginInput">Header Offset (px):</label>
@@ -195,6 +194,28 @@
                            <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Verify</button>
                         </div>
                         <div id="cfwResult" style="margin-top:10px; font-weight:bold;"></div>
+                        <button id="tutorialBtn" style="display:block; margin-top:15px; padding:6px 18px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-weight:bold;">Show Manual Check Tutorial</button>
+                        <div id="manualTutorial" style="display:none; margin-top:12px; padding:10px; background:#333; border-radius:4px; border-left: 3px solid #dc3545;">
+                           <span style="color: #f79452;">Download the file</span><br><br>
+                           <span style="color: #f79452;">Plug your USB into your PC/Laptop and format it in FAT32 if it's not already formatted in FAT32!</span><br><br>
+                           <span style="color: #f79452;">On the USB, create the following folders so the path looks like: F:\PS3\UPDATE</span><br><br>
+                           <span style="color: #f79452;">(The drive letter F:\ might be different for you – that's fine.)</span><br><br>
+                           <span style="color: #f79452;">Drag and drop the file you downloaded into: F:\PS3\UPDATE</span><br><br>
+                           <span style="color: #f79452;">Make sure the file is stored in that path and is named: PS3UPDAT.PUP</span><br><br>
+                           <span style="color: #f79452;">After that, use an MD5 File Checker and verify that the file's MD5 matches the one listed on GitHub!</span><br><br>
+                           <span style="color: #f79452;">Then safely eject your USB (do NOT just pull it out of your PC/laptop – that can corrupt the files).</span><br><br>
+                           <span style="color: #f79452;">Take the USB and plug it into your PS3, then go to: Settings > System Update > Update via Storage Media</span><br><br>
+                           <span style="color: #f79452;">A pop-up will appear: "The following update data was found:"</span><br><br>
+                           <span style="color: #f79452;">Version: VERSION CECHK by ifcaro</span><br><br>
+                           <span style="color: #f79452;">Press OK. It will fail and show a message like: "Update data of version 2.70 or later can be installed on this system. (8002F967)"</span><br><br>
+                           <span style="color: #f79452;">If that message says 3.56 or lower, your console can run CFW!</span><br><br>
+                           <span style="color: #f79452;">If you cant manually check because you don't have a PC/Laptop or a USB or just can't figure it i can check for you but i will only be able to do this in person!</span>
+                        </div>
+                        <a href="https://github.com/killstorm103/PS3-Firmwares-Archive/releases/tag/Minimum-Firmware-Version-Checker"
+                           target="_blank"
+                           style="display:inline-block; margin-top:12px; padding:6px 18px; background:#dc3545;
+                           color:#fff; text-decoration:none; border-radius:4px; font-weight:bold;">
+                        Minimum Firmware Version Checker</a>
                      </div>
                   </li>
                   <li style="padding:0; margin:0;">
@@ -240,7 +261,7 @@
       </div>
       <script>
          (function () {
-            var CURRENT_VERSION = "1.1";
+            var CURRENT_VERSION = "1.2";
             if (!window.isPS3) {
                 if (window.top === window.self && navigator.cookieEnabled) {
                     (function() {
@@ -831,6 +852,20 @@
                         runChecker(dc);
                     };
                     datecodeInput.onkeypress = function(e) { e = e || window.event; if (e.keyCode === 13) datecodeBtn.onclick(); };
+                }
+
+                var tutorialBtn = document.getElementById('tutorialBtn'),
+                    tutorialDiv = document.getElementById('manualTutorial');
+                if (tutorialBtn && tutorialDiv) {
+                    tutorialBtn.onclick = function() {
+                        if (tutorialDiv.style.display === 'none') {
+                            tutorialDiv.style.display = 'block';
+                            tutorialBtn.textContent = 'Hide Manual Check Tutorial';
+                        } else {
+                            tutorialDiv.style.display = 'none';
+                            tutorialBtn.textContent = 'Show Manual Check Tutorial';
+                        }
+                    };
                 }
             }
 
