@@ -166,7 +166,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.92);
+        background: rgba(0,0,0,0.92);
         z-index: 9999;
         display: none;
         text-align: center;
@@ -174,15 +174,12 @@
 
       #image-overlay img {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         margin: auto;
         max-width: 95%;
         max-height: 95%;
         border-radius: 8px;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 20px rgba(255,255,255,0.3);
       }
 
       .zoomable {
@@ -194,7 +191,7 @@
   <body>
     <!-- Zoom overlay (hidden by default) -->
     <div id="image-overlay" onclick="closeZoom()">
-      <img id="zoom-img" src="" alt="Zoomed image">
+        <img id="zoom-img" src="" alt="Zoomed image">
     </div>
 
     <div class="fixed-header">
@@ -348,12 +345,12 @@
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:10px;">Compatible Jailbreak Types Checker</strong>
                 <span style="color:#f79452;">Enter your PS3 model number:</span><br>
-                <input type="text" id="modelInput" placeholder="Examples: CECH-2002A, CECH-2501A, DECR-1000A, DECH-A00A, CEB-1000" style="margin-top:5px; padding:5px; width:530px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
+                <input type="text" id="modelInput" placeholder="Examples: CECH-2002A, CECH-2501A, DECR-1000A, DECH-A00A, CEB-1000" style="margin-top:5px; padding:5px; width:530px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;" onkeypress="if(event.keyCode===13) runChecker(null)">
                 <button id="checkBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="runChecker(null)">Check</button>
                 <div id="datecode-box" style="display:none; margin-top:10px;">
                   <span style="color:#f79452;">Enter your PS3's date code (found on the back sticker, e.g., 0C or 1A):</span><br>
-                  <input type="text" id="datecodeInput" placeholder="Example: 0C" style="margin-top:5px; padding:5px; width:150px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
-                  <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="var dc=document.getElementById('datecodeInput').value.trim(); if(!dc){document.getElementById('cfwResult').innerHTML='<span style=color:#ffa500;>Please enter the date code.</span>'; return;} runChecker(dc)">Verify</button>
+                  <input type="text" id="datecodeInput" placeholder="Example: 0C" style="margin-top:5px; padding:5px; width:150px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;" onkeypress="if(event.keyCode===13) verifyDateCode()">
+                  <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="verifyDateCode()">Verify</button>
                 </div>
                 <div id="cfwResult" style="margin-top:10px; font-weight:bold;"></div>
 
@@ -389,7 +386,7 @@
                 </div>
 
                 <br>
-                <a href="…" target="_blank" style="display:inline-block; margin-top:12px; padding:6px 18px; background:#dc3545; color:#fff; text-decoration:none; border-radius:4px; font-weight:bold;">
+                <a href="https://github.com/killstorm103/PS3-Firmwares-Archive/releases/tag/Minimum-Firmware-Version-Checker" target="_blank" style="display:inline-block; margin-top:12px; padding:6px 18px; background:#dc3545; color:#fff; text-decoration:none; border-radius:4px; font-weight:bold;">
                   Minimum Firmware Version Checker
                 </a>
               </div>
@@ -438,27 +435,28 @@
     </div>
     <!-- ==================== ZOOM SCRIPTS (global scope) ==================== -->
     <script>
-      function zoomImage(src) {
-        var overlay = document.getElementById('image-overlay');
-        var img = document.getElementById('zoom-img');
-        if (overlay && img) {
-          img.src = src;
-          overlay.style.display = 'block';
+        function zoomImage(src) {
+            var overlay = document.getElementById('image-overlay');
+            var img = document.getElementById('zoom-img');
+            if (overlay && img) {
+                img.src = src;
+                overlay.style.display = 'block';
+            }
         }
-      }
 
-      function closeZoom() {
-        var overlay = document.getElementById('image-overlay');
-        if (overlay) overlay.style.display = 'none';
-      }
-      document.addEventListener('keydown', function(e) {
-        if (e.key === "Escape") closeZoom();
-      });
+        function closeZoom() {
+            var overlay = document.getElementById('image-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") closeZoom();
+        });
     </script>
     <!-- ================================================================== -->
     <script>
       (function() {
-        var CURRENT_VERSION = "2.0";
+        var CURRENT_VERSION = "2.1";
         if (!window.isPS3) {
           if (window.top === window.self && navigator.cookieEnabled) {
             (function() {
@@ -1247,52 +1245,39 @@
               for (var i = 0; i < darkBoxes.length; i++) darkBoxes[i].style.marginBottom = '4px';
             }, 300);
           }
-          var checkBtn = document.getElementById('checkBtn'),
-            modelInput = document.getElementById('modelInput'),
-            datecodeBox = document.getElementById('datecode-box'),
-            datecodeInput = document.getElementById('datecodeInput'),
-            datecodeBtn = document.getElementById('datecodeBtn'),
-            resultDiv = document.getElementById('cfwResult');
 
-          function runChecker(datecode) {
-            var model = modelInput.value.trim();
+          // ========== Checker function – exported globally ==========
+          window.runChecker = function(datecode) {
+            var model = document.getElementById('modelInput').value.trim();
             if (!model) {
-              resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a model number.</span>';
+              document.getElementById('cfwResult').innerHTML = '<span style="color:#ffa500;">Please enter a model number.</span>';
               return;
             }
             var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
-            if (!/^CECH/.test(cleaned) && !/^DECH/.test(cleaned) && !/^DECR/.test(cleaned) && !/^CEB/.test(cleaned)) cleaned = 'CECH' + cleaned;
+            if (!/^CECH/.test(cleaned) && !/^DECH/.test(cleaned) && !/^DECR/.test(cleaned) && !/^CEB/.test(cleaned))
+              cleaned = 'CECH' + cleaned;
             var is25xx = /^CECH-?25\d{2}[A-Za-z]?$/.test(cleaned) || /^DECH-?25\d{2}[A-Za-z]?$/.test(cleaned);
             var res = checkCFWCompatibility(model, datecode);
             if (res === 'NEED_DATE') {
-              datecodeBox.style.display = 'block';
-              resultDiv.innerHTML = '';
+              document.getElementById('datecode-box').style.display = 'block';
+              document.getElementById('cfwResult').innerHTML = '';
             } else {
-              datecodeBox.style.display = is25xx ? 'block' : 'none';
-              resultDiv.innerHTML = res;
+              document.getElementById('datecode-box').style.display = is25xx ? 'block' : 'none';
+              document.getElementById('cfwResult').innerHTML = res;
             }
-          }
-          window.runChecker = runChecker;
-          checkBtn.onclick = function() {
-            runChecker(null);
           };
-          modelInput.onkeypress = function(e) {
-            e = e || window.event;
-            if (e.keyCode === 13) checkBtn.onclick();
-          };
-          datecodeBtn.onclick = function() {
-            var dc = datecodeInput.value.trim();
+
+          // ========== Date code helper – exported globally ==========
+          window.verifyDateCode = function() {
+            var dc = document.getElementById('datecodeInput').value.trim();
             if (!dc) {
-              resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter the date code.</span>';
+              document.getElementById('cfwResult').innerHTML = '<span style="color:#ffa500;">Please enter the date code.</span>';
               return;
             }
             runChecker(dc);
           };
-          datecodeInput.onkeypress = function(e) {
-            e = e || window.event;
-            if (e.keyCode === 13) datecodeBtn.onclick();
-          };
-          // Tutorial toggle
+
+          // Tutorial toggle (still works via ID)
           var tutorialBtn = document.getElementById('tutorialBtn'),
             tutorialDiv = document.getElementById('manualTutorial');
           if (tutorialBtn && tutorialDiv) {
@@ -1307,6 +1292,7 @@
             };
           }
         }
+
         if (window.addEventListener) window.addEventListener('load', onPageLoad, false);
         else if (window.attachEvent) window.attachEvent('onload', onPageLoad);
         else {
@@ -1318,5 +1304,4 @@
       })();
     </script>
   </body>
-
 </html>
