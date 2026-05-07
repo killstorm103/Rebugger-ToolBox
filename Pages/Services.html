@@ -158,10 +158,42 @@
       .console-info {
         color: #f79452;
       }
+
+      /* ---- Zoom overlay (simple, compatible) ---- */
+      #image-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.92);
+        z-index: 9999;
+        display: none;
+        text-align: center;
+      }
+
+      #image-overlay img {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        margin: auto;
+        max-width: 95%;
+        max-height: 95%;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      }
+
+      .zoomable {
+        cursor: pointer;
+      }
     </style>
   </head>
 
   <body>
+    <!-- Zoom overlay (hidden by default) -->
+    <div id="image-overlay" onclick="closeZoom()">
+        <img id="zoom-img" src="" alt="Zoomed image">
+    </div>
+
     <div class="fixed-header">
       <h1>Dillans Services</h1>
       <div class="nav-container">
@@ -214,11 +246,11 @@
             <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
               <tr>
                 <td style="vertical-align: top; padding-right: 20px;">
-                  <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+                  <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                 </td>
                 <td style="vertical-align: top;">
                   <div id="sliderContainer" style="margin: 0;">
-                    <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+                    <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
                     <div id="manualBtns" style="display:none; margin-top:8px;">
                       <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
@@ -327,10 +359,10 @@
                 <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top:10px; margin-left:0px; display:inline-block;">
                   <tr>
                     <td style="vertical-align: top; padding-right: 20px;">
-                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/Model-Number-place-1.jpg" width="300" height="200" alt="Model Number Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/Model-Number-place-1.jpg" width="300" height="200" alt="Model Number Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     </td>
                     <td style="vertical-align: top;">
-                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     </td>
                   </tr>
                 </table>
@@ -402,9 +434,30 @@
         </li>
       </ul>
     </div>
+    <!-- ==================== ZOOM SCRIPTS (global scope) ==================== -->
+    <script>
+        function zoomImage(src) {
+            var overlay = document.getElementById('image-overlay');
+            var img = document.getElementById('zoom-img');
+            if (overlay && img) {
+                img.src = src;
+                overlay.style.display = 'block';
+            }
+        }
+
+        function closeZoom() {
+            var overlay = document.getElementById('image-overlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") closeZoom();
+        });
+    </script>
+    <!-- ================================================================== -->
     <script>
       (function() {
-        var CURRENT_VERSION = "1.6";
+        var CURRENT_VERSION = "2.0";
         if (!window.isPS3) {
           if (window.top === window.self && navigator.cookieEnabled) {
             (function() {
@@ -749,7 +802,7 @@
             function createConsoleSlider(container, images) {
               var sliderHTML = '';
               sliderHTML += '<div style="position:relative; display:inline-block; margin-top:10px; margin-bottom:10px;">';
-              sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);">';
+              sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">';
               sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
               if (window.isPS3) {
                 sliderHTML += '  <div style="margin-top:8px;">';
@@ -1169,7 +1222,7 @@
           // ---------- Dev‑kit warning ----------
           var devKitWarning = '';
           if (isDevKit) {
-            devKitWarning = '<span style="color:#ffa500;">Info: Jailbreaking a Dev Kit PS3 is not recommended!, a Dev Kit is better than CFW.</span>';
+            devKitWarning = '<span style="color:#f79452;">Info: Jailbreaking a Dev Kit PS3 is not recommended!, a Dev Kit is better than CFW.</span>';
           }
           // ---------- Build single return ----------
           return '<span style="color:' + cfwColor + ';">CFW: ' + cfw + '</span><br>' +
@@ -1263,5 +1316,4 @@
       })();
     </script>
   </body>
-
 </html>
