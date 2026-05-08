@@ -30,8 +30,8 @@
         { file: 'Known.html',                        name: 'Known cunts list' },
         { file: 'Social_Medias.html',                name: 'Social Medias' },
         { file: 'Services.html',                     name: 'Services' },
-        { file: 'Platform_Debugger.html',            name: 'Platform Debugger' }
-    , {file: 'beta_test', name: 'Beta Test Page'}];
+        { file: 'Platform_Debugger.html',            name: 'Platform Debugger' },
+        { file: 'beta_test.html', name: 'Beta Test Page' } ];
 
     var BASE_URL = 'http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/';
     var currentFile = getCurrentPage();
