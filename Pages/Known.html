@@ -1,215 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
-</head>
-<body>
-<style>
-    body
-    {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-}
+    
+    <style>
+      /* Margin input styles (needed by Auto_Buttons.js) */
+      #marginInput {
+        background: #333;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 4px;
+        font-size: 14px;
+      }
 
-.container
-{
-    max-width: max-content;
-    padding: 20px 20px 10px 20px;
-    margin-top: 160px;
-}
+      #applyMarginBtn {
+        font-weight: bold;
+      }
 
-h1 
-{
-    text-align: left;
-    font-size: 40px;
-    margin: 0;
-    color: #ffffff;
-}
-h1_under
-{
-    text-align: left;
-    font-size: 14px;
-    margin: 0;
-    color: #ffffff;
-}
-.main
-{
-    list-style-type: none;
-    padding: 0;
-}
+      #applyMarginBtn:hover {
+        background: #b02a37;
+      }
 
-.main li 
-{
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: .5px solid rgba(0,0,0,0.1);
-    border-radius: 7px;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    font-size: 17px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000000;
+      }
 
-.main h2
-{
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #000000;
-}
-.main ul 
-{
-    list-style-type: disc;
-    margin-left: 20px;
-    margin-right: 30px;
-}
+      .container {
+        max-width: max-content;
+        padding: 20px 20px 10px 20px;
+        margin-top: 160px;
+      }
 
-.main ul li
-{
-    margin-bottom: 5px;
-}
+      .fixed-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #000000;
+        padding: 10px 20px;
+        z-index: 1000;
+        border-bottom: 1px solid #333;
+      }
 
-.space 
-{
-    display: block;
-    margin: 0 0 0 20px;
-}
-.space2 
-{
-    display: block;
-    margin: 0 0 0 34px;
-}
-.nav-container
-{
-  margin-top: 10px;
-}
-.fixed-header 
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #000000;
-    padding: 10px 20px;
-    z-index: 1000;
-    border-bottom: 1px solid #333;
-}
-.size 
-{
-    font-size: 16px;
-}
-.nav-button
-{
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px 0;
-    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 16px;
-    border: none;
-    transition: background-color 0.2s;
-}
+      .nav-container {
+        margin-top: 10px;
+      }
 
-.nav-button:hover 
-{
-    background-color: #b02a37;
-    cursor: pointer;
-}
-</style>
-   <div class="fixed-header">
-         <h1>Rebugger - ToolBox: Known Cunts List</h1>
-        <h1_under>known scammers, dickheads etc</h1_under>
-        <div class="nav-container">
-            <div class="nav-container">
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-				<a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-</div>
-        </div>
-    </div> 
-    <div class="container">
-        <ul class="main">
-            <li class="bloc">
-                <h2>Information<span class="size"></span></h2>
-                <ul>
-                    <li>If no Accounts is mentioned besides in the title its because their only known as that name!</li>
-                    <li>If you confirm they've got other accounts report it to me and i'll add it here (Must have Hard Proof)</li>
-                    <li>Same goes for if you find another scammer or something else etc (Must have Hard Proof)</li>
-                    <li>Eligible types:</li>
-                    <span class="space">└ Scammers, Ratters, Dickheads</span><br>
-                    <span class="space">└ Pathetic Crying Little Bitches, Pathetic Cunts</span><br>
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>Keno (Scammer)<span class="size"></span></h2>
-                <ul>
-                    <li>Sells Jailbroken PS3s takes the payment but never ships it and ghosts you!</li>
-                    <li>Social medias:</li>
-                    <span class="space">└ Discords: Keno (fluxlzv) & PainlessAw (therealzoo.)</span><br>
-                    <span class="space">└ PSNs: NrxKeno, WeaponInfo, Dysets, fqilured,
-				Keno1v1, Kenolzv, Lossngs, BaguetteAw (Unconfirmed)</span><br>
-					<span class="space">└ Instagrams: Bod Geo (463.keno)</span><br>
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>LILLY-LEEX (Dickhead)<span class="size"></span></h2>
-                <ul>
-                    <li>Flashbangs you etc for being mates with or
-				even just playing with modders and is known for getting cunts
-				bullshitly banned for swearing in messages and spreading lies about people!</li>
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>Mistakes (Pathetic Cunt)<span class="size"></span></h2>
-                <ul>
-                    <li>Freezes and DDOSS's you for no valid reason he'll freze you just for being another modder in the same lobby as him and if he cant freeze you he'll boot you, he also follows you around freezing/booting you, i've heard from people that he's booted people offline for minutes, hours, and even sometimes days</li>
-                    <li>Social medias:</li>
-                    <span class="space">└ Discords: Nothing Special (mistakezwermade)</span><br>
-                    <span class="space">└ YouTubes: https://www.youtube.com/@MistakezWeRMade_</span><br>
-                    <span class="space">└ Note: Alot of the time he hides his real PSN names these are the only ones i know, no matter what name he uses he always seems to be Prestige 15 and if bigmommaZ88 is there he is very likely there hes her best mate!</span><br>
-                    <span class="space">└ Real PSNs: gypsycrusader, MistakezWeRMade7, MisteakzWeRMade, ObnoxiousMiztake, ViciousGermz-, trlgger22</span>
-					<span class="space">└ Fake PSNs: WeenieSmalls, Foo Fighters, Momma Bear Slayer69</span>
-                    
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>x-HJKLO (Pathetic Cunt)<span class="size"></span></h2>
-                <ul>
-                    <li>Joins lobbies noone invited him to and freezes & ddoss's you and others if you dont want him there and kick him out and keeps trying to add you despite doing this and wonders why you decline the request and kick him out, on top of that he's doing this to others for someone else kicking him out not even the one who kicked him, he's a literal child!</li>
-                    <li>Social medias:</li>
-                    <span class="space">└ PSNs: x-HJKLO, viYNB3AWi, Dust_WeZe</span>
-                    
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>Exiil (Ratter)<span class="size"></span></h2>
-                <ul>
-                    <li>Known Ratter from what i've heard he puts credit card stealers etc
-				in his tools, its easy to false flag antivirus but
-				after i downloaded and installed 1 of his tools my pcs fans
-				speed went crazy! (Only time its Ever done this)</li>
-                </ul>
-            </li>
-            <li class="bloc">
-                <h2>HONKY419GAM (Pathetic Crying Little Bitch)<span class="size"></span></h2>
-                <ul>
-                    <li>Brings Famaliy into shit (over the smallest thing) and has threatened
-				a 16 year old over a miss understanding that he apologised for.</li>
-                </ul>
-            </li>
-        </ul>
+      h1 {
+        text-align: left;
+        font-size: 40px;
+        margin: 0;
+        color: #ffffff;
+      }
+
+      h1_under {
+        text-align: left;
+        font-size: 14px;
+        margin: 0;
+        color: #ffffff;
+      }
+
+      .main {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .main li {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: .5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 7px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 17px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      .main h2 {
+        margin-top: 1;
+        margin-bottom: 10px;
+        color: #000000;
+      }
+
+      .main ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        margin-right: 30px;
+      }
+
+      .main ul li {
+        margin-bottom: 5px;
+      }
+      .spanned
+      {
+        display: block;
+        color: #f79452;
+      }
+      .space {
+        display: block;
+        margin: 0 0 0 20px;
+        color: #f79452;
+      }
+
+      .space2 {
+        display: block;
+        margin: 0 0 0 34px;
+        color: #f79452;
+      }
+
+      .size {
+        font-size: 16px;
+      }
+
+      .nav-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background-color: #dc3545;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 16px;
+        border: none;
+        transition: background-color 0.2s;
+      }
+
+      .nav-button:hover {
+        background-color: #b02a37;
+        cursor: pointer;
+      }
+
+      .main li div[style*="background:#222"] strong {
+        color: #dc3545;
+      }
+
+      /* Make sure inner list items inside dark boxes do NOT get the white background */
+      .main li div[style*="background:#222"] ul li {
+        background: none;
+        color: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="fixed-header">
+      <h1>Rebugger - ToolBox: Known Cunts List</h1>
+      <h1_under>known scammers, dickheads etc</h1_under>
+      <div class="nav-container"></div>
     </div>
-</body>
+
+    <div id="mainContainer" class="container">
+      <ul class="main">
+        <li class="bloc">
+          <ul>
+            <!-- Information -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>Information</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ If no Accounts is mentioned besides in the title its because their only known as that name!</span>
+                  <span class="spanned" style="margin-top: 10px">└ If you confirm they've got other accounts report it to me and i'll add it here (Must have Hard Proof)</span>
+                  <span class="spanned" style="margin-top: 10px">└ Same goes for if you find another scammer or something else etc (Must have Hard Proof)</span><br>
+                <strong>Eligible types:</strong><br>
+                <span class="spanned" style="margin-top: 10px">└ Scammers, Ratters, Dickheads</span><br>
+                <span class="spanned" style="margin-top: -14px">└ Pathetic Crying Little Bitches, Pathetic Cunts</span>
+              </div>
+            </li>
+
+            <!-- Keno -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>Keno (Scammer)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Sells Jailbroken PS3s takes the payment but never ships it and ghosts you!</span>
+                  <span class="spanned" style="margin-top: 10px">└ Social medias:</span>
+                  <span class="spanned" style="margin-top: 10px">└ Discords: Keno (fluxlzv) &amp; PainlessAw (therealzoo.)</span>
+                  <span class="spanned" style="margin-top: 10px">└ PSNs: NrxKeno, WeaponInfo, Dysets, fqilured, Keno1v1, Kenolzv, Lossngs, BaguetteAw (Unconfirmed)</span>
+                  <span class="spanned" style="margin-top: 10px">└ Instagrams: Bod Geo (463.keno)</span>
+              </div>
+            </li>
+
+            <!-- LILLY-LEEX -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>LILLY-LEEX (Dickhead)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Flashbangs you etc for being mates with or even just playing with modders and is known for getting cunts bullshitly banned for swearing in messages and spreading lies about people!</span>
+              </div>
+            </li>
+
+            <!-- Mistakes -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>Mistakes (Pathetic Cunt)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Freezes and DDOSS's you for no valid reason he'll freze you just for being another modder in the same lobby as him and if he cant freeze you he'll boot you, he also follows you around freezing/booting you, i've heard from people that he's booted people offline for minutes, hours, and even sometimes days</span>
+                  <span class="spanned" style="margin-top: 10px">└ Social medias:</span>
+                  <span class="spanned" style="margin-top: 10px">└ Discords: Nothing Special (mistakezwermade)</span>
+                  <span class="spanned" style="margin-top: 10px">└ YouTubes: https://www.youtube.com/@MistakezWeRMade_</span>
+                  <span class="spanned" style="margin-top: 10px">└ Note: Alot of the time he hides his real PSN names these are the only ones i know, no matter what name he uses he always seems to be Prestige 15 and if bigmommaZ88 is there he is very likely there hes her best mate!</span>
+                  <span class="spanned" style="margin-top: 10px">└ Real PSNs: gypsycrusader, MistakezWeRMade7, MisteakzWeRMade, ObnoxiousMiztake, ViciousGermz-, trlgger22</span>
+                  <span class="spanned" style="margin-top: 10px">└ Fake PSNs: WeenieSmalls, Foo Fighters, Mamma Bear Slayer69, wiredlife420, jessegermz</span>
+              </div>
+            </li>
+
+            <!-- x-HJKLO -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>x-HJKLO (Pathetic Cunt)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Joins lobbies noone invited him to and freezes &amp; ddoss's you and others if you dont want him there and kick him out and keeps trying to add you despite doing this and wonders why you decline the request and kick him out, on top of that he's doing this to others for someone else kicking him out not even the one who kicked him, he's a literal child!</span>
+                  <span class="spanned" style="margin-top: 10px">└ Social medias:</span>
+                  <span class="spanned" style="margin-top: 10px">└ PSNs: x-HJKLO, viYNB3AWi, Dust_WeZe</span>
+              </div>
+            </li>
+
+            <!-- Exiil -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>Exiil (Ratter)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Known Ratter from what i've heard he puts credit card stealers etc in his tools, its easy to false flag antivirus but after i downloaded and installed 1 of his tools my pcs fans speed went crazy! (Only time its Ever done this)</span>
+              </div>
+            </li>
+
+            <!-- HONKY419GAM -->
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                  <strong>HONKY419GAM (Pathetic Crying Little Bitch)</strong><br>
+                  <span class="spanned" style="margin-top: 10px">└ Brings Famaliy into shit (over the smallest thing) and has threatened a 16 year old over a miss understanding that he apologised for.</span>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
+  </body>
 </html>
