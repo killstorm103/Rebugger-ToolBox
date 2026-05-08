@@ -202,7 +202,6 @@
       <h1>Dillans Services</h1>
       <div class="nav-container"></div>
     </div>
-    <!-- Auto_Buttons.js moved AFTER mainContainer – this ensures mainContainer exists when the script runs -->
     <div id="mainContainer" class="container">
       <ul class="main">
         <li class="bloc">
@@ -387,7 +386,7 @@
                 <span class="space2">└ DEX: Dev Kit PS3 (Better than a Jailbreak!)</span><br>
                 <span class="space2">└ CFW: Custom Firmware Grants you full control over the console install homebrew and play game backups etc from start/boot up without having to do anything and gain the ability to convert to DEX.</span><br>
                 <span class="space3">└ Not all PS3s can run CFW, All Fat Models and some Slim Models can run CFW.</span><br>
-                <span class="space2">└ qCFW: Quasi-Custom Firmware a type of Custom Firmware for PS3 models that cannot run standard CFW and for now only avabilable for PS3s with a NOR flash memory type. Installation requires a hardware modification (soldering work), so the process starts by using HEN to run initial tools — but once installed, qCFW boots directly like a normal CFW, with no need to enable HEN every time. You can do almost everything a regular CFW can, with a few exceptions: you cannot convert to DEX, you cannot dump the console's EID root key and anything else that required your consoles EID root key, and you cannot use old firmwares like REBUG. New firmware versions must be built specifically for qCFW. Currently, the only qCFW is based on Evilnat PEX.</span><br>
+                <span class="space2">└ qCFW: Quasi-Custom Firmware a type of Custom Firmware for PS3 models that cannot run standard CFW and for now only avabilable for PS3s with a NOR flash memory type. Installation requires a hardware modification (soldering work), the process starts by installing HEN and using it to run initial tools — but once installed, qCFW boots directly like a normal CFW, with no need to enable HEN every time. You can do almost everything a regular CFW can, with a few exceptions: you cannot convert to DEX, you cannot dump the console's EID root key and anything else that required your consoles EID root key, and you cannot use old firmwares like REBUG. New firmware versions must be built specifically for qCFW. Currently, the only qCFW is based on Evilnat PEX.</span><br>
                 <span class="space2">└ HEN: A temporary Homebrew Enabler you have to re-activate every time you turn on the console. No DEX conversion, less system-level access than CFW.</span><br>
                 <span class="space2">└ OFW: Official Firmware (Normal PS3 not jailbroken)</span><br>
               </div>
@@ -916,13 +915,14 @@
                 var titleEl = document.getElementById('title-line');
                 if (titleEl) {
                   var lineWidth = titleEl.offsetWidth + extraLeft + rightExtension;
-                  ['red-separator', 'top-line', 'bottom-line'].forEach(function(id) {
-                    var el = document.getElementById(id);
-                    if (el) {
-                      el.style.width = lineWidth + 'px';
-                      el.style.marginLeft = '-' + extraLeft + 'px';
-                    }
-                  });
+                  var ids = ['red-separator', 'top-line', 'bottom-line'];
+for (var j = 0; j < ids.length; j++) {
+    var el = document.getElementById(ids[j]);
+    if (el) {
+        el.style.width = lineWidth + 'px';
+        el.style.marginLeft = '-' + extraLeft + 'px';
+    }
+}
                   var verticalLine = document.createElement('div');
                   verticalLine.style.position = 'absolute';
                   verticalLine.style.top = '0';
@@ -1314,7 +1314,6 @@
             }
         }
     </script>
-    <!-- Auto_Buttons.js loaded LAST so mainContainer exists -->
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
   </body>
 </html>
