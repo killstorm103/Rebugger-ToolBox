@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
+
     <style>
+      /* Margin input styles (needed by Auto_Buttons.js) */
       #marginInput {
         background: #333;
         color: #fff;
@@ -196,27 +198,9 @@
     <div id="image-overlay" onclick="closeZoom()">
       <img id="zoom-img" src="" alt="Zoomed image">
     </div>
-
     <div class="fixed-header">
       <h1>Dillans Services</h1>
-      <div class="nav-container">
-        <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-          <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-        </div>
-      </div>
-      <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-        <label for="marginInput">Header Offset (px):</label>
-        <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-        <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
-        <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-        <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-      </div>
+      <div class="nav-container"></div>
     </div>
     <div id="mainContainer" class="container">
       <ul class="main">
@@ -402,7 +386,7 @@
                 <span class="space2">└ DEX: Dev Kit PS3 (Better than a Jailbreak!)</span><br>
                 <span class="space2">└ CFW: Custom Firmware Grants you full control over the console install homebrew and play game backups etc from start/boot up without having to do anything and gain the ability to convert to DEX.</span><br>
                 <span class="space3">└ Not all PS3s can run CFW, All Fat Models and some Slim Models can run CFW.</span><br>
-                <span class="space2">└ qCFW: Quasi-Custom Firmware a type of Custom Firmware for PS3 models that cannot run standard CFW and for now only avabilable for PS3s with a NOR flash memory type. Installation requires a hardware modification (soldering work), so the process starts by using HEN to run initial tools — but once installed, qCFW boots directly like a normal CFW, with no need to enable HEN every time. You can do almost everything a regular CFW can, with a few exceptions: you cannot convert to DEX, you cannot dump the console's EID root key and anything else that required your consoles EID root key, and you cannot use old firmwares like REBUG. New firmware versions must be built specifically for qCFW. Currently, the only qCFW is based on Evilnat PEX.</span><br>
+                <span class="space2">└ qCFW: Quasi-Custom Firmware a type of Custom Firmware for PS3 models that cannot run standard CFW and for now only avabilable for PS3s with a NOR flash memory type. Installation requires a hardware modification (soldering work), the process starts by installing HEN and using it to run initial tools — but once installed, qCFW boots directly like a normal CFW, with no need to enable HEN every time. You can do almost everything a regular CFW can, with a few exceptions: you cannot convert to DEX, you cannot dump the console's EID root key and anything else that required your consoles EID root key, and you cannot use old firmwares like REBUG. New firmware versions must be built specifically for qCFW. Currently, the only qCFW is based on Evilnat PEX.</span><br>
                 <span class="space2">└ HEN: A temporary Homebrew Enabler you have to re-activate every time you turn on the console. No DEX conversion, less system-level access than CFW.</span><br>
                 <span class="space2">└ OFW: Official Firmware (Normal PS3 not jailbroken)</span><br>
               </div>
@@ -456,7 +440,7 @@
         if (e.key === "Escape") closeZoom();
       });
     </script>
-    <!-- ==================== MAIN SCRIPT (slider, margin, stock list) ==================== -->
+    <!-- ==================== MAIN SCRIPT (slider, stock list, NO MARGIN CONTROL) ==================== -->
     <script>
       (function() {
         var CURRENT_VERSION = "2.1";
@@ -622,51 +606,6 @@
               scheduleNext(SKIP_DELAY);
             }
           }, MAX_WAIT);
-        }
-
-        function initMarginControl() {
-          var input = document.getElementById('marginInput'),
-            applyBtn = document.getElementById('applyMarginBtn'),
-            valueDisplay = document.getElementById('marginValue'),
-            container = document.getElementById('mainContainer');
-          if (!input || !applyBtn || !container) return;
-
-          function updateMargin(value) {
-            var cleanValue = String(value).replace(/[ .]/g, '');
-            if (cleanValue === '') return;
-            var num = parseInt(cleanValue, 10);
-            if (isNaN(num)) return;
-            if (num < 0) num = 0;
-            container.style.marginTop = num + 'px';
-            if (valueDisplay) valueDisplay.innerHTML = num;
-            input.value = num;
-          }
-          input.onkeypress = function(e) {
-            e = e || window.event;
-            var keyCode = e.keyCode || e.which;
-            var char = String.fromCharCode(keyCode);
-            var isDigit = /[0-9]/.test(char);
-            var isControl = keyCode === 8 || keyCode === 46 || keyCode === 13 || keyCode === 9 || keyCode === 37 || keyCode === 39 || keyCode === 38 || keyCode === 40;
-            if (!isDigit && !isControl) {
-              if (e.preventDefault) e.preventDefault();
-              return false;
-            }
-            if (keyCode === 13) {
-              updateMargin(input.value);
-              if (e.preventDefault) e.preventDefault();
-              return false;
-            }
-            return true;
-          };
-          input.oninput = function() {
-            var clean = this.value.replace(/[^0-9]/g, '');
-            this.value = clean;
-          };
-          applyBtn.onclick = function() {
-            updateMargin(input.value);
-          };
-          var initial = input.value;
-          if (initial !== '') updateMargin(initial);
         }
 
         function initConsoleStock() {
@@ -976,13 +915,14 @@
                 var titleEl = document.getElementById('title-line');
                 if (titleEl) {
                   var lineWidth = titleEl.offsetWidth + extraLeft + rightExtension;
-                  ['red-separator', 'top-line', 'bottom-line'].forEach(function(id) {
-                    var el = document.getElementById(id);
+                  var ids = ['red-separator', 'top-line', 'bottom-line'];
+                  for (var j = 0; j < ids.length; j++) {
+                    var el = document.getElementById(ids[j]);
                     if (el) {
                       el.style.width = lineWidth + 'px';
                       el.style.marginLeft = '-' + extraLeft + 'px';
                     }
-                  });
+                  }
                   var verticalLine = document.createElement('div');
                   verticalLine.style.position = 'absolute';
                   verticalLine.style.top = '0';
@@ -1093,7 +1033,7 @@
         }
 
         function onPageLoad() {
-          initMarginControl();
+          // Margin control is now handled entirely by Auto_Buttons.js
           if (window.isPS3) startSliderManual();
           else startSliderAuto();
           setTimeout(initConsoleStock, 100);
@@ -1350,29 +1290,30 @@
     </script>
     <!-- ==================== Keyboard support (PC only) ==================== -->
     <script>
-        if (!window.isPS3) {
-            var modelInput = document.getElementById('modelInput');
-            if (modelInput) {
-                modelInput.onkeypress = function(e) {
-                    e = e || window.event;
-                    if ((e.keyCode || e.which) === 13) {
-                        runChecker(null);
-                        return false;
-                    }
-                };
+      if (!window.isPS3) {
+        var modelInput = document.getElementById('modelInput');
+        if (modelInput) {
+          modelInput.onkeypress = function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) === 13) {
+              runChecker(null);
+              return false;
             }
-
-            var datecodeInput = document.getElementById('datecodeInput');
-            if (datecodeInput) {
-                datecodeInput.onkeypress = function(e) {
-                    e = e || window.event;
-                    if ((e.keyCode || e.which) === 13) {
-                        verifyDateCode();
-                        return false;
-                    }
-                };
-            }
+          };
         }
+        var datecodeInput = document.getElementById('datecodeInput');
+        if (datecodeInput) {
+          datecodeInput.onkeypress = function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) === 13) {
+              verifyDateCode();
+              return false;
+            }
+          };
+        }
+      }
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
   </body>
+
 </html>
