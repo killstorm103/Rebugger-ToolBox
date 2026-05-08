@@ -239,7 +239,28 @@
         </li>
       </ul>
     </div>
-
+    <script>
+        function onPageLoad()
+        {
+          if (window.isPS3)
+          {
+            setTimeout(function() 
+            {
+              var darkBoxes = document.querySelectorAll('div[style*="background:#222"]');
+              for (var i = 0; i < darkBoxes.length; i++) darkBoxes[i].style.marginBottom = '4px';
+            }, 300);
+          }
+        }
+        if (window.addEventListener) window.addEventListener('load', onPageLoad, false);
+        else if (window.attachEvent) window.attachEvent('onload', onPageLoad);
+        else {
+          window.onload = function() {
+            if (window._oldOnload) window._oldOnload();
+            onPageLoad();
+          };
+        }
+      })();
+    </script>
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
   </body>
 </html>
