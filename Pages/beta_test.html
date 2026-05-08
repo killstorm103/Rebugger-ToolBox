@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
+    
     <style>
+      /* Margin input styles (needed by Auto_Buttons.js) */
       #marginInput {
         background: #333;
         color: #fff;
@@ -200,10 +202,7 @@
       <h1>Dillans Services</h1>
       <div class="nav-container"></div>
     </div>
-    <!-- other content -->
-
-    <!-- Auto_Buttons.js right at the very end -->
-    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Auto_Buttons.js"></script>
+    <!-- Auto_Buttons.js moved AFTER mainContainer – this ensures mainContainer exists when the script runs -->
     <div id="mainContainer" class="container">
       <ul class="main">
         <li class="bloc">
@@ -442,7 +441,7 @@
         if (e.key === "Escape") closeZoom();
       });
     </script>
-    <!-- ==================== MAIN SCRIPT (slider, margin, stock list) ==================== -->
+    <!-- ==================== MAIN SCRIPT (slider, stock list, NO MARGIN CONTROL) ==================== -->
     <script>
       (function() {
         var CURRENT_VERSION = "2.1";
@@ -608,51 +607,6 @@
               scheduleNext(SKIP_DELAY);
             }
           }, MAX_WAIT);
-        }
-
-        function initMarginControl() {
-          var input = document.getElementById('marginInput'),
-            applyBtn = document.getElementById('applyMarginBtn'),
-            valueDisplay = document.getElementById('marginValue'),
-            container = document.getElementById('mainContainer');
-          if (!input || !applyBtn || !container) return;
-
-          function updateMargin(value) {
-            var cleanValue = String(value).replace(/[ .]/g, '');
-            if (cleanValue === '') return;
-            var num = parseInt(cleanValue, 10);
-            if (isNaN(num)) return;
-            if (num < 0) num = 0;
-            container.style.marginTop = num + 'px';
-            if (valueDisplay) valueDisplay.innerHTML = num;
-            input.value = num;
-          }
-          input.onkeypress = function(e) {
-            e = e || window.event;
-            var keyCode = e.keyCode || e.which;
-            var char = String.fromCharCode(keyCode);
-            var isDigit = /[0-9]/.test(char);
-            var isControl = keyCode === 8 || keyCode === 46 || keyCode === 13 || keyCode === 9 || keyCode === 37 || keyCode === 39 || keyCode === 38 || keyCode === 40;
-            if (!isDigit && !isControl) {
-              if (e.preventDefault) e.preventDefault();
-              return false;
-            }
-            if (keyCode === 13) {
-              updateMargin(input.value);
-              if (e.preventDefault) e.preventDefault();
-              return false;
-            }
-            return true;
-          };
-          input.oninput = function() {
-            var clean = this.value.replace(/[^0-9]/g, '');
-            this.value = clean;
-          };
-          applyBtn.onclick = function() {
-            updateMargin(input.value);
-          };
-          var initial = input.value;
-          if (initial !== '') updateMargin(initial);
         }
 
         function initConsoleStock() {
@@ -1079,7 +1033,7 @@
         }
 
         function onPageLoad() {
-          initMarginControl();
+          // Margin control is now handled entirely by Auto_Buttons.js
           if (window.isPS3) startSliderManual();
           else startSliderAuto();
           setTimeout(initConsoleStock, 100);
@@ -1360,6 +1314,7 @@
             }
         }
     </script>
-    <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Auto_Buttons.js?v=3"></script>
+    <!-- Auto_Buttons.js loaded LAST so mainContainer exists -->
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
   </body>
 </html>
