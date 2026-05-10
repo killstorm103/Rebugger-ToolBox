@@ -1178,12 +1178,17 @@
             if (isNaN(yearDigit) || isNaN(month) || month < 1 || month > 12) {
               return 'Invalid date code';
             }
-            if (yearDigit === 1 && month === 1) {
-              cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
-            } else if (yearDigit === 0 && (month === 3 || month === 4)) {
-              cfw = 'Yes (CECH-25xx, date code ' + dc + ' - min firmware < 3.60)';
-            } else {
-              cfw = 'No (CECH-25xx, date code ' + dc + ' - min firmware > 3.56)';
+            if (yearDigit === 0 && month <= 5) 
+            {
+                cfw = 'Yes (CECH-25xx, date code ' + dc + ' - min firmware < 3.60)';
+            } 
+            else if (yearDigit === 1 && month === 1)
+            {
+                cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
+            } 
+            else
+            {
+                cfw = 'No (CECH-25xx, date code ' + dc + ' - min firmware > 3.56)';
             }
           } else if (cleaned.indexOf('CECH30') === 0 || cleaned.indexOf('CECH-30') === 0 ||
             cleaned.indexOf('CECH40') === 0 || cleaned.indexOf('CECH-40') === 0 ||
@@ -1242,12 +1247,13 @@
           resultDiv.innerHTML = '';
           return;
         }
-        if (res === 'Invalid date code') {
-          resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C).</span>';
-          return;
-        }
+        
         if (res === 'Unknown model') {
           resultDiv.innerHTML = '<span style="color:#ffa500;">Unknown model - please check the number (e.g., 2501A).</span>';
+          return;
+        }
+        if (res === 'Invalid date code') {
+          resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C).</span>';
           return;
         }
         var cfw = res.cfw;
