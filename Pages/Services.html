@@ -335,14 +335,37 @@
                 <input type="text" id="modelInput" placeholder="Examples: CECH-2002A, CECH-2501A, DECR-1000A, DECH-A00A, CEB-1000" style="margin-top:5px; padding:5px; width:530px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
                 <button id="checkBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="runChecker(null)">Check</button>
                 <div id="datecode-box" style="display:none; margin-top:10px;">
-                  <span style="color:#f79452;">Enter your PS3's date code (found on the back sticker, e.g., 0C or 1A):</span><br>
-                  <input type="text" id="datecodeInput" placeholder="Example: 0C" style="margin-top:5px; padding:5px; width:150px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
-                  <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="verifyDateCode()">Verify</button>
+                  <!-- Combined label + inline inputs -->
+                  <span style="color:#f79452;">Enter your PS3's date code or manufacturing date:</span><br>
+                  <input type="text" id="datecodeInput" placeholder="Example: 0C" style="margin-top:5px; padding:5px; width:150px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                  <select id="monthSelect" style="margin-top:5px; margin-left:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                    <option value="">Month</option>
+                    <option value="1">January (1)</option>
+                    <option value="2">February (2)</option>
+                    <option value="3">March (3)</option>
+                    <option value="4">April (4)</option>
+                    <option value="5">May (5)</option>
+                    <option value="6">June (6)</option>
+                    <option value="7">July (7)</option>
+                    <option value="8">August (8)</option>
+                    <option value="9">September (9)</option>
+                    <option value="10">October (10)</option>
+                    <option value="11">November (11)</option>
+                    <option value="12">December (12)</option>
+                  </select>
+                  <select id="yearSelect" style="margin-top:5px; margin-left:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                    <option value="">Year</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                  </select>
+                  <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; vertical-align: middle;" onclick="verifyDateCode()">Verify</button>
                 </div>
                 <div id="cfwResult" style="margin-top:10px; font-weight:bold;"></div>
 
                 <br>
-                <span style="color: #f79452;">Here's where to find the model number and date code on your PS3:</span><br>
+                <span style="color: #f79452;">Here's where to find the model number and date code or manufacturing date on your PS3:</span><br>
                 <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top:10px; margin-left:0px; display:inline-block;">
                   <tr>
                     <td style="vertical-align: top; padding-right: 20px;">
@@ -350,6 +373,9 @@
                     </td>
                     <td style="vertical-align: top;">
                       <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                    </td>
+                    <td style="vertical-align: top;">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code-2.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     </td>
                   </tr>
                 </table>
@@ -1104,10 +1130,33 @@
         return 'NOR';
       }
     </script>
-    <!-- ==================== Checker: compatibility + button helpers ==================== -->
+    <!-- ==================== Checker: compatibility + button helpers (FIXED – actual years + smart label) ==================== -->
     <script>
       function trimStr(str) {
         return str.replace(/^\s+|\s+$/g, '');
+      }
+
+      // Parse a full month+year string like "January 2010" or "jan 2010"
+      function parseFullDate(dateStr) {
+        var s = trimStr(dateStr);
+        var parts = s.split(/\s+/);
+        if (parts.length < 2) return null;
+
+        var monthName = parts[0].toLowerCase();
+        var yearPart  = parts[1];
+        var year = parseInt(yearPart, 10);
+        if (isNaN(year) || year < 2009 || year > 2012) return null;
+
+        var months = {
+          january:1, february:2, march:3, april:4, may:5, june:6,
+          july:7, august:8, september:9, october:10, november:11, december:12,
+          jan:1, feb:2, mar:3, apr:4, jun:6, jul:7, aug:8,
+          sep:9, oct:10, nov:11, dec:12
+        };
+        var monthNum = months[monthName];
+        if (monthNum === undefined) return null;
+
+        return { yearDigit: year - 2010, month: monthNum };
       }
 
       function checkCFWCompatibility(model, datecode) {
@@ -1137,19 +1186,31 @@
             if (cleaned.indexOf('DECH25') === 0 || cleaned.indexOf('DECH-25') === 0 ||
               cleaned.indexOf('DECHS25') === 0) {
               if (!datecode) return 'NEED_DATE';
-              var dc = trimStr(datecode.toUpperCase());
-              var yearDigit = dc.charCodeAt(0) - 48;
-              var monthChar = dc.charAt(1);
-              var month = monthChar.charCodeAt(0) - 64;
-              if (isNaN(yearDigit) || isNaN(month) || month < 1 || month > 12) {
-                return 'Invalid date code';
-              }
-              if (yearDigit === 1 && month === 1) {
-                cfw = 'Maybe - Manual check required';
-              } else if (yearDigit === 0 && (month === 3 || month === 4)) {
-                cfw = 'Yes (date code ' + dc + ')';
+              var parsed = parseFullDate(datecode);
+              var year, month;
+              var isManufactureDate = false;   // track type
+              if (parsed) {
+                year = parsed.yearDigit + 2010;
+                month = parsed.month;
+                isManufactureDate = true;
               } else {
-                cfw = 'No (date code ' + dc + ')';
+                var dc = trimStr(datecode.toUpperCase());
+                var yd = dc.charCodeAt(0) - 48;
+                var mc = dc.charAt(1);
+                month = mc.charCodeAt(0) - 64;
+                if (isNaN(yd) || isNaN(month) || month < 1 || month > 12) {
+                  return 'Invalid date code';
+                }
+                year = yd + 2010;
+                isManufactureDate = false;
+              }
+              var label = isManufactureDate ? 'manufacturing date' : 'date code';
+              if (year <= 2010) {
+                cfw = 'Yes (' + label + ' ' + datecode + ')';
+              } else if (year === 2011 && month === 1) {
+                cfw = 'Maybe - Manual check required';
+              } else {
+                cfw = 'No (' + label + ' ' + datecode + ')';
               }
             } else if (cleaned.indexOf('DECH30') === 0 || cleaned.indexOf('DECH-30') === 0 ||
               cleaned.indexOf('DECH40') === 0 || cleaned.indexOf('DECH-40') === 0) {
@@ -1171,24 +1232,31 @@
             cfw = 'Yes';
           } else if (cleaned.indexOf('CECH25') === 0 || cleaned.indexOf('CECH-25') === 0) {
             if (!datecode) return 'NEED_DATE';
-            var dc = trimStr(datecode.toUpperCase());
-            var yearDigit = dc.charCodeAt(0) - 48;
-            var monthChar = dc.charAt(1);
-            var month = monthChar.charCodeAt(0) - 64;
-            if (isNaN(yearDigit) || isNaN(month) || month < 1 || month > 12) {
-              return 'Invalid date code';
+            var parsed = parseFullDate(datecode);
+            var year, month;
+            var isManufactureDate = false;
+            if (parsed) {
+              year = parsed.yearDigit + 2010;
+              month = parsed.month;
+              isManufactureDate = true;
+            } else {
+              var dc = trimStr(datecode.toUpperCase());
+              var yd = dc.charCodeAt(0) - 48;
+              var mc = dc.charAt(1);
+              month = mc.charCodeAt(0) - 64;
+              if (isNaN(yd) || isNaN(month) || month < 1 || month > 12) {
+                return 'Invalid date code';
+              }
+              year = yd + 2010;
+              isManufactureDate = false;
             }
-            if (yearDigit === 0 && month <= 5) 
-            {
-                cfw = 'Yes (CECH-25xx, date code ' + dc + ' - min firmware < 3.60)';
-            } 
-            else if (yearDigit === 1 && month === 1)
-            {
-                cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
-            } 
-            else
-            {
-                cfw = 'No (CECH-25xx, date code ' + dc + ' - min firmware > 3.56)';
+            var label = isManufactureDate ? 'manufacturing date' : 'date code';
+            if (year <= 2010) {
+              cfw = 'Yes (CECH-25xx, ' + label + ' ' + datecode + ' - min firmware < 3.60)';
+            } else if (year === 2011 && month === 1) {
+              cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
+            } else {
+              cfw = 'No (CECH-25xx, ' + label + ' ' + datecode + ' - min firmware > 3.56)';
             }
           } else if (cleaned.indexOf('CECH30') === 0 || cleaned.indexOf('CECH-30') === 0 ||
             cleaned.indexOf('CECH40') === 0 || cleaned.indexOf('CECH-40') === 0 ||
@@ -1247,13 +1315,12 @@
           resultDiv.innerHTML = '';
           return;
         }
-        
         if (res === 'Unknown model') {
           resultDiv.innerHTML = '<span style="color:#ffa500;">Unknown model - please check the number (e.g., 2501A).</span>';
           return;
         }
         if (res === 'Invalid date code') {
-          resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C).</span>';
+          resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C or January 2010).</span>';
           return;
         }
         var cfw = res.cfw;
@@ -1284,11 +1351,26 @@
       }
 
       function verifyDateCode() {
+        var monthSelect = document.getElementById('monthSelect');
+        var yearSelect  = document.getElementById('yearSelect');
+        // Check if dropdowns have selections
+        if (monthSelect && yearSelect && monthSelect.value !== '' && yearSelect.value !== '') {
+          var monthNum = parseInt(monthSelect.value, 10);
+          var yearNum  = parseInt(yearSelect.value, 10);
+          // Convert to month name
+          var monthNames = ["January","February","March","April","May","June",
+                            "July","August","September","October","November","December"];
+          var monthName = monthNames[monthNum-1];
+          var dateString = monthName + " " + yearNum;
+          runChecker(dateString);
+          return;
+        }
+        // Fallback to text input
         var dcInput = document.getElementById('datecodeInput');
         var dc = dcInput ? dcInput.value : '';
         dc = trimStr(dc);
         if (!dc) {
-          document.getElementById('cfwResult').innerHTML = '<span style="color:#ffa500;">Please enter the date code.</span>';
+          document.getElementById('cfwResult').innerHTML = '<span style="color:#ffa500;">Please enter a date code or select a manufacturing date.</span>';
           return;
         }
         runChecker(dc);
