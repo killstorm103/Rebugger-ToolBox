@@ -190,16 +190,49 @@
                     
                     uaElem.innerHTML = window.UserAgent || navigator.userAgent;
                     var pluginList = '';
+
 if (navigator.plugins && navigator.plugins.length > 0) 
 {
     pluginList += '<br>'
     for (var i = 0; i < navigator.plugins.length; i++) {
-        pluginList += (i + 1) + '. ' + navigator.plugins[i].name + '<br>';
+        var p = navigator.plugins[i];
+
+        // Basic info
+        pluginList += '<b>Plugin #' + (i + 1) + '</b><br>';
+        pluginList += 'Name: ' + (p.name        || '(unnamed)') + '<br>';
+        pluginList += 'File: ' + (p.filename    || '(no filename)') + '<br>';
+        pluginList += 'Description: ' + (p.description || '(no description)') + '<br>';
+
+        // Version – sometimes empty, try to get it from the object
+        var ver = p.version || '';
+        if (ver === '' && p.description) {
+            // PS3's Flash player often stores the build in the description, e.g. "Shockwave Flash 9.0 r159"
+            var match = p.description.match(/(\d+\.\d+[^\s]*)/);
+            if (match) ver = match[1];
+        }
+        pluginList += 'Version: ' + (ver || '(not reported)') + '<br>';
+
+        // MIME types supported by this plugin
+        pluginList += 'MIME types (' + p.length + '):<br>';
+        if (p.length > 0) {
+            for (var j = 0; j < p.length; j++) {
+                var mime = p[j];
+                if (mime) {
+                    pluginList += '&nbsp;&nbsp;' + (j + 1) + '. ' + (mime.type || '?') +
+                                  ' (' + (mime.suffixes || 'none') + ')<br>';
+                }
+            }
+        } else {
+            pluginList += '&nbsp;&nbsp;(none)<br>';
+        }
+        pluginList += '<br>'; // blank line between plugins
     }
 } else {
-    pluginList = 'None / not supported';
+    pluginList = 'No plugins available or <code>navigator.plugins</code> not supported';
 }
+
 PluginElem.innerHTML = pluginList;
+PluginElem.innerHTML = pluginList;   // ← use the same name here
                 }
 
                 if (document.readyState === 'complete') {
