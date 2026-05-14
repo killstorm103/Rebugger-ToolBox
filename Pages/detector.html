@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PS3 Factory MinVer Detector</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; margin-top: 30px; }
+        .box { background: #222; border-left: 5px solid #dc3545; padding: 20px; display: inline-block; max-width: 650px; }
+        h1 { color: #dc3545; }
+        #status { color: #f79452; margin: 20px 0; }
+        #result { font-weight: bold; font-size: 1.2em; margin-top: 20px; }
+        button { padding: 12px 30px; font-size: 1.1em; font-weight: bold; background: #dc3545; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+        button:hover { background: #b02a37; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        #fallback { display: none; margin-top: 20px; padding: 15px; background: #333; border-radius: 4px; text-align: left; }
+        a { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Factory Minimum Firmware Version Detector</h1>
+        <div id="status">Loading Flash exploit…</div>
+        <button id="btnDetect" onclick="detectMinVer()" disabled>Detect Factory Firmware</button>
+        <div id="result"></div>
+        <div id="fallback">
+            <strong style="color:#ffa500;">⚠️ The Flash exploit did not respond.</strong><br><br>
+            <span>This can happen on firmwares that are not supported by the SWF (e.g., OFW 4.93+).<br>
+            For a 100% reliable method, use the <strong>MinVerChk PUP</strong>:</span><br><br>
+            <span style="color:#f79452;">
+                1. Download <a href="https://archive.midnightchannel.net/SonyPS/Firmware/download/bb39828156bc7df144e4d06d81c801ab/MINVERCHK.PUP" target="_blank">MINVERCHK.PUP</a>.<br>
+                2. Place it on a FAT32 USB drive in <code>PS3/UPDATE/PS3UPDAT.PUP</code>.<br>
+                3. Settings → System Update → Update via Storage Media.<br>
+                4. The failed update shows your factory minimum version.
+            </span>
+        </div>
+    </div>
+
+    <!-- SWF loaded from SAME ORIGIN (relative path) -->
+    <object id="ps3Swf" type="application/x-shockwave-flash"
+            data="files/PS3Loader.swf" width="1" height="1"
+            style="visibility:hidden;">
+        <param name="allowScriptAccess" value="always">
+    </object>
+
+    <script>
+        var swf = document.getElementById('ps3Swf');
+        var swfReady = false;
+        var attempts = 0;
+        var maxAttempts = 30; // 15 seconds
+
+        function waitForSwf() {
+            attempts++;
+            try {
+                if (swf && typeof swf.PercentLoaded === 'function') {
+                    var pct = swf.PercentLoaded();
+                    document.getElementById('status').innerHTML = 'SWF loaded (' + pct + '%). Checking functions…';
+                    if (pct === 100) {
+                        if (typeof swf.leakbyte === 'function' ||
+                            typeof swf.leakval32 === 'function' ||
+                            typeof swf.leakbytes === 'function') {
+                            clearInterval(pollTimer);
+                            swfReady = true;
+                            document.getElementById('status').innerHTML = 'Exploit ready. Press the button to detect.';
+                            document.getElementById('btnDetect').disabled = false;
+                            return;
+                        }
+                    }
+                }
+            } catch(e) {}
+
+            if (attempts >= maxAttempts) {
+                clearInterval(pollTimer);
+                document.getElementById('status').innerHTML = 'SWF did not expose memory functions.';
+                document.getElementById('fallback').style.display = 'block';
+            }
+        }
+
+        var pollTimer = setInterval(waitForSwf, 500);
+
+        function detectMinVer() {
+            if (!swfReady) return;
+
+            var btn = document.getElementById('btnDetect');
+            btn.disabled = true;
+            btn.textContent = 'Detecting…';
+            document.getElementById('status').innerHTML = 'Reading factory minimum firmware version…';
+
+            try {
+                var addr = 0x8B000000 - 0x8; // 0x8AFFFFF8
+
+                var data;
+                if (typeof swf.leakbytes === 'function') {
+                    data = swf.leakbytes(addr, 32, true, false);
+                } else if (typeof swf.leakbyte === 'function') {
+                    var bytes = [];
+                    for (var i = 0; i < 32; i++) {
+                        bytes.push(swf.leakbyte(addr + i));
+                    }
+                    data = String.fromCharCode.apply(null, bytes);
+                } else {
+                    throw new Error('No memory read function exposed.');
+                }
+
+                if (!data || data.length < 32) throw new Error('Read returned empty data');
+
+                var ver = '';
+                for (var j = 8; j < 12; j++) {
+                    var c = data.charCodeAt(j);
+                    if (c >= 0x20 && c <= 0x7E) ver += String.fromCharCode(c);
+                }
+                var minver = parseFloat(ver);
+                if (isNaN(minver)) {
+                    var b1 = data.charCodeAt(8), b2 = data.charCodeAt(9);
+                    if (b1 >= 0x30 && b1 <= 0x39 && b2 >= 0x30 && b2 <= 0x39)
+                        minver = (b1 - 0x30) + (b2 - 0x30) / 100;
+                    else minver = 9.99;
+                }
+
+                document.getElementById('result').innerHTML =
+                    '<span style="color:' + (minver > 3.56 ? 'red' : 'lightgreen') + '">' +
+                    'Factory Minimum Firmware: ' + minver.toFixed(2) +
+                    (minver > 3.56 ? ' (NOT CFW compatible)' : ' (CFW compatible)') +
+                    '</span>';
+                document.getElementById('status').innerHTML = 'Detection complete.';
+            } catch (e) {
+                document.getElementById('status').innerHTML = 'Error: ' + e.message;
+            }
+            btn.disabled = false;
+            btn.textContent = 'Retry';
+        }
+    </script>
+</body>
+</html>
