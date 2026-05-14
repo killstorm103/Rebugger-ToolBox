@@ -9,19 +9,19 @@
 <body>
 <style>
     #marginInput {
-    background: #333;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 14px;
-}
-#applyMarginBtn {
-    font-weight: bold;
-}
-#applyMarginBtn:hover {
-    background: #b02a37;
-}
+        background: #333;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 4px;
+        font-size: 14px;
+    }
+    #applyMarginBtn {
+        font-weight: bold;
+    }
+    #applyMarginBtn:hover {
+        background: #b02a37;
+    }
     .image-gallery {
         display: flex;
         flex-wrap: wrap;
@@ -40,7 +40,7 @@
     .container {
         max-width: max-content;
         padding: 20px 20px 10px 20px;
-        margin-top: 160px;  
+        margin-top: 160px;
     }
     .fixed-header {
         position: fixed;
@@ -123,33 +123,12 @@
         background-color: #b02a37;
         cursor: pointer;
     }
-    #marginInput {
-        background: #333;
-        color: #fff;
-        border: 1px solid #555;
-        border-radius: 4px;
-        padding: 4px;
-        font-size: 14px;
-      }
 
-      #applyMarginBtn {
-        font-weight: bold;
-      }
-
-      #applyMarginBtn:hover {
-        background: #b02a37;
-      }
-
-      .image-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .image-gallery img {
-        border-radius: 8px;
-        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-      }
+    /* spanned – used inside dark boxes */
+    .spanned {
+        display: block;
+        color: #f79452;
+    }
 </style>
 
 <div class="fixed-header">
@@ -162,77 +141,84 @@
         <li class="bloc">
             <h2>Platform Debugger<span class="size"></span></h2>
             <ul>
-                <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
-                <li>is PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></li>
-                <li>Firmware Version: <span id="fwSpan">Checking...</span></li>
-                <li>User Agent: <span id="uaSpan"></span></li>
-                <li>Plugins: <span id="pluginsSpan"></span></li>
+                <li style="padding:0; margin:0;">
+                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <strong>Information</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Is PS3: <span id="isPs3Span">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Firmware Version: <span id="fwSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ User Agent: <span id="uaSpan"></span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Plugins:</span><br>
+                        <span id="pluginsSpan" style="display:block; margin-left:20px; color:#f79452;"></span>
+                    </div>
+                </li>
             </ul>
             <script>
                 function updateStatus() {
                     var isPs3Elem = document.getElementById('isPs3Span'),
-                        fwElem = document.getElementById('fwSpan'),
-                        uaElem = document.getElementById('uaSpan'),
-                        engineElem = document.getElementById('EngineSpan'), PluginElem = document.getElementById('pluginsSpan');
+                        fwElem     = document.getElementById('fwSpan'),
+                        uaElem     = document.getElementById('uaSpan'),
+                        engineElem = document.getElementById('EngineSpan'),
+                        PluginElem = document.getElementById('pluginsSpan');
 
+                    // Is PS3?
                     if (window.isPS3) {
                         isPs3Elem.innerHTML = '✔️ Yes';
                     } else {
                         isPs3Elem.innerHTML = '❌ No (standard browser)';
                     }
-                    
+
+                    // Firmware
                     fwElem.innerHTML = window.isPS3 ? (window.ps3Firmware || 'Unknown') : 'N/A';
+
+                    // Silk Engine?
                     if (window.isPS3SilkBrowserEngine) {
                         engineElem.innerHTML = '✔️ Yes';
                     } else {
-                        engineElem.innerHTML = '❌ No' ;
+                        engineElem.innerHTML = '❌ No';
                     }
-                    
+
+                    // User Agent
                     uaElem.innerHTML = window.UserAgent || navigator.userAgent;
+
+                    // Plugins – full details loop (as you wanted)
                     var pluginList = '';
+                    if (navigator.plugins && navigator.plugins.length > 0) 
+                    {
+                        for (var i = 0; i < navigator.plugins.length; i++) {
+                            var p = navigator.plugins[i];
+ 
+                            pluginList += 'Name: ' + (p.name        || '(unnamed)') + ' (Plugin #' + (i + 1) + ')' + '<br>';
+                            pluginList += 'File: ' + (p.filename    || '(no filename)') + '<br>';
+                            pluginList += 'Description: ' + (p.description || '(no description)') + '<br>';
 
-if (navigator.plugins && navigator.plugins.length > 0) 
-{
-    pluginList += '<br>'
-    for (var i = 0; i < navigator.plugins.length; i++) {
-        var p = navigator.plugins[i];
+                            // Try to extract version
+                            var ver = p.version || '';
+                            if (ver === '' && p.description) {
+                                var match = p.description.match(/(\d+\.\d+[^\s]*)/);
+                                if (match) ver = match[1];
+                            }
+                            pluginList += 'Version: ' + (ver || '(not reported)') + '<br>';
 
-        // Basic info
-        pluginList += '<b>Plugin #' + (i + 1) + '</b><br>';
-        pluginList += 'Name: ' + (p.name        || '(unnamed)') + '<br>';
-        pluginList += 'File: ' + (p.filename    || '(no filename)') + '<br>';
-        pluginList += 'Description: ' + (p.description || '(no description)') + '<br>';
-
-        // Version – sometimes empty, try to get it from the object
-        var ver = p.version || '';
-        if (ver === '' && p.description) {
-            // PS3's Flash player often stores the build in the description, e.g. "Shockwave Flash 9.0 r159"
-            var match = p.description.match(/(\d+\.\d+[^\s]*)/);
-            if (match) ver = match[1];
-        }
-        pluginList += 'Version: ' + (ver || '(not reported)') + '<br>';
-
-        // MIME types supported by this plugin
-        pluginList += 'MIME types (' + p.length + '):<br>';
-        if (p.length > 0) {
-            for (var j = 0; j < p.length; j++) {
-                var mime = p[j];
-                if (mime) {
-                    pluginList += '&nbsp;&nbsp;' + (j + 1) + '. ' + (mime.type || '?') +
-                                  ' (' + (mime.suffixes || 'none') + ')<br>';
-                }
-            }
-        } else {
-            pluginList += '&nbsp;&nbsp;(none)<br>';
-        }
-        pluginList += '<br>'; // blank line between plugins
-    }
-} else {
-    pluginList = 'No plugins available or <code>navigator.plugins</code> not supported';
-}
-
-PluginElem.innerHTML = pluginList;
-PluginElem.innerHTML = pluginList;   // ← use the same name here
+                            // MIME types
+                            pluginList += 'MIME types (' + p.length + '):<br>';
+                            if (p.length > 0) {
+                                for (var j = 0; j < p.length; j++) {
+                                    var mime = p[j];
+                                    if (mime) {
+                                        pluginList += '&nbsp;&nbsp;' + (j + 1) + '. ' + (mime.type || '?') +
+                                                      ' (' + (mime.suffixes || 'none') + ')<br>';
+                                    }
+                                }
+                            } else {
+                                pluginList += '&nbsp;&nbsp;(none)<br>';
+                            }
+                            pluginList += '<br>'; // space between plugins
+                        }
+                    } else {
+                        pluginList = 'No plugins available or not supported';
+                    }
+                    PluginElem.innerHTML = pluginList;
                 }
 
                 if (document.readyState === 'complete') {
