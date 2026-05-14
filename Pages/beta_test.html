@@ -143,13 +143,30 @@
             <ul>
                 <li style="padding:0; margin:0;">
                     <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                        <strong>Information</strong><br>
+                        <strong>System Checks</strong><br>
                         <span class="spanned" style="margin-top: 10px">└ Is PS3: <span id="isPs3Span">Checking...</span></span><br>
                         <span class="spanned" style="margin-top: 10px">└ PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></span><br>
                         <span class="spanned" style="margin-top: 10px">└ Firmware Version: <span id="fwSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Online: <span id="onlineSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Cookies Enabled: <span id="cookieSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Navigator Properties</strong><br>
                         <span class="spanned" style="margin-top: 10px">└ User Agent: <span id="uaSpan"></span></span><br>
-                        <span class="spanned" style="margin-top: 10px">└ Plugins:</span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Platform: <span id="platformSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Product: <span id="productSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ App Version: <span id="appVersionSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Screen / Hardware</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Screen Resolution: <span id="screenSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Geolocation</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Geolocation Supported: <span id="geoSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Plugins & MIME Types</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Plugin Count: <span id="pluginCountSpan">Checking...</span></span><br>
                         <span id="pluginsSpan" style="display:block; margin-left:20px; color:#f79452;"></span>
+                        <span class="spanned" style="margin-top: 10px">└ MIME Type Count: <span id="mimeCountSpan">Checking...</span></span><br>
+                        <span id="mimeSpan" style="display:block; margin-left:20px; color:#f79452;"></span>
                     </div>
                 </li>
             </ul>
@@ -159,7 +176,17 @@
                         fwElem     = document.getElementById('fwSpan'),
                         uaElem     = document.getElementById('uaSpan'),
                         engineElem = document.getElementById('EngineSpan'),
-                        PluginElem = document.getElementById('pluginsSpan');
+                        PluginElem = document.getElementById('pluginsSpan'),
+                        onlineElem = document.getElementById('onlineSpan'),
+                        cookieElem = document.getElementById('cookieSpan'),
+                        platformElem = document.getElementById('platformSpan'),
+                        productElem  = document.getElementById('productSpan'),
+                        appVerElem   = document.getElementById('appVersionSpan'),
+                        screenElem   = document.getElementById('screenSpan'),
+                        geoElem      = document.getElementById('geoSpan'),
+                        mimeCountElem = document.getElementById('mimeCountSpan'),
+                        mimeElem     = document.getElementById('mimeSpan'),
+                        pluginCountElem = document.getElementById('pluginCountSpan');
 
                     // Is PS3?
                     if (window.isPS3) {
@@ -181,44 +208,73 @@
                     // User Agent
                     uaElem.innerHTML = window.UserAgent || navigator.userAgent;
 
-                    // Plugins – full details loop (as you wanted)
+                    // Online / Cookies
+                    onlineElem.innerHTML = navigator.onLine ? '✔️ Online' : '❌ Offline';
+                    cookieElem.innerHTML = navigator.cookieEnabled ? '✔️ Enabled' : '❌ Disabled';
+
+                    // Navigator properties
+                    platformElem.innerHTML = navigator.platform || 'Unknown';
+                    productElem.innerHTML  = navigator.product  || 'Unknown';
+                    appVerElem.innerHTML   = navigator.appVersion || 'Unknown';
+
+                    // Screen
+                    screenElem.innerHTML = screen.width + ' x ' + screen.height;
+
+                    // Geolocation – existence check
+                    geoElem.innerHTML = navigator.geolocation ? '✔️ Supported' : '❌ Not Supported';
+
+                    // Plugins – full details
                     var pluginList = '';
-                    if (navigator.plugins && navigator.plugins.length > 0) 
-                    {
-                        for (var i = 0; i < navigator.plugins.length; i++) {
+                    var pluginCount = navigator.plugins ? navigator.plugins.length : 0;
+                    pluginCountElem.innerHTML = pluginCount;
+                    if (pluginCount > 0) {
+                        for (var i = 0; i < pluginCount; i++) {
                             var p = navigator.plugins[i];
- 
-                            pluginList += 'Name: ' + (p.name        || '(unnamed)') + ' (Plugin #' + (i + 1) + ')' + '<br>';
-                            pluginList += 'File: ' + (p.filename    || '(no filename)') + '<br>';
+                            pluginList += 'Name: ' + (p.name || '(unnamed)') + ' (Plugin #' + (i+1) + ')' + '<br>';
+                            pluginList += 'File: ' + (p.filename || '(no filename)') + '<br>';
                             pluginList += 'Description: ' + (p.description || '(no description)') + '<br>';
 
-                            // Try to extract version
                             var ver = p.version || '';
                             if (ver === '' && p.description) {
                                 var match = p.description.match(/(\d+\.\d+[^\s]*)/);
                                 if (match) ver = match[1];
                             }
                             pluginList += 'Version: ' + (ver || '(not reported)') + '<br>';
-
-                            // MIME types
                             pluginList += 'MIME types (' + p.length + '):<br>';
                             if (p.length > 0) {
                                 for (var j = 0; j < p.length; j++) {
                                     var mime = p[j];
                                     if (mime) {
-                                        pluginList += '&nbsp;&nbsp;' + (j + 1) + '. ' + (mime.type || '?') +
+                                        pluginList += '&nbsp;&nbsp;' + (j+1) + '. ' + (mime.type || '?') +
                                                       ' (' + (mime.suffixes || 'none') + ')<br>';
                                     }
                                 }
                             } else {
                                 pluginList += '&nbsp;&nbsp;(none)<br>';
                             }
-                            pluginList += '<br>'; // space between plugins
+                            pluginList += '<br>';
                         }
                     } else {
                         pluginList = 'No plugins available or not supported';
                     }
                     PluginElem.innerHTML = pluginList;
+
+                    // MIME Types – simple list
+                    var mimeCount = navigator.mimeTypes ? navigator.mimeTypes.length : 0;
+                    mimeCountElem.innerHTML = mimeCount;
+                    var mimeList = '';
+                    if (mimeCount > 0) {
+                        for (var k = 0; k < mimeCount; k++) {
+                            var mt = navigator.mimeTypes[k];
+                            if (mt) {
+                                mimeList += (k+1) + '. ' + (mt.type || '?') +
+                                            ' (' + (mt.suffixes || 'none') + ')<br>';
+                            }
+                        }
+                    } else {
+                        mimeList = 'No MIME types';
+                    }
+                    mimeElem.innerHTML = mimeList;
                 }
 
                 if (document.readyState === 'complete') {
