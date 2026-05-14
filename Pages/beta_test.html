@@ -11,12 +11,19 @@
         #result { font-weight: bold; font-size: 1.2em; margin-top: 20px; }
         #fallback { display: none; margin-top: 20px; padding: 15px; background: #333; border-radius: 4px; text-align: left; }
         a { color: #dc3545; }
+        button {
+            padding: 12px 30px; font-size: 1.1em; font-weight: bold;
+            background: #dc3545; color: #fff; border: none; border-radius: 6px; cursor: pointer;
+        }
+        button:hover { background: #b02a37; }
+        button:disabled { background: #555; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <div class="box">
         <h1>Factory Minimum Firmware Version Detector</h1>
-        <div id="status">Checking system compatibility…</div>
+        <div id="status">Press the button below to attempt detection.<br><small style="color:#aaa;">(Works on HFW; may work on some OFW versions)</small></div>
+        <button id="detectBtn" onclick="tryDetection()">Detect Factory Firmware</button>
         <div id="result"></div>
         <div id="fallback">
             <strong style="color:#ffa500;">⚠️ The memory leak could not be performed.</strong><br><br>
@@ -132,49 +139,61 @@
         return hex.join('');
     }
 
-    // Read factory minimum firmware version from PS3 flash memory
-    function detectMinVer() {
+    // Triggered by the button
+    function tryDetection() {
+        var btn = document.getElementById('detectBtn');
+        btn.disabled = true;
+        btn.textContent = 'Detecting…';
+
         var statusEl = document.getElementById('status');
         var resultEl = document.getElementById('result');
         var fallbackEl = document.getElementById('fallback');
 
-        // Address where the factory min version is stored (same as Flash Writer)
+        // Hide fallback in case user retries
+        fallbackEl.style.display = 'none';
+        resultEl.innerHTML = '';
+
+        var ua = navigator.userAgent;
+        if (ua.indexOf('PLAYSTATION 3') === -1) {
+            statusEl.innerHTML = 'Not a PlayStation 3. This tool only works on a PS3 browser.';
+            btn.disabled = false;
+            btn.textContent = 'Detect Factory Firmware';
+            return;
+        }
+
+        statusEl.innerHTML = 'Reading factory minimum firmware version…';
+
+        // The factory minimum firmware is stored at 0x8B000000 - 0x8 (same as Flash Writer)
         var address = 0x8B000000 - 0x8; // 0x8AFFFFF8
         var size = 0x100;               // read 256 bytes
 
-        statusEl.innerHTML = 'Reading factory minimum firmware version…';
-        var raw = readMemoryLeak(address, size);
+        // Use setTimeout to allow the UI to update before the potentially heavy operation
+        setTimeout(function() {
+            var raw = readMemoryLeak(address, size);
 
-        if (!raw) {
-            fallbackEl.style.display = 'block';
-            statusEl.innerHTML = 'Exploit did not succeed.';
-            return;
-        }
+            if (!raw) {
+                fallbackEl.style.display = 'block';
+                statusEl.innerHTML = 'Exploit did not succeed.';
+                btn.disabled = false;
+                btn.textContent = 'Retry Detection';
+                return;
+            }
 
-        // Extract the version using the same logic as Flash Writer's minVer()
-        var minVerRaw = raw.substr(10, 10);   // take 10 chars starting at offset 10
-        var hex = s2hex(minVerRaw);
-        var minver = hex.slice(3, 8).replace('00', '.');
+            // Extract the version using the same logic as Flash Writer's minVer()
+            var minVerRaw = raw.substr(10, 10);   // take 10 chars starting at offset 10
+            var hex = s2hex(minVerRaw);
+            var minver = hex.slice(3, 8).replace('00', '.');
 
-        if (parseFloat(minver) > 3.56) {
-            resultEl.innerHTML = '<span style="color:red">Factory Minimum Firmware: ' + minver + ' (NOT CFW compatible)</span>';
-        } else {
-            resultEl.innerHTML = '<span style="color:lightgreen">Factory Minimum Firmware: ' + minver + ' (CFW compatible)</span>';
-        }
-        statusEl.innerHTML = 'Detection complete.';
+            if (parseFloat(minver) > 3.56) {
+                resultEl.innerHTML = '<span style="color:red">Factory Minimum Firmware: ' + minver + ' (NOT CFW compatible)</span>';
+            } else {
+                resultEl.innerHTML = '<span style="color:lightgreen">Factory Minimum Firmware: ' + minver + ' (CFW compatible)</span>';
+            }
+            statusEl.innerHTML = 'Detection complete.';
+            btn.disabled = false;
+            btn.textContent = 'Retry Detection';
+        }, 100);
     }
-
-    // Start when the page is ready
-    window.onload = function() {
-        var ua = navigator.userAgent;
-        if (ua.indexOf('PLAYSTATION 3') === -1) {
-            document.getElementById('status').innerHTML = 'Not a PlayStation 3. This tool only works on a PS3 browser.';
-            return;
-        }
-
-        // Short delay to ensure the page is fully loaded and the exploit element exists
-        setTimeout(detectMinVer, 500);
-    };
     </script>
 </body>
 </html>
