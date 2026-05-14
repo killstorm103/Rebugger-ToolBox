@@ -9,19 +9,19 @@
 <body>
 <style>
     #marginInput {
-    background: #333;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 14px;
-}
-#applyMarginBtn {
-    font-weight: bold;
-}
-#applyMarginBtn:hover {
-    background: #b02a37;
-}
+        background: #333;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 4px;
+        font-size: 14px;
+    }
+    #applyMarginBtn {
+        font-weight: bold;
+    }
+    #applyMarginBtn:hover {
+        background: #b02a37;
+    }
     .image-gallery {
         display: flex;
         flex-wrap: wrap;
@@ -40,7 +40,7 @@
     .container {
         max-width: max-content;
         padding: 20px 20px 10px 20px;
-        margin-top: 160px;  
+        margin-top: 160px;
     }
     .fixed-header {
         position: fixed;
@@ -123,27 +123,17 @@
         background-color: #b02a37;
         cursor: pointer;
     }
+
+    /* spanned – used inside dark boxes */
+    .spanned {
+        display: block;
+        color: #f79452;
+    }
 </style>
 
 <div class="fixed-header">
-    <h1>Dillans Services</h1>
-    <div class="nav-container">
-        <!-- Removed duplicate nav-container div -->
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-        <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-    </div>
-    <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-    <label for="marginInput">Header Offset (px):</label>
-    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-    <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
-    <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-</div>
+    <h1>Dillans Platform Debugger</h1>
+    <div class="nav-container"></div>
 </div>
 
 <div id="mainContainer" class="container">
@@ -151,32 +141,140 @@
         <li class="bloc">
             <h2>Platform Debugger<span class="size"></span></h2>
             <ul>
-                <li>Is PS3: <span id="isPs3Span">Checking...</span></li>
-                <li>is PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></li>
-                <li>Firmware Version: <span id="fwSpan">Checking...</span></li>
-                <li>User Agent: <span id="uaSpan"></span></li>
+                <li style="padding:0; margin:0;">
+                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <strong>System Checks</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Is PS3: <span id="isPs3Span">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ PS3 Silk Browser Engine: <span id="EngineSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Firmware Version: <span id="fwSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Online: <span id="onlineSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Cookies Enabled: <span id="cookieSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Navigator Properties</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ User Agent: <span id="uaSpan"></span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Platform: <span id="platformSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ Product: <span id="productSpan">Checking...</span></span><br>
+                        <span class="spanned" style="margin-top: 10px">└ App Version: <span id="appVersionSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Screen / Hardware</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Screen Resolution: <span id="screenSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Geolocation</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Geolocation Supported: <span id="geoSpan">Checking...</span></span><br>
+                        <br>
+                        <strong>Plugins & MIME Types</strong><br>
+                        <span class="spanned" style="margin-top: 10px">└ Plugin Count: <span id="pluginCountSpan">Checking...</span></span><br>
+                        <span id="pluginsSpan" style="display:block; margin-left:20px; color:#f79452;"></span>
+                        <span class="spanned" style="margin-top: 10px">└ MIME Type Count: <span id="mimeCountSpan">Checking...</span></span><br>
+                        <span id="mimeSpan" style="display:block; margin-left:20px; color:#f79452;"></span>
+                    </div>
+                </li>
             </ul>
             <script>
                 function updateStatus() {
                     var isPs3Elem = document.getElementById('isPs3Span'),
-                        fwElem = document.getElementById('fwSpan'),
-                        uaElem = document.getElementById('uaSpan'),
-                        engineElem = document.getElementById('EngineSpan');
+                        fwElem     = document.getElementById('fwSpan'),
+                        uaElem     = document.getElementById('uaSpan'),
+                        engineElem = document.getElementById('EngineSpan'),
+                        PluginElem = document.getElementById('pluginsSpan'),
+                        onlineElem = document.getElementById('onlineSpan'),
+                        cookieElem = document.getElementById('cookieSpan'),
+                        platformElem = document.getElementById('platformSpan'),
+                        productElem  = document.getElementById('productSpan'),
+                        appVerElem   = document.getElementById('appVersionSpan'),
+                        screenElem   = document.getElementById('screenSpan'),
+                        geoElem      = document.getElementById('geoSpan'),
+                        mimeCountElem = document.getElementById('mimeCountSpan'),
+                        mimeElem     = document.getElementById('mimeSpan'),
+                        pluginCountElem = document.getElementById('pluginCountSpan');
 
+                    // Is PS3?
                     if (window.isPS3) {
                         isPs3Elem.innerHTML = '✔️ Yes';
                     } else {
                         isPs3Elem.innerHTML = '❌ No (standard browser)';
                     }
-                    
+
+                    // Firmware
                     fwElem.innerHTML = window.isPS3 ? (window.ps3Firmware || 'Unknown') : 'N/A';
+
+                    // Silk Engine?
                     if (window.isPS3SilkBrowserEngine) {
                         engineElem.innerHTML = '✔️ Yes';
                     } else {
-                        engineElem.innerHTML = '❌ No' ;
+                        engineElem.innerHTML = '❌ No';
                     }
-                    
+
+                    // User Agent
                     uaElem.innerHTML = window.UserAgent || navigator.userAgent;
+
+                    // Online / Cookies
+                    onlineElem.innerHTML = navigator.onLine ? '✔️ Online' : '❌ Offline';
+                    cookieElem.innerHTML = navigator.cookieEnabled ? '✔️ Enabled' : '❌ Disabled';
+
+                    // Navigator properties
+                    platformElem.innerHTML = navigator.platform || 'Unknown';
+                    productElem.innerHTML  = navigator.product  || 'Unknown';
+                    appVerElem.innerHTML   = navigator.appVersion || 'Unknown';
+
+                    // Screen
+                    screenElem.innerHTML = screen.width + ' x ' + screen.height;
+
+                    // Geolocation – existence check
+                    geoElem.innerHTML = navigator.geolocation ? '✔️ Supported' : '❌ Not Supported';
+
+                    // Plugins – full details
+                    var pluginList = '';
+                    var pluginCount = navigator.plugins ? navigator.plugins.length : 0;
+                    pluginCountElem.innerHTML = pluginCount;
+                    if (pluginCount > 0) {
+                        for (var i = 0; i < pluginCount; i++) {
+                            var p = navigator.plugins[i];
+                            pluginList += 'Name: ' + (p.name || '(unnamed)') + ' (Plugin #' + (i+1) + ')' + '<br>';
+                            pluginList += 'File: ' + (p.filename || '(no filename)') + '<br>';
+                            pluginList += 'Description: ' + (p.description || '(no description)') + '<br>';
+
+                            var ver = p.version || '';
+                            if (ver === '' && p.description) {
+                                var match = p.description.match(/(\d+\.\d+[^\s]*)/);
+                                if (match) ver = match[1];
+                            }
+                            pluginList += 'Version: ' + (ver || '(not reported)') + '<br>';
+                            pluginList += 'MIME types (' + p.length + '):<br>';
+                            if (p.length > 0) {
+                                for (var j = 0; j < p.length; j++) {
+                                    var mime = p[j];
+                                    if (mime) {
+                                        pluginList += '&nbsp;&nbsp;' + (j+1) + '. ' + (mime.type || '?') +
+                                                      ' (' + (mime.suffixes || 'none') + ')<br>';
+                                    }
+                                }
+                            } else {
+                                pluginList += '&nbsp;&nbsp;(none)<br>';
+                            }
+                            pluginList += '<br>';
+                        }
+                    } else {
+                        pluginList = 'No plugins available or not supported';
+                    }
+                    PluginElem.innerHTML = pluginList;
+
+                    // MIME Types – simple list
+                    var mimeCount = navigator.mimeTypes ? navigator.mimeTypes.length : 0;
+                    mimeCountElem.innerHTML = mimeCount;
+                    var mimeList = '';
+                    if (mimeCount > 0) {
+                        for (var k = 0; k < mimeCount; k++) {
+                            var mt = navigator.mimeTypes[k];
+                            if (mt) {
+                                mimeList += (k+1) + '. ' + (mt.type || '?') +
+                                            ' (' + (mt.suffixes || 'none') + ')<br>';
+                            }
+                        }
+                    } else {
+                        mimeList = 'No MIME types';
+                    }
+                    mimeElem.innerHTML = mimeList;
                 }
 
                 if (document.readyState === 'complete') {
@@ -184,91 +282,10 @@
                 } else {
                     window.onload = updateStatus;
                 }
-
-                
-                function initMarginControl () 
-       {
-           var input = document.getElementById('marginInput');
-           var applyBtn = document.getElementById('applyMarginBtn');
-           var valueDisplay = document.getElementById('marginValue');
-           var container = document.getElementById('mainContainer'); 
-           if (!input || !applyBtn || !container) return;
-           
-           function updateMargin(value) 
-           {
-               var cleanValue = String(value).replace(/[ .]/g, '');
-               if (cleanValue === '') return; 
-               
-               var num = parseInt(cleanValue, 10);
-               
-               if (isNaN(num)) return; 
-               if (num < 0) num = 0;
-               
-               container.style.marginTop = num + 'px';
-               if (valueDisplay) valueDisplay.innerHTML = num;
-               
-               input.value = num;
-    }
-    input.onkeypress = function(e)
-    {
-        e = e || window.event;
-        var keyCode = e.keyCode || e.which;
-        var char = String.fromCharCode(keyCode);
-
-        var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8  
-                     || keyCode === 46 
-                     || keyCode === 13  
-                     || keyCode === 9   
-                     || keyCode === 37  
-                     || keyCode === 39  
-                     || keyCode === 38  
-                     || keyCode === 40; 
-
-        if (!isDigit && !isControl) {
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        if (keyCode === 13) {
-            updateMargin(input.value);
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        return true;
-    };
-
-    input.oninput = function() 
-    {
-        var clean = this.value.replace(/[^0-9]/g, '');
-        this.value = clean;
-    };
-
-    applyBtn.onclick = function() 
-    {
-        updateMargin(input.value);
-    };
-    var initial = input.value;
-    if (initial !== '') {
-        updateMargin(initial);
-    }
-}
-if (window.addEventListener) 
-{
-    window.addEventListener('load', initMarginControl, false);
-} 
-else if (window.attachEvent) 
-{
-    window.attachEvent('onload', initMarginControl);
-} 
-else
-{
-    window.onload = initMarginControl;
-}
             </script>
         </li>
     </ul>
 </div>
+<script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
 </body>
 </html>
