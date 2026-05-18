@@ -4,192 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
 </head>
 <body>
 <style>
-    body
-    {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-}
-
-
-.container
-{
-    max-width: max-content;
-    padding: 20px 20px 10px 20px;
-    margin-top: 160px;  
-}
-
-.fixed-header 
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #000000;
-    padding: 10px 20px;
-    z-index: 1000;
-    border-bottom: 1px solid #333;
-}
-
-.nav-container
-{
-  margin-top: 10px;
-}
-
-h1 
-{
-    text-align: left;
-    font-size: 40px;
-    margin: 0;
-    color: #ffffff;
-}
-h1_under
-{
-    text-align: left;
-    font-size: 14px;
-    margin: 0;
-    color: #ffffff;
-}
-.main
-{
-    list-style-type: none;
-    padding: 0;
-}
-
-.main li 
-{
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: .5px solid rgba(0,0,0,0.1);
-    border-radius: 7px;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    font-size: 17px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
-.main h2
-{
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #000000;
-}
-.main ul 
-{
-    list-style-type: disc;
-    margin-left: 20px;
-    margin-right: 30px;
-}
-
-.main ul li
-{
-    margin-bottom: 5px;
-}
-
-.space 
-{
-    display: block;
-    margin: 0 0 0 20px;
-}
-.space2 
-{
-    display: block;
-    margin: 0 0 0 34px;
-}
-
-.size 
-{
-    font-size: 16px;
-}
-.nav-button
-{
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px 0;
-    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 16px;
-    border: none;
-    transition: background-color 0.2s;
-}
-
-.nav-button:hover 
-{
-    background-color: #b02a37;
-    cursor: pointer;
-}
 </style>
     <div class="fixed-header">
         <h1>Rebugger - ToolBox: How to Install</h1>
-        <div class="nav-container">
-            <div class="nav-container">
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Changelog.html" class="nav-button" target="_blank">ChangeLogs</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
-    <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-</div>
-        </div>
+        <div class="nav-container"></div>
     </div> 
-    <div class="container">
+    <div id="mainContainer" class="container">
         <ul class="main">
             <li class="bloc">
                 <h2>Tutorials<span class="size"></span></h2>
                 <ul>
-                    <li>How to unInstall</li>
-                    <span class="space">└ Go into: Rebugger - ToolBox > Settings > Delete Rebugger Toolbox > Completely remove Rebugger Toolbox?</span>
-                    <span class="space">└ Then Press X on this and wait until you get a notification saying it's been uninstalled or until your ps3s clocks time is updating again and don't press Anything during this process!</span>
-                    <span class="space">└ or using mmCM or FileZilla go to: /dev_hdd0/game</span>
-                    <span class="space">└ and find Rebugger_Tool and delete that folder, after deleting it restart your PS3</span>
-                    <span class="space">└ The Fixes for Rebugger - ToolBox will still be on your console if you want to remove them reinstall your PS3's Firmware!</span>
+                    <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:10px;">How to unInstal:</strong>
+                <span class="spanned">└ Go into: Rebugger - ToolBox > Settings > Delete Rebugger Toolbox > Completely remove Rebugger Toolbox?</span><br>
+                <span class="spanned">└ Then Press X on this and wait until you get a notification saying it's been uninstalled or until your ps3s clocks time is updating again and don't press Anything during this process!</span><br>
+                <span class="spanned">└ or using mmCM or FileZilla go to: /dev_hdd0/game</span><br>
+                <span class="spanned">└ and find Rebugger_Tool and delete that folder, after deleting it restart your PS3</span><br>
+                <span class="spanned">└ The Fixes for Rebugger - ToolBox will still be on your console if you want to remove them reinstall your PS3's Firmware!</span>
+              </div>
+            </li>
                     
-                    <li>How to Update</li>
-                    <span class="space">└ Go to the Downloads Page by clicking the Downloads button on this Page or in the ToolBox go to: Settings > Update Rebugger ToolBox > Download Page</span>
-                    <span class="space">└ Download the Latest Stable Or Dev Build</span>
-                    <span class="space">└ Download the file to /dev_hdd0/packages or /dev_hdd0/dev_usb000 (number might be different for you)</span>
-                    <span class="space">└ Then if your on HEN/HFW Download the HEN Patch to go with it!</span>
-                    <span class="space">└ After you've downloaded it go back to Rebugger ToolBox and go to: Settings > Delete Rebugger ToolBox > Completely Remove Rebugger ToolBox</span>
-                    <span class="space">└ Then after its deleted restart your Console and then go to: Package Manager > Install Package Files > (PS3 System Storage or Standard)</span>
-                    <span class="space">└ And Install Rebugger.Toolbox.Installer_CFW.pkg</span>
-                    <span class="space">└ And then IF your on HEN/HFW Install Rebugger.Toolbox.Patch_HEN.pkg</span>
-                     <span class="space">└ Then restart your PS3 and then your done!</span>
-                     
-                     
-                    <li>How to Install</li>
-                    <span class="space">└ Download the Latest Stable Or Dev Build from the Downloads Page or from <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases" target="_blank" class="inline-link">GitHub [Link]</a></span>
-                    <span class="space">└ Make sure you download the Fixes too: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined)</span>
-                    <span class="space">└ If your on PS3 Download the files to /dev_hdd0/packages or /dev_hdd0/dev_usb000 (number might be different for you)</span>
-                    <span class="space">└ If your on PC Download the files like you would any other file and then put them on the root of your USB or move them over to your PS3 using FileZilla</span>
-                    <span class="space">└ Put them in one of these path locations: /dev_hdd0/packages or USB/FileName</span>
-                    <span class="space">└ On your PS3 go to: WebMAN Games > WebMAN Setup > Enable /dev_blind</span>
-                    <span class="space">└ and then Once the files are in your USB or on the PS3 Use your Package Manager to Install them: Package Manager > Install Package Files > (PS3 System Storage or Standard)</span>
-                    <span class="space">└ First Install: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg</span>
-                    <span class="space">└ And Then Install Rebugger.Toolbox.Installer_CFW.pkg</span>
-                    <span class="space">└ Then IF Your on HEN/HFW Install Rebugger.Toolbox.Patch_HEN.pkg</span>
-                    <span class="space">└ Then restart your Console and your good to go!, you'll find Rebugger - ToolBox in the PSN/PlayStation Network Category on your XMB!</span>
+                    <li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">How to Update:</strong>
+    <span class="spanned">└ Go to the Downloads Page by clicking the Downloads button on this Page or in the ToolBox go to: Settings > Update Rebugger ToolBox > Download Page</span><br>
+    <span class="spanned">└ Download the Latest Stable Or Dev Build</span><br>
+    <span class="spanned">└ Download the file to /dev_hdd0/packages or /dev_hdd0/dev_usb000 (number might be different for you)</span><br>
+    <span class="spanned">└ Then if you're on HEN/HFW Download the HEN Patch to go with it!</span><br>
+    <span class="spanned">└ After you've downloaded it go back to Rebugger ToolBox and go to: Settings > Delete Rebugger ToolBox > Completely Remove Rebugger ToolBox</span><br>
+    <span class="spanned">└ Then after it's deleted restart your Console and then go to: Package Manager > Install Package Files > (PS3 System Storage or Standard)</span><br>
+    <span class="spanned">└ And Install Rebugger.Toolbox.Installer_CFW.pkg</span><br>
+    <span class="spanned">└ And then IF you're on HEN/HFW Install Rebugger.Toolbox.Patch_HEN.pkg</span><br>
+    <span class="spanned">└ Then restart your PS3 and you're done!</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">How to Install:</strong>
+    <span class="spanned">└ Download the Latest Stable Or Dev Build from the Downloads Page or from <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases" target="_blank" style="color:#f79452;">GitHub [Link]</a></span><br>
+    <span class="spanned">└ Make sure you download the Fixes too: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined)</span><br>
+    <span class="spanned">└ If you're on PS3 Download the files to /dev_hdd0/packages or /dev_hdd0/dev_usb000 (number might be different for you)</span><br>
+    <span class="spanned">└ If you're on PC Download the files like you would any other file and then put them on the root of your USB or move them over to your PS3 using FileZilla</span><br>
+    <span class="spanned">└ Put them in one of these path locations: /dev_hdd0/packages or USB/FileName</span><br>
+    <span class="spanned">└ On your PS3 go to: WebMAN Games > WebMAN Setup > Enable /dev_blind</span><br>
+    <span class="spanned">└ Once the files are on your USB or PS3, use your Package Manager to Install them: Package Manager > Install Package Files > (PS3 System Storage or Standard)</span><br>
+    <span class="spanned">└ First Install: Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg &gt; Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg</span><br>
+    <span class="spanned">└ And Then Install Rebugger.Toolbox.Installer_CFW.pkg</span><br>
+    <span class="spanned">└ Then IF you're on HEN/HFW Install Rebugger.Toolbox.Patch_HEN.pkg</span><br>
+    <span class="spanned">└ Then restart your Console – you'll find Rebugger - ToolBox in the PSN/PlayStation Network Category on your XMB!</span><br>
+  </div>
+</li>
                 </ul>
                 <h2>Common sense (Errors etc)<span class="size"></span></h2>
                 <ul>
-                    <li>Read this before trying to contact me and annoy me!</li>
-                    <li>Read the How to Uninstall/Install/Update Tutorial First!</li>
-                    
-                    <li>If your getting a Error (8001003A) when trying to Install its because you haven't Enabled /dev_blind!</li>
-                    <li>If you switch or reinstall your PS3s Firmware you will need to reenable /dev_blind and then reinstall the Fixes again or you won't be able to see/access the ToolBox!</li>
-                    <span class="space">└ Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg > Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg</span>
+                    <li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Important Notes:</strong>
+    <span class="spanned">└ Read this before trying to contact me and annoy me!</span><br>
+    <span class="spanned">└ Read the How to Uninstall/Install/Update Tutorial First!</span><br>
+    <span class="spanned">└ If you're getting a Error (8001003A) when trying to Install, it's because you haven't Enabled /dev_blind!</span><br>
+    <span class="spanned">└ If a Mod/Cheat Installer or Remover stops working try: uninstalling the toolbox and reinstalling it if that doesn't work uninstall it again and reinstall your firmware and then reinstall the toolbox!</span><br>
+    <span class="spanned">└ If you switch or reinstall your PS3's Firmware, you will need to reenable /dev_blind and then reinstall the Fixes again or you won't be able to see/access the ToolBox!</span><br>
+    <span class="space">└ Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg (Both files combined) or Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg &gt; Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg</span><br>
+  </div>
+</li>
                 </ul>
             </li>
         </ul>
     </div>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Correction.js"></script>
 </body>
 </html>
