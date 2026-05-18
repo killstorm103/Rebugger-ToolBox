@@ -4,250 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
+    <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
 </head>
 <body>
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-}
-
-.container {
-    max-width: max-content;
-    padding: 20px 20px 10px 20px;
-    margin-top: 160px;  
-}
-.fixed-header 
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #000000;
-    padding: 10px 20px;
-    z-index: 1000;
-    border-bottom: 1px solid #333;
-}
-
-.nav-container
-{
-  margin-top: 10px;
-}
-h1 {
-    text-align: left;
-    font-size: 40px;
-    margin: 0;
-    color: #ffffff;
-}
-
-.changelogs {
-    list-style-type: none;
-    padding: 0;
-}
-
-.changelogs li {
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: .5px solid rgba(0,0,0,0.1);
-    border-radius: 7px;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    font-size: 17px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
-.changelogs h2 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #000000;
-}
-
-.changelogs ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-
-.changelogs ul li {
-    margin-bottom: 5px;
-}
-
-.space 
-{
-    display: block;
-    margin: 0 0 0 20px;
-}
-.space2 
-{
-    display: block;
-    margin: 0 0 0 34px;
-}
-
-.size
-{
-    font-size: 16px;
-}
-.nav-button
-{
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px 0;
-    background-color: #dc3545;   /* #dc3545 red tone to match the theme */
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 16px;
-    border: none;
-    transition: background-color 0.2s;
-}
-
-.nav-button:hover 
-{
-    background-color: #b02a37;
-    cursor: pointer;
-}
-#marginInput {
-    background: #333;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 14px;
-}
-#applyMarginBtn {
-    font-weight: bold;
-}
-#applyMarginBtn:hover {
-    background: #b02a37;
-}
-</style>
+<style></style>
     <div class="fixed-header">
         <h1>Rebugger - ToolBox: ChangeLogs</h1>
-            <div class="nav-container">
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/How_To_Install.html" class="nav-button" target="_blank">How to Install</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Download_Page.html" class="nav-button" target="_blank">Downloads</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Social_Medias.html" class="nav-button" target="_blank">Social Medias</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Services.html" class="nav-button" target="_blank">View Services</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Known.html" class="nav-button" target="_blank">Known cunts list</a>
-               <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Fixes_and_Other_Information.html" class="nav-button" target="_blank">Fixes &amp; Other Information</a>
-                <a href="http://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/Pages/Homebrew_Information.html" class="nav-button" target="_blank">Homebrew Information</a>
-               </div>
-               <div style="padding: 5px; background: #222; color: #fff; font-size: 14px;">
-    <label for="marginInput">Header Offset (px):</label>
-    <input type="text" id="marginInput" value="300" size="4" style="width: 60px; text-align: center;">
-    <button id="applyMarginBtn" style="margin-left: 5px; padding: 2px 10px; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Apply</button>
-    <span style="margin-left: 10px; font-size: 12px; color: #aaa;">(Current: <span id="marginValue">300</span>px)</span>
-    <span style="margin-left: 15px; font-size: 15px; color: #ffa500;">Press L1 or R1 before pressing Start to stop PS3 from deleting your last inputted number</span>
-</div>
+            <div class="nav-container"></div>
     </div> 
     <div id="mainContainer" class="container">
-        <ul class="changelogs">
+        <ul class="main">
             <li class="bloc">
-                <h2>Upcoming Release</h2>
-                <ul>
-                    <li>Made Firmware Installers so the ToolBox comes with PUP Files and this moves those to your USB</li>
-                    <li>Fixed a mistake in Bradleys Preset Flash Setup</li>
-                    <li>Made Multiple things into html Pages</li>
-                    <li>Reworked/improved some html Pages</li>
-                    <li>Made some html Page openers use WebKit or Silk Engine (You choose) (Silk allows for you to download files on old firmwares that have outdated Certificates, Silk doesn't work on all websites!)</li>
-                    <li>Made &amp; Added a working File Downloader</li>
-                    <li>Made Check For Updates</li>
-                    <li>Made a Tutorial Page</li>
-                    <li>Added a Debug Settings Togglers</li>
-                    <li>Removed somethings and put them in a html page</li>
-                    <li>Added a XMB Reloader in Extra Tools Tab!</li>
-                </ul>
-                
                 <h2>Version <span id="latest_dev_build_span">Checking version info</span><span class="size"></span></h2>
                 <ul>
-                    <li>Made Firmware Installers so the ToolBox comes with PUP Files and this moves those to your USB</li>
-                    <li>Fixed a mistake in Bradleys Preset Flash Setup</li>
-                    <li>Made Multiple things into html Pages</li>
-                    <li>Reworked/improved some html Pages</li>
-                    <li>Made html Page openers use WebKit or Silk Engine (You choose) (Silk allows for you to download files on old firmwares that have outdated Certificates, Silk doesn't work on all websites)</li>
-                    <li>Made &amp; Added a working File Downloader</li>
-                    <li>Made Check For Updates</li>
-                    <li>Made a Tutorial Page</li>
-                    <li>Added a Debug Settings Togglers</li>
-                    <li>Removed somethings and put them in a html page</li>
+            <li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Made/Added:</strong>
+    <span class="spanned">└ Made Firmware Installers so the ToolBox comes with PUP Files and this moves those to your USB</span><br>
+    <span class="spanned">└ Made Multiple things into html Pages</span><br>
+    <span class="spanned">└ Made some html Page openers use WebKit or Silk Engine (You choose) (Silk allows for you to download files on old firmwares that have outdated Certificates, Silk doesn't work on all websites)</span><br>
+    <span class="spanned">└ Made &amp; Added a working File Downloader</span><br>
+    <span class="spanned">└ Made Check For Updates</span><br>
+    <span class="spanned">└ Made a Tutorial Page</span><br>
+    <span class="spanned">└ Added a Debug Settings Togglers</span><br>
+    <span class="spanned">└ Added a XMB Reloader in Extra Tools Tab</span><br>
+    <span class="spanned">└ Made The Simpsons Coldboot (Image &amp; Sound)</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Reworked/Improved:</strong>
+    <span class="spanned">└ Reworked/improved some html Pages</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Fixed:</strong>
+    <span class="spanned">└ Fixed a mistake in Bradleys Preset Flash Setup</span><br>
+    <span class="spanned">└ Updated category_psn.xml (ToolBox Fix) So it doesn't have Extra shit in there (Like old stores i had installed)</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Removed:</strong>
+    <span class="spanned">└ Removed somethings and put them in a html page</span><br>
+  </div>
+</li>
                 </ul>
             </li>
             <li class="bloc">
                 <h2>Version <span id="latest_stable_build_span">Checking version info</span><span class="size"></span></h2>
                 <ul>
-                    <li>Added Official Eboots for Baguette HVH (Bo2) (DEX & CEX/HEN)</li>
-                    <li>Made Ingame XMB Themed (Including PSN Logo: xmb_ingame.rco) (Some files are done, DO NOT USE THIS YET!!)</li>
-                    <li>Added Fury Store</li>
-                    <li>Changed the HEN icon</li>
-                    <li>Added Homebrew Information inside Information!</li>
-                    <li>Moved Social Medias into Social Media Tab!</li>
-                    <li>Made it so the updater is now: (CFW or HEN) > (Latest Stable Build or Latest Dev Build)</li>
-                    <li>Moved Toggle /dev_blind into Extra Tools Tab</li>
-                    <li>Added File Downloader from a direct URL inside Extra Tools Tab</li>
-                    <li>Added Package Manager to Extra Tools Tab! (This may not work on HEN or Evilnat CFW)</li>
-                    <li>Added PS3 Firmwares to Extra Tools Tab</li>
-                    <li>Updated some texts</li>
-                    <li>Improved Changelogs</li>
-                    <li>Added Evilnat 4.92.2 CFW to Extra Tools > PS3 Firmwares > CFW</li>
-                        <span class="space">└ CEX/PEX/D-PEX.</span><br>
-                    <li>Added Custom Firmware Mods inside Customisation</li>
-                    <li>Updated the Images inside: Extra Tools > PS3 Firmwares (+ inside: Official/HFW/CFW Updates)</li>
-                    <li>Added DEX/CEX Installation Error Explanation inside: Extra Tools > PS3 Firmwares</li>
-                    <li>Added CEX2DEX Conversion Tutorial (CFW Only!) in: Extra Tools > PS3 Firmwares</li>
-                    <li>Added Anti Freeze Eboots for Black ops 2 inside: Game Mods/Cheats > Black ops 2</li>
-                    <li>Deleted Useless files i forgot to delete!</li>
-                    <li>Renamed Custom Firmware Mods to Firmware Mods!</li>
-                    <li>Added Default Rebug & Evilnats PS1 & PS2 Emulators to: Customisation > Firmware Mods > Emulators and + PS1/PS2 NETEMU/GXEMU Mods</li>
-                    <li>Made Jerome Thug Love Jones/Breaded Chicken Coldboot & 4 Coldboot Sounds for it!</li>
-                    <li>Added Other Information Tab inside Information Tab!</li>
-                    <li>Improved Homebrews Webman Mod now it takes you to the page telling you how to manually delete it and it has a installer for the wm_ignore.txt  for when you reinstall webman!</li>
-                    <li>Renamed Other Information Tab to Fixes & Other Information!</li>
-                    <li>Added Browser Fix to Other Information Tab!</li>
-                    <li>Added Rebug 4.82.2 REX & D-REX to: PS3 Firmwares > CFW Updates</li>
-                    <li>Added Kebab 1.5.3 (Bo2) to Game Mods/Cheats Tab!</li>
-                    <li>Added Debugging Station Fix & Other Fixes to Fixes & Other Information Tab!</li>
-                    <li>Renamed Game Mods/Cheats to Games and made Game Mods/Cheats & Game Licenses Tabs!</li>
-                    <li>Made a HEN Patch to fix and update somethings on HFW</li>
-                    <li>Made HFW (4.92.1 | PSXploit) rco psn files: (Only: Normal is done dont install any of the others!)</li>
-                    <li>Added Online Acces Bypass To Extra Tools and a Online Acces Bypass Patch in Updater for when a new Firmware comes out!</li>
-                    <li>Deleted a unused Folder</li>
-                    <li>Made Known Cunts List (known scammers, dickheads etc) inside Information Tab!</li>
-                    <li>Updated wm_ignore.txt installer</li>
-                    <li>Made Preset /dev_flash setups</li>
-                    <li>Added a tutorial on how to install Game Mods/Cheats in Homebrew information</li>
-                    <li>Added HFW 4.93.1 (PSXploit) & OFW 4.93 & Evilnat CFW 4.93 (CEX/PEX/D-PEX) to PS3 HFW/OFW/CFW Firmwares!</li>
-                    <li>Optimised Games > Game Mods/Cheats > (bo1/2) And added support for</li>
-                    <span class="space">└ BO1: BLES01031 & BLUS3059, BO2: BLES01717 & BLUS31011</span><br>
-                    <li>Added a DEX CFW Only Note to OG DEX Aimbot Eboot Cheat!</li>
-                    <li>Added a few Bo2 Mods/Cheats</li>
+                    <li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Made/Added:</strong>
+    <span class="spanned">└ Added Official Eboots for Baguette HVH (Bo2) (DEX &amp; CEX/HEN)</span><br>
+    <span class="spanned">└ Made Ingame XMB Themed (Including PSN Logo: xmb_ingame.rco) (Some files are done, DO NOT USE THIS YET!!)</span><br>
+    <span class="spanned">└ Added Fury Store</span><br>
+    <span class="spanned">└ Added Homebrew Information inside Information!</span><br>
+    <span class="spanned">└ Made it so the updater is now: (CFW or HEN) > (Latest Stable Build or Latest Dev Build)</span><br>
+    <span class="spanned">└ Added File Downloader from a direct URL inside Extra Tools Tab</span><br>
+    <span class="spanned">└ Added Package Manager to Extra Tools Tab! (This may not work on HEN or Evilnat CFW)</span><br>
+    <span class="spanned">└ Added PS3 Firmwares to Extra Tools Tab</span><br>
+    <span class="spanned">└ Added Evilnat 4.92.2 CFW to Extra Tools > PS3 Firmwares > CFW</span><br>
+    <span class="space">└ CEX/PEX/D-PEX.</span><br>
+    <span class="spanned">└ Added Custom Firmware Mods inside Customisation</span><br>
+    <span class="spanned">└ Added DEX/CEX Installation Error Explanation inside: Extra Tools > PS3 Firmwares</span><br>
+    <span class="spanned">└ Added CEX2DEX Conversion Tutorial (CFW Only!) in: Extra Tools > PS3 Firmwares</span><br>
+    <span class="spanned">└ Added Anti Freeze Eboots for Black ops 2 inside: Game Mods/Cheats > Black ops 2</span><br>
+    <span class="spanned">└ Added Default Rebug &amp; Evilnats PS1 &amp; PS2 Emulators to: Customisation > Firmware Mods > Emulators and + PS1/PS2 NETEMU/GXEMU Mods</span><br>
+    <span class="spanned">└ Made Jerome Thug Love Jones/Breaded Chicken Coldboot &amp; 4 Coldboot Sounds for it!</span><br>
+    <span class="spanned">└ Added Other Information Tab inside Information Tab!</span><br>
+    <span class="spanned">└ Added Browser Fix to Other Information Tab!</span><br>
+    <span class="spanned">└ Added Rebug 4.82.2 REX &amp; D-REX to: PS3 Firmwares > CFW Updates</span><br>
+    <span class="spanned">└ Added Kebab 1.5.3 (Bo2) to Game Mods/Cheats Tab!</span><br>
+    <span class="spanned">└ Added Debugging Station Fix &amp; Other Fixes to Fixes &amp; Other Information Tab!</span><br>
+    <span class="spanned">└ Made a HEN Patch to fix and update somethings on HFW</span><br>
+    <span class="spanned">└ Made HFW (4.92.1 | PSXploit) rco psn files: (Only: Normal is done dont install any of the others!)</span><br>
+    <span class="spanned">└ Added Online Acces Bypass To Extra Tools and a Online Acces Bypass Patch in Updater for when a new Firmware comes out!</span><br>
+    <span class="spanned">└ Made Known Cunts List (known scammers, dickheads etc) inside Information Tab!</span><br>
+    <span class="spanned">└ Made Preset /dev_flash setups</span><br>
+    <span class="spanned">└ Added a tutorial on how to install Game Mods/Cheats in Homebrew information</span><br>
+    <span class="spanned">└ Added HFW 4.93.1 (PSXploit) &amp; OFW 4.93 &amp; Evilnat CFW 4.93 (CEX/PEX/D-PEX) to PS3 HFW/OFW/CFW Firmwares!</span><br>
+    <span class="spanned">└ Added a DEX CFW Only Note to OG DEX Aimbot Eboot Cheat!</span><br>
+    <span class="spanned">└ Added a few Bo2 Mods/Cheats</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Reworked/Improved:</strong>
+    <span class="spanned">└ Changed the HEN icon</span><br>
+    <span class="spanned">└ Moved Social Medias into Social Media Tab!</span><br>
+    <span class="spanned">└ Moved Toggle /dev_blind into Extra Tools Tab</span><br>
+    <span class="spanned">└ Updated some texts</span><br>
+    <span class="spanned">└ Improved Changelogs</span><br>
+    <span class="spanned">└ Updated the Images inside: Extra Tools > PS3 Firmwares (+ inside: Official/HFW/CFW Updates)</span><br>
+    <span class="spanned">└ Renamed Custom Firmware Mods to Firmware Mods!</span><br>
+    <span class="spanned">└ Improved Homebrews Webman Mod now it takes you to the page telling you how to manually delete it and it has a installer for the wm_ignore.txt for when you reinstall webman!</span><br>
+    <span class="spanned">└ Renamed Other Information Tab to Fixes &amp; Other Information!</span><br>
+    <span class="spanned">└ Renamed Game Mods/Cheats to Games and made Game Mods/Cheats &amp; Game Licenses Tabs!</span><br>
+    <span class="spanned">└ Updated wm_ignore.txt installer</span><br>
+    <span class="spanned">└ Optimised Games > Game Mods/Cheats > (bo1/2) And added support for</span><br>
+    <span class="space">└ BO1: BLES01031 &amp; BLUS3059, BO2: BLES01717 &amp; BLUS31011</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Removed:</strong>
+    <span class="spanned">└ Deleted Useless files i forgot to delete!</span><br>
+    <span class="spanned">└ Deleted a unused Folder</span><br>
+  </div>
+</li>
                 </ul>
             </li>
 
             <li class="bloc">
                 <h2>Version 1.0.2 <span class="size"></span></h2>
                 <ul>
-                    <li>Fixed custom > coldboots</li>
-                    <li>Made Evilnat 4.91.2 & 4.92.2 & Rebug 4.84.2 PSN rco files: Normal, In game, Sign in, Package Manager</li>
-                    <li>Added store(s) to Unofficial Stores</li>
-                    <li>Added live warning list, press Warnings inside Rebugger Toolbox!</li>
-                    <li>Added more ISP Bypasses!</li>
-                    <li>Added 16 18? your first coldboot</li>
-                    <li>Remade PSN Logos Menu so its now: Category (New PSN, Old PSN, Other PSN) > Logo > category (normal, ingame, sign in, package manager) > firmware (Evilnat, Rebug) > Version</li>
-                    <li>Added a Updater inside Settings</li>
-                    <li>Made Version shower & Github inside Infomation take you to update Rebugger Toolbox!</li>
-                    <li>Added English langue to Langues inside Settings!</li>
-                    <li>Added Toggle /dev_blind</li>
-                    <li>Added Mods/Game Cheats Installer</li>
-                    <li>Added a Live TODO List for showing what i need to do before i release the next Update!</li>
-                    <li>Started making Themes: Rebugger Toolbox > Custom > Themes, (Normal is done)</li>
-                    <li>Improved the psp image inside: Rebugger Toolbox > Infomation > Game & Movie/Show Infomation > Game & Movie/Shows Locations</li>
-                    <li>Made the Rom Sites inside: Infomation > Game & Movie/Show Infomation Take you to the website when you press x on it (if it doesn't work, it's up to the site to add support for the website on ps3, if a site doesn't load read the ISP Bypasses)</li>
-                    <li>Added Live Changelog</li>
-                    <li>Remade PSN Installers so its now: type > firmware (Evilnat, Rebug) > firmwares (Rebug: 4.84.2, Evilnat: 4.91.2, 4.92.2)</li>
+                    <li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Made/Added:</strong>
+    <span class="spanned">└ Made Evilnat 4.91.2 &amp; 4.92.2 &amp; Rebug 4.84.2 PSN rco files: Normal, In game, Sign in, Package Manager</span><br>
+    <span class="spanned">└ Added store(s) to Unofficial Stores</span><br>
+    <span class="spanned">└ Added live warning list, press Warnings inside Rebugger Toolbox!</span><br>
+    <span class="spanned">└ Added more ISP Bypasses!</span><br>
+    <span class="spanned">└ Added 16 18? your first coldboot</span><br>
+    <span class="spanned">└ Added a Updater inside Settings</span><br>
+    <span class="spanned">└ Made Version shower &amp; Github inside Infomation take you to update Rebugger Toolbox!</span><br>
+    <span class="spanned">└ Added English langue to Langues inside Settings!</span><br>
+    <span class="spanned">└ Added Toggle /dev_blind</span><br>
+    <span class="spanned">└ Added Mods/Game Cheats Installer</span><br>
+    <span class="spanned">└ Added a Live TODO List for showing what i need to do before i release the next Update!</span><br>
+    <span class="spanned">└ Started making Themes: Rebugger Toolbox > Custom > Themes, (Normal is done)</span><br>
+    <span class="spanned">└ Made the Rom Sites inside: Infomation > Game &amp; Movie/Show Infomation Take you to the website when you press x on it (if it doesn't work, it's up to the site to add support for the website on ps3, if a site doesn't load read the ISP Bypasses)</span><br>
+    <span class="spanned">└ Added Live Changelog</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Reworked/Improved:</strong>
+    <span class="spanned">└ Remade PSN Logos Menu so its now: Category (New PSN, Old PSN, Other PSN) &gt; Logo &gt; category (normal, ingame, sign in, package manager) &gt; firmware (Evilnat, Rebug) &gt; Version</span><br>
+    <span class="spanned">└ Improved the psp image inside: Rebugger Toolbox &gt; Infomation &gt; Game &amp; Movie/Show Infomation &gt; Game &amp; Movie/Shows Locations</span><br>
+    <span class="spanned">└ Remade PSN Installers so its now: type &gt; firmware (Evilnat, Rebug) &gt; firmwares (Rebug: 4.84.2, Evilnat: 4.91.2, 4.92.2)</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Fixed:</strong>
+    <span class="spanned">└ Fixed custom &gt; coldboots</span><br>
+  </div>
+</li>
+
+<li style="padding:0; margin:0;">
+  <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+    <strong style="display:block; margin-bottom:10px;">Removed:</strong>
+    <span class="spanned">└ (No removed items in this update)</span><br>
+  </div>
+</li>
                 </ul>
             </li>
         </ul>
@@ -397,5 +318,6 @@ else
     window.onload = initMarginControl;
 }
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
 </body>
 </html>
