@@ -36,7 +36,7 @@
 <li style="padding:0; margin:0;">
   <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
     <strong style="display:block; margin-bottom:10px;">Reworked/Improved:</strong>
-    <span class="spanned">└ Reworked/improved some html Pages</span><br>
+    <span class="spanned">└ some html Pages</span><br>
   </div>
 </li>
 
@@ -236,88 +236,8 @@
         {
             window.attachEvent('onload', fetchVersionInfo);
         }
-
-       function initMarginControl() 
-       {
-           var input = document.getElementById('marginInput');
-           var applyBtn = document.getElementById('applyMarginBtn');
-           var valueDisplay = document.getElementById('marginValue');
-           var container = document.getElementById('mainContainer'); 
-           if (!input || !applyBtn || !container) return;
-           
-           function updateMargin(value) 
-           {
-               var cleanValue = String(value).replace(/[ .]/g, '');
-               if (cleanValue === '') return; 
-               
-               var num = parseInt(cleanValue, 10);
-               
-               if (isNaN(num)) return; 
-               if (num < 0) num = 0;
-               
-               container.style.marginTop = num + 'px';
-               if (valueDisplay) valueDisplay.innerHTML = num;
-               
-               input.value = num;
-    }
-    input.onkeypress = function(e)
-    {
-        e = e || window.event;
-        var keyCode = e.keyCode || e.which;
-        var char = String.fromCharCode(keyCode);
-
-        var isDigit = /[0-9]/.test(char);
-        var isControl = keyCode === 8  
-                     || keyCode === 46 
-                     || keyCode === 13  
-                     || keyCode === 9   
-                     || keyCode === 37  
-                     || keyCode === 39  
-                     || keyCode === 38  
-                     || keyCode === 40; 
-
-        if (!isDigit && !isControl) {
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        if (keyCode === 13) {
-            updateMargin(input.value);
-            if (e.preventDefault) e.preventDefault();
-            return false;
-        }
-
-        return true;
-    };
-
-    input.oninput = function() 
-    {
-        var clean = this.value.replace(/[^0-9]/g, '');
-        this.value = clean;
-    };
-
-    applyBtn.onclick = function() 
-    {
-        updateMargin(input.value);
-    };
-    var initial = input.value;
-    if (initial !== '') {
-        updateMargin(initial);
-    }
-}
-if (window.addEventListener) 
-{
-    window.addEventListener('load', initMarginControl, false);
-} 
-else if (window.attachEvent) 
-{
-    window.attachEvent('onload', initMarginControl);
-} 
-else
-{
-    window.onload = initMarginControl;
-}
     </script>
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Correction.js"></script>
 </body>
 </html>
