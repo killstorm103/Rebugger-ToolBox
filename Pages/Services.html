@@ -1200,66 +1200,87 @@
         };
       }
 
-      function runChecker(datecode) {
-        if (typeof checkCFWCompatibility !== 'function') {
-          document.getElementById('cfwResult').innerHTML = 'Script not loaded correctly.';
-          return;
-        }
-        var resultDiv = document.getElementById('cfwResult');
-        var modelInput = document.getElementById('modelInput');
-        var model = modelInput ? modelInput.value : '';
-        model = trimStr(model);
-        if (!model) {
-          resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a model number.</span>';
-          return;
-        }
-        var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
-        if (!/^CECH/.test(cleaned) && !/^DECH/.test(cleaned) && !/^DECR/.test(cleaned) && !/^CEB/.test(cleaned))
-          cleaned = 'CECH' + cleaned;
-        var res = checkCFWCompatibility(model, datecode);
-        if (res === 'NEED_DATE') {
-          document.getElementById('datecode-box').style.display = 'block';
-          resultDiv.innerHTML = '';
-          return;
-        }
-        if (res === 'Unknown model') {
-          resultDiv.innerHTML = '<span style="color:#ffa500;">Unknown model - please check the number (e.g., 2501A).</span>';
-          return;
-        }
-        if (res === 'Invalid date code') {
-          resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C or January 2010).</span>';
-          return;
-        }
-        var cfw = res.cfw;
-        var qcfw = res.qcfw;
-        var flash = res.flash;
-        var modelType = res.modelType;
-        var displayModel = res.displayModel;
-        var isDevKit = res.isDevKit;
-        var maxDowngradeFirmware = res.maxDowngradeFirmware;
-        var cfwColor = '#28a745';
-        if (cfw.indexOf('Maybe') === 0) cfwColor = '#ffa500';
-        if (cfw.indexOf('No') === 0) cfwColor = '#dc3545';
-        var qcfwColor = (qcfw.indexOf('No') === 0) ? '#dc3545' : '#28a745';
-        var html = '';
-        html += '<span style="color:' + cfwColor + ';">CFW: ' + cfw + '</span><br>';
-        html += '<span style="color:' + qcfwColor + ';">qCFW: ' + qcfw + '</span><br>';
-        html += '<span style="color:#28a745;">HEN: Yes</span><br><br>';
-        html += 'Model Number: ' + displayModel + '<br>';
-        html += 'Model: ' + modelType + '<br>';
-        html += 'Flash Memory Type: ' + flash;
-        if (isDevKit) {
-          html += '<br><span style="color:#f79452;">Info: Jailbreaking a Dev Kit PS3 is not recommended!</span>';
-        }
-        if (maxDowngradeFirmware) {
-          html += '<br><span>' + 'Estimated Max Downgrade/Factory Firmware: ' + maxDowngradeFirmware + '</span>';
-        }
-        resultDiv.innerHTML = html;
-        document.getElementById('datecode-box').style.display = 'none';
-        if (/^CECH-?25/.test(cleaned) || /^DECH-?25/.test(cleaned)) {
-          document.getElementById('datecode-box').style.display = 'block';
-        }
-      }
+      // Helper function for backwards compatibility
+function getBackwardsCompatibility(model) {
+    var m = model.toUpperCase();
+    // CECHA / CECHB (US/Japan) – full hardware PS2 (EE+GS)
+    if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0) {
+        return "Full PS2 Hardware (EE+GS) + PS1";
+    }
+    // CECHC / CECHE (PAL/Australia/Europe) – partial hardware (GS only, no EE)
+    if (m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0) {
+        return "Partial PS2 (GS only) + PS1";
+    }
+    // All other models (including all Slim, Super Slim, later Fats) – no PS2 hardware, but PS1 still works
+    return "No (PS1 only)";
+}
+
+function runChecker(datecode) {
+    if (typeof checkCFWCompatibility !== 'function') {
+        document.getElementById('cfwResult').innerHTML = 'Script not loaded correctly.';
+        return;
+    }
+    var resultDiv = document.getElementById('cfwResult');
+    var modelInput = document.getElementById('modelInput');
+    var model = modelInput ? modelInput.value : '';
+    model = trimStr(model);
+    if (!model) {
+        resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a model number.</span>';
+        return;
+    }
+    var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
+    if (!/^CECH/.test(cleaned) && !/^DECH/.test(cleaned) && !/^DECR/.test(cleaned) && !/^CEB/.test(cleaned))
+        cleaned = 'CECH' + cleaned;
+    var res = checkCFWCompatibility(model, datecode);
+    if (res === 'NEED_DATE') {
+        document.getElementById('datecode-box').style.display = 'block';
+        resultDiv.innerHTML = '';
+        return;
+    }
+    if (res === 'Unknown model') {
+        resultDiv.innerHTML = '<span style="color:#ffa500;">Unknown model - please check the number (e.g., 2501A).</span>';
+        return;
+    }
+    if (res === 'Invalid date code') {
+        resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C or January 2010).</span>';
+        return;
+    }
+    var cfw = res.cfw;
+    var qcfw = res.qcfw;
+    var flash = res.flash;
+    var modelType = res.modelType;
+    var displayModel = res.displayModel;
+    var isDevKit = res.isDevKit;
+    var maxDowngradeFirmware = res.maxDowngradeFirmware;
+    var cfwColor = '#28a745';
+    if (cfw.indexOf('Maybe') === 0) cfwColor = '#ffa500';
+    if (cfw.indexOf('No') === 0) cfwColor = '#dc3545';
+    var qcfwColor = (qcfw.indexOf('No') === 0) ? '#dc3545' : '#28a745';
+
+    // Get backwards compatibility string
+    var backwards = getBackwardsCompatibility(cleaned);
+
+    var html = '';
+    html += '<span style="color:' + cfwColor + ';">CFW: ' + cfw + '</span><br>';
+    html += '<span style="color:' + qcfwColor + ';">qCFW: ' + qcfw + '</span><br>';
+    html += '<span style="color:#28a745;">HEN: Yes</span><br><br>';
+    html += 'Model Number: ' + displayModel + '<br>';
+    html += 'Model: ' + modelType + '<br>';
+    html += 'Flash Memory Type: ' + flash + '<br>';
+    html += 'Backwards Compatibility: ' + backwards + '<br>';
+
+    if (maxDowngradeFirmware) {
+        html += '<span>Estimated Max Downgrade/Factory Firmware: ' + maxDowngradeFirmware + '</span><br>';
+    }
+    if (isDevKit) {
+        html += '<span style="color:#f79452;">Info: Jailbreaking a Dev Kit PS3 is not recommended!</span><br>';
+    }
+    resultDiv.innerHTML = html;
+    document.getElementById('datecode-box').style.display = 'none';
+    if (/^CECH-?25/.test(cleaned) || /^DECH-?25/.test(cleaned)) {
+        document.getElementById('datecode-box').style.display = 'block';
+    }
+}
 
       function verifyDateCode() {
         var monthSelect = document.getElementById('monthSelect');
