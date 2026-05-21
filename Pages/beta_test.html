@@ -8,7 +8,10 @@
     <script src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
     
     <style>
-        
+        /* Ensure the silk download link is visible on Silk */
+        #silk-download-link.silk-visible {
+            display: list-item !important;
+        }
     </style>
 </head>
 <body>
@@ -25,21 +28,21 @@
         <li class="bloc">
             <ul>
                 <li style="padding:0; margin:0;">
-    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-        <strong>Notice:</strong><br><br>
-        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/yellow_warning.png" width="150" height="150" loading="lazy"><br><br>
-        <span class="spanned">If you get an error code when trying to download a Update/Patch:</span><br>
-        <span class="spanned">└ Your Firmware's certificates are outdated and stopping you from downloading the file!</span><br>
-        <span class="spanned">└ CFW Users: Change to Evilnat 4.93 at least – temporarily this will fix it, then you can switch back to Rebug!</span><br>
-        <span class="spanned">└ HEN Users: Bitch to the HFW/HEN Devs until they fix it.</span><br>
-        <span class="spanned">└ A non‑firmware / vsh.self file fix is: Use Silk Engine.</span><br>
-        <span class="spanned">└ Enable Internet Browser Debug in your PS3's Debug Settings!</span><br>
-        <span class="spanned">└ You'll find this in the CEX Debug Settings Menu, or you could download and install: <a href="https://store.brewology.com/get/homebrew.php?id=191&amp;fid=779" target="_blank" style="color:#f79452;">Web Browser Plus [Link]</a></span><br>
-        <span class="spanned">└ This browser always uses the Silk Engine!</span><br>
-        <span class="spanned">└ If you choose to use Internet Browser Debug, press Triangle on the Internet Browser item in the XMB and change the Engine to: Silk!</span><br>
-        <span id="silk-download-link" style="display:none;">Direct Download links for Silk PS3 Browser Engine! &nbsp;<a href="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt" target="_blank" style="color:#f79452;">version.txt</a></span>
-    </div>
-</li>
+                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <strong>Notice:</strong><br><br>
+                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/yellow_warning.png" width="150" height="150" loading="lazy"><br><br>
+                        <span class="spanned">If you get an error code when trying to download an Update/Patch:</span><br>
+                        <span class="spanned">└ Your Firmware's certificates are outdated and stopping you from downloading the file!</span><br>
+                        <span class="spanned">└ CFW Users: Change to Evilnat 4.93 at least – temporarily this will fix it, then you can switch back to Rebug!</span><br>
+                        <span class="spanned">└ HEN Users: Bitch to the HFW/HEN Devs until they fix it.</span><br>
+                        <span class="spanned">└ A non‑firmware / vsh.self file fix is: Use Silk Engine.</span><br>
+                        <span class="spanned">└ Enable Internet Browser Debug in your PS3's Debug Settings!</span><br>
+                        <span class="spanned">└ You'll find this in the CEX Debug Settings Menu, or you could download and install: <a href="https://store.brewology.com/get/homebrew.php?id=191&amp;fid=779" target="_blank" style="color:#f79452;">Web Browser Plus [Link]</a></span><br>
+                        <span class="spanned">└ This browser always uses the Silk Engine!</span><br>
+                        <span class="spanned">└ If you choose to use Internet Browser Debug, press Triangle on the Internet Browser item in the XMB and change the Engine to: Silk!</span><br>
+                        <span id="silk-download-link" style="display:none;">Direct Download links for Silk PS3 Browser Engine! &nbsp;<a href="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt" target="_blank" style="color:#f79452;">version.txt</a></span>
+                    </div>
+                </li>
             </ul>
         </li>
 
@@ -47,14 +50,14 @@
         <li class="bloc">
             <ul>
                 <li style="padding:0; margin:0;">
-    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-        <strong>Updates:</strong><br><br>
-        <span class="spanned">└ Rebugger - ToolBox (Base) (CFW)</span><br>
-        <div id="dropdown-container-cfw" style="margin-top: -15px"></div>
-        <span class="spanned" style="margin-bottom:-26px">└ Fixes (Stable &amp; Dev are pretty much the same but they may change at some point)</span><br>
-        <div id="dropdown-container-fixes" style="margin-top: 15px"></div>
-    </div>
-</li>
+                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <strong>Updates:</strong><br><br>
+                        <span class="spanned">└ Rebugger - ToolBox (Base) (CFW)</span><br>
+                        <div id="dropdown-container-cfw" style="margin-top: -15px"></div>
+                        <span class="spanned" style="margin-bottom:-26px">└ Fixes (Stable &amp; Dev are pretty much the same but they may change at some point)</span><br>
+                        <div id="dropdown-container-fixes" style="margin-top: 15px"></div>
+                    </div>
+                </li>
             </ul>
         </li>
 
@@ -62,25 +65,25 @@
         <li class="bloc">
             <ul>
                 <li style="padding:0; margin:0;">
-    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-        <strong>Patches:</strong><br><br>
-        <span class="spanned">└ HEN Patch</span><br>
-        <div id="dropdown-container-hen"></div>
-        <span class="spanned">└ Online Access Bypass (<span id="latestFirmwareSpan">4.93</span>) (If you have 1.0.3+ its Up to date by default – no need to patch!)</span>
-        <div style="margin-top:10px;">
-            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank">
-                <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy" style="border-radius:8px;">
-            </a>
-        </div>
-    </div>
-</li>
+                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                        <strong>Patches:</strong><br><br>
+                        <span class="spanned">└ HEN Patch</span><br>
+                        <div id="dropdown-container-hen"></div>
+                        <span class="spanned">└ Online Access Bypass (<span id="latestFirmwareSpan">4.93</span>) (If you have 1.0.3+ it's up to date by default – no need to patch!)</span>
+                        <div style="margin-top:10px;">
+                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank">
+                                <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy" style="border-radius:8px;">
+                            </a>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </li>
     </ul>
 </div>
 
 <script>
-    // Helper: trim (same as before)
+    // Helper: trim
     function manualTrim(str) {
         var start = 0, end = str.length - 1;
         while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
@@ -88,7 +91,7 @@
         return str.substring(start, end + 1);
     }
 
-    // Parse version.txt (same logic)
+    // Parse version.txt
     function parseVersionData(text) {
         var data = {
             stable: { version: null, cfwDownload: null, henPatchDownload: null },
@@ -116,6 +119,14 @@
         return data;
     }
 
+    // Convert HTTPS to HTTP for Silk (images)
+    function toHttp(url) {
+        if (window.isPS3SilkBrowserEngine && url && url.indexOf('https://') === 0) {
+            return url.replace('https://', 'http://');
+        }
+        return url;
+    }
+
     // Create dropdowns after version data is ready
     function buildAllDropdowns(devVersionText, stableVersionText, urls) {
         var isSilk = window.isPS3SilkBrowserEngine || false;
@@ -126,18 +137,21 @@
         var henDevUrl = (isSilk || !urls.henDevUrl) ? '#' : urls.henDevUrl;
         var henStableUrl = (isSilk || !urls.henStableUrl) ? '#' : urls.henStableUrl;
 
-        
-        if (typeof createDropdown !== 'undefined') 
-        {
+        // Convert image URLs for Silk
+        var cfwImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png');
+        var toolboxImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png');
+        var henImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png');
+
+        if (typeof createDropdown !== 'undefined') {
             // CFW dropdown
-            createDropdown('dropdown-container-cfw', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png', [
+            createDropdown('dropdown-container-cfw', cfwImg, [
                 { text: 'Dev Build: ' + displayDev, url: cfwDevUrl },
                 { isSeparator: true },
                 { text: 'Stable Build: ' + displayStable, url: cfwStableUrl }
             ]);
 
             // Fixes dropdown (static links)
-            createDropdown('dropdown-container-fixes', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png', [
+            createDropdown('dropdown-container-fixes', toolboxImg, [
                 { text: 'Both Fixes Combined (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg' },
                 { text: 'Category Fix (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg' },
                 { text: 'Plugin Installer (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg' },
@@ -148,7 +162,7 @@
             ]);
 
             // HEN Patch dropdown
-            createDropdown('dropdown-container-hen', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png', [
+            createDropdown('dropdown-container-hen', henImg, [
                 { text: 'Dev Build: ' + displayDev, url: henDevUrl },
                 { isSeparator: true },
                 { text: 'Stable Build: ' + displayStable, url: henStableUrl }
@@ -193,15 +207,41 @@
         xhr.send();
     }
 
-    // Show/hide Silk download link
+    // Show/hide Silk download link (and also convert its link to HTTP if Silk)
     function updateSilkLinkVisibility() {
         var isSilk = window.isPS3SilkBrowserEngine || false;
-        var silkLi = document.getElementById('silk-download-link');
-        if (silkLi) silkLi.style.display = isSilk ? 'list-item' : 'none';
+        var silkSpan = document.getElementById('silk-download-link');
+        if (silkSpan) {
+            if (isSilk) {
+                silkSpan.style.display = 'inline';  // or 'block', but inline works inside span
+                // Convert any HTTPS links inside to HTTP
+                var links = silkSpan.getElementsByTagName('a');
+                for (var i = 0; i < links.length; i++) {
+                    if (links[i].href && links[i].href.indexOf('https://') === 0) {
+                        links[i].href = links[i].href.replace('https://', 'http://');
+                    }
+                }
+            } else {
+                silkSpan.style.display = 'none';
+            }
+        }
+    }
+
+    // Also convert all existing images in the page (like the warning image) to HTTP for Silk
+    function fixImagesForSilk() {
+        if (!window.isPS3SilkBrowserEngine) return;
+        var imgs = document.getElementsByTagName('img');
+        for (var i = 0; i < imgs.length; i++) {
+            var src = imgs[i].src;
+            if (src && src.indexOf('https://') === 0) {
+                imgs[i].src = src.replace('https://', 'http://');
+            }
+        }
     }
 
     // Initialize everything after DOM is ready
     window.addEventListener('load', function() {
+        fixImagesForSilk();
         fetchAndBuild();
         updateSilkLinkVisibility();
     });
