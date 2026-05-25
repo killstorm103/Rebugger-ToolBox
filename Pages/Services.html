@@ -104,12 +104,11 @@
                 <strong style="display:block; margin-bottom:0x;">Games (Install games on your ps3s Hard Drive) (5-50$)</strong><br>
                 <span class="spanned">└ PS1 &amp; 2 &amp; 3, PSP and Rom Games, You Do Not get a physical copy!</span><br>
                 <span class="spanned">└ Prices are per game!</span><br>
-                <span class="spanned">└ Games 3GB or less: 5$</span><br>
-                <span class="spanned">└ Games &larr;= 6GB: 10$</span><br>
-                <span class="spanned">└ Games &larr;= 11GB: 15$</span><br>
-                <span class="spanned">└ Games &larr;= 21GB: 30$</span><br>
-                <span class="spanned">└ Games &larr;= 31GB: 40$</span><br>
-                <span class="spanned">└ Games &rarr; 31GB: 50$</span><br>
+                <span class="spanned">└ Games 6GB or less: 5$</span><br>
+                <span class="spanned">└ Games &larr;= 11GB: 10$</span><br>
+                <span class="spanned">└ Games &larr;= 21GB: 20$</span><br>
+                <span class="spanned">└ Games &larr;= 31GB: 35$</span><br>
+                <span class="spanned">└ Games &rarr; 31GB: 45$</span><br>
                 <span class="spanned">└ if your unsure of how big your games your wanting are tell me them and i absolutetly can find out and tell you the total!</span><br>
                 <span class="spanned">└ i'll test the games or let you test them before you leave if you want we'll only go as far as making sure they boot up(playing acouple of minutes of each of them will take to long)!</span><br>
                 <span class="spanned">└ If you end up taking the console home and find out that a game is in the wrong language and you can't change it from within the games options, you can bring it back and i'll try finding 1 of it in English make sure one in English exists before wasting my and your time!, no refunds will be given for games not in English!</span>
@@ -504,6 +503,7 @@
                     type: '',
                     firmware: '',
                     model: '',
+                    factory_firmware: '',
                     accessories: '',
                     hardDrive: '',
                     replacedThermalPaste: 'no',
@@ -545,6 +545,7 @@
                 else if (line.indexOf('warranty:') === 0) currentConsole.warranty = trim(line.substring('warranty:'.length));
                 else if (line.indexOf('warranty note:') === 0) currentConsole.warranty_note = trim(line.substring('warranty note:'.length));
                 else if (line.indexOf('listed on:') == 0) currentConsole.listed_date = trim(line.substring('listed on:'.length));
+                else if (line.indexOf('factory_firmware:') == 0) currentConsole.factory_firmware = trim(line.substring('factory_firmware:'.length));
               }
               if (currentConsole) consoles.push(currentConsole);
               return consoles;
@@ -819,6 +820,8 @@
                   }
                   titleText += ')';
                 }
+                var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, null, null);
+                
                 infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
                 infoHTML += 'Price: ' + displayPrice + '<br>';
                 infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
@@ -826,8 +829,8 @@
                 infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : '?') + '<br>';
                 infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
                 infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
-                // FIXED: use c.model instead of undefined 'cleaned'
                 infoHTML += 'PS2 Backwards Compatibility: ' + getBackwardsCompatibility(c.type, c.model, true) + '<br>';
+                infoHTML += (c.factory_firmware && c.factory_firmware !== '' ? ' ' : 'Estimated ') + 'Max Downgrade/Factory Firmware: ' + FactoryFW + '<br>';
                 infoHTML += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
                 infoHTML += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
                 infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
@@ -886,7 +889,6 @@
         }
 
         function onPageLoad() {
-          // Margin control is now handled entirely by Auto_Buttons.js
           if (window.isPS3) startSliderManual();
           else startSliderAuto();
           setTimeout(initConsoleStock, 100);
@@ -989,70 +991,7 @@
         return cleaned;
       }
 
-      /*
-       * Estimated Max Downgrade (Factory Firmware @ Release)
-       */
-      function getMaxDowngradeFirmware(modelPrefix, month, year) {
-        modelPrefix = modelPrefix.toUpperCase();
-
-        // Fat models
-        if (modelPrefix === 'CECHA' || modelPrefix === 'CECHB') return "1.00";
-        if (modelPrefix === 'CECHC') return "1.00";
-        if (modelPrefix === 'CECHE') return "1.00";
-        if (modelPrefix === 'CECHG') return "1.90";
-        if (modelPrefix === 'CECHH') return "1.97";
-        if (modelPrefix === 'CECHJ') return "2.16";
-        if (modelPrefix === 'CECHK' || modelPrefix === 'CECHL' ||
-            modelPrefix === 'CECHM' || modelPrefix === 'CECHP' ||
-            modelPrefix === 'CECHQ') return "2.45";
-
-        // Slim 2000
-        if (modelPrefix === 'CECH-20') return "2.70";
-
-        // Slim 2100
-        if (modelPrefix === 'CECH-21') return "3.20";
-
-        // Slim 2500 – date code dependent
-        if (modelPrefix === 'CECH-25') {
-          // If no date provided
-          if (year === undefined || year === null || year === 0)
-            return "3.40–3.60+ (requires date code)";
-
-          // Before model was manufactured (before July 2010)
-          if (year < 2010 || (year === 2010 && month < 7))
-            return "N/A (model not yet manufactured)";
-
-          // Valid production months
-          if (year === 2010) {
-            if (month >= 7 && month <= 9)   return "3.40";
-            if (month >= 10 && month <= 12) return "3.40 or 3.50";
-          } else if (year === 2011) {
-            if (month >= 1 && month <= 3)   return "3.60+ (some 3.50-3.56)";
-            // April–June 2011 (1B): most are 3.60+, but a very few early 1B units left the factory with 3.56
-            if (month >= 4 && month <= 6)   return "3.60+ or 3.56 (Anything lower than 3.60 is Rare!)";
-            // Months after June 2011 – production ended
-            if (month >= 7)                 return "N/A (production ended before this date)";
-          } else if (year >= 2012) {
-            return "N/A (production ended before this date)";
-          }
-
-          return "3.40–3.56 (requires date code)";
-        }
-
-        // Slim 3000
-        if (modelPrefix === 'CECH-30') return "3.56+";
-
-        // Super Slim 4000
-        if (modelPrefix === 'CECH-40') return "4.11–4.31";
-
-        // Super Slim 4200
-        if (modelPrefix === 'CECH-42') return "4.40";
-
-        // Super Slim 4300
-        if (modelPrefix === 'CECH-43') return "4.50";
-
-        return null;
-      }
+      
 
       function checkCFWCompatibility(model, datecode) {
         var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
@@ -1075,11 +1014,7 @@
         var maxDowngradeFirmware = null;
         var prefix = '';
 
-        if (!isDevKit) {
-          prefix = getModelPrefix(cleaned);
-        } else {
-          if (cleaned.indexOf('DECH') === 0) prefix = getModelPrefix(cleaned);
-        }
+        prefix = getModelPrefix(cleaned);
 
         // Calculate max downgrade firmware for ALL retail models
         if (prefix) {
@@ -1215,7 +1150,81 @@ function getBackwardsCompatibility(type, model, boolean) {
     }
     return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation.";
 }
-
+/*
+       * Estimated Max Downgrade (Factory Firmware @ Release)
+       */
+      function getMaxDowngradeFirmware(model, month, year) {
+    if (!model) return null;
+    
+    // Normalise: remove hyphens and spaces, uppercase
+    var cleaned = model.toUpperCase().replace(/[-\s]/g, '');
+    
+    // Extract prefix
+    var prefix = '';
+    
+    // Letter-based fat models: CECHA, CECHB, etc.
+    var fatLetterMatch = cleaned.match(/^CECH([A-Z])/);
+    if (fatLetterMatch) {
+        prefix = 'CECH' + fatLetterMatch[1];
+    }
+    // Number-based slim/super slim: CECH20xx, CECH25xx, etc.
+    else {
+        var numMatch = cleaned.match(/^CECH(\d{2})/);
+        if (numMatch) {
+            prefix = 'CECH-' + numMatch[1];
+        }
+    }
+    
+    if (!prefix) return null;
+    
+    // Fat models (letter-based)
+    if (prefix === 'CECHA' || prefix === 'CECHB') return "1.00";
+    if (prefix === 'CECHC') return "1.00";
+    if (prefix === 'CECHE') return "1.00";
+    if (prefix === 'CECHG') return "1.90";
+    if (prefix === 'CECHH') return "1.97";
+    if (prefix === 'CECHJ') return "2.16";
+    if (prefix === 'CECHK' || prefix === 'CECHL' ||
+        prefix === 'CECHM' || prefix === 'CECHP' ||
+        prefix === 'CECHQ') return "2.45";
+    
+    // Slim 2000
+    if (prefix === 'CECH-20') return "2.70";
+    
+    // Slim 2100
+    if (prefix === 'CECH-21') return "3.20";
+    
+    // Slim 2500 – date dependent
+    if (prefix === 'CECH-25') {
+        if (!month || !year) return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (year < 2010 || (year === 2010 && month < 7)) return "N/A (model not yet manufactured)";
+        if (year === 2010) {
+            if (month >= 7 && month <= 9) return "3.40";
+            if (month >= 10 && month <= 12) return "3.40 or 3.50";
+        }
+        if (year === 2011) {
+            if (month >= 1 && month <= 3) return "3.60+ (some 3.50-3.56)";
+            if (month >= 4 && month <= 6) return "3.60+ or 3.56 (Anything lower than 3.60 is Rare!)";
+            if (month >= 7) return "N/A (production ended before this date)";
+        }
+        if (year >= 2012) return "N/A (production ended before this date)";
+        return "3.40–3.60+ (requires date code or manufacturing date)";
+    }
+    
+    // Slim 3000
+    if (prefix === 'CECH-30') return "3.56+";
+    
+    // Super Slim 4000
+    if (prefix === 'CECH-40') return "4.11–4.31";
+    
+    // Super Slim 4200
+    if (prefix === 'CECH-42') return "4.40";
+    
+    // Super Slim 4300
+    if (prefix === 'CECH-43') return "4.50";
+    
+    return null;
+}
 function runChecker(datecode) {
     if (typeof checkCFWCompatibility !== 'function') {
         document.getElementById('cfwResult').innerHTML = 'Script not loaded correctly.';
