@@ -74,8 +74,7 @@
                 <strong style="display:block; margin-bottom:-10px;">Jailbreaking (CFW or HEN: Started: 60$, Basic: 80$, Full: 100$) (qCFW: currently not offered)</strong><br>
                 <span class="spanned">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span><br>
                 <span class="spanned">└ Go down to the Console Information section to enter in your PS3's Model number to check if it can take CFW and what the Flash memory type is!</span><br>
-                <span class="spanned">└ Recommendation: replace the old hard drive with a Samsung 870 EVO/QVO SATA III 2.5" SSD before jailbreaking</span><br>
-                <span class="spanned">└ up to a 1TB do not go over 1TB cause the restore file system function breaks!</span><br>
+                <span class="spanned">└ Recommendation: replace the old hard drive before jailbreaking, Read PS3 Information for Recommended HDD/SSD replacements</span><br>
                 <span class="spanned">└ Read the Console Information section to read about the differences between the jailbreaks.</span><br>
                 <span class="spanned">└ Started: i only jailbreak it for you only nothing else!</span><br>
                 <span class="spanned">└ Basic: Started + i configure somethings for you and i make sure you can go online(If its console banned you must provide the new CID)</span><br>
@@ -238,7 +237,13 @@
                 <span class="spanned">└ OFW: Official Firmware (Normal PS3 not jailbroken)</span><br><br>
                 <span class="spanned">└ All OFW PS3s can play: PS1 & PS3 Games and can play/watch DVDs and blu ray Movies/Shows</span>
                 <span class="spanned">└ All Jailbroken PS3s can play: PS2 Games (Through Emulation), and can play all the following types:</span>
-                <span class="spanned">Same as OFW + PSP, and ROM Games</span>
+                <span class="spanned">└ Same as OFW + PSP, and ROM Games</span><br>
+                <span class="spanned">└ Recommended Hard Drive Replacements:</span>
+                <span class="spanned">└ SSDs: Samsung 870 EVO, Crucial BX500 or MX500, Western Digital WD Blue</span>
+                <span class="spanned">└ HDDs: Seagate, Western Digital, Samsung</span>
+                <span class="spanned">└ Notes:</span>
+                <span class="spanned">└ 2: Do not go over 1TB cause the restore file system function breaks</span>
+                <span class="spanned">└ 1: the HDD/SSD Must be 2.5-inch SATA drive with a maximum height (thickness) of 9.5mm</span>
               </div>
             </li>
           </ul>
@@ -1336,7 +1341,7 @@ function getBackwardsCompatibility(type, model, boolean) {
     }
     
     // Slim 3000
-    if (prefix === 'CECH-30') return "3.56+";
+    if (prefix === 'CECH-30') return "3.60+";
     
     // Super Slim 4000
     if (prefix === 'CECH-40') return "4.11–4.31";
