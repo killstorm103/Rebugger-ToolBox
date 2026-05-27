@@ -21,7 +21,7 @@
       <div class="nav-container"></div>
     </div>
     <div id="mainContainer" class="container">
-      <!-- ============ PAGE CONTENT (unchanged) ============ -->
+      <!-- ============ PAGE CONTENT ============ -->
       <ul class="main">
         <li class="bloc">
           <h2>Information<span class="size"></span></h2>
@@ -198,7 +198,7 @@
                     <td style="vertical-align: top;">
                       <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code-2.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     </td>
-                  </tr>
+                  <tr>
                 </table>
                 <button id="tutorialBtn" style="display:block; margin-top:15px; padding:6px 18px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-weight:bold;">Show Manual Check Tutorial</button>
                 <div id="manualTutorial" style="display:none; margin-top:12px; padding:10px; background:#333; border-radius:4px; border-left: 3px solid #dc3545;">
@@ -296,7 +296,7 @@
         if (e.key === "Escape") closeZoom();
       });
     </script>
-    <!-- ==================== MAIN SCRIPT (slider, stock list, NO MARGIN CONTROL) ==================== -->
+    <!-- ==================== MAIN SCRIPT (slider, stock list) ==================== -->
     <script>
       (function() {
         var CURRENT_VERSION = "7.2";
@@ -510,6 +510,8 @@
                     type: '',
                     firmware: '',
                     model: '',
+                    date_code: '',
+                    manufacturing_date: '',
                     factory_firmware: '',
                     accessories: '',
                     hardDrive: '',
@@ -553,6 +555,8 @@
                 else if (line.indexOf('warranty note:') === 0) currentConsole.warranty_note = trim(line.substring('warranty note:'.length));
                 else if (line.indexOf('listed on:') == 0) currentConsole.listed_date = trim(line.substring('listed on:'.length));
                 else if (line.indexOf('factory_firmware:') == 0) currentConsole.factory_firmware = trim(line.substring('factory_firmware:'.length));
+                else if (line.indexOf('manufacturing date:') == 0) currentConsole.manufacturing_date = trim(line.substring('manufacturing date:'.length));
+                else if (line.indexOf('date code:') == 0) currentConsole.date_code = trim(line.substring('date code:'.length));
               }
               if (currentConsole) consoles.push(currentConsole);
               return consoles;
@@ -827,13 +831,14 @@
                   }
                   titleText += ')';
                 }
-                var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, null, null);
+                // Updated call: pass date_code and manufacturing_date
+                var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
                 
                 infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
                 infoHTML += 'Price: ' + displayPrice + '<br>';
                 infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
                 infoHTML += 'Firmware: ' + c.firmware + '<br>';
-                infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : '?') + '<br>';
+                infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : 'Unknown, not set') + ' ' + (c.date_code !== '' ? '(date code: ' + c.date_code + ')' : c.manufacturing_date !== '' ? '(manufacturing date: ' + c.manufacturing_date + ')' : '') + '<br>';
                 infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
                 infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
                 infoHTML += 'PS2 Backwards Compatibility: ' + getBackwardsCompatibility(c.type, c.model, true) + '<br>';
@@ -966,7 +971,7 @@
         return 'NOR';
       }
     </script>
-    <!-- ==================== Checker: compatibility + button helpers (UPDATED & FIXED) ==================== -->
+    <!-- ==================== Checker: compatibility + button helpers ==================== -->
     <script>
       function trimStr(str) {
         return str.replace(/^\s+|\s+$/g, '');
@@ -997,8 +1002,6 @@
         if (match) return 'CECH-' + match[1];
         return cleaned;
       }
-
-      
 
       function checkCFWCompatibility(model, datecode) {
     var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
@@ -1168,11 +1171,9 @@ function getBackwardsCompatibility(type, model, boolean) {
 
     // Dev Kit models (DECR, DECH, CEB)
     if (m.indexOf('DECR') === 0) {
-        // Source: [1,7] - No PS2 hardware, no ps2emu
         return "No (No PS2 hardware or emulator)";
     }
     if (m.indexOf('CEB') === 0) {
-        // Source: [10] - CEB series has no support for PS2 Emulation
         return "No (Development Prototype, no PS2 hardware or PS2 emulation)";
     }
     if (m.indexOf('DECH') === 0) {
@@ -1180,180 +1181,172 @@ function getBackwardsCompatibility(type, model, boolean) {
         if (m.indexOf('DECH25') === 0 || m.indexOf('DECH-25') === 0 ||
             m.indexOf('DECHS25') === 0) {
             // DECH25 is based on CECH-25 (no hardware BC, software emulation possible via CFW)
-            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation.";
+            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
         }
         if (m.indexOf('DECH30') === 0 || m.indexOf('DECH-30') === 0 ||
             m.indexOf('DECH40') === 0 || m.indexOf('DECH-40') === 0) {
             // DECH30/40 based on Slim/Super Slim (no hardware BC)
-            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation.";
+            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
         }
         // Older DECH models (e.g., DECH-A00) have hardware PS2
-        // Source: [2,9] - Based on CECHA, has COK-001 full BC board
         return "Full PS2 Hardware (EE+GS)";
     }
 
-    // Default for all other models (Slim/Super Slim) - No hardware BC, but emulation possible via CFW/HEN
-    return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation.";
+    // Default for all other models (Slim/Super Slim)
+    return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
 }
+
 /*
-       * Estimated Max Downgrade (Factory Firmware @ Release)
-       */
-      function getMaxDowngradeFirmware(model, month, year) {
+ * Estimated Max Downgrade (Factory Firmware @ Release)
+ * Now supports date_code and manufacturing_date parameters (passed from services.txt)
+ */
+function getMaxDowngradeFirmware(model, date_code, manufacturing_date, month, year) {
     if (!model) return null;
     
-    // Normalise: remove hyphens and spaces, uppercase
-    var cleaned = model.toUpperCase().replace(/[-\s]/g, '');
+    // Detect call signature:
+    // If date_code is a number (or undefined) and manufacturing_date is a number (or undefined), it's the old style (month, year)
+    var isOldStyle = (typeof date_code === 'number' || date_code === undefined) && 
+                     (typeof manufacturing_date === 'number' || manufacturing_date === undefined);
+    var yr = 0, mo = 0, hasDate = false;
     
-    // Extract prefix (supports both retail and dev kit models)
-    var prefix = '';
-    
-    // Dev kits: DECR, DECH, CEB
-    if (cleaned.indexOf('DECR') === 0) {
-        prefix = 'DECR';
-    }
-    else if (cleaned.indexOf('DECH') === 0) {
-        // DECH models follow same numbering as retail: DECH25xx, DECH30xx, etc.
-        var numMatch = cleaned.match(/^DECH(\d{2})/);
-        if (numMatch) {
-            prefix = 'DECH-' + numMatch[1];  // e.g., DECH-25
-        } else {
-            prefix = 'DECH';  // Older models like DECH-A00
+    if (isOldStyle) {
+        // Old style: date_code = month, manufacturing_date = year
+        var m = (typeof date_code === 'number') ? date_code : 0;
+        var y = (typeof manufacturing_date === 'number') ? manufacturing_date : 0;
+        if (m > 0 && y > 0) {
+            mo = m;
+            yr = y;
+            hasDate = true;
         }
-    }
-    else if (cleaned.indexOf('CEB') === 0) {
-        prefix = 'CEB';
-    }
-    // Letter-based fat models: CECHA, CECHB, etc.
-    else {
-        var fatLetterMatch = cleaned.match(/^CECH([A-Z])/);
-        if (fatLetterMatch) {
-            prefix = 'CECH' + fatLetterMatch[1];
+    } else {
+        // New style: date_code and manufacturing_date strings
+        // Priority: manufacturing_date > date_code > month/year (extra params)
+        if (manufacturing_date && manufacturing_date.trim && manufacturing_date.trim() !== '') {
+            var man = manufacturing_date.trim();
+            var parts = man.split(/\s+/);
+            if (parts.length >= 2) {
+                var monthNames = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+                var monthLower = parts[0].toLowerCase();
+                for (var i = 0; i < monthNames.length; i++) {
+                    if (monthNames[i].indexOf(monthLower) === 0 || monthLower === monthNames[i]) {
+                        mo = i + 1;
+                        break;
+                    }
+                }
+                var yrNum = parseInt(parts[1], 10);
+                if (!isNaN(yrNum) && yrNum >= 2009 && yrNum <= 2013) {
+                    yr = yrNum;
+                    hasDate = true;
+                }
+            }
         }
-        // Number-based slim/super slim: CECH20xx, CECH25xx, etc.
-        else {
-            var numMatch = cleaned.match(/^CECH(\d{2})/);
-            if (numMatch) {
-                prefix = 'CECH-' + numMatch[1];
+        if (!hasDate && date_code && date_code.trim && date_code.trim() !== '') {
+            var dc = date_code.trim().toUpperCase();
+            if (dc.length >= 2) {
+                var yd = dc.charCodeAt(0) - 48;
+                var qc = dc.charAt(1);
+                var quarter = qc.charCodeAt(0) - 64;
+                if (!isNaN(yd) && quarter >= 1 && quarter <= 4) {
+                    yr = yd + 2010;
+                    mo = (quarter - 1) * 3 + 1;
+                    hasDate = true;
+                }
+            }
+        }
+        if (!hasDate && typeof month === 'number' && typeof year === 'number') {
+            if (month >= 1 && month <= 12 && year >= 2009 && year <= 2013) {
+                mo = month;
+                yr = year;
+                hasDate = true;
             }
         }
     }
     
+    // Normalise model and extract prefix (same as before)
+    var cleaned = model.toUpperCase().replace(/[-\s]/g, '');
+    var prefix = '';
+    if (cleaned.indexOf('DECR') === 0) {
+        prefix = 'DECR';
+    } else if (cleaned.indexOf('DECH') === 0) {
+        var numMatch = cleaned.match(/^DECH(\d{2})/);
+        if (numMatch) prefix = 'DECH-' + numMatch[1];
+        else prefix = 'DECH';
+    } else if (cleaned.indexOf('CEB') === 0) {
+        prefix = 'CEB';
+    } else {
+        var fatLetterMatch = cleaned.match(/^CECH([A-Z])/);
+        if (fatLetterMatch) prefix = 'CECH' + fatLetterMatch[1];
+        else {
+            var numMatch = cleaned.match(/^CECH(\d{2})/);
+            if (numMatch) prefix = 'CECH-' + numMatch[1];
+        }
+    }
     if (!prefix) return null;
     
     // ==================== DEV KIT MODELS ====================
-    
-    // DECR-1000 (Reference Tool / Dev Kit)
     if (prefix === 'DECR') {
-    var decrModel = cleaned;
-    if (decrModel.indexOf('DECR-1000') !== -1) {
-        return "0.85";
-    } else if (decrModel.indexOf('DECR-1400') !== -1) {
-        return "2.60";
-    } else if (decrModel.indexOf('DECR-1500') !== -1) {
-        return "3.56+ (Likely >3.56, verify with MinVerChk)";
-    } else if (decrModel.indexOf('DECR-1600') !== -1) {
-        return "4.11+ (Likely >4.10, verify with MinVerChk)";
-    } else {
+        if (cleaned.indexOf('DECR-1000') !== -1) return "0.85";
+        if (cleaned.indexOf('DECR-1400') !== -1) return "2.60";
+        if (cleaned.indexOf('DECR-1500') !== -1) return "3.56+ (Likely >3.56, verify with MinVerChk)";
+        if (cleaned.indexOf('DECR-1600') !== -1) return "4.11+ (Likely >4.10, verify with MinVerChk)";
         return "Unknown (Dev Kit)";
     }
-}
+    if (prefix === 'CEB') return "Unknown (Early Prototype)";
     
-    // CEB series (Prototypes)
-    if (prefix === 'CEB') {
-        // No official firmware release data available – these are very early prototypes
-        return "Unknown (Early Prototype)";
-    }
-    
-    // DECH series (Debugging Stations) – based on retail counterparts
-    if (prefix === 'DECH') {
-        // Older DECH models (e.g., DECH-A00, DECH-J00) based on CECHA
-        return "1.00";
-    }
-    if (prefix === 'DECH-20') {
-        // Based on CECH-20
-        return "2.70";
-    }
-    if (prefix === 'DECH-21') {
-        // Based on CECH-21
-        return "3.20";
-    }
+    // DECH series
+    if (prefix === 'DECH') return "1.00";
+    if (prefix === 'DECH-20') return "2.70";
+    if (prefix === 'DECH-21') return "3.20";
     if (prefix === 'DECH-25') {
-        // DECH-25xx based on CECH-25 – requires date code for accurate value
-        if (!month || !year) {
-            return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (!hasDate) return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (yr < 2010 || (yr === 2010 && mo < 7)) return "N/A (model not yet manufactured)";
+        if (yr === 2010) {
+            if (mo >= 7 && mo <= 9) return "3.40";
+            if (mo >= 10 && mo <= 12) return "3.40 or 3.50";
         }
-        if (year < 2010 || (year === 2010 && month < 7)) return "N/A (model not yet manufactured)";
-        if (year === 2010) {
-            if (month >= 7 && month <= 9) return "3.40 (Debug Station)";
-            if (month >= 10 && month <= 12) return "3.40 or 3.50 (Debug Station)";
+        if (yr === 2011) {
+            if (mo >= 1 && mo <= 3) return "3.60+ (some 3.50-3.56)";
+            if (mo >= 4 && mo <= 6) return "3.60+ or 3.56 (Rare!)";
+            if (mo >= 7) return "N/A (production ended)";
         }
-        if (year === 2011) {
-            if (month >= 1 && month <= 3) return "3.60+ (some 3.50-3.56)";
-            if (month >= 4 && month <= 6) return "3.60+ or 3.56 (Anything lower than 3.60 is Rare!)";
-            if (month >= 7) return "N/A (production ended before this date)";
-        }
-        if (year >= 2012) return "N/A (production ended before this date)";
-        return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (yr >= 2012) return "N/A (production ended)";
+        return "3.40–3.60+ (requires date code)";
     }
-    if (prefix === 'DECH-30') {
-        // DECH-30xx based on CECH-30 (Slim)
-        return "3.60+";
-    }
-    if (prefix === 'DECH-40') {
-        // DECH-40xx based on Super Slim
-        return "4.11–4.31";
-    }
+    if (prefix === 'DECH-30') return "3.60+";
+    if (prefix === 'DECH-40') return "4.11–4.31";
     
     // ==================== RETAIL MODELS ====================
-    
-    // Fat models (letter-based)
     if (prefix === 'CECHA' || prefix === 'CECHB') return "1.00";
     if (prefix === 'CECHC') return "1.00";
     if (prefix === 'CECHE') return "1.00";
     if (prefix === 'CECHG') return "1.90";
     if (prefix === 'CECHH') return "1.97";
     if (prefix === 'CECHJ') return "2.16";
-    if (prefix === 'CECHK' || prefix === 'CECHL' ||
-        prefix === 'CECHM' || prefix === 'CECHP' ||
-        prefix === 'CECHQ') return "2.45";
-    
-    // Slim 2000
+    if (prefix === 'CECHK' || prefix === 'CECHL' || prefix === 'CECHM' || prefix === 'CECHP' || prefix === 'CECHQ') return "2.45";
     if (prefix === 'CECH-20') return "2.70";
-    
-    // Slim 2100
     if (prefix === 'CECH-21') return "3.20";
-    
-    // Slim 2500 – date dependent
     if (prefix === 'CECH-25') {
-        if (!month || !year) return "3.40–3.60+ (requires date code or manufacturing date)";
-        if (year < 2010 || (year === 2010 && month < 7)) return "N/A (model not yet manufactured)";
-        if (year === 2010) {
-            if (month >= 7 && month <= 9) return "3.40";
-            if (month >= 10 && month <= 12) return "3.40 or 3.50";
+        if (!hasDate) return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (yr < 2010 || (yr === 2010 && mo < 7)) return "N/A (model not yet manufactured)";
+        if (yr === 2010) {
+            if (mo >= 7 && mo <= 9) return "3.40";
+            if (mo >= 10 && mo <= 12) return "3.40 or 3.50";
         }
-        if (year === 2011) {
-            if (month >= 1 && month <= 3) return "3.60+ (some 3.50-3.56)";
-            if (month >= 4 && month <= 6) return "3.60+ or 3.56 (Anything lower than 3.60 is Rare!)";
-            if (month >= 7) return "N/A (production ended before this date)";
+        if (yr === 2011) {
+            if (mo >= 1 && mo <= 3) return "3.60+ (some 3.50-3.56)";
+            if (mo >= 4 && mo <= 6) return "3.60+ or 3.56 (Rare!)";
+            if (mo >= 7) return "N/A (production ended)";
         }
-        if (year >= 2012) return "N/A (production ended before this date)";
-        return "3.40–3.60+ (requires date code or manufacturing date)";
+        if (yr >= 2012) return "N/A (production ended)";
+        return "3.40–3.60+ (requires date code)";
     }
-    
-    // Slim 3000
     if (prefix === 'CECH-30') return "3.60+";
-    
-    // Super Slim 4000
     if (prefix === 'CECH-40') return "4.11–4.31";
-    
-    // Super Slim 4200
     if (prefix === 'CECH-42') return "4.40";
-    
-    // Super Slim 4300
     if (prefix === 'CECH-43') return "4.50";
-    
     return null;
 }
+
 function runChecker(datecode) {
     if (typeof checkCFWCompatibility !== 'function') {
         document.getElementById('cfwResult').innerHTML = 'Script not loaded correctly.';
