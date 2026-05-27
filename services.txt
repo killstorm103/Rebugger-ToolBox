@@ -7,7 +7,7 @@ consoles:
       firmware: Evilnat 4.93 CEX
       model-number: CECH-2502A
       date code: 0C
-      accessories: none console and power cord Only!
+      accessories: console and power cord & hdmi cord Only no controller!
       hard drive: 160GB
       replaced:
         thermal paste: yes
