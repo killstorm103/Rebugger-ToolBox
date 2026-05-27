@@ -1,7 +1,7 @@
 consoles:
   PS3:
     console-1:
-      price: 165$
+      price: 170$
       images: [http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg, http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg]
       console-type: CFW
       firmware: Evilnat 4.93 CEX
