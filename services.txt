@@ -1,5 +1,5 @@
 service availability status: Available
-availability-note: 
+availability-note: none
 consoles:
   PS3:
     console-1:
