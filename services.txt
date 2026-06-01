@@ -1,4 +1,5 @@
 service availability status: Available
+opening-hours: Monday-Saturdays: 5:30-9:30 PM
 availability-note: none
 consoles:
   PS3:
