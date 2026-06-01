@@ -1,3 +1,4 @@
+service availability status: Available
 consoles:
   PS3:
     console-1:
