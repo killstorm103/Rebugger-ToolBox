@@ -1,0 +1,34 @@
+PS2:
+  Crash Bandicoot The Wrath of Cortex: 500MB
+  Crash Nitro Kart: 2.98GB
+  Finding Nemo: 2.11GB
+  The Incredibles: 1.57GB
+  The Incredibles - Rise of the Underminer: 1.44GB
+  Pirates of the Caribbean - The Legend of Jack Sparrow: 4.35GB
+  Bee Movie Game: 1.55GB
+  Chicken Little: 1.50GB
+  Chicken Little - Ace in Action: 1.62GB
+
+PS3:
+  Pirates of the Caribbean - At World's End: 5.30GB
+  The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.32GB
+  Bolt: 5.58GB
+  Brave: 2.87GB
+  The Godfather The Don's Edition: 8.92GB
+  The Godfather II: 10.6GB
+
+Game Boy:
+  Pokemon - Blue Version: 1.00MB
+  Pokemon - Red Version: 1.00MB
+  Pokemon - Yellow Version - Special Pikachu Edition: 1.00MB
+
+Game Boy Advance:
+  Pokemon - Emerald Version: 16.0MB
+  Pokemon - Ruby Version: 16.0MB
+  Pokemon - Sapphire Version: 16.0MB
+
+Game Boy Color:
+  Pokemon - Crystal Version: 2.00MB
+  Pokemon - Gold Version: 2.00MB
+  Pokemon - Silver Version: 2.00MB
+  Quest for Camelot: 1.00MB
