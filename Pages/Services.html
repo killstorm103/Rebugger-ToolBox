@@ -7,7 +7,6 @@
     <title>Rebugger - ToolBox</title>
     <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
-    
     <style></style>
   </head>
 
@@ -39,42 +38,52 @@
                 <span class="spanned">└ 2: Being in Australia (WA) and handing over the Device in person (i Will Not Do Shipping!)</span><br>
                 <span class="spanned">└ 3: Cash Only i don't accept paypal or anything else!</span><br>
                 <span class="spanned">└ 4: Cash Must Be AUD no other currencies will be accepted!</span><br>
-                <span class="spanned">└ 5: You must bring obviously the device and the power and hdmi cords and a controller (and the charging cord if its not a wired controller)</span>
+                <span class="spanned">└ 5: You must have the exact amount cause i'm not a official business i won't carry cash therefore i won't be able to give you change!</span><br>
+                <span class="spanned">└ 6: You must bring obviously the device and the power and hdmi cords and a controller (and the charging cord if its not a wired controller)</span>
               </div>
             </li>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:-11px;">Disclaimers &amp; Information:</strong><br>
                 <span class="spanned">└ 1: You will not get to watch me do the service(s), your paying for me doing it not to teach you how to!</span><br>
-                <span class="spanned">└ 2: i will do it on the spot for you if possible</span><br>
+                <span class="spanned">└ 2: i will do it on the spot for you if possible (Sometimes you may need to leave the console with me for a day or a few days depending on what service(s) you want/need)</span><br>
                 <span class="spanned">└ 3: Prices are none negotiable!</span><br>
-                <span class="spanned">└ 4: i'm free to do these services most Monday-Saturdays from 5:30-6 PM we'll discuss and arrange a day and time before you come you can reach out to me on social media or get whoever put you onto me to get you in contact with me!</span><br>
+                <span class="spanned">└ 4: i'm free to do these services most Monday-Saturdays from 5:30-6 PM we'll discuss and arrange a day and time before you come you can reach out to me on social media!</span><br>
                 <span class="spanned">└ 5: There is always a risk when working on devices: i take no responsibility for any damages, if something goes wrong you will be given a full refund or a certain amount will be deducted from the total (Depending on if its fully or somewhat broken), The only thing that i've ever broke is one of my slim ps3s Ribbon cables and thats only due to it being severely old and fragile!</span>
               </div>
             </li>
           </ul>
           <h2>‎ <span class="size"></span></h2>
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="font-size: 25px; display:block; margin-bottom:-10px;">Services Availability</strong><br>
+                <span class="spanned">└ Status: <span id="serviceStatus">Loading...</span></span><br>
+                <span id="availabilityNote" style="display: block; margin-left: 20px; color: #f79452;"></span>
+              </div>
+            </li>
+          </ul>
           <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:15px; margin-left:60px; display:inline-block;">
-    <strong style="display:block; margin-bottom:10px; font-size: 25px;">PS3 Services</strong>
-    <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-        <tr>
-            <td style="vertical-align: top; padding-right: 20px;">
-                <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
-            </td>
-            <td style="vertical-align: top;">
-                <div id="sliderContainer" style="margin: 0;">
+            <strong style="display:block; margin-bottom:10px; font-size: 25px;">PS3 Services</strong>
+            <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: top; padding-right: 20px;">
+                  <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                </td>
+                <td style="vertical-align: top;">
+                  <div id="sliderContainer" style="margin: 0;">
                     <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
                     <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
                     <div id="manualBtns" style="display:none; margin-top:8px;">
-                        <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
-                        <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
+                      <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
+                      <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
                     </div>
                     <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
           <ul>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
@@ -317,7 +326,7 @@
         if (e.key === "Escape") closeZoom();
       });
     </script>
-    <!-- ==================== MAIN SCRIPT (slider, stock list) ==================== -->
+    <!-- ==================== MAIN SCRIPT (slider, stock list, service availability) ==================== -->
     <script>
       (function() {
         var CURRENT_VERSION = "7.3";
@@ -924,11 +933,40 @@
                 createConsoleSlider(sliderContainer, c.images);
               }
             }
+
             var xhr = new XMLHttpRequest();
             xhr.open('GET', REMOTE_URL, true);
             xhr.onreadystatechange = function() {
               if (xhr.readyState === 4 && xhr.status === 200) {
-                var consoles = parseServices(xhr.responseText);
+                // Inside the XHR onreadystatechange callback (when xhr.readyState === 4 && xhr.status === 200)
+var fullText = xhr.responseText;
+
+// Extract status and note
+var statusMatch = fullText.match(/^service availability status:\s*(.+)$/im);
+var noteMatch = fullText.match(/^availability-note:\s*(.*)$/im);
+
+var statusSpan = document.getElementById('serviceStatus');
+var noteSpan = document.getElementById('availabilityNote');
+
+if (statusSpan) {
+    statusSpan.innerText = (statusMatch && statusMatch[1]) ? statusMatch[1].trim() : 'Unknown';
+}
+if (noteSpan) {
+    // Clear any previous content
+    noteSpan.innerText = '';
+    if (noteMatch && noteMatch[1]) {
+        var noteText = noteMatch[1].trim();
+        // Ignore if note is empty or a placeholder (case‑insensitive)
+        var ignoreNote = (noteText === '' || noteText === '?' || 
+                          noteText.toLowerCase() === 'not set' || 
+                          noteText.toLowerCase() === 'none');
+        if (!ignoreNote) {
+            noteSpan.innerText = '└ ' + noteText;
+        }
+    }
+}
+                // --- Parse consoles and build UI ---
+                var consoles = parseServices(fullText);
                 buildConsolesUI(consoles);
               }
             };
