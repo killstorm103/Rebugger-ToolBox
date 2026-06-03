@@ -1,3 +1,6 @@
+PS1:
+  Tomb Raider: 584MB
+
 PS2:
   Crash Bandicoot The Wrath of Cortex: 500MB
   Crash Nitro Kart: 2.98GB
@@ -16,6 +19,20 @@ PS3:
   Brave: 2.87GB
   The Godfather The Don's Edition: 8.92GB
   The Godfather II: 10.6GB
+
+PSP:
+  Tekken 6: 816MB
+  Grand Theft Auto - Vice City Stories: 1.57GB
+
+NES:
+  Mega Man: 128KB
+
+Super Nintendo:
+  Super Mario All-Stars: 2.00MB
+  Donkey Kong Country 2 - Diddy's Kong Quest: 4.00MB
+
+Sega Genesis:
+  Aladdin: 2.00MB
 
 Game Boy:
   Pokemon - Blue Version: 1.00MB
