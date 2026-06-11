@@ -16,6 +16,7 @@ consoles:
       replaced:
         thermal paste: yes
         hard drive: no
+        cmos battery: yes
       issues: none
       listed on: 27/5/2026
       sold on: 
