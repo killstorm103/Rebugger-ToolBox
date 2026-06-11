@@ -305,7 +305,7 @@
                 <span class="spanned">└ No Warranty can be offered for PS3s that haven't had their hard drives replaced!</span><br>
                 <span class="spanned">└ ABSOLUTELY NO Warranty Can Be Offered For Fat Model PS3s that have a NAND Flash Memory Type these Consoles are an absolute piece of shit!, and i will likely never sell them unless i get one for Really cheap or get given one for free!</span>
                 <span class="spanned" style="margin-top: 12px">└ If something goes wrong with the hard drive i do offer a replacement hard drive service which you can read about by scrolling up!</span><br>
-                <span class="spanned">└ the Warranty obviously starts on the day as soon as the consoles been marked as sold!, t</span>
+                <span class="spanned">└ the Warranty obviously starts on the day as soon as the consoles been marked as sold!</span>
                 <span class="spanned" style="margin-top: 4px">└ Warranty is obviously void if you:</span>
                 <span class="spanned">└ 1: Open the Console Up At All!</span>
                 <span class="spanned">└ 2: Brick/Corrupt the Console or Its hard drive by modifying the Consoles System Files (The PS3s /dev_flash for example)!</span>
@@ -972,6 +972,7 @@
                   titleText += ')';
                 }
                 var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
+                
                 infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
                 infoHTML += 'Price: ' + displayPrice + '<br>';
                 infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
