@@ -22,7 +22,7 @@ consoles:
       sold on: 
       warranty: 30d
       warranty note: Special Exclusive Offer for this PS3: if the hard drive fails within 30 days i'll reinstall all the games listed here for free on a replacement HDD/SSD you Provide, you will still need to pay for \nmy Replace Hard drive service! ({hdd_replacement_option_2}$ currently)
-      additional Info: includes: a full setup of everything you'll need \n3Homebrew Apps for Emulating Game Boy etc \na Custom Simpsons Coldboot
+      additional Info: includes: a full setup of everything you'll need \n3 Homebrew Apps for Emulating Game Boy etc \na Custom Simpsons Coldboot
       game list:
         Game Boy: Pokemon - Blue Version, Pokemon - Red Version, Pokemon - Yellow Version - Special Pikachu Edition
         Game Boy Advance: Pokemon - Emerald Version, Pokemon - Ruby Version, Pokemon - Sapphire Version
