@@ -17,11 +17,6 @@ Game Boy Color
 NES
   Mega Man.nes: 128.02 KB
 
-PS1
-  Driver 2: 574.93MB
-  Driver 2.zip: 374.09MB # Extract and delete archive
-  Tomb Raider.zip: 402.67MB # Extract and delete archive
-
 PS2
   ATV Offroad Fury 3: 4.08GB
   Bee Movie Game: 1.56GB
