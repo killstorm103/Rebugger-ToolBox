@@ -547,16 +547,52 @@
         }
 
         function convertToGB(sizeStr) {
-          var match = sizeStr.match(/^([\d\.]+)\s*(KB|MB|GB|TB)$/i);
-          if (!match) return null;
-          var value = parseFloat(match[1]);
-          var unit = match[2].toUpperCase();
-          if (unit === 'KB') return value / (1024 * 1024);
-          if (unit === 'MB') return value / 1024;
-          if (unit === 'TB') return value * 1024;
-          
-          return value;
+    // Added \s* before the $ to ignore any accidental trailing spaces or hidden characters
+    var match = sizeStr.match(/^([\d\.]+)\s*(KB|MB|GB|TB)\s*$/i);
+    if (!match) return null;
+    
+    var value = parseFloat(match[1]);
+    var unit = match[2].toUpperCase();
+    
+    if (unit === 'KB') return value / (1024 * 1024);
+    if (unit === 'MB') return value / 1024;
+    if (unit === 'TB') return value * 1024;
+    
+    return value; // Already in GB
+}
+ function parseGameSizes(text) {
+    var lines = text.split(/\r?\n/);
+    var gameData = {};
+    var currentPlatform = null;
+
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line === "") continue;
+
+        // Check if the line is a Platform header (no colon)
+        if (line.indexOf(':') === -1) {
+            currentPlatform = line;
+            if (!gameData[currentPlatform]) {
+                gameData[currentPlatform] = [];
+            }
+        } else if (currentPlatform) {
+            // It's a game line, split at the first colon
+            var parts = line.split(':');
+            var gameName = parts[0].trim();
+            var sizeStr = parts[1].trim();
+            
+            // Use the convertToGB function we just fixed
+            var size = convertToGB(sizeStr);
+            
+            // Only add if it parsed correctly
+            if (size !== null) {
+                gameData[currentPlatform].push({ name: gameName, size: size });
+            }
         }
+    }
+    return gameData;
+}
+
 
         function formatSize(sizeGB) {
           if (sizeGB < 0.001) return (sizeGB * 1024 * 1024).toFixed(2) + ' KB';
@@ -579,51 +615,71 @@
         }
 
         function loadGameDatabase() {
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Game_Sizes.txt', true);
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-              var text = xhr.responseText;
-              var lines = text.split(/\r?\n/);
-              var currentPlatform = '';
-              var platforms = [];
-              
-              for (var i = 0; i < lines.length; i++) {
-                var line = lines[i].trim();
-                if (line === '') continue;
-                // Platform header (ends with colon)
-                if (line.indexOf(':') === line.length-1) {
-                  currentPlatform = line.substring(0, line.length-1).trim();
-                  if (currentPlatform !== '') {
-                    platforms.push(currentPlatform);
-                    if (!gameDatabase[currentPlatform]) gameDatabase[currentPlatform] = {};
-                    if (!platformGamesList[currentPlatform]) platformGamesList[currentPlatform] = [];
-                  }
-                  continue;
-                }
-                // Game entry
-                var colonPos = line.indexOf(':');
-                if (colonPos > 0 && currentPlatform !== '') {
-                  var gameName = line.substring(0, colonPos).trim();
-                  var sizePart = line.substring(colonPos+1).trim();
-                  var sizeGB = convertToGB(sizePart);
-                  if (sizeGB !== null) {
-                    var lowerGame = gameName.toLowerCase();
-                    gameDatabase[currentPlatform][lowerGame] = sizeGB;
-                    platformGamesList[currentPlatform].push(gameName);
-                  }
-                }
-              }
-              // Sort game lists alphabetically
-              for (var p in platformGamesList) {
-                platformGamesList[p].sort();
-              }
-              // Populate the platform dropdown with the collected platforms
-              populatePlatformDropdown(platforms);
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Game_Sizes.txt', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var text = xhr.responseText;
+      var lines = text.split(/\r?\n/);
+      var currentPlatform = '';
+      var platforms = [];
+      
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line === '') continue;
+
+        var colonPos = line.indexOf(':');
+        
+        // Logic to determine if it's a Platform Header or a Game Entry
+        var isGameEntry = false;
+        if (colonPos > 0) {
+            // Check if the part after the colon is a valid file size unit
+            var sizePart = line.substring(colonPos + 1).trim();
+            if (/(KB|MB|GB|TB)$/i.test(sizePart)) {
+                isGameEntry = true;
             }
-          };
-          xhr.send();
         }
+
+        if (!isGameEntry) {
+          // --- It's a Platform Header ---
+          // Strip colon if user included it at the end
+          currentPlatform = line.replace(/:$/, "").trim();
+          
+          if (currentPlatform !== '') {
+            // Only add to platforms array if we haven't seen it yet
+            if (platforms.indexOf(currentPlatform) === -1) {
+              platforms.push(currentPlatform);
+            }
+            if (!gameDatabase[currentPlatform]) gameDatabase[currentPlatform] = {};
+            if (!platformGamesList[currentPlatform]) platformGamesList[currentPlatform] = [];
+          }
+        } else {
+          // --- It's a Game Entry ---
+          if (currentPlatform !== '') {
+            var gameName = line.substring(0, colonPos).trim();
+            var sizePart = line.substring(colonPos + 1).trim();
+            var sizeGB = convertToGB(sizePart);
+            
+            if (sizeGB !== null) {
+              var lowerGame = gameName.toLowerCase();
+              gameDatabase[currentPlatform][lowerGame] = sizeGB;
+              platformGamesList[currentPlatform].push(gameName);
+            }
+          }
+        }
+      }
+      
+      // Sort game lists alphabetically
+      for (var p in platformGamesList) {
+        platformGamesList[p].sort();
+      }
+      
+      // Populate the platform dropdown
+      populatePlatformDropdown(platforms);
+    }
+  };
+  xhr.send();
+}
 
         function updateDatalist() {
           var platform = document.getElementById('gamePlatformSelect').value;
@@ -707,19 +763,16 @@
             }
 
             function parseServices(text) {
-              var consoles = [], lines = text.split('\n'), currentConsole = null, insideReplaced = false;
+              var consoles = [], lines = text.split('\n'), currentConsole = null, insideReplaced = false, insideGameList = false;
               for (var i = 0; i < lines.length; i++) {
                 var raw = lines[i], line = trim(raw);
                 if (line === '') continue;
                 var consoleMatch = line.match(/^console-(\d+):/);
                 if (consoleMatch) {
                   if (currentConsole) consoles.push(currentConsole);
-                  currentConsole = {
-                    listed_date: '', images: [], type: '', firmware: '', model: '', date_code: '', manufacturing_date: '', factory_firmware: '',
-                    accessories: '', hardDrive: '', replacedThermalPaste: 'No', replacedHardDrive: 'No', replacedCMOS: 'No', price: '', issues: '',
-                    soldOn: '', warranty: '', warranty_note: '', additionalInfo: ''
-                  };
-                  insideReplaced = false;
+                  currentConsole = { listed_date: '', images: [], type: '', firmware: '', model: '', date_code: '', manufacturing_date: '', factory_firmware: '', accessories: '', hardDrive: '', replacedThermalPaste: 'No', replacedHardDrive: 'No', replacedCMOS: 'No', price: '', issues: '', soldOn: '', warranty: '', warranty_note: '', additionalInfo: '', gameList: {} }; 
+insideReplaced = false;
+insideGameList = false;
                   continue;
                 }
                 if (!currentConsole) continue;
@@ -747,6 +800,31 @@
                 }
                 if (line.indexOf('images:') === 0) currentConsole.images = parseImageArray(line);
                 else if (line.indexOf('additional Info:') === 0) currentConsole.additionalInfo = trim(line.substring('additional Info:'.length));
+                else if (line === 'game list:') {
+    insideGameList = true;
+    insideReplaced = false; 
+    continue;
+}
+
+if (insideGameList) {
+    var firstColon = line.indexOf(':');
+    if (firstColon !== -1) {
+        var platform = trim(line.substring(0, firstColon));
+        var gamesStr = trim(line.substring(firstColon + 1));
+        
+        if (gamesStr !== '') {
+            var gamesArray = gamesStr.split(',').map(function(g) { 
+                return trim(g); 
+            });
+            currentConsole.gameList[platform] = gamesArray;
+            continue; 
+        } else {
+            insideGameList = false; 
+        }
+    } else {
+        insideGameList = false; 
+    }
+}
                 else if (line.indexOf('console-type:') === 0) currentConsole.type = trim(line.substring('console-type:'.length));
                 else if (line.indexOf('firmware:') === 0) currentConsole.firmware = trim(line.substring('firmware:'.length));
                 else if (line.indexOf('issues:') === 0) currentConsole.issues = trim(line.substring('issues:'.length));
@@ -988,7 +1066,56 @@
                 infoHTML += 'Replaced CMOS Battery: ' + c.replacedCMOS + '<br>';
                 infoHTML += 'Known issues: ' + displayIssues + '<br>';
                 infoHTML += 'Accessories: ' + displayAccessories + '<br>';
-                if (c.additionalInfo) infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g,'<br>') + '<br>';
+                if (c.additionalInfo)
+                infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g,'<br>') + '<br>';
+                
+if (c.gameList && Object.keys(c.gameList).length > 0) {
+    // Outer wrapper matching your custom information box style
+    infoHTML += '<div style="margin-top: 15px; background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">';
+    
+    // Start of the dropdown
+    infoHTML += '<details>';
+    
+    // Set the overall summary color to white (for the arrow), but the text to red
+    infoHTML += '<summary style="color:#fff; font-weight:bold; cursor:pointer; user-select:none; outline:none;">';
+    infoHTML += '<span style="color:#dc3545;">Included Games</span>';
+    infoHTML += '</summary>';
+    
+    infoHTML += '<div style="margin-top: 10px;">';
+    // Calculate total games across all platforms in this console
+var totalGames = 0;
+for (var platform in c.gameList) {
+    totalGames += c.gameList[platform].length;
+}
+
+// Add Total Games line with red label and white number
+infoHTML += '<span class="spanned" style="margin-top: 15px; display:block; font-weight:bold; color:#dc3545;">';
+infoHTML += 'Total Games: <span style="color:#fff;">' + totalGames + '</span>';
+infoHTML += '</span><br>';
+    
+    
+    var isFirstPlatform = true;
+    for (var platform in c.gameList) {
+        var games = c.gameList[platform];
+        
+        // Spacing between platforms
+        var topMargin = isFirstPlatform ? '4px' : '12px';
+        
+        // Platform name: Red text, no └ symbol
+        infoHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + platform + ' (' + games.length + ' Games)</span>';
+        isFirstPlatform = false;
+        
+        // Game list: White text, indented, with the └ symbol
+        for (var g = 0; g < games.length; g++) {
+            infoHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">└ ' + games[g] + '</span>';
+        }
+    }
+    
+    infoHTML += '</div>';
+    infoHTML += '</details>';
+    infoHTML += '</div>';
+}
+                infoHTML += '<br>';
                 if (c.warranty) {
                   infoHTML += '<br>Warranty: ' + (c.warranty.replace('d',' Days')) + '<br>';
                   if (c.warranty_note) {
