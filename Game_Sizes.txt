@@ -1,51 +1,85 @@
-PS1:
-  Tomb Raider: 584MB
-
-PS2:
-  Crash Bandicoot The Wrath of Cortex: 500MB
-  Crash Nitro Kart: 2.98GB
-  Finding Nemo: 2.11GB
-  The Incredibles: 1.57GB
-  The Incredibles - Rise of the Underminer: 1.44GB
-  Pirates of the Caribbean - The Legend of Jack Sparrow: 4.35GB
-  Bee Movie Game: 1.55GB
-  Chicken Little: 1.50GB
-  Chicken Little - Ace in Action: 1.62GB
-
-PS3:
-  Pirates of the Caribbean - At World's End: 5.30GB
-  The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.32GB
-  Bolt: 5.58GB
-  Brave: 2.87GB
-  The Godfather The Don's Edition: 8.92GB
-  The Godfather II: 10.6GB
-
-PSP:
-  Tekken 6: 816MB
-  Grand Theft Auto - Vice City Stories: 1.57GB
-
-NES:
-  Mega Man: 128KB
-
-Super Nintendo:
-  Super Mario All-Stars: 2.00MB
-  Donkey Kong Country 2 - Diddy's Kong Quest: 4.00MB
-
-Sega Genesis:
-  Aladdin: 2.00MB
-
-Game Boy:
+Game Boy
   Pokemon - Blue Version: 1.00MB
   Pokemon - Red Version: 1.00MB
   Pokemon - Yellow Version - Special Pikachu Edition: 1.00MB
 
-Game Boy Advance:
-  Pokemon - Emerald Version: 16.0MB
-  Pokemon - Ruby Version: 16.0MB
-  Pokemon - Sapphire Version: 16.0MB
+Game Boy Advance
+  Pokemon - Emerald Version: 16.00MB
+  Pokemon - Ruby Version: 16.00MB
+  Pokemon - Sapphire Version: 16.00MB
 
-Game Boy Color:
+Game Boy Color
   Pokemon - Crystal Version: 2.00MB
   Pokemon - Gold Version: 2.00MB
   Pokemon - Silver Version: 2.00MB
   Quest for Camelot: 1.00MB
+
+NES
+  Mega Man.nes: 128.02 KB
+
+PS1
+  Driver 2: 574.93MB
+  Driver 2.zip: 374.09MB # Extract and delete archive
+  Tomb Raider.zip: 402.67MB # Extract and delete archive
+
+PS2
+  ATV Offroad Fury 3: 4.08GB
+  Bee Movie Game: 1.56GB
+  Chicken Little: 1.51GB
+  Chicken Little - Ace in Action: 1.62GB
+  Crash Bandicoot The Wrath of Cortex: 500.34MB
+  Crash Nitro Kart: 2.99GB
+  Dead to Rights: 2.02GB
+  Dead to Rights II: 4.36GB
+  Destroy All Humans!: 4.26GB
+  Destroy All Humans! 2: 4.19GB
+  Disney's Chicken Little: 1.51GB
+  DreamWorks Shrek - SuperSlam: 1.64GB
+  DreamWorks Shrek the Third: 1.16GB
+  Family Guy Video Game: 2.94GB
+  Finding Nemo: 2.12GB
+  Futurama: 3.11GB
+  Manhunt: 4.38GB
+  Manhunt 2: 2.47GB
+  Pirates of the Caribbean - The Legend of Jack Sparrow: 4.35GB
+  Rampage - Total Destruction: 4.31GB
+  Scooby-Doo! First Frights: 3.10GB
+  Scooby-Doo! Night of 100 Frights: 2.22GB
+  Shrek 2: 1.18GB
+  The Godfather: 4.00GB
+  The Guy Game: 7.56GB
+  The Incredible Hulk: 2.64GB
+  The Incredibles: 1.58GB
+  The Incredibles - Rise of the Underminer: 1.45GB
+  The Simpsons Hit and Run: 1.54GB
+  The Simpsons Road Rage: 2.32GB
+
+PS3
+  Ben 10 - Omniverse: 3.06GB
+  Ben 10 - Omniverse 2: 2.20GB
+  Bolt: 5.59GB
+  Brave: 2.87GB
+  Dead Space: 7.72GB
+  Dead Space 2: 13.82GB
+  Dead Space 3: 12.27GB
+  DreamWorks Turbo - Super Stunt Squad: 1.53GB
+  Family Guy - Back to the Multiverse: 4.91GB
+  Grand Theft Auto - San Andreas: 2.32GB
+  Kane & Lynch 2 - Dog Days: 8.26GB
+  Pirates of the Caribbean - At World's End: 5.30GB
+  The Godfather II: 10.60GB
+  The Godfather The Don's Edition: 8.93GB
+  The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.33GB
+  The Simpsons Game: 11.01GB
+
+PSP
+  Spider-Man 2: 556.50MB
+  Spider-Man 3: 1.57GB
+
+Sega Genesis
+  Aladdin: 2.00MB
+
+Super Nintendo
+  Donkey Kong Country 2 - Diddy's Kong Quest: 4.00MB
+  Super Mario All-Stars: 2.00MB
+
