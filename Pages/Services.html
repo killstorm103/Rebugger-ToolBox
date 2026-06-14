@@ -1083,46 +1083,83 @@ if (insideGameList) {
                 infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g,'<br>') + '<br>';
                 
 if (c.gameList && Object.keys(c.gameList).length > 0) {
-    // Outer wrapper matching your custom information box style
+    // Initialize Grand Total Accumulators
+    var totalGames = 0;
+    var totalSpaceGB = 0;
+    var totalValue = 0;
+    var platformsHTML = "";
+    var isFirstPlatform = true;
+
+    // --- Pass 1: Gather Metrics and Construct Sub-lists ---
+    for (var platform in c.gameList) {
+        var games = c.gameList[platform];
+        var platformGameCount = games.length;
+        
+        var platformSpaceGB = 0;
+        var platformValue = 0;
+        var gamesHTML = "";
+        
+        // Ensure database profile exists for current platform
+        var platformExists = (typeof gameDatabase !== 'undefined' && gameDatabase && gameDatabase[platform]);
+
+        for (var g = 0; g < games.length; g++) {
+            var gameName = games[g];
+            var lookupName = gameName.toLowerCase().trim();
+            
+            var sizeText = "Not in database";
+            var priceText = "Not in database";
+            
+            // Query match against Game_Sizes.txt dataset
+            if (platformExists && gameDatabase[platform][lookupName] !== undefined) {
+                var gameSizeGB = parseFloat(gameDatabase[platform][lookupName]);
+                var gamePrice = getPriceFromSize(gameSizeGB); // Connects to your HTML regex scraper
+                
+                platformSpaceGB += gameSizeGB;
+                platformValue += gamePrice;
+                
+                sizeText = formatSize(gameSizeGB); // Using your built-in function
+                priceText = "$" + gamePrice;
+            }
+            
+            // Sub-item format: └ Pokemon - Blue Version (Size) (Value: price)
+            gamesHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">' +
+                         '└ ' + gameName + ' (Game Size: ' + sizeText + ') (Value: ' + priceText + ')</span>';
+        }
+
+        // Tally up grand metrics
+        totalGames += platformGameCount;
+        totalSpaceGB += platformSpaceGB;
+        totalValue += platformValue;
+
+        // Platform metrics translation
+        var platformSizeText = (platformSpaceGB > 0) ? formatSize(platformSpaceGB) : "Not in database"; // Using your built-in function
+        var platformValueText = (platformValue > 0) ? "$" + platformValue : "Not in database";
+        var topMargin = isFirstPlatform ? '4px' : '12px';
+        isFirstPlatform = false;
+
+        // Platform line format: Game Boy (Number Games) (Space Required: size) (Total Value: price)
+        platformsHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + 
+                         platform + ' (' + platformGameCount + ' Games) (Space Required/Used: ' + platformSizeText + ') (Total Value: ' + platformValueText + ')</span>';
+        platformsHTML += gamesHTML;
+    }
+
+    var totalSpaceText = (totalSpaceGB > 0) ? formatSize(totalSpaceGB) : "Not in database"; // Using your built-in function
+
+    // --- Pass 2: Output Final UI Layout ---
     infoHTML += '<div style="margin-top: 15px; background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">';
-    
-    // Start of the dropdown
     infoHTML += '<details>';
-    
-    // Set the overall summary color to white (for the arrow), but the text to red
     infoHTML += '<summary style="color:#fff; font-weight:bold; cursor:pointer; user-select:none; outline:none;">';
     infoHTML += '<span style="color:#dc3545;">Included Games</span>';
     infoHTML += '</summary>';
-    
     infoHTML += '<div style="margin-top: 10px;">';
-    // Calculate total games across all platforms in this console
-var totalGames = 0;
-for (var platform in c.gameList) {
-    totalGames += c.gameList[platform].length;
-}
 
-// Add Total Games line with red label and white number
-infoHTML += '<span class="spanned" style="margin-top: 15px; display:block; font-weight:bold; color:#dc3545;">';
-infoHTML += 'Total Games: <span style="color:#fff;">' + totalGames + '</span>';
-infoHTML += '</span><br>';
-    
-    
-    var isFirstPlatform = true;
-    for (var platform in c.gameList) {
-        var games = c.gameList[platform];
-        
-        // Spacing between platforms
-        var topMargin = isFirstPlatform ? '4px' : '12px';
-        
-        // Platform name: Red text, no └ symbol
-        infoHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + platform + ' (' + games.length + ' Games)</span>';
-        isFirstPlatform = false;
-        
-        // Game list: White text, indented, with the └ symbol
-        for (var g = 0; g < games.length; g++) {
-            infoHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">└ ' + games[g] + '</span>';
-        }
-    }
+    // Grand Summary Header Lines
+    infoHTML += '<span class="spanned" style="margin-top: 5px; display:block; font-weight:bold; color:#dc3545;">Total Games: <span style="color:#fff;">' + totalGames + '</span></span>';
+    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Required for Base Game: <span style="color:#fff;">' + totalSpaceText + ' (Based on Base Game not including Updates, DLC or Game Saves etc)' + '</span></span>';
+    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Valued At: <span style="color:#fff;">$' + totalValue + ' (Based on my Services not actual game price)' + '</span></span><br>';
+
+    // Inject Platform Groups and Indented Child Nodes
+    infoHTML += platformsHTML;
     
     infoHTML += '</div>';
     infoHTML += '</details>';
