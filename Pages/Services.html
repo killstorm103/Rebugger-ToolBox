@@ -94,6 +94,7 @@
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:-10px;">Jailbreaking (CFW or HEN: Started: 50$, Basic: 60$, Full: 100$) (qCFW: currently not offered)</strong><br>
                 <span class="spanned">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span><br>
+                 <span class="spanned">└ If a new firmware has came out and its not possible to easily jailbreak and i have to manually back up and patch the flash memory there is a additional Fee that automatically gets added on top of the price/cost of jailbreaking, because of how much bullshit i have to do to do this, taking apart the Whole PS3 and then using the E3 NOR Flasher which can be a Bitch to work with i have to charge a Fee of: + 50% of the price/cost of jailbreaking!, this is Only for If your wanting CFW this is more for if you wanting CFW Urgently!</span><br>
                 <span class="spanned">└ Go down to the Console Information section to enter in your PS3's Model number to check if it can take CFW and what the Flash memory type is!</span><br>
                 <span class="spanned">└ Recommendation: replace the old hard drive before jailbreaking, Read PS3 Information for Recommended HDD/SSD replacements</span><br>
                 <span class="spanned">└ Read the Console Information section to read about the differences between the jailbreaks.</span><br>
@@ -105,7 +106,18 @@
             </li>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                <strong style="display:block; margin-bottom:0x;">Homebrew (5-10$)</strong><br>
+                <strong style="display:block; margin-bottom:-10px;">Switching Jailbreaks (HEN ----> CFW or Switching to a differnt/newer Firmware: 20$)</strong><br>
+                <span class="spanned">└ Options:</span><br>
+                <span class="spanned">└ 1: Evilnat 4.91.2 - 4.93 (CEX, PEX or D-PEX)</span><br>
+                <span class="spanned">└ 2: Rebug (4.21.2 REX, 4.82.2 REX or D-REX, 4.84.2 REX or D-REX or D-REX OverClocked)</span><br>
+                <span class="spanned">└ 3: Rebug 4.84.7 D-REX Cobra 8.3 By DEVX (Not official Rebug its not made by the Rebug Team)</span><br>
+                <span class="spanned">└ 4: HFW: 4.92.1, 4.93.1</span><br>
+                <span class="spanned">└ 5: Original/Official Firmware: 3.55, 4.92, 4.93</span><br>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Homebrew Installation (5-10$)</strong><br>
                 <span class="spanned">└ i'll install homebrew and set it up for you</span><br>
                 <span class="spanned">└ 5$ for anything up to 2GB, 10$ for anything more than 2GB</span><br>
                 <span class="spanned">└ Note: contact me about what homebrew you want first to make sure i know how to set it up and price is per homebrew!</span>
@@ -137,7 +149,10 @@
                  <span class="spanned">└ Examples: Spider Man 3 (PSP) is unplayable because of slow frames but it gets a little better if you switch to a differnt Emulator/Launcher (at least on the first level i didn't test past that)!, Spider Man 2 (PSP) is marked as Playable but you can't save the game and have to finish it in 1 sitting!</span><br>
                  <span class="spanned">└ You have to pay me to install and setup homebrew apps for Emulating: PSP (2 Apps) & for Game Boy and others like it (1 App) If you don't have them already!</span><br>
                 <!-- Game Price Calculator - dynamic platform dropdown -->
-                <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #dc3545;">
+                <!-- border-bottom: 4px solid #dc3545; margin: 5px 0 6px 0; 
+                
+                -->
+                <div style="margin-top: 15px; padding-top: 10px; border-top: 4px solid #dc3545; margin-left: -15px; margin-right: -15px; padding-left: 15px; padding-right: 15px;">
                   <strong>🎮 Game Price Calculator</strong><br>
                   <span style="color: #f79452;">Select platform and type game name:</span><br>
                   <select id="gamePlatformSelect" style="margin-top:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
@@ -171,10 +186,13 @@
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:0x;">History:</strong><br>
+                 <span class="spanned">└ i have successfully worked on: 8 PS3s</span><br>
                 <span class="spanned">└ i've successfully opened and cleaned and changed the thermal paste of all 4 of my Consoles</span><br>
-                <span class="spanned">└ and a mates console</span><br>
+                <span class="spanned">└ opened and cleaned replaced the thermal paste and hard drive and jailbroken 1 PS3 which i gave to a mate as a birthday present!</span><br>
                 <span class="spanned">└ and i have successfully jailbroken and opened and cleaned 2 of my other mates consoles!</span><br>
                 <span class="spanned">└ i have successfully gotten the dried up glued motherboards out of 2 slim model ps3s!</span>
+                <span class="spanned">└ and i have successfully replaced the CMOS battery on: 1 PS3</span>
+                <span class="spanned">└ i have successfully jailbroken 1 PS3 using a E3 NOR Flasher</span>
               </div>
             </li>
           </ul>
@@ -714,7 +732,7 @@
             var sizeDisplay = formatSize(foundSize);
             resultDiv.innerHTML = '<span style="color:#28a745;">✅ "' + title + '" (' + platform + ') is ' + sizeDisplay + ' → Price: $' + price + '</span>';
           } else {
-            resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in matabase. contact me to find out its size.</span>';
+            resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in  database, contact me to find out its size.</span>';
           }
         }
 
@@ -1155,7 +1173,7 @@ if (c.gameList && Object.keys(c.gameList).length > 0) {
 
     // Grand Summary Header Lines
     infoHTML += '<span class="spanned" style="margin-top: 5px; display:block; font-weight:bold; color:#dc3545;">Total Games: <span style="color:#fff;">' + totalGames + '</span></span>';
-    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Required for Base Game: <span style="color:#fff;">' + totalSpaceText + ' (Based on Base Game not including Updates, DLC or Game Saves etc)' + '</span></span>';
+    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Used: <span style="color:#fff;">' + totalSpaceText + ' (Not including Updates, DLC or Game Saves etc)' + '</span></span>';
     infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Valued At: <span style="color:#fff;">$' + totalValue + ' (Based on my Services not actual game price)' + '</span></span><br>';
 
     // Inject Platform Groups and Indented Child Nodes
