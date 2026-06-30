@@ -1,254 +1,1637 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rebugger - ToolBox</title>
     <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
-    <style>
-        /* Ensure the silk download link is visible on Silk */
-        #silk-download-link.silk-visible {
-            display: list-item !important;
-        }
-    </style>
-</head>
-<body>
+    <style></style>
+  </head>
 
-<div class="fixed-header">
-    <h1>Rebugger - ToolBox: Updates & Patches</h1>
-    <h1_under>Click on the images to download</h1_under>
-    <div class="nav-container"></div> <!-- Auto_Buttons.js fills this -->
-</div>
-
-<div id="mainContainer" class="container">
-    <ul class="main">
-        <!-- Notice Section -->
+  <body>
+    <!-- Zoom overlay -->
+    <div id="image-overlay" onclick="closeZoom()">
+      <img id="zoom-img" src="" alt="Zoomed image">
+    </div>
+    <div class="fixed-header">
+      <h1>Dillans Services</h1>
+      <div class="nav-container"></div>
+    </div>
+    <div id="mainContainer" class="container">
+      <ul class="main">
         <li class="bloc">
-            <ul>
-                <li style="padding:0; margin:0;">
-                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                        <strong>Notice:</strong><br><br>
-                        <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/yellow_warning.png" width="150" height="150" loading="lazy"><br><br>
-                        <span class="spanned">If you get an error code when trying to download an Update/Patch:</span><br>
-                        <span class="spanned">└ Your Firmware's certificates are outdated and stopping you from downloading the file!</span><br>
-                        <span class="spanned">└ CFW Users: Change to Evilnat 4.93 at least – temporarily this will fix it, then you can switch back to Rebug!</span><br>
-                        <span class="spanned">└ HEN Users: Bitch to the HFW/HEN Devs until they fix it.</span><br>
-                        <span class="spanned">└ A non‑firmware / vsh.self file fix is: Use Silk Engine.</span><br>
-                        <span class="spanned">└ Enable Internet Browser Debug in your PS3's Debug Settings!</span><br>
-                        <span class="spanned">└ You'll find this in the CEX Debug Settings Menu, or you could download and install: <a href="https://store.brewology.com/get/homebrew.php?id=191&amp;fid=779" target="_blank" style="color:#f79452;">Web Browser Plus [Link]</a></span><br>
-                        <span class="spanned">└ This browser always uses the Silk Engine!</span><br>
-                        <span class="spanned">└ If you choose to use Internet Browser Debug, press Triangle on the Internet Browser item in the XMB and change the Engine to: Silk!</span><br>
-                        <span id="silk-download-link" style="display:none;">Direct Download links for Silk PS3 Browser Engine! &nbsp;<a href="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt" target="_blank" style="color:#f79452;">version.txt</a></span>
+          <!-- Information section -->
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="font-size: 25px; display:block; margin-bottom: -5px; margin-top: -5px">Information</strong>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:10px;">Requirements:</strong>
+                <span class="spanned">└ 1: I Must know you or know of you because of a mate or someone else who paid for my services!</span><br>
+                <span class="spanned">└ 2: Being in Australia (WA) and handing over the Device in person (i Will Not Do Shipping!)</span><br>
+                <span class="spanned">└ 3: Cash Only i don't accept paypal or anything else!</span><br>
+                <span class="spanned">└ 4: Cash Must Be AUD no other currencies will be accepted!</span><br>
+                <span class="spanned">└ 5: You must have the exact amount cause i'm not a official business i won't carry cash therefore i won't be able to give you change!</span><br>
+                <span class="spanned">└ 6: You must bring obviously the device and the power and hdmi cords and a controller (and the charging cord if its not a wired controller)</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:-11px;">Disclaimers &amp; Information:</strong><br>
+                <span class="spanned">└ 1: You will not get to watch me do the service(s), your paying for me doing it not to teach you how to!</span><br>
+                <span class="spanned">└ 2: i will do it on the spot for you if possible But Sometimes you may need to leave the console with me for a day or a few days depending on what service(s) you want/need and how many others are ahead of you</span><br>
+                <span class="spanned">└ 3: Prices are none negotiable!</span><br>
+                <span class="spanned">└ 4: There is always a risk when working on devices: i take no responsibility for any damages, if something goes wrong you will be given a full refund or a certain amount will be deducted from the total (Depending on if its fully or somewhat broken), The only thing that i've ever broke is one of my slim ps3s Ribbon cables and thats only due to it being severely old and fragile!</span>
+                <span class="spanned" style="margin-top: 24px;">└ 5: If You buy a game from me and it doesn't work because of a bug in the game or it messes up because your playing say a PS2 game through emulation or something else out of my control i'm not responsible and can't be held liable and you won't be given a refund!</span>
+                <span class="spanned" style="margin-top: 14px;">└ 6: If you end up taking the console home and find out that a game is in the wrong language and you can't change it from within the games options, you can bring it back and i'll try finding 1 of it in English make sure one in English exists before wasting my and your time!, no refunds will be given for games not in English!</span>
+                <span class="spanned" style="margin-top: 20px;">└ 7: If you pay me to install and setup a homebrew app for you, you won't be given a refund if somethings wrong with it and it causes you to randomly freeze/crash or something, Control Console Api for example is a homebrew app that's known for this but it works for some without issues apparently according to some but i always crashed when playing BO2 after a game or so when i had it installed on my PS3!</span>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Services Availability -->
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="font-size: 25px; display:block; margin-bottom:-10px;">Services Availability</strong><br>
+                <span class="spanned">└ Status: <span id="serviceStatus">Loading...</span></span><br>
+                <span id="availabilityNote" style="display: block; margin-left: 20px; color: #f79452;"></span>
+              </div>
+            </li>
+          </ul>
+
+          <!-- PS3 Services images -->
+          <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:15px; margin-left:60px; display:inline-block;">
+            <strong style="display:block; margin-bottom:10px; font-size: 25px;">PS3 Services</strong>
+            <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: top; padding-right: 20px;">
+                  <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                </td>
+                <td style="vertical-align: top;">
+                  <div id="sliderContainer" style="margin: 0;">
+                    <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                    <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
+                    <div id="manualBtns" style="display:none; margin-top:8px;">
+                      <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
+                      <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
                     </div>
-                </li>
-            </ul>
+                    <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Service list items -->
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:-10px;">Jailbreaking (CFW or HEN: Started: 50$, Basic: 60$, Full: 100$) (qCFW: currently not offered)</strong><br>
+                <span class="spanned">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span><br>
+                 <span class="spanned">└ If a new firmware has came out and its not possible to easily jailbreak and i have to manually back up and patch the flash memory there is a additional Fee that automatically gets added on top of the price/cost of jailbreaking, because of how much bullshit i have to do to do this, taking apart the Whole PS3 and then using the E3 NOR Flasher which can be a Bitch to work with i have to charge a Fee of: + 50% of the price/cost of jailbreaking!, this is Only for If your wanting CFW this is more for if you wanting CFW Urgently!</span><br>
+                <span class="spanned">└ Go down to the Console Information section to enter in your PS3's Model number to check if it can take CFW and what the Flash memory type is!</span><br>
+                <span class="spanned">└ Recommendation: replace the old hard drive before jailbreaking, Read PS3 Information for Recommended HDD/SSD replacements</span><br>
+                <span class="spanned">└ Read the Console Information section to read about the differences between the jailbreaks.</span><br>
+                <span class="spanned">└ Started: i only jailbreak it for you only nothing else!</span><br>
+                <span class="spanned">└ Basic: Started + i configure somethings for you and i make sure you can go online(If its console banned you must provide the new CID)</span><br>
+                <span class="spanned">└ Full: Basic + i set you up with my toolbox and any other homebrew tools/apps you'll need!</span><br>
+                <span class="spanned">└ Info: bring a USB and i'll give you a copy of your Flash Memory BackUp for free</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:-10px;">Switching Jailbreaks (HEN ----> CFW or Switching to a differnt/newer Firmware: 20$)</strong><br>
+                <span class="spanned">└ Options:</span><br>
+                <span class="spanned">└ 1: Evilnat 4.91.2 - 4.93 (CEX, PEX or D-PEX)</span><br>
+                <span class="spanned">└ 2: Rebug (4.21.2 REX, 4.82.2 REX or D-REX, 4.84.2 REX or D-REX or D-REX OverClocked)</span><br>
+                <span class="spanned">└ 3: Rebug 4.84.7 D-REX Cobra 8.3 By DEVX (Not official Rebug its not made by the Rebug Team)</span><br>
+                <span class="spanned">└ 4: HFW: 4.92.1, 4.93.1</span><br>
+                <span class="spanned">└ 5: Original/Official Firmware: 3.55, 4.92, 4.93</span><br>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Homebrew Installation (5-10$)</strong><br>
+                <span class="spanned">└ i'll install homebrew and set it up for you</span><br>
+                <span class="spanned">└ 5$ for anything up to 2GB, 10$ for anything more than 2GB</span><br>
+                <span class="spanned">└ Note: contact me about what homebrew you want first to make sure i know how to set it up and price is per homebrew!</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Opening and Cleaning (1: 20$, 2: 35$, 3: 50$)</strong><br>
+                <span class="spanned">└ 1: Just a basic normal open and cleaning</span><br>
+                <span class="spanned">└ 2: 1 + Thermal paste replacement (You Must Provide the Thermal Paste)</span><br>
+                <span class="spanned">└ 3: 2, alot of slim models motherboards get stuck cause of the old dried up thermal paste that glues it in place this requires a heat gun and more time to get the motherboard out safely so i'm charging a little bit more because of this!</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Games (Install games on your ps3s Hard Drive) (5-50$)</strong><br>
+                <span class="spanned">└ PS1 &amp; 2 &amp; 3, PSP &amp; Any Game for the following consoles/platforms: Game Boy & Game Boy Color & GameBoy Advance & NES & SNES & Genesis & Neo Geo Pocket & WonderSwan & PC & Atari 2600/7800/Lynx & Arcade and Maybe some others!, You Do Not get a physical copy!</span><br>
+                <span class="spanned">└ Prices are per game!</span><br>
+                <span class="spanned">└ Games 6GB or less: 5$</span><br>
+                <span class="spanned">└ Games up to 11GB: 10$</span><br>
+                <span class="spanned">└ Games up to 21GB: 20$</span><br>
+                <span class="spanned">└ Games up to 31GB: 35$</span><br>
+                <span class="spanned">└ Games &rarr; 31GB: 50$</span><br>
+                <span class="spanned">└ if your unsure of how big your games your wanting are tell me them and i absolutetly can find out and tell you the total!, DO NOT go by google for accurately telling you the size of a game as it's inaccurate as Fuck, its best to contact me and get me to find out, also i'll need to know what games your wanting before your coming so i can make sure i have them downloaded and ready to install!</span><br>
+                <span class="spanned">└ if you want you can try using my Game Price Calculator below (my own database of games i've downloaded) – if your game isn't listed you'll have to get me to find out its size!</span><br>
+                <span class="spanned">└ i'll test the games or let you test them before you leave if you want we'll only go as far as making sure they boot up (playing acouple of minutes of each of them will take to long)!</span><br>
+                <span class="spanned">└ <a href="https://docs.google.com/spreadsheets/d/1LjcZpw-wFNAiOw_nVQm15U4ALm-geToJw_6Epc1zf4M/edit?pli=1&amp;pli=1&amp;gid=0#gid=0" target="_blank" style="color:#f79452;">PSP Compatibility List [Link]</a></span><br>
+                 <span class="spanned">└ Note this Compatibility list is by the Community not me and can be wrong!</span><br>
+                 <span class="spanned">└ Examples: Spider Man 3 (PSP) is unplayable because of slow frames but it gets a little better if you switch to a differnt Emulator/Launcher (at least on the first level i didn't test past that)!, Spider Man 2 (PSP) is marked as Playable but you can't save the game and have to finish it in 1 sitting!</span><br>
+                 <span class="spanned">└ You have to pay me to install and setup homebrew apps for Emulating: PSP (2 Apps) & for Game Boy and others like it (1 App) If you don't have them already!</span><br>
+                <!-- Game Price Calculator - dynamic platform dropdown -->
+                <!-- border-bottom: 4px solid #dc3545; margin: 5px 0 6px 0; 
+                
+                -->
+                <div style="margin-top: 15px; padding-top: 10px; border-top: 4px solid #dc3545; margin-left: -15px; margin-right: -15px; padding-left: 15px; padding-right: 15px;">
+                  <strong>🎮 Game Price Calculator</strong><br>
+                  <span style="color: #f79452;">Select platform and type game name:</span><br>
+                  <select id="gamePlatformSelect" style="margin-top:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
+                    <!-- options will be filled from Game_Sizes.txt -->
+                  </select>
+                  <input type="text" id="gameTitleInput" placeholder="Start typing to see matching games" style="margin-top:5px; margin-left:5px; padding:5px; width:250px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;" list="gameDatalist">
+                  <datalist id="gameDatalist"></datalist>
+                  <button id="calcGamePriceBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Get Price</button>
+                  <div id="gamePriceResult" style="margin-top:8px; font-weight:bold;"></div>
+                </div>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Replace Hard drive (10-40$)</strong><br>
+                <span class="spanned">└ Note: You Must Provide the HDD/SSD Replacement</span><br>
+                <span class="spanned">└ Go down to PS3 Information to read Recommended Hard Drive Replacements</span><br>
+                <span class="spanned">└ Cloning the old HDD/SSD and then installing the clone backup (only up to 235GB) (<span id="hdd_replacement_option_1">40</span>$)</span><br>
+                <span class="spanned">└ Install the new HDD/SSD and reinstall CFW/HEN/qCFW and reinstall basic homebrew applications <span id="hdd_replacement_option_2">20</span>$</span><br>
+                <span class="spanned" style="margin-top: 10px">└ Remove the old HDD/SSD and replace it with the new HDD/SSD and install OFW/HFW/qCFW/CFW (<span id="hdd_replacement_option_3">10</span>$)</span><br>
+                <span class="spanned">└ You must bring the ps3 with the old HDD/SSD inside it or be able to show proof that it was already jailbroken or otherwise i'll have to charge you for jailbreaking it if your wanting HFW/qCFW/CFW Installed!</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Delidding (?) (Risky repair!)</strong><br>
+                <span class="spanned">└ i've never attempted delidding but i've got what is needed to do it so some day i might maybe offer this service!</span><br>
+                <span class="spanned">└ Only Fat Models need this if theres someone telling you need to do this with anything else other than a fat model their either a absolute retard or trying to scam you into paying for a even more severely risky procedure that you don't need, Deldding is even more Risky on slim &amp; super slim models!</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">History:</strong><br>
+                 <span class="spanned">└ i have successfully worked on: 8 PS3s</span><br>
+                <span class="spanned">└ i've successfully opened and cleaned and changed the thermal paste of all 4 of my Consoles</span><br>
+                <span class="spanned">└ opened and cleaned replaced the thermal paste and hard drive and jailbroken 1 PS3 which i gave to a mate as a birthday present!</span><br>
+                <span class="spanned">└ and i have successfully jailbroken and opened and cleaned 2 of my other mates consoles!</span><br>
+                <span class="spanned">└ i have successfully gotten the dried up glued motherboards out of 2 slim model ps3s!</span>
+                <span class="spanned">└ and i have successfully replaced the CMOS battery on: 1 PS3</span>
+                <span class="spanned">└ i have successfully jailbroken 1 PS3 using a E3 NOR Flasher</span>
+              </div>
+            </li>
+          </ul>
         </li>
 
-        <!-- Updates Section -->
+        <!-- Console Information (separate bloc) -->
         <li class="bloc">
-            <ul>
-                <li style="padding:0; margin:0;">
-                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                        <strong>Updates:</strong><br><br>
-                        <span class="spanned">└ Rebugger - ToolBox (Base) (CFW)</span><br>
-                        <div id="dropdown-container-cfw" style="margin-top: -15px"></div>
-                        <span class="spanned" style="margin-bottom:-26px">└ Fixes (Stable &amp; Dev are pretty much the same but they may change at some point)</span><br>
-                        <div id="dropdown-container-fixes" style="margin-top: 15px"></div>
-                    </div>
-                </li>
-            </ul>
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="font-size: 25px; display:block; margin-bottom: -23px; margin-top: -5px;">Console Information</strong><br>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:10px;">Compatible Jailbreak Types Checker</strong>
+                <span style="color:#f79452;">Enter your PS3 model number:</span><br>
+                <input type="text" id="modelInput" placeholder="Examples: CECH-2002A, CECH-2501A, DECR-1000A, DECH-A00A, CEB-1000" style="margin-top:5px; padding:5px; width:530px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
+                <button id="checkBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;" onclick="runChecker(null)">Check</button>
+                <div id="datecode-box" style="display:none; margin-top:10px;">
+                  <span style="color:#f79452;">Enter your PS3's date code or manufacturing date:</span><br>
+                  <input type="text" id="datecodeInput" placeholder="Example: 0C" style="margin-top:5px; padding:5px; width:150px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                  <select id="monthSelect" style="margin-top:5px; margin-left:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                    <option value="">Month</option>
+                    <option value="1">January (1)</option>
+                    <option value="2">February (2)</option>
+                    <option value="3">March (3)</option>
+                    <option value="4">April (4)</option>
+                    <option value="5">May (5)</option>
+                    <option value="6">June (6)</option>
+                    <option value="7">July (7)</option>
+                    <option value="8">August (8)</option>
+                    <option value="9">September (9)</option>
+                    <option value="10">October (10)</option>
+                    <option value="11">November (11)</option>
+                    <option value="12">December (12)</option>
+                  </select>
+                  <select id="yearSelect" style="margin-top:5px; margin-left:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px; vertical-align: middle;">
+                    <option value="">Year</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                  </select>
+                  <button id="datecodeBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; vertical-align: middle;" onclick="verifyDateCode()">Verify</button>
+                </div>
+                <div id="cfwResult" style="margin-top:10px; font-weight:bold;"></div>
+                <br>
+                <span style="color: #f79452;">Here's where to find the model number and date code or manufacturing date on your PS3:</span><br>
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top:10px; margin-left:0px; display:inline-block;">
+                  <tr>
+                    <td style="vertical-align: top; padding-right: 20px;">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/Model-Number-place-1.jpg" width="300" height="200" alt="Model Number Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                    </td>
+                    <td style="vertical-align: top;">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                    </td>
+                  </tr>
+                </table>
+                <table cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-top:10px; margin-left:0px; display:inline-block;">
+                  <tr>
+                    <td style="vertical-align: top;">
+                      <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Services/Example/date-code-2.png" width="300" height="200" alt="Date Code Location" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+                    </td>
+                  </tr>
+                </table>
+                <button id="tutorialBtn" style="display:block; margin-top:15px; padding:6px 18px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-weight:bold;">Show Manual Check Tutorial</button>
+                <div id="manualTutorial" style="display:none; margin-top:12px; padding:10px; background:#333; border-radius:4px; border-left: 3px solid #dc3545;">
+                  <span style="color: #f79452;">Download the file</span><br><br>
+                  <span style="color: #f79452;">Plug your USB into your PC/Laptop and format it in FAT32 if it's not already formatted in FAT32!</span><br><br>
+                  <span style="color: #f79452;">On the USB, create the following folders so the path looks like: F:\PS3\UPDATE</span><br><br>
+                  <span style="color: #f79452;">(The drive letter F:\ might be different for you – that's fine.)</span><br><br>
+                  <span style="color: #f79452;">Drag and drop the file you downloaded into: F:\PS3\UPDATE</span><br><br>
+                  <span style="color: #f79452;">Make sure the file is stored in that path and is named: PS3UPDAT.PUP</span><br><br>
+                  <span style="color: #f79452;">After that, use an MD5 File Checker and verify that the file's MD5 matches the one listed on GitHub!</span><br><br>
+                  <span style="color: #f79452;">Then safely eject your USB (do NOT just pull it out of your PC/laptop – that can corrupt the files).</span><br><br>
+                  <span style="color: #f79452;">Take the USB and plug it into your PS3, then go to: Settings > System Update > Update via Storage Media</span><br><br>
+                  <span style="color: #f79452;">A pop-up will appear: "The following update data was found:"</span><br><br>
+                  <span style="color: #f79452;">Version: VERSION CECHK by ifcaro</span><br><br>
+                  <span style="color: #f79452;">Press OK. It will fail and show a message like: "Update data of version 2.70 or later can be installed on this system. (8002F967)"</span><br><br>
+                  <span style="color: #f79452;">If that message says 3.56 or lower, your console can run CFW!</span><br><br>
+                  <span style="color: #f79452;">If you cant manually check because you don't have a PC/Laptop or a USB or just can't figure it i can check for you but i will only be able to do this in person!</span>
+                </div>
+                <br>
+                <a href="https://github.com/killstorm103/PS3-Firmwares-Archive/releases/tag/Minimum-Firmware-Version-Checker" target="_blank" style="display:inline-block; margin-top:12px; padding:6px 18px; background:#dc3545; color:#fff; text-decoration:none; border-radius:4px; font-weight:bold;">
+                  Minimum Firmware Version Checker
+                </a>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">PS3 Information</strong><br>
+                <span class="spanned">└ Types of PS3s</span><br>
+                <span class="spanned">└ DEX: Dev Kit PS3 (Better than a Jailbreak!)</span><br>
+                <span class="spanned">└ CFW: Custom Firmware Grants you full control over the console install homebrew and play game backups etc from start/boot up without having to do anything and gain the ability to convert to DEX.</span><br>
+                <span class="space">└ Not all PS3s can run CFW, All Fat Models and some Slim Models can run CFW.</span><br>
+                <span class="spanned">└ qCFW: Quasi-Custom Firmware a type of Custom Firmware for PS3 models that cannot run standard CFW and for now only avabilable for PS3s with a NOR flash memory type. Installation requires a hardware modification (soldering work), the process starts by installing HEN and using it to run initial tools — but once installed, qCFW boots directly like a normal CFW, with no need to enable HEN every time. You can do almost everything a regular CFW can, with a few exceptions: you cannot convert to DEX, you cannot dump the console's EID root key and anything else that required your consoles EID root key, and you cannot use old firmwares like REBUG. New firmware versions must be built specifically for qCFW. Currently, the only qCFW is based on Evilnat PEX.</span><br>
+                <span class="spanned">└ HEN: A temporary Homebrew Enabler you have to re-activate every time you turn on the console. No DEX conversion, less system-level access than CFW.</span><br>
+                <span class="spanned">└ OFW: Official Firmware (Normal PS3 not jailbroken)</span><br><br>
+                <span class="spanned">└ All OFW PS3s can play: PS1 & PS3 Games and can play/watch DVDs and blu ray Movies/Shows</span>
+                <span class="spanned">└ All Jailbroken PS3s can play: PS2 Games (Through Emulation), and can play all the following types:</span>
+                <span class="spanned">└ Same as OFW + (Through Emulation): PS2 & PSP & Any Game for the following consoles/platforms: Game Boy & Game Boy Color & GameBoy Advance & NES & SNES & Genesis & Neo Geo Pocket & WonderSwan & PC & Atari 2600/7800/Lynx & Arcade and Maybe some others!</span><br>
+                <span class="spanned">└ Recommended Hard Drive Replacements:</span>
+                <span class="spanned">└ SSDs: Samsung 870 EVO, Crucial BX500 or MX500, Western Digital WD Blue</span>
+                <span class="spanned">└ HDDs: Seagate, Western Digital, Samsung</span>
+                <span class="spanned">└ Notes:</span>
+                <span class="spanned">└ 1: Do not go over 1TB cause the restore file system function breaks</span>
+                <span class="spanned">└ 2: the HDD/SSD Must be 2.5-inch SATA drive with a maximum height (thickness) of 9.5mm</span>
+              </div>
+            </li>
+          </ul>
         </li>
 
-        <!-- Patches Section -->
+        <!-- Consoles for sale -->
         <li class="bloc">
-            <ul>
-                <li style="padding:0; margin:0;">
-                    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                        <strong>Patches:</strong><br><br>
-                        <span class="spanned">└ HEN Patch</span><br>
-                        <div id="dropdown-container-hen"></div>
-                        <span class="spanned">└ Online Access Bypass (<span id="latestFirmwareSpan">4.93</span>) (If you have 1.0.3+ it's up to date by default – no need to patch!)</span>
-                        <div style="margin-top:10px;">
-                            <a href="https://github.com/killstorm103/Rebugger-ToolBox/releases/download/toolbox-patches/Rebugger.Toolbox.OnlineAcess_Patch.pkg" target="_blank">
-                                <img src="https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/bypass.png" width="150" height="150" loading="lazy" style="border-radius:8px;">
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="font-size: 25px; display:block; margin-bottom: -23px; margin-top: -5px;">Consoles for sale</strong><br>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Information</strong><br>
+                <span class="spanned">└ All sales are final there isn't a: change of mind return and refunded!</span><br>
+                <span class="spanned">└ Go on the assumption any games mentioned as included are not physical games and are installed on the Consoles Hard Drive unless pacificaly stated as otherwise!</span><br>
+                <span class="spanned">└ No Warranty can be offered for PS3s that haven't had their hard drives replaced!</span><br>
+                <span class="spanned">└ ABSOLUTELY NO Warranty Can Be Offered For Fat Model PS3s that have a NAND Flash Memory Type these Consoles are an absolute piece of shit!, and i will likely never sell them unless i get one for Really cheap or get given one for free!</span>
+                <span class="spanned" style="margin-top: 12px">└ If something goes wrong with the hard drive i do offer a replacement hard drive service which you can read about by scrolling up!</span><br>
+                <span class="spanned">└ the Warranty obviously starts on the day as soon as the consoles been marked as sold!</span>
+                <span class="spanned" style="margin-top: 4px">└ Warranty is obviously void if you:</span>
+                <span class="spanned">└ 1: Open the Console Up At All!</span>
+                <span class="spanned">└ 2: Brick/Corrupt the Console or Its hard drive by modifying the Consoles System Files (The PS3s /dev_flash for example)!</span>
+                <span class="spanned">└ 3: if the Console gets damaged by you or anyone else</span>
+                <span class="spanned">└ 4: if you unjailbreak the console for any reason or by mistake there's no undo or redo you will need to pay for it to be rejailbroken!</span>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li style="padding:0; margin:0;">
+              <div id="stock-box" style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">Loading stock…</div>
+            </li>
+          </ul>
+          <ul id="consoles-list" style="margin-top:0;"></ul>
         </li>
-    </ul>
-</div>
+      </ul>
+    </div>
 
-<script>
-    // Helper: trim
-    function manualTrim(str) {
-        var start = 0, end = str.length - 1;
-        while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
-        while (end >= start && (str.charAt(end) === ' ' || str.charAt(end) === '\t')) end--;
-        return str.substring(start, end + 1);
-    }
-
-    // Parse version.txt
-    function parseVersionData(text) {
-        var data = {
-            stable: { version: null, cfwDownload: null, henPatchDownload: null },
-            dev:    { version: null, build: null, cfwDownload: null, henPatchDownload: null }
-        };
-        var normalText = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        var lines = normalText.split('\n');
-        var currentSection = '';
-        for (var i = 0; i < lines.length; i++) {
-            var line = manualTrim(lines[i]);
-            if (line === '') continue;
-            if (line.indexOf('stable build:') === 0) { currentSection = 'stable'; continue; }
-            if (line.indexOf('dev build:') === 0)    { currentSection = 'dev'; continue; }
-            if (currentSection === 'stable') {
-                if (line.indexOf('version ') === 0) data.stable.version = manualTrim(line.substring('version '.length));
-                else if (line.indexOf('download_base_cfw:') === 0) data.stable.cfwDownload = manualTrim(line.substring('download_base_cfw:'.length));
-                else if (line.indexOf('download_hen_patch:') === 0) data.stable.henPatchDownload = manualTrim(line.substring('download_hen_patch:'.length));
-            } else if (currentSection === 'dev') {
-                if (line.indexOf('version ') === 0) data.dev.version = manualTrim(line.substring('version '.length));
-                else if (line.indexOf('build:') === 0) data.dev.build = manualTrim(line.substring('build:'.length));
-                else if (line.indexOf('download_base_cfw:') === 0) data.dev.cfwDownload = manualTrim(line.substring('download_base_cfw:'.length));
-                else if (line.indexOf('download_hen_patch:') === 0) data.dev.henPatchDownload = manualTrim(line.substring('download_hen_patch:'.length));
-            }
+    <!-- ==================== ZOOM SCRIPTS ==================== -->
+    <script>
+      function zoomImage(src) {
+        var overlay = document.getElementById('image-overlay');
+        var img = document.getElementById('zoom-img');
+        if (overlay && img) {
+          img.src = src;
+          overlay.style.display = 'block';
         }
-        return data;
-    }
+      }
+      function closeZoom() {
+        var overlay = document.getElementById('image-overlay');
+        if (overlay) overlay.style.display = 'none';
+      }
+      document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") closeZoom();
+      });
+    </script>
 
-    // Convert HTTPS to HTTP for Silk (images)
-    function toHttp(url) {
-        if (window.isPS3SilkBrowserEngine && url && url.indexOf('https://') === 0) {
-            return url.replace('https://', 'http://');
-        }
-        return url;
-    }
-
-    // Create dropdowns after version data is ready
-    function buildAllDropdowns(devVersionText, stableVersionText, urls) {
-        var isSilk = window.isPS3SilkBrowserEngine || false;
-        var displayDev = isSilk ? 'Download unavailable on Silk' : devVersionText;
-        var displayStable = isSilk ? 'Download unavailable on Silk' : stableVersionText;
-        var cfwDevUrl = (isSilk || !urls.cfwDevUrl) ? '#' : urls.cfwDevUrl;
-        var cfwStableUrl = (isSilk || !urls.cfwStableUrl) ? '#' : urls.cfwStableUrl;
-        var henDevUrl = (isSilk || !urls.henDevUrl) ? '#' : urls.henDevUrl;
-        var henStableUrl = (isSilk || !urls.henStableUrl) ? '#' : urls.henStableUrl;
-
-        // Convert image URLs for Silk
-        var cfwImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/CFW.png');
-        var toolboxImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/toolbox.png');
-        var henImg = toHttp('https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/HEN.png');
-
-        if (typeof createDropdown !== 'undefined') {
-            // CFW dropdown
-            createDropdown('dropdown-container-cfw', cfwImg, [
-                { text: 'Dev Build: ' + displayDev, url: cfwDevUrl },
-                { isSeparator: true },
-                { text: 'Stable Build: ' + displayStable, url: cfwStableUrl }
-            ]);
-
-            // Fixes dropdown (static links)
-            createDropdown('dropdown-container-fixes', toolboxImg, [
-                { text: 'Both Fixes Combined (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg' },
-                { text: 'Category Fix (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg' },
-                { text: 'Plugin Installer (Dev Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-dev-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg' },
-                { isSeparator: true },
-                { text: 'Both Fixes Combined (Stable Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Fixes_Mount_dev_blind_First.pkg' },
-                { text: 'Category Fix (Stable Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Category_Installer_Mount_dev_blind_First.pkg' },
-                { text: 'Plugin Installer (Stable Build)', url: 'https://github.com/killstorm103/Rebugger-ToolBox/releases/download/latest-stable-build/Rebugger_Toolbox_Plugin_Installer_Mount_dev_blind_First.pkg' }
-            ]);
-
-            // HEN Patch dropdown
-            createDropdown('dropdown-container-hen', henImg, [
-                { text: 'Dev Build: ' + displayDev, url: henDevUrl },
-                { isSeparator: true },
-                { text: 'Stable Build: ' + displayStable, url: henStableUrl }
-            ]);
-        } else {
-            console.error('DropdownMenu.js not loaded yet');
-        }
-    }
-
-    // Fetch version.txt and build dropdowns
-    function fetchAndBuild() {
-        var isSilk = window.isPS3SilkBrowserEngine || false;
-        if (isSilk) {
-            buildAllDropdowns('Download unavailable on Silk', 'Download unavailable on Silk', {});
-            return;
-        }
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/version.txt', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    try {
-                        var data = parseVersionData(xhr.responseText);
-                        var devText = data.dev.version ? (data.dev.version + ' #' + (data.dev.build || '?')) : 'Failed to fetch dev version';
-                        var stableText = data.stable.version ? data.stable.version : 'Failed to fetch stable version';
-                        var urls = {
-                            cfwDevUrl: data.dev.cfwDownload || null,
-                            cfwStableUrl: data.stable.cfwDownload || null,
-                            henDevUrl: data.dev.henPatchDownload || null,
-                            henStableUrl: data.stable.henPatchDownload || null
-                        };
-                        buildAllDropdowns(devText, stableText, urls);
-                    } catch(e) {
-                        buildAllDropdowns('Error', 'Error', {});
-                    }
-                } else {
-                    buildAllDropdowns('Failed to fetch', 'Failed to fetch', {});
+    <!-- ==================== MAIN SCRIPT ==================== -->
+    <script>
+      (function() {
+        var CURRENT_VERSION = "7.7";
+        if (!window.isPS3) {
+          if (window.top === window.self && navigator.cookieEnabled) {
+            (function() {
+              function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                  var date = new Date();
+                  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                  expires = "; expires=" + date.toUTCString();
                 }
-            }
-        };
-        xhr.onerror = function() { buildAllDropdowns('Failed to fetch', 'Failed to fetch', {}); };
-        xhr.send();
-    }
-
-    // Show/hide Silk download link (and also convert its link to HTTP if Silk)
-    function updateSilkLinkVisibility() {
-        var isSilk = window.isPS3SilkBrowserEngine || false;
-        var silkSpan = document.getElementById('silk-download-link');
-        if (silkSpan) {
-            if (isSilk) {
-                silkSpan.style.display = 'inline';  // or 'block', but inline works inside span
-                // Convert any HTTPS links inside to HTTP
-                var links = silkSpan.getElementsByTagName('a');
-                for (var i = 0; i < links.length; i++) {
-                    if (links[i].href && links[i].href.indexOf('https://') === 0) {
-                        links[i].href = links[i].href.replace('https://', 'http://');
-                    }
+                document.cookie = name + "=" + value + expires + "; path=/";
+              }
+              function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                  var c = ca[i].trim();
+                  if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
                 }
+                return null;
+              }
+              var STORAGE_KEY = 'rb_toolbox_v';
+              var storedVersion = getCookie(STORAGE_KEY);
+              if (storedVersion !== CURRENT_VERSION) {
+                setCookie(STORAGE_KEY, CURRENT_VERSION, 365);
+                var url = window.location.href.split('?')[0] + '?v=' + CURRENT_VERSION;
+                window.location.replace(url);
+                return;
+              }
+            })();
+          }
+        }
+        
+        function startSliderManual() {
+          var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
+          var img = document.getElementById('sliderImage'),
+            counter = document.getElementById('imageCounter');
+          if (!img || !counter) return;
+          var manualBtns = document.getElementById('manualBtns');
+          if (manualBtns) manualBtns.style.display = 'block';
+          var prevBtn = document.getElementById('prevBtn'),
+            nextBtn = document.getElementById('nextBtn'),
+            currentIndex = 0,
+            total = images.length;
+          function showImage(idx) {
+            if (idx < 0) idx = total - 1;
+            if (idx >= total) idx = 0;
+            currentIndex = idx;
+            img.src = images[currentIndex];
+            counter.innerHTML = (currentIndex + 1) + ' / ' + total;
+          }
+          prevBtn.onclick = function() { showImage(currentIndex - 1); };
+          nextBtn.onclick = function() { showImage(currentIndex + 1); };
+          showImage(0);
+        }
+
+        function startSliderAuto() {
+          var images = ['http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/001.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/002.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/003.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/004.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/005.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/006.jpg', 'http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Services/007.jpg'];
+          var img = document.getElementById('sliderImage'),
+            counter = document.getElementById('imageCounter');
+          if (!img || !counter) return;
+          var total = images.length,
+            index = 0,
+            nextTimer = null,
+            maxWaitTimer = null,
+            isLoading = false,
+            isPaused = false,
+            retryCount = 0,
+            MAX_RETRIES = 5;
+          var DISPLAY_TIME = 1500,
+            SKIP_DELAY = 3000,
+            MAX_WAIT = 5500;
+          var pauseBtn = document.getElementById('pauseBtn');
+          if (pauseBtn) {
+            pauseBtn.style.display = 'inline-block';
+            pauseBtn.onclick = function() {
+              isPaused = !isPaused;
+              if (isPaused) {
+                clearAllTimers();
+                pauseBtn.innerHTML = 'Play';
+              } else {
+                pauseBtn.innerHTML = 'Pause';
+                showNextImage();
+              }
+            };
+          }
+          function clearAllTimers() {
+            if (nextTimer) clearTimeout(nextTimer);
+            if (maxWaitTimer) clearTimeout(maxWaitTimer);
+          }
+          function showNextImage() {
+            if (isPaused) return;
+            clearAllTimers();
+            isLoading = true;
+            retryCount = 0;
+            index++;
+            if (index >= total) index = 0;
+            img.src = images[index];
+            counter.innerHTML = (index + 1) + ' / ' + total;
+            maxWaitTimer = setTimeout(function() {
+              if (isLoading && !isPaused) {
+                isLoading = false;
+                scheduleNext(SKIP_DELAY);
+              }
+            }, MAX_WAIT);
+          }
+          function scheduleNext(delay) {
+            if (isPaused) return;
+            clearAllTimers();
+            nextTimer = setTimeout(showNextImage, delay);
+          }
+          img.onload = function() {
+            if (isLoading && !isPaused) {
+              isLoading = false;
+              clearAllTimers();
+              scheduleNext(DISPLAY_TIME);
+            }
+          };
+          img.onerror = function() {
+            if (!isLoading || isPaused) return;
+            retryCount++;
+            if (retryCount <= MAX_RETRIES) {
+              clearAllTimers();
+              img.src = images[index];
+              maxWaitTimer = setTimeout(function() {
+                if (isLoading && !isPaused) {
+                  isLoading = false;
+                  scheduleNext(SKIP_DELAY);
+                }
+              }, MAX_WAIT);
             } else {
-                silkSpan.style.display = 'none';
+              isLoading = false;
+              clearAllTimers();
+              counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+              scheduleNext(SKIP_DELAY);
+            }
+          };
+          isLoading = true;
+          retryCount = 0;
+          img.src = images[0];
+          counter.innerHTML = '1 / ' + total;
+          maxWaitTimer = setTimeout(function() {
+            if (isLoading && !isPaused) {
+              isLoading = false;
+              scheduleNext(SKIP_DELAY);
+            }
+          }, MAX_WAIT);
+        }
+
+        // ---------- Game Price Calculator (dynamic platforms from Game_Sizes.txt) ----------
+        var gameDatabase = {};
+        var platformGamesList = {};
+        var priceTiers = [];
+
+        function parsePriceTiersFromPage() {
+          var allDivs = document.querySelectorAll('div[style*="background:#222"]');
+          var gamesDiv = null;
+          for (var i = 0; i < allDivs.length; i++) {
+            var strong = allDivs[i].querySelector('strong');
+            if (strong && strong.innerText && strong.innerText.indexOf('Games (Install games') === 0) {
+              gamesDiv = allDivs[i];
+              break;
+            }
+          }
+          if (!gamesDiv) {
+            priceTiers = [{ maxSize: 6, price: 5 }, { maxSize: 11, price: 10 }, { maxSize: 21, price: 20 }, { maxSize: 31, price: 35 }, { maxSize: Infinity, price: 50 }];
+            return;
+          }
+          var spans = gamesDiv.querySelectorAll('span.spanned');
+          var tiers = [];
+          for (var i = 0; i < spans.length; i++) {
+            var text = spans[i].innerText.trim();
+            var matchLess = text.match(/Games\s+([\d\.]+)GB\s+or less:\s*(\d+)\$/i);
+            var matchUpTo = text.match(/Games\s+up to\s+([\d\.]+)GB:\s*(\d+)\$/i);
+            var matchArrow = text.match(/Games\s+→\s+([\d\.]+)GB:\s*(\d+)\$/i);
+            if (matchLess) {
+              tiers.push({ maxSize: parseFloat(matchLess[1]), price: parseInt(matchLess[2], 10) });
+            } else if (matchUpTo) {
+              tiers.push({ maxSize: parseFloat(matchUpTo[1]), price: parseInt(matchUpTo[2], 10) });
+            } else if (matchArrow) {
+              tiers.push({ maxSize: Infinity, price: parseInt(matchArrow[2], 10) });
+            }
+          }
+          if (tiers.length === 0) {
+            priceTiers = [{ maxSize: 6, price: 5 }, { maxSize: 11, price: 10 }, { maxSize: 21, price: 20 }, { maxSize: 31, price: 35 }, { maxSize: Infinity, price: 50 }];
+          } else {
+            priceTiers = tiers;
+          }
+        }
+
+        function getPriceFromSize(sizeGB) {
+          for (var i = 0; i < priceTiers.length; i++) {
+            if (sizeGB <= priceTiers[i].maxSize) {
+              return priceTiers[i].price;
+            }
+          }
+          return 50;
+        }
+
+        function convertToGB(sizeStr) {
+    // Added \s* before the $ to ignore any accidental trailing spaces or hidden characters
+    var match = sizeStr.match(/^([\d\.]+)\s*(KB|MB|GB|TB)\s*$/i);
+    if (!match) return null;
+    
+    var value = parseFloat(match[1]);
+    var unit = match[2].toUpperCase();
+    
+    if (unit === 'KB') return value / (1024 * 1024);
+    if (unit === 'MB') return value / 1024;
+    if (unit === 'TB') return value * 1024;
+    
+    return value; // Already in GB
+}
+ function parseGameSizes(text) {
+    var lines = text.split(/\r?\n/);
+    var gameData = {};
+    var currentPlatform = null;
+
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line === "") continue;
+
+        // Check if the line is a Platform header (no colon)
+        if (line.indexOf(':') === -1) {
+            currentPlatform = line;
+            if (!gameData[currentPlatform]) {
+                gameData[currentPlatform] = [];
+            }
+        } else if (currentPlatform) {
+            // It's a game line, split at the first colon
+            var parts = line.split(':');
+            var gameName = parts[0].trim();
+            var sizeStr = parts[1].trim();
+            
+            // Use the convertToGB function we just fixed
+            var size = convertToGB(sizeStr);
+            
+            // Only add if it parsed correctly
+            if (size !== null) {
+                gameData[currentPlatform].push({ name: gameName, size: size });
             }
         }
     }
+    return gameData;
+}
 
-    // Also convert all existing images in the page (like the warning image) to HTTP for Silk
-    function fixImagesForSilk() {
-        if (!window.isPS3SilkBrowserEngine) return;
-        var imgs = document.getElementsByTagName('img');
-        for (var i = 0; i < imgs.length; i++) {
-            var src = imgs[i].src;
-            if (src && src.indexOf('https://') === 0) {
-                imgs[i].src = src.replace('https://', 'http://');
+
+        function formatSize(sizeGB) {
+          if (sizeGB < 0.001) return (sizeGB * 1024 * 1024).toFixed(2) + ' KB';
+          if (sizeGB < 1) return (sizeGB * 1024).toFixed(2) + ' MB';
+          return sizeGB.toFixed(2) + ' GB';
+        }
+
+        function populatePlatformDropdown(platforms) {
+          var select = document.getElementById('gamePlatformSelect');
+          if (!select) return;
+          select.innerHTML = '';
+          for (var i = 0; i < platforms.length; i++) {
+            var option = document.createElement('option');
+            option.value = platforms[i];
+            option.textContent = platforms[i];
+            select.appendChild(option);
+          }
+          // After populating, update the datalist for the first platform
+          if (platforms.length > 0) updateDatalist();
+        }
+
+        function loadGameDatabase() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/Game_Sizes.txt', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var text = xhr.responseText;
+      var lines = text.split(/\r?\n/);
+      var currentPlatform = '';
+      var platforms = [];
+      
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (line === '') continue;
+
+        var colonPos = line.indexOf(':');
+        
+        // Logic to determine if it's a Platform Header or a Game Entry
+        var isGameEntry = false;
+        if (colonPos > 0) {
+            // Check if the part after the colon is a valid file size unit
+            var sizePart = line.substring(colonPos + 1).trim();
+            if (/(KB|MB|GB|TB)$/i.test(sizePart)) {
+                isGameEntry = true;
             }
         }
+
+        if (!isGameEntry) {
+          // --- It's a Platform Header ---
+          // Strip colon if user included it at the end
+          currentPlatform = line.replace(/:$/, "").trim();
+          
+          if (currentPlatform !== '') {
+            // Only add to platforms array if we haven't seen it yet
+            if (platforms.indexOf(currentPlatform) === -1) {
+              platforms.push(currentPlatform);
+            }
+            if (!gameDatabase[currentPlatform]) gameDatabase[currentPlatform] = {};
+            if (!platformGamesList[currentPlatform]) platformGamesList[currentPlatform] = [];
+          }
+        } else {
+          // --- It's a Game Entry ---
+          if (currentPlatform !== '') {
+            var gameName = line.substring(0, colonPos).trim();
+            var sizePart = line.substring(colonPos + 1).trim();
+            var sizeGB = convertToGB(sizePart);
+            
+            if (sizeGB !== null) {
+              var lowerGame = gameName.toLowerCase();
+              gameDatabase[currentPlatform][lowerGame] = sizeGB;
+              platformGamesList[currentPlatform].push(gameName);
+            }
+          }
+        }
+      }
+      
+      // Sort game lists alphabetically
+      for (var p in platformGamesList) {
+        platformGamesList[p].sort();
+      }
+      
+      // Populate the platform dropdown
+      populatePlatformDropdown(platforms);
+    }
+  };
+  xhr.send();
+}
+
+        function updateDatalist() {
+          var platform = document.getElementById('gamePlatformSelect').value;
+          var datalist = document.getElementById('gameDatalist');
+          datalist.innerHTML = '';
+          if (platformGamesList[platform]) {
+            var games = platformGamesList[platform];
+            for (var i = 0; i < games.length; i++) {
+              var option = document.createElement('option');
+              option.value = games[i];
+              datalist.appendChild(option);
+            }
+          }
+        }
+
+        function showGamePrice() {
+          var title = document.getElementById('gameTitleInput').value.trim();
+          var platform = document.getElementById('gamePlatformSelect').value;
+          var resultDiv = document.getElementById('gamePriceResult');
+          if (title === '') {
+            resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a game title.</span>';
+            return;
+          }
+          if (!gameDatabase[platform]) {
+            resultDiv.innerHTML = '<span style="color:#ffa500;">No data for this platform yet.</span>';
+            return;
+          }
+          var lowerTitle = title.toLowerCase();
+          if (gameDatabase[platform][lowerTitle]) {
+            var foundSize = gameDatabase[platform][lowerTitle];
+            var price = getPriceFromSize(foundSize);
+            var sizeDisplay = formatSize(foundSize);
+            resultDiv.innerHTML = '<span style="color:#28a745;">✅ "' + title + '" (' + platform + ') is ' + sizeDisplay + ' → Price: $' + price + '</span>';
+          } else {
+            resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in  database, contact me to find out its size.</span>';
+          }
+        }
+
+        function initGameCalculator() {
+          parsePriceTiersFromPage();
+          loadGameDatabase(); // this will also populate the dropdown
+          var calcBtn = document.getElementById('calcGamePriceBtn');
+          if (calcBtn) calcBtn.onclick = showGamePrice;
+          var platformSelect = document.getElementById('gamePlatformSelect');
+          if (platformSelect) platformSelect.onchange = updateDatalist;
+          var titleInput = document.getElementById('gameTitleInput');
+          if (titleInput) {
+            titleInput.onkeypress = function(e) {
+              e = e || window.event;
+              if ((e.keyCode || e.which) === 13) {
+                showGamePrice();
+                return false;
+              }
+            };
+          }
+        }
+
+        // ---------- Console stock and services ----------
+        function initConsoleStock() {
+          (function() {
+            var REMOTE_URL = 'https://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/dev/services.txt';
+            var consolesList = document.getElementById('consoles-list');
+
+            function trim(str) {
+              var start = 0, end = str.length - 1;
+              while (start <= end && (str.charAt(start) === ' ' || str.charAt(start) === '\t')) start++;
+              while (end >= start && (str.charAt(end) === ' ' || str.charAt(end) === '\t')) end--;
+              return str.substring(start, end + 1);
+            }
+
+            function parseImageArray(line) {
+              var imgStart = line.indexOf('['), imgEnd = line.indexOf(']');
+              if (imgStart === -1 || imgEnd === -1) return [];
+              var arrStr = line.substring(imgStart + 1, imgEnd);
+              var urls = [], parts = arrStr.split(',');
+              for (var i = 0; i < parts.length; i++) {
+                var url = trim(parts[i].replace(/['"]/g, ''));
+                if (url) urls.push(url);
+              }
+              return urls;
+            }
+
+            function parseServices(text) {
+              var consoles = [], lines = text.split('\n'), currentConsole = null, insideReplaced = false, insideGameList = false;
+              for (var i = 0; i < lines.length; i++) {
+                var raw = lines[i], line = trim(raw);
+                if (line === '') continue;
+                var consoleMatch = line.match(/^console-(\d+):/);
+                if (consoleMatch) {
+                  if (currentConsole) consoles.push(currentConsole);
+                  currentConsole = { listed_date: '', images: [], type: '', firmware: '', model: '', date_code: '', manufacturing_date: '', factory_firmware: '', accessories: '', hardDrive: '', replacedThermalPaste: 'No', replacedHardDrive: 'No', replacedCMOS: 'No', price: '', issues: '', soldOn: '', warranty: '', warranty_note: '', additionalInfo: '', gameList: {} }; 
+insideReplaced = false;
+insideGameList = false;
+                  continue;
+                }
+                if (!currentConsole) continue;
+                if (insideReplaced) {
+                  if (line.indexOf('thermal paste:') === 0)
+                  {
+                    var tp = trim(line.substring('thermal paste:'.length));
+                    currentConsole.replacedThermalPaste = (tp === 'yes') ? 'Yes' : 'No';
+                  } 
+                  else if (line.indexOf('hard drive:') === 0) 
+                  {
+                    var hd = trim(line.substring('hard drive:'.length));
+                    currentConsole.replacedHardDrive = (hd === 'yes') ? 'Yes' : 'No';
+                  } 
+                  else if (line.indexOf('cmos battery:') === 0) 
+                  {
+                    var cmos = trim(line.substring('cmos battery:'.length));
+                    currentConsole.replacedCMOS = (cmos === 'yes') ? 'Yes' : 'No';
+                  } 
+                  else 
+                  {
+                    insideReplaced = false;
+                  }
+                  if (insideReplaced) continue;
+                }
+                if (line.indexOf('images:') === 0) currentConsole.images = parseImageArray(line);
+                else if (line.indexOf('additional Info:') === 0) currentConsole.additionalInfo = trim(line.substring('additional Info:'.length));
+                else if (line === 'game list:') {
+    insideGameList = true;
+    insideReplaced = false; 
+    continue;
+}
+
+if (insideGameList) {
+    var firstColon = line.indexOf(':');
+    if (firstColon !== -1) {
+        var platform = trim(line.substring(0, firstColon));
+        var gamesStr = trim(line.substring(firstColon + 1));
+        
+        if (gamesStr !== '') {
+            var gamesArray = gamesStr.split(',').map(function(g) { 
+                return trim(g); 
+            });
+            currentConsole.gameList[platform] = gamesArray;
+            continue; 
+        } else {
+            insideGameList = false; 
+        }
+    } else {
+        insideGameList = false; 
+    }
+}
+                else if (line.indexOf('console-type:') === 0) currentConsole.type = trim(line.substring('console-type:'.length));
+                else if (line.indexOf('firmware:') === 0) currentConsole.firmware = trim(line.substring('firmware:'.length));
+                else if (line.indexOf('issues:') === 0) currentConsole.issues = trim(line.substring('issues:'.length));
+                else if (line.indexOf('model-number:') === 0) currentConsole.model = trim(line.substring('model-number:'.length));
+                else if (line.indexOf('accessories:') === 0) currentConsole.accessories = trim(line.substring('accessories:'.length));
+                else if (line.indexOf('hard drive:') === 0) currentConsole.hardDrive = trim(line.substring('hard drive:'.length));
+                else if (line.indexOf('price:') === 0) currentConsole.price = trim(line.substring('price:'.length));
+                else if (line.indexOf('replaced:') === 0) insideReplaced = true;
+                else if (line.indexOf('sold on:') === 0) currentConsole.soldOn = trim(line.substring('sold on:'.length));
+                else if (line.indexOf('warranty:') === 0) currentConsole.warranty = trim(line.substring('warranty:'.length));
+                else if (line.indexOf('warranty note:') === 0) currentConsole.warranty_note = trim(line.substring('warranty note:'.length));
+                else if (line.indexOf('listed on:') == 0) currentConsole.listed_date = trim(line.substring('listed on:'.length));
+                else if (line.indexOf('factory_firmware:') == 0) currentConsole.factory_firmware = trim(line.substring('factory_firmware:'.length));
+                else if (line.indexOf('manufacturing date:') == 0) currentConsole.manufacturing_date = trim(line.substring('manufacturing date:'.length));
+                else if (line.indexOf('date code:') == 0) currentConsole.date_code = trim(line.substring('date code:'.length));
+              }
+              if (currentConsole) consoles.push(currentConsole);
+              return consoles;
+            }
+
+            function createConsoleSlider(container, images) {
+              var sliderHTML = '';
+              sliderHTML += '<div style="position:relative; display:inline-block; margin-top:10px; margin-bottom:10px;">';
+              sliderHTML += '  <img class="cons-slider-img" src="" width="300" height="200" alt="Console image" style="border-radius:8px; box-shadow:2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">';
+              sliderHTML += '  <div style="margin-top:10px; color:#fff;"><span class="cons-slider-counter">1 / ' + images.length + '</span></div>';
+              if (window.isPS3) {
+                sliderHTML += '  <div style="margin-top:8px;">';
+                sliderHTML += '    <button class="cons-prev-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">◀ Prev</button>';
+                sliderHTML += '    <button class="cons-next-btn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next ▶</button>';
+                sliderHTML += '  </div>';
+              } else {
+                sliderHTML += '  <button class="cons-pause-btn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>';
+              }
+              sliderHTML += '</div>';
+              container.innerHTML = sliderHTML;
+              var img = container.querySelector('.cons-slider-img'), counter = container.querySelector('.cons-slider-counter');
+              if (window.isPS3) {
+                var currentIndex = 0;
+                function showImage(idx) {
+                  if (idx < 0) idx = images.length - 1;
+                  if (idx >= images.length) idx = 0;
+                  currentIndex = idx;
+                  img.src = images[currentIndex];
+                  counter.innerHTML = (currentIndex + 1) + ' / ' + images.length;
+                }
+                var prevBtn = container.querySelector('.cons-prev-btn'), nextBtn = container.querySelector('.cons-next-btn');
+                prevBtn.onclick = function() { showImage(currentIndex - 1); };
+                nextBtn.onclick = function() { showImage(currentIndex + 1); };
+                showImage(0);
+              } else {
+                var pauseBtn = container.querySelector('.cons-pause-btn');
+                var total = images.length, index = 0, nextTimer = null, maxWaitTimer = null;
+                var isLoading = false, retryCount = 0, MAX_RETRIES = 1, isPaused = false;
+                var DISPLAY_TIME = 1500, SKIP_DELAY = 3000, MAX_WAIT = 5500;
+                if (pauseBtn) {
+                  pauseBtn.style.display = 'inline-block';
+                  pauseBtn.onclick = function() {
+                    isPaused = !isPaused;
+                    if (isPaused) { clearAllTimers(); pauseBtn.innerHTML = 'Play'; }
+                    else { pauseBtn.innerHTML = 'Pause'; showNextImage(); }
+                  };
+                }
+                function clearAllTimers() {
+                  if (nextTimer) clearTimeout(nextTimer);
+                  if (maxWaitTimer) clearTimeout(maxWaitTimer);
+                }
+                function showNextImage() {
+                  if (isPaused) return;
+                  clearAllTimers();
+                  isLoading = true;
+                  retryCount = 0;
+                  index = (index + 1) % total;
+                  img.src = images[index];
+                  counter.innerHTML = (index + 1) + ' / ' + total;
+                  maxWaitTimer = setTimeout(function() {
+                    if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                  }, MAX_WAIT);
+                }
+                function scheduleNext(delay) {
+                  if (isPaused) return;
+                  clearAllTimers();
+                  nextTimer = setTimeout(showNextImage, delay);
+                }
+                img.onload = function() {
+                  if (isLoading && !isPaused) { isLoading = false; clearAllTimers(); scheduleNext(DISPLAY_TIME); }
+                };
+                img.onerror = function() {
+                  if (!isLoading || isPaused) return;
+                  retryCount++;
+                  if (retryCount <= MAX_RETRIES) {
+                    clearAllTimers();
+                    img.src = images[index];
+                    maxWaitTimer = setTimeout(function() {
+                      if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                    }, MAX_WAIT);
+                  } else {
+                    isLoading = false;
+                    clearAllTimers();
+                    counter.innerHTML = (index + 1) + ' / ' + total + ' (failed)';
+                    scheduleNext(SKIP_DELAY);
+                  }
+                };
+                isLoading = true;
+                retryCount = 0;
+                img.src = images[0];
+                counter.innerHTML = '1 / ' + total;
+                maxWaitTimer = setTimeout(function() {
+                  if (isLoading && !isPaused) { isLoading = false; scheduleNext(SKIP_DELAY); }
+                }, MAX_WAIT);
+              }
+            }
+
+            function buildConsolesUI(consoles) {
+              if (!consolesList) return;
+              consolesList.innerHTML = '';
+              if (typeof window.servicePrices === 'undefined') {
+                window.servicePrices = {
+                  option1: document.getElementById('hdd_replacement_option_1') ? parseInt(document.getElementById('hdd_replacement_option_1').innerText, 10) : 40,
+                  option2: document.getElementById('hdd_replacement_option_2') ? parseInt(document.getElementById('hdd_replacement_option_2').innerText, 10) : 20,
+                  option3: document.getElementById('hdd_replacement_option_3') ? parseInt(document.getElementById('hdd_replacement_option_3').innerText, 10) : 10
+                };
+              }
+              function getPerthToday() {
+                var now = new Date();
+                var perthTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+                return new Date(perthTime.getFullYear(), perthTime.getMonth(), perthTime.getDate());
+              }
+              var today = getPerthToday();
+              var validConsoles = [];
+              for (var i = 0; i < consoles.length; i++) {
+                var c = consoles[i];
+                if (!c.soldOn) { validConsoles.push(c); continue; }
+                if (!c.warranty) continue;
+                var parts = c.soldOn.split('/');
+                if (parts.length !== 3) continue;
+                var day = parseInt(parts[0],10), month = parseInt(parts[1],10), year = parseInt(parts[2],10);
+                if (isNaN(day) || isNaN(month) || isNaN(year)) continue;
+                var durMatch = c.warranty.match(/(\d+)/);
+                var durationDays = durMatch ? parseInt(durMatch[1],10) : 0;
+                if (durationDays <= 0) continue;
+                var soldDate = new Date(year, month-1, day);
+                var expirationDate = new Date(soldDate);
+                expirationDate.setDate(soldDate.getDate() + durationDays);
+                if (expirationDate >= today) validConsoles.push(c);
+              }
+              var unsoldConsoles = validConsoles.filter(function(c) { return !c.soldOn; });
+              var CFW_Count=0, qCFW_Count=0, HEN_Count=0, OFW_Count=0, DEX_Count=0;
+              for (var j=0; j<unsoldConsoles.length; j++) {
+                var type = unsoldConsoles[j].type;
+                if (!type) continue;
+                switch (type.toUpperCase()) {
+                  case 'CFW': CFW_Count++; break;
+                  case 'QCFW': qCFW_Count++; break;
+                  case 'HEN': HEN_Count++; break;
+                  case 'OFW': OFW_Count++; break;
+                  case 'DEX': DEX_Count++; break;
+                }
+              }
+              var stockBox = document.getElementById('stock-box');
+              if (stockBox) {
+    stockBox.style.position = 'relative';
+    var extraLeft = 20, rightExtension = 15;
+    var soldCount = consoles.length - unsoldConsoles.length;
+
+    stockBox.innerHTML = '<div id="top-line" style="border-bottom: 3px solid #dc3545; margin: -15px 0 6px 0;"></div>' +
+                         '<span id="title-line"><span style="color:#dc3545;">Available PS3s</span></span><br>' +
+                         'Total: ' + unsoldConsoles.length + 
+                         // Top separator (under Total)
+                         '<div id="red-separator" style="border-bottom: 4px solid #dc3545; margin: 6px 0 5px 0;"></div>' +
+                         // Console Breakdown
+                         '<div style="margin-bottom: 3px; margin-top: 5px">' +
+                         'DEXs: ' + DEX_Count + '<br>' +
+                         'CFWs: ' + CFW_Count + '<br>' +
+                         'qCFWs: ' + qCFW_Count + '<br>' +
+                         'HENs: ' + HEN_Count + '<br>' +
+                         'OFWs: ' + OFW_Count + '</div>' +
+                         // Bottom separator (above Sold)
+                         '<div id="red-separator-2" style="border-bottom: 4px solid #dc3545; margin: 5px 0 6px 0;"></div>' +
+                         'Sold: ' + soldCount +
+                         '<div id="bottom-line" style="border-bottom: 3px solid #dc3545; margin: 6px 0 -15px 0;"></div>';
+    
+    var titleEl = document.getElementById('title-line');
+    if (titleEl) {
+        var lineWidth = titleEl.offsetWidth + extraLeft + rightExtension;
+        
+        var ids = ['red-separator', 'red-separator-2', 'top-line', 'bottom-line'];
+        
+        for (var j=0; j<ids.length; j++) {
+            var el = document.getElementById(ids[j]);
+            if (el) { 
+                el.style.width = lineWidth + 'px'; 
+                el.style.marginLeft = '-' + extraLeft + 'px'; 
+            }
+        }
+        var verticalLine = document.createElement('div');
+        verticalLine.style.position = 'absolute';
+        verticalLine.style.top = '0';
+        verticalLine.style.bottom = '0';
+        verticalLine.style.borderLeft = '2px solid #dc3545';
+        verticalLine.style.left = (titleEl.offsetLeft + titleEl.offsetWidth + rightExtension) + 'px';
+        stockBox.appendChild(verticalLine);
+    }
+}
+              for (var k=0; k<validConsoles.length; k++) {
+                var c = validConsoles[k];
+                var li = document.createElement('li');
+                li.style.padding = '0';
+                li.style.margin = '0 0 10px 0';
+                var displayIssues = c.issues ? c.issues : 'None',
+                    displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!',
+                    displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
+                var infoHTML = '';
+                var titleText = 'PS3 #' + (k+1);
+                if (c.soldOn) {
+                  titleText += ' (Sold on: ' + c.soldOn;
+                  if (c.warranty) {
+                    var wParts = c.soldOn.split('/');
+                    if (wParts.length === 3) {
+                      var wDay = parseInt(wParts[0],10), wMonth = parseInt(wParts[1],10), wYear = parseInt(wParts[2],10);
+                      if (!isNaN(wDay) && !isNaN(wMonth) && !isNaN(wYear)) {
+                        var wSoldDate = new Date(wYear, wMonth-1, wDay);
+                        var durMatch = c.warranty.match(/(\d+)/);
+                        var durDays = durMatch ? parseInt(durMatch[1],10) : 0;
+                        if (durDays > 0) {
+                          var wExpDate = new Date(wSoldDate);
+                          wExpDate.setDate(wSoldDate.getDate() + durDays);
+                          var todayClean = getPerthToday();
+                          var diffTime = wExpDate.getTime() - todayClean.getTime();
+                          var daysLeft = Math.ceil(diffTime / (1000*60*60*24));
+                          if (daysLeft === 1) titleText += ' - Last day of warranty!';
+                          else if (daysLeft > 1) titleText += ' - Warranty: ' + daysLeft + ' days left';
+                        }
+                      }
+                    }
+                  }
+                  titleText += ')';
+                }
+                var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
+                
+                infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
+                infoHTML += 'Price: ' + displayPrice + '<br>';
+                infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
+                infoHTML += 'Firmware: ' + c.firmware + '<br>';
+                infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : 'Unknown, not set') + ' ' + (c.date_code !== '' ? '(date code: ' + c.date_code + ')' : c.manufacturing_date !== '' ? '(manufacturing date: ' + c.manufacturing_date + ')' : '') + '<br>';
+                infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
+                infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
+                infoHTML += 'PS2 Backwards Compatibility: ' + getBackwardsCompatibility(c.type, c.model, true) + '<br>';
+                infoHTML += (c.factory_firmware && c.factory_firmware !== '' ? ' ' : 'Estimated ') + 'Minimum Applicable Firmware Version: ' + FactoryFW + ' (Also Known As: Max Downgrade Version, Factory Firmware)' + '<br>';
+                infoHTML += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
+                infoHTML += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
+                infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
+                infoHTML += 'Replaced CMOS Battery: ' + c.replacedCMOS + '<br>';
+                infoHTML += 'Known issues: ' + displayIssues + '<br>';
+                infoHTML += 'Accessories: ' + displayAccessories + '<br>';
+                if (c.additionalInfo)
+                infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g,'<br>') + '<br>';
+                
+if (c.gameList && Object.keys(c.gameList).length > 0) {
+    // Initialize Grand Total Accumulators
+    var totalGames = 0;
+    var totalSpaceGB = 0;
+    var totalValue = 0;
+    var platformsHTML = "";
+    var isFirstPlatform = true;
+
+    // --- Pass 1: Gather Metrics and Construct Sub-lists ---
+    for (var platform in c.gameList) {
+        var games = c.gameList[platform];
+        var platformGameCount = games.length;
+        
+        var platformSpaceGB = 0;
+        var platformValue = 0;
+        var gamesHTML = "";
+        
+        // Ensure database profile exists for current platform
+        var platformExists = (typeof gameDatabase !== 'undefined' && gameDatabase && gameDatabase[platform]);
+
+        for (var g = 0; g < games.length; g++) {
+            var gameName = games[g];
+            var lookupName = gameName.toLowerCase().trim();
+            
+            var sizeText = "Not in database";
+            var priceText = "Not in database";
+            
+            // Query match against Game_Sizes.txt dataset
+            if (platformExists && gameDatabase[platform][lookupName] !== undefined) {
+                var gameSizeGB = parseFloat(gameDatabase[platform][lookupName]);
+                var gamePrice = getPriceFromSize(gameSizeGB); // Connects to your HTML regex scraper
+                
+                platformSpaceGB += gameSizeGB;
+                platformValue += gamePrice;
+                
+                sizeText = formatSize(gameSizeGB); // Using your built-in function
+                priceText = "$" + gamePrice;
+            }
+            
+            // Sub-item format: └ Pokemon - Blue Version (Size) (Value: price)
+            gamesHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">' +
+                         '└ ' + gameName + ' (Game Size: ' + sizeText + ') (Value: ' + priceText + ')</span>';
+        }
+
+        // Tally up grand metrics
+        totalGames += platformGameCount;
+        totalSpaceGB += platformSpaceGB;
+        totalValue += platformValue;
+
+        // Platform metrics translation
+        var platformSizeText = (platformSpaceGB > 0) ? formatSize(platformSpaceGB) : "Not in database"; // Using your built-in function
+        var platformValueText = (platformValue > 0) ? "$" + platformValue : "Not in database";
+        var topMargin = isFirstPlatform ? '4px' : '12px';
+        isFirstPlatform = false;
+
+        // Platform line format: Game Boy (Number Games) (Space Required: size) (Total Value: price)
+        platformsHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + 
+                         platform + ' (' + platformGameCount + ' Games) (Space Required/Used: ' + platformSizeText + ') (Total Value: ' + platformValueText + ')</span>';
+        platformsHTML += gamesHTML;
     }
 
-    // Initialize everything after DOM is ready
-    window.addEventListener('load', function() {
-        fixImagesForSilk();
-        fetchAndBuild();
-        updateSilkLinkVisibility();
-    });
-</script>
+    var totalSpaceText = (totalSpaceGB > 0) ? formatSize(totalSpaceGB) : "Not in database"; // Using your built-in function
 
-<script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/DropdownMenu.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Correction.js"></script>
+    // --- Pass 2: Output Final UI Layout ---
+    infoHTML += '<div style="margin-top: 15px; background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">';
+    infoHTML += '<details>';
+    infoHTML += '<summary style="color:#fff; font-weight:bold; cursor:pointer; user-select:none; outline:none;">';
+    infoHTML += '<span style="color:#dc3545;">Included Games</span>';
+    infoHTML += '</summary>';
+    infoHTML += '<div style="margin-top: 10px;">';
 
-</body>
+    // Grand Summary Header Lines
+    infoHTML += '<span class="spanned" style="margin-top: 5px; display:block; font-weight:bold; color:#dc3545;">Total Games: <span style="color:#fff;">' + totalGames + '</span></span>';
+    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Used: <span style="color:#fff;">' + totalSpaceText + ' (Not including Updates, DLC or Game Saves etc)' + '</span></span>';
+    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Valued At: <span style="color:#fff;">$' + totalValue + ' (Based on my Services not actual game price)' + '</span></span><br>';
+
+    // Inject Platform Groups and Indented Child Nodes
+    infoHTML += platformsHTML;
+    
+    infoHTML += '</div>';
+    infoHTML += '</details>';
+    infoHTML += '</div>';
+}
+                infoHTML += '<br>';
+                if (c.warranty) {
+                  infoHTML += '<br>Warranty: ' + (c.warranty.replace('d',' Days')) + '<br>';
+                  if (c.warranty_note) {
+                    var warrantyNote = c.warranty_note.replace(/\\n/g,'<br>');
+                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_1\}/g, window.servicePrices.option1);
+                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_2\}/g, window.servicePrices.option2);
+                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_3\}/g, window.servicePrices.option3);
+                    infoHTML += warrantyNote + '<br>';
+                  }
+                }
+                infoHTML += '<div class="cons-slider-' + k + '"></div>';
+                var listedLine = 'Listed on: ' + (c.listed_date || 'unknown');
+                if (c.listed_date && !c.soldOn) {
+                  var listedParts = c.listed_date.split('/');
+                  if (listedParts.length === 3) {
+                    var lDay = parseInt(listedParts[0],10), lMonth = parseInt(listedParts[1],10), lYear = parseInt(listedParts[2],10);
+                    if (!isNaN(lDay) && !isNaN(lMonth) && !isNaN(lYear)) {
+                      var listedDate = new Date(lYear, lMonth-1, lDay);
+                      var todayClean = getPerthToday();
+                      var diffTime = todayClean.getTime() - listedDate.getTime();
+                      var daysListed = Math.floor(diffTime / (1000*60*60*24));
+                      if (daysListed < 0) daysListed = 0;
+                      listedLine += ' (Up for: ' + daysListed + ' Days)';
+                    }
+                  }
+                }
+                infoHTML += listedLine + '<br>';
+                var infoBox = document.createElement('div');
+                infoBox.style.background = '#222';
+                infoBox.style.borderLeft = '5px solid #dc3545';
+                infoBox.style.padding = '15px';
+                infoBox.style.color = '#fff';
+                infoBox.style.marginBottom = '0';
+                infoBox.innerHTML = infoHTML;
+                li.appendChild(infoBox);
+                consolesList.appendChild(li);
+                var sliderContainer = infoBox.querySelector('.cons-slider-' + k);
+                createConsoleSlider(sliderContainer, c.images);
+              }
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', REMOTE_URL, true);
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                var fullText = xhr.responseText;
+                var statusMatch = fullText.match(/^service availability status:\s*(.+)$/im);
+                var noteMatch = fullText.match(/^availability-note:\s*(.*)$/im);
+                var hoursMatch = fullText.match(/^opening-hours:\s*(.*)$/im);
+                var statusSpan = document.getElementById('serviceStatus');
+                var noteSpan = document.getElementById('availabilityNote');
+                if (statusSpan) {
+                  var statusText = (statusMatch && statusMatch[1]) ? statusMatch[1] + (statusMatch[1].toLowerCase() == 'available' ? ' (Accepting Orders/Work)' : ' (Not Accepting Orders/Work)') : 'Unknown';
+                  var message = statusText;
+                  if (statusText.toLowerCase().startsWith('available') && hoursMatch && hoursMatch[1]) {
+                    var hours = hoursMatch[1];
+                    if (hours !== '' && hours !== 'none' && hours !== 'not set yet') {
+                      message += '<br>└ Opening Hours: ' + hours + '<br>';
+                      message += "└ Notes: Might be able to do earlier if arranged, we'll still need to discuss and arrange a day and time before you come you can reach out to me on social media!" + '<br>';
+                      message += "└ if your putting someone onto me don't give out my phone number if you know it!";
+                    }
+                  }
+                  statusSpan.innerHTML = message;
+                }
+                if (noteSpan) {
+                  noteSpan.innerText = '';
+                  if (noteMatch && noteMatch[1]) {
+                    var noteText = noteMatch[1];
+                    var ignoreNote = (noteText === '' || noteText === '?' || noteText.toLowerCase() === 'not set' || noteText.toLowerCase() === 'none');
+                    if (!ignoreNote) noteSpan.innerText = '└ ' + noteText;
+                  }
+                }
+                var consoles = parseServices(fullText);
+                buildConsolesUI(consoles);
+              }
+            };
+            xhr.send();
+          })();
+        }
+
+        function onPageLoad() {
+          if (window.isPS3) startSliderManual();
+          else startSliderAuto();
+          setTimeout(initConsoleStock, 100);
+          initGameCalculator();
+          var tutorialBtn = document.getElementById('tutorialBtn'), tutorialDiv = document.getElementById('manualTutorial');
+          if (tutorialBtn && tutorialDiv) {
+            tutorialBtn.onclick = function() {
+              if (tutorialDiv.style.display === 'none') {
+                tutorialDiv.style.display = 'block';
+                tutorialBtn.textContent = 'Hide Manual Check Tutorial';
+              } else {
+                tutorialDiv.style.display = 'none';
+                tutorialBtn.textContent = 'Show Manual Check Tutorial';
+              }
+            };
+          }
+        }
+        if (window.addEventListener) window.addEventListener('load', onPageLoad, false);
+        else if (window.attachEvent) window.attachEvent('onload', onPageLoad);
+        else window.onload = function() { onPageLoad(); };
+      })();
+    </script>
+
+    <!-- ==================== Checker helpers ==================== -->
+    <script>
+      function getPS3Model(model) {
+        if (!model || model === '?') return '?';
+        var cleaned = '';
+        for (var i = 0; i < model.length; i++) {
+          var ch = model.charAt(i);
+          if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) cleaned += ch;
+        }
+        var m = cleaned.toUpperCase();
+        if (/^DECR/.test(m)) return 'Reference Tool';
+        if (/^DECHS/.test(m)) return 'Debug Station';
+        if (/^DECH/.test(m)) return 'Debug Station';
+        if (/^CEB/.test(m)) return 'Prototype';
+        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 || m.indexOf('CECHC') === 0 ||
+          m.indexOf('CECHE') === 0 || m.indexOf('CECHG') === 0 || m.indexOf('CECHH') === 0 ||
+          m.indexOf('CECHJ') === 0 || m.indexOf('CECHK') === 0 || m.indexOf('CECHL') === 0 ||
+          m.indexOf('CECHM') === 0 || m.indexOf('CECHP') === 0 || m.indexOf('CECHQ') === 0) return 'Fat';
+        if (m.indexOf('CECH4') === 0) return 'Super Slim';
+        if (m.indexOf('CECH2') === 0 || m.indexOf('CECH3') === 0) return 'Slim';
+        return 'Unknown';
+      }
+      function getFlashType(model) {
+        if (!model || model === '?') return 'Unknown';
+        var m = model.toUpperCase();
+        if (m.indexOf('CECHA') === 0 || m.indexOf('CECHB') === 0 ||
+          m.indexOf('CECHC') === 0 || m.indexOf('CECHE') === 0 ||
+          m.indexOf('CECHG') === 0) return 'NAND';
+        if (/^DECR-?1000/.test(m)) return 'NAND';
+        if (/^DECH-?A00/.test(m) || /^DECH-?J00/.test(m) || /^DECHSJ00/.test(m)) return 'NAND';
+        if ((/^CECH-?42\d{2}[A-Za-z]?$/).test(m) || (/^CECH-?43\d{2}[A-Za-z]?$/).test(m)) return 'eMMC';
+        if (/^DECH-?4000/.test(m) || /^DECH-?40\d{2}[A-Za-z]?$/.test(m)) return 'eMMC';
+        return 'NOR';
+      }
+    </script>
+
+    <script>
+      function trimStr(str) { return str.replace(/^\s+|\s+$/g, ''); }
+      function parseFullDate(dateStr) {
+        var s = trimStr(dateStr);
+        var parts = s.split(/\s+/);
+        if (parts.length < 2) return null;
+        var monthName = parts[0].toLowerCase();
+        var yearPart = parts[1];
+        var year = parseInt(yearPart, 10);
+        if (isNaN(year) || year < 2009 || year > 2013) return null;
+        var months = { january:1, february:2, march:3, april:4, may:5, june:6, july:7, august:8, september:9, october:10, november:11, december:12,
+          jan:1, feb:2, mar:3, apr:4, jun:6, jul:7, aug:8, sep:9, oct:10, nov:11, dec:12 };
+        var monthNum = months[monthName];
+        if (monthNum === undefined) return null;
+        return { yearDigit: year - 2010, month: monthNum, year: year };
+      }
+      function getModelPrefix(cleaned) {
+        if (/^CECH[A-HJ-MP-Q]/.test(cleaned)) return cleaned.substring(0,5);
+        var match = cleaned.match(/^CECH(\d\d)/);
+        if (match) return 'CECH-' + match[1];
+        return cleaned;
+      }
+      function checkCFWCompatibility(model, datecode) {
+        var cleaned = model.toUpperCase().replace(/\s/g, '').replace(/-/g, '');
+        if (cleaned.indexOf('CECH') !== 0 && cleaned.indexOf('DECH') !== 0 && cleaned.indexOf('DECR') !== 0 && cleaned.indexOf('CEB') !== 0)
+          cleaned = 'CECH' + cleaned;
+        var isDevKit = (cleaned.indexOf('DECR') === 0 || cleaned.indexOf('DECH') === 0 || cleaned.indexOf('DECHS') === 0 || cleaned.indexOf('CEB') === 0);
+        var cfw = '', maxDowngradeFirmware = null, prefix = getModelPrefix(cleaned);
+        if (prefix) {
+          var yr = 0, mo = 0;
+          if (datecode) {
+            var pd = parseFullDate(datecode);
+            if (pd) { yr = pd.year; mo = pd.month; }
+            else {
+              var dc = trimStr(datecode.toUpperCase());
+              if (dc.length >= 2) {
+                var yd = dc.charCodeAt(0)-48, qc = dc.charAt(1), quarter = qc.charCodeAt(0)-64;
+                if (!isNaN(yd) && quarter>=1 && quarter<=4) { yr = yd+2010; mo = (quarter-1)*3+1; }
+              }
+            }
+          }
+          maxDowngradeFirmware = getMaxDowngradeFirmware(prefix, mo, yr);
+        }
+        function getDateInfo(dc) {
+          if (!dc) return null;
+          var parsed = parseFullDate(dc);
+          if (parsed) return { year: parsed.year, month: parsed.month, isManufactureDate: true };
+          var dcu = trimStr(dc.toUpperCase());
+          if (dcu.length>=2) {
+            var yd = dcu.charCodeAt(0)-48, qc = dcu.charAt(1), quarter = qc.charCodeAt(0)-64;
+            if (!isNaN(yd) && quarter>=1 && quarter<=4) return { year: yd+2010, month: (quarter-1)*3+1, isManufactureDate: false };
+          }
+          return null;
+        }
+        if (isDevKit) {
+          if (cleaned.indexOf('DECR')===0) cfw = 'Yes';
+          else if (cleaned.indexOf('CEB')===0) cfw = 'Yes';
+          else {
+            if (cleaned.indexOf('DECH25')===0 || cleaned.indexOf('DECH-25')===0 || cleaned.indexOf('DECHS25')===0) {
+              if (!datecode) return 'NEED_DATE';
+              var dinfo = getDateInfo(datecode);
+              if (!dinfo) return 'Invalid date code';
+              var year = dinfo.year, month = dinfo.month, label = dinfo.isManufactureDate ? 'manufacturing date' : 'date code';
+              if (year<=2010) cfw = 'Yes (DECH-25xx, ' + label + ' ' + datecode + ' - min firmware < 3.60)';
+              else if (year===2011) {
+                if (month>=1 && month<=3) cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
+                else if (month>=4 && month<=6) cfw = 'Maybe (Very Unlikely & Rare) - Manual check required (minimum firmware version must be < 3.60)';
+                else cfw = 'No (DECH-25xx, ' + label + ' ' + datecode + ' - production ended)';
+              } else cfw = 'No (DECH-25xx, ' + label + ' ' + datecode + ' - min firmware > 3.56)';
+            }
+            else if (cleaned.indexOf('DECH30')===0 || cleaned.indexOf('DECH-30')===0 || cleaned.indexOf('DECH40')===0 || cleaned.indexOf('DECH-40')===0) cfw = 'No';
+            else cfw = 'Yes';
+          }
+        } else {
+          if (cleaned.indexOf('CECHA')===0 || cleaned.indexOf('CECHB')===0 || cleaned.indexOf('CECHC')===0 || cleaned.indexOf('CECHE')===0 ||
+              cleaned.indexOf('CECHG')===0 || cleaned.indexOf('CECHH')===0 || cleaned.indexOf('CECHJ')===0 || cleaned.indexOf('CECHK')===0 ||
+              cleaned.indexOf('CECHL')===0 || cleaned.indexOf('CECHM')===0 || cleaned.indexOf('CECHP')===0 || cleaned.indexOf('CECHQ')===0) cfw = 'Yes';
+          else if (cleaned.indexOf('CECH20')===0 || cleaned.indexOf('CECH-20')===0 || cleaned.indexOf('CECH21')===0 || cleaned.indexOf('CECH-21')===0) cfw = 'Yes';
+          else if (cleaned.indexOf('CECH25')===0 || cleaned.indexOf('CECH-25')===0) {
+            if (!datecode) return 'NEED_DATE';
+            var dinfo = getDateInfo(datecode);
+            if (!dinfo) return 'Invalid date code';
+            var year = dinfo.year, month = dinfo.month, label = dinfo.isManufactureDate ? 'manufacturing date' : 'date code';
+            if (year<=2010) cfw = 'Yes (CECH-25xx, ' + label + ' ' + datecode + ' - min firmware < 3.60)';
+            else if (year===2011) {
+              if (month>=1 && month<=3) cfw = 'Maybe - Manual check required (minimum firmware version must be < 3.60)';
+              else if (month>=4 && month<=6) cfw = 'Maybe (Very Unlikely & Rare) - Manual check required (minimum firmware version must be < 3.60)';
+              else cfw = 'No (CECH-25xx, ' + label + ' ' + datecode + ' - production ended)';
+            } else cfw = 'No (CECH-25xx, ' + label + ' ' + datecode + ' - min firmware > 3.56)';
+          }
+          else if (cleaned.indexOf('CECH30')===0 || cleaned.indexOf('CECH-30')===0 ||
+                   cleaned.indexOf('CECH40')===0 || cleaned.indexOf('CECH-40')===0 ||
+                   cleaned.indexOf('CECH42')===0 || cleaned.indexOf('CECH-42')===0 ||
+                   cleaned.indexOf('CECH43')===0 || cleaned.indexOf('CECH-43')===0) cfw = 'No';
+          else return 'Unknown model';
+        }
+        var flash = getFlashType(cleaned);
+        var qcfw = (flash === 'NOR') ? 'Yes (requires soldering)' : 'No';
+        var modelType = getPS3Model(cleaned);
+        var displayModel = cleaned;
+        if (displayModel.indexOf('CECH')===0 && displayModel.length>5 && displayModel.charAt(4)>='0' && displayModel.charAt(4)<='9')
+          displayModel = 'CECH-' + displayModel.substring(4);
+        return { cfw: cfw, qcfw: qcfw, flash: flash, modelType: modelType, displayModel: displayModel, isDevKit: isDevKit, maxDowngradeFirmware: maxDowngradeFirmware };
+      }
+      function getBackwardsCompatibility(type, model, boolean) {
+        var m = model.toUpperCase();
+        if (m.indexOf('CECHA')===0 || m.indexOf('CECHB')===0) return "Full PS2 Hardware (EE+GS)";
+        if (m.indexOf('CECHC')===0 || m.indexOf('CECHE')===0) return "Partial PS2 (GS only)";
+        if (m.indexOf('DECR')===0) return "No (No PS2 hardware or emulator)";
+        if (m.indexOf('CEB')===0) return "No (Development Prototype, no PS2 hardware or PS2 emulation)";
+        if (m.indexOf('DECH')===0) {
+          if (m.indexOf('DECH25')===0 || m.indexOf('DECH-25')===0 || m.indexOf('DECHS25')===0)
+            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
+          if (m.indexOf('DECH30')===0 || m.indexOf('DECH-30')===0 || m.indexOf('DECH40')===0 || m.indexOf('DECH-40')===0)
+            return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
+          return "Full PS2 Hardware (EE+GS)";
+        }
+        return boolean === true ? (type == "OFW" ? "No" : "Yes Through Emulation") : "OFW: No, If Jailbroken Yes Through Emulation";
+      }
+function getMaxDowngradeFirmware(model, date_code, manufacturing_date, month, year) {
+        if (!model) return null;
+        var isOldStyle = (typeof date_code === 'number' || date_code === undefined) && (typeof manufacturing_date === 'number' || manufacturing_date === undefined);
+        var yr=0, mo=0, hasDate=false;
+        if (isOldStyle) {
+          var m = (typeof date_code === 'number') ? date_code : 0;
+          var y = (typeof manufacturing_date === 'number') ? manufacturing_date : 0;
+          if (m>0 && y>0) { mo=m; yr=y; hasDate=true; }
+        } else {
+          if (manufacturing_date && manufacturing_date.trim && manufacturing_date.trim()!=='') {
+            var man = manufacturing_date.trim(), parts = man.split(/\s+/);
+            if (parts.length>=2) {
+              var monthNames = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+              var monthLower = parts[0].toLowerCase();
+              for (var i=0; i<monthNames.length; i++) {
+                if (monthNames[i].indexOf(monthLower)===0 || monthLower===monthNames[i]) { mo=i+1; break; }
+              }
+              var yrNum = parseInt(parts[1],10);
+              if (!isNaN(yrNum) && yrNum>=2009 && yrNum<=2013) { yr=yrNum; hasDate=true; }
+            }
+          }
+          if (!hasDate && date_code && date_code.trim && date_code.trim()!=='') {
+            var dc = date_code.trim().toUpperCase();
+            if (dc.length>=2) {
+              var yd = dc.charCodeAt(0)-48, qc = dc.charAt(1), quarter = qc.charCodeAt(0)-64;
+              if (!isNaN(yd) && quarter>=1 && quarter<=4) { yr=yd+2010; mo=(quarter-1)*3+1; hasDate=true; }
+            }
+          }
+          if (!hasDate && typeof month === 'number' && typeof year === 'number') {
+            if (month>=1 && month<=12 && year>=2009 && year<=2013) { mo=month; yr=year; hasDate=true; }
+          }
+        }
+        var cleaned = model.toUpperCase().replace(/[-\s]/g,''), prefix='';
+        if (cleaned.indexOf('DECR')===0) prefix='DECR';
+        else if (cleaned.indexOf('DECH')===0) {
+          var numMatch = cleaned.match(/^DECH(\d{2})/);
+          if (numMatch) prefix = 'DECH-' + numMatch[1];
+          else prefix = 'DECH';
+        } else if (cleaned.indexOf('CEB')===0) prefix='CEB';
+        else {
+          var fatLetterMatch = cleaned.match(/^CECH([A-Z])/);
+          if (fatLetterMatch) prefix = 'CECH' + fatLetterMatch[1];
+          else { var nMatch = cleaned.match(/^CECH(\d{2})/); if (nMatch) prefix = 'CECH-' + nMatch[1]; }
+        }
+        if (!prefix) return null;
+        if (prefix === 'DECR') {
+          if (cleaned.indexOf('DECR-1000')!==-1) return "0.85";
+          if (cleaned.indexOf('DECR-1400')!==-1) return "2.60";
+          if (cleaned.indexOf('DECR-1500')!==-1) return "3.56+ (Likely >3.56, verify with MinVerChk)";
+          if (cleaned.indexOf('DECR-1600')!==-1) return "4.11+ (Likely >4.10, verify with MinVerChk)";
+          return "Unknown (Dev Kit)";
+        }
+        if (prefix === 'CEB') return "Unknown (Early Prototype)";
+        if (prefix === 'DECH') return "1.00";
+        if (prefix === 'DECH-20') return "2.70";
+        if (prefix === 'DECH-21') return "3.20";
+        if (prefix === 'DECH-25') {
+          if (!hasDate) return "3.40–3.60+ (requires date code or manufacturing date)";
+          if (yr < 2010 || (yr===2010 && mo<7)) return "N/A (model not yet manufactured)";
+          if (yr===2010) { if (mo>=7 && mo<=9) return "3.40"; if (mo>=10 && mo<=12) return "3.40 or 3.50"; }
+          if (yr===2011) {
+            if (mo>=1 && mo<=3) return "3.60+ (some 3.50-3.56)";
+            if (mo>=4 && mo<=6) return "3.60+ or 3.56 (Rare!)";
+            if (mo>=7) return "N/A (production ended)";
+          }
+          if (yr>=2012) return "N/A (production ended)";
+          return "3.40–3.60+ (requires date code)";
+        }
+        if (prefix === 'DECH-30') return "3.60+";
+        if (prefix === 'DECH-40') return "4.11–4.31";
+        if (prefix === 'CECHA' || prefix === 'CECHB') return "1.00";
+        if (prefix === 'CECHC') return "1.00";
+        if (prefix === 'CECHE') return "1.00";
+        if (prefix === 'CECHG') return "1.90";
+        if (prefix === 'CECHH') return "1.97";
+        if (prefix === 'CECHJ') return "2.16";
+        if (prefix === 'CECHK' || prefix === 'CECHL' || prefix === 'CECHM' || prefix === 'CECHP' || prefix === 'CECHQ') return "2.45";
+        if (prefix === 'CECH-20') return "2.70";
+        if (prefix === 'CECH-21') return "3.20";
+        if (prefix === 'CECH-25') {
+          if (!hasDate) return "3.40–3.60+ (requires date code or manufacturing date)";
+          if (yr < 2010 || (yr===2010 && mo<7)) return "N/A (model not yet manufactured)";
+          if (yr===2010) { if (mo>=7 && mo<=9) return "3.40"; if (mo>=10 && mo<=12) return "3.40 or 3.50"; }
+          if (yr===2011) {
+            if (mo>=1 && mo<=3) return "3.60+ (some 3.50-3.56)";
+            if (mo>=4 && mo<=6) return "3.60+ or 3.56 (Rare!)";
+            if (mo>=7) return "N/A (production ended)";
+          }
+          if (yr>=2012) return "N/A (production ended)";
+          return "3.40–3.60+ (requires date code)";
+        }
+        if (prefix === 'CECH-30') return "3.60+";
+        if (prefix === 'CECH-40') return "4.11–4.31";
+        if (prefix === 'CECH-42') return "4.40";
+        if (prefix === 'CECH-43') return "4.50";
+        return null;
+      }
+      function runChecker(datecode) {
+        if (typeof checkCFWCompatibility !== 'function') { document.getElementById('cfwResult').innerHTML = 'Script not loaded correctly.'; return; }
+        var resultDiv = document.getElementById('cfwResult');
+        var modelInput = document.getElementById('modelInput');
+        var model = modelInput ? modelInput.value : '';
+        model = trimStr(model);
+        if (!model) { resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a model number.</span>'; return; }
+        var cleaned = model.toUpperCase().replace(/\s/g,'').replace(/-/g,'');
+        if (!/^CECH/.test(cleaned) && !/^DECH/.test(cleaned) && !/^DECR/.test(cleaned) && !/^CEB/.test(cleaned)) cleaned = 'CECH' + cleaned;
+        var res = checkCFWCompatibility(model, datecode);
+        if (res === 'NEED_DATE') { document.getElementById('datecode-box').style.display = 'block'; resultDiv.innerHTML = ''; return; }
+        if (res === 'Unknown model') { resultDiv.innerHTML = '<span style="color:#ffa500;">Unknown model - please check the number (e.g., 2501A).</span>'; return; }
+        if (res === 'Invalid date code') { resultDiv.innerHTML = '<span style="color:#ffa500;">Invalid date code. Please check the back sticker (e.g., 0C or January 2010).</span>'; return; }
+        var cfw = res.cfw, qcfw = res.qcfw, flash = res.flash, modelType = res.modelType, displayModel = res.displayModel, isDevKit = res.isDevKit, maxDowngradeFirmware = res.maxDowngradeFirmware;
+        var cfwColor = '#28a745'; if (cfw.indexOf('Maybe')===0) cfwColor='#ffa500'; if (cfw.indexOf('No')===0) cfwColor='#dc3545';
+        var qcfwColor = (qcfw.indexOf('No')===0) ? '#dc3545' : '#28a745';
+        var html = '';
+        html += '<span style="color:'+cfwColor+';">CFW: '+cfw+'</span><br>';
+        html += '<span style="color:'+qcfwColor+';">qCFW: '+qcfw+'</span><br>';
+        html += '<span style="color:#28a745;">HEN: Yes</span><br><br>';
+        html += 'Model Number: '+displayModel+'<br>';
+        html += 'Model: '+modelType+'<br>';
+        html += 'Flash Memory Type: '+flash+'<br>';
+        html += 'PS2 Backwards Compatibility: '+getBackwardsCompatibility(null, cleaned, false)+'<br>';
+        
+        if (maxDowngradeFirmware) html += 'Estimated Minimum Applicable Firmware Version: ' + maxDowngradeFirmware + ' (Also Known As: Max Downgrade Version, Factory Firmware)' + '<br>';
+        if (isDevKit) html += '<span style="color:#f79452;">Info: Jailbreaking a Dev Kit PS3 is not recommended!</span><br>';
+        resultDiv.innerHTML = html;
+        document.getElementById('datecode-box').style.display = 'none';
+        if (/^CECH-?25/.test(cleaned) || /^DECH-?25/.test(cleaned)) document.getElementById('datecode-box').style.display = 'block';
+      }
+      function verifyDateCode() {
+        var monthSelect = document.getElementById('monthSelect'), yearSelect = document.getElementById('yearSelect');
+        if (monthSelect && yearSelect && monthSelect.value !== '' && yearSelect.value !== '') {
+          var monthNum = parseInt(monthSelect.value,10), yearNum = parseInt(yearSelect.value,10);
+          var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+          var monthName = monthNames[monthNum-1];
+          runChecker(monthName + " " + yearNum);
+          return;
+        }
+        var dcInput = document.getElementById('datecodeInput');
+        var dc = dcInput ? dcInput.value : '';
+        dc = trimStr(dc);
+        if (!dc) { document.getElementById('cfwResult').innerHTML = '<span style="color:#ffa500;">Please enter a date code or select a manufacturing date.</span>'; return; }
+        runChecker(dc);
+      }
+    </script>
+
+    <!-- ==================== Keyboard support (PC only) ==================== -->
+    <script>
+      if (!window.isPS3) {
+        var modelInput = document.getElementById('modelInput');
+        if (modelInput) {
+          modelInput.onkeypress = function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) === 13) {
+              var datecodeBox = document.getElementById('datecode-box');
+              if (datecodeBox && datecodeBox.style.display === 'block') {
+                var datecodeInput = document.getElementById('datecodeInput');
+                var monthSelect = document.getElementById('monthSelect');
+                var yearSelect = document.getElementById('yearSelect');
+                if (datecodeInput && datecodeInput.value.trim() !== '') {
+                  runChecker(datecodeInput.value.trim());
+                } else if (monthSelect && yearSelect && monthSelect.value !== '' && yearSelect.value !== '') {
+                  var monthNum = parseInt(monthSelect.value, 10);
+                  var yearNum = parseInt(yearSelect.value, 10);
+                  var monthNames = ["January","February","March","April","May","June",
+                                    "July","August","September","October","November","December"];
+                  var monthName = monthNames[monthNum-1];
+                  runChecker(monthName + " " + yearNum);
+                } else {
+                  runChecker(null);
+                }
+              } else {
+                runChecker(null);
+              }
+              return false;
+            }
+          };
+        }
+        var datecodeInput = document.getElementById('datecodeInput');
+        if (datecodeInput) {
+          datecodeInput.onkeypress = function(e) {
+            e = e || window.event;
+            if ((e.keyCode || e.which) === 13) {
+              verifyDateCode();
+              return false;
+            }
+          };
+        }
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Correction.js"></script>
+  </body>
 </html>
