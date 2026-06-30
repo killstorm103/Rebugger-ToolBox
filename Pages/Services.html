@@ -54,47 +54,51 @@
             </li>
           </ul>
 
-          <!-- Services Availability -->
           <ul>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                <strong style="font-size: 25px; display:block; margin-bottom:-10px;">Services Availability</strong><br>
-                <span class="spanned">└ Status: <span id="serviceStatus">Loading...</span></span><br>
-                <span id="availabilityNote" style="display: block; margin-left: 20px; color: #f79452;"></span>
+  <li style="padding:0; margin:0;">
+    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+      <strong style="font-size: 25px; display:block; margin-bottom:-10px;">Services Availability</strong><br>
+      <span class="spanned">└ Status: <span id="serviceStatus">Loading...</span></span><br>
+      <span id="availabilityNote" style="display: block; margin-left: 20px; color: #f79452;"></span>
+    </div>
+  </li>
+  
+  <li style="padding:0; margin:0; margin-top: 15px;">
+    <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
+      <strong style="display:block; margin-bottom:10px; font-size: 25px;">PS3 Services</strong>
+      <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td style="vertical-align: top; padding-right: 20px;">
+            <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+          </td>
+          <td style="vertical-align: top;">
+            <div id="sliderContainer" style="margin: 0;">
+              <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
+              <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
+              <div id="manualBtns" style="display:none; margin-top:8px;">
+                <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
+                <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
               </div>
-            </li>
-          </ul>
-
-          <!-- PS3 Services images -->
-          <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:15px; margin-left:60px; display:inline-block;">
-            <strong style="display:block; margin-bottom:10px; font-size: 25px;">PS3 Services</strong>
-            <table cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
-              <tr>
-                <td style="vertical-align: top; padding-right: 20px;">
-                  <img src="http://raw.githubusercontent.com/killstorm103/Rebugger-ToolBox/main/Images/ps3s_all_models.png" height="200" width="300" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
-                </td>
-                <td style="vertical-align: top;">
-                  <div id="sliderContainer" style="margin: 0;">
-                    <img id="sliderImage" src="" width="300" height="200" alt="Service image" style="border-radius: 8px; box-shadow: 2px 2px 6px rgba(0,0,0,0.3);" onclick="zoomImage(this.src)" class="zoomable">
-                    <div style="margin-top: 10px;"><span id="imageCounter">1 / 7</span></div>
-                    <div id="manualBtns" style="display:none; margin-top:8px;">
-                      <button id="prevBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px; margin-right:5px;">Previous</button>
-                      <button id="nextBtn" style="padding:5px 12px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Next</button>
-                    </div>
-                    <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
+              <button id="pauseBtn" style="display:none; margin-top:8px; padding:4px 14px; background:#555; color:#fff; border:1px solid #777; border-radius:4px; cursor:pointer; font-size:12px;">Pause</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
 
           <!-- Service list items -->
           <ul>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:-10px;">Jailbreaking (CFW or HEN: Started: 50$, Basic: 60$, Full: 100$) (qCFW: currently not offered)</strong><br>
+                
+                <!--
                 <span class="spanned">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span><br>
                  <span class="spanned">└ If a new firmware has came out and its not possible to easily jailbreak and i have to manually back up and patch the flash memory there is a additional Fee that automatically gets added on top of the price/cost of jailbreaking, because of how much bullshit i have to do to do this, taking apart the Whole PS3 and then using the E3 NOR Flasher which can be a Bitch to work with i have to charge a Fee of: + 50% of the price/cost of jailbreaking!, this is Only for If your wanting CFW this is more for if you wanting CFW Urgently!</span><br>
+                 
+                !-->
                 <span class="spanned">└ Go down to the Console Information section to enter in your PS3's Model number to check if it can take CFW and what the Flash memory type is!</span><br>
                 <span class="spanned">└ Recommendation: replace the old hard drive before jailbreaking, Read PS3 Information for Recommended HDD/SSD replacements</span><br>
                 <span class="spanned">└ Read the Console Information section to read about the differences between the jailbreaks.</span><br>
@@ -167,7 +171,7 @@
             </li>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                <strong style="display:block; margin-bottom:0x;">Replace Hard drive (10-40$)</strong><br>
+                <strong style="display:block; margin-bottom:0x;">Replacement Hard drive Service (10-40$)</strong><br>
                 <span class="spanned">└ Note: You Must Provide the HDD/SSD Replacement</span><br>
                 <span class="spanned">└ Go down to PS3 Information to read Recommended Hard Drive Replacements</span><br>
                 <span class="spanned">└ Cloning the old HDD/SSD and then installing the clone backup (only up to 235GB) (<span id="hdd_replacement_option_1">40</span>$)</span><br>
@@ -192,7 +196,6 @@
                 <span class="spanned">└ and i have successfully jailbroken and opened and cleaned 2 of my other mates consoles!</span><br>
                 <span class="spanned">└ i have successfully gotten the dried up glued motherboards out of 2 slim model ps3s!</span>
                 <span class="spanned">└ and i have successfully replaced the CMOS battery on: 1 PS3</span>
-                <span class="spanned">└ i have successfully jailbroken 1 PS3 using a E3 NOR Flasher</span>
               </div>
             </li>
           </ul>
@@ -364,7 +367,7 @@
     <!-- ==================== MAIN SCRIPT ==================== -->
     <script>
       (function() {
-        var CURRENT_VERSION = "7.7";
+        var CURRENT_VERSION = "7.8";
         if (!window.isPS3) {
           if (window.top === window.self && navigator.cookieEnabled) {
             (function() {
@@ -1323,7 +1326,6 @@ if (c.gameList && Object.keys(c.gameList).length > 0) {
       }
     </script>
 
-    <!-- ==================== Checker: compatibility + button helpers ==================== -->
     <script>
       function trimStr(str) { return str.replace(/^\s+|\s+$/g, ''); }
       function parseFullDate(dateStr) {
