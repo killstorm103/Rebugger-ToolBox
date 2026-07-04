@@ -110,7 +110,7 @@
             </li>
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
-                <strong style="display:block; margin-bottom:-10px;">Switching Jailbreaks (HEN ----> CFW or Switching to a differnt/newer Firmware: 20$)</strong><br>
+                <strong style="display:block; margin-bottom:-10px;">Switching Firmwares (HEN ----> CFW or Switching to a differnt/newer Firmware: 20$)</strong><br>
                 <span class="spanned">└ Options:</span><br>
                 <span class="spanned">└ 1: Evilnat 4.91.2 - 4.93 (CEX, PEX or D-PEX)</span><br>
                 <span class="spanned">└ 2: Rebug (4.21.2 REX, 4.82.2 REX or D-REX, 4.84.2 REX or D-REX or D-REX OverClocked)</span><br>
@@ -125,6 +125,13 @@
                 <span class="spanned">└ i'll install homebrew and set it up for you</span><br>
                 <span class="spanned">└ 5$ for anything up to 2GB, 10$ for anything more than 2GB</span><br>
                 <span class="spanned">└ Note: contact me about what homebrew you want first to make sure i know how to set it up and price is per homebrew!</span>
+              </div>
+            </li>
+            <li style="padding:0; margin:0;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+                <strong style="display:block; margin-bottom:0x;">Custom Boot Up (Aka Coldboot) (5-10$)</strong><br>
+                <span class="spanned">└ 5$ if you only want a image and no custom sound or if you come with a editted audio file thats 8 seconds long at most and ready to be used or if you want one that i've already got pre made!</span><br>
+                <span class="spanned">└ 10$ if the custom sound you want isn't ready and i have to edit/cut it down to 8 seconds!</span><br>
               </div>
             </li>
             <li style="padding:0; margin:0;">
@@ -959,87 +966,170 @@ if (insideGameList) {
             }
 
             function buildConsolesUI(consoles) {
-              if (!consolesList) return;
-              consolesList.innerHTML = '';
-              if (typeof window.servicePrices === 'undefined') {
-                window.servicePrices = {
-                  option1: document.getElementById('hdd_replacement_option_1') ? parseInt(document.getElementById('hdd_replacement_option_1').innerText, 10) : 40,
-                  option2: document.getElementById('hdd_replacement_option_2') ? parseInt(document.getElementById('hdd_replacement_option_2').innerText, 10) : 20,
-                  option3: document.getElementById('hdd_replacement_option_3') ? parseInt(document.getElementById('hdd_replacement_option_3').innerText, 10) : 10
-                };
-              }
-              function getPerthToday() {
-                var now = new Date();
-                var perthTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
-                return new Date(perthTime.getFullYear(), perthTime.getMonth(), perthTime.getDate());
-              }
-              var today = getPerthToday();
-              var validConsoles = [];
-              for (var i = 0; i < consoles.length; i++) {
-                var c = consoles[i];
-                if (!c.soldOn) { validConsoles.push(c); continue; }
-                if (!c.warranty) continue;
-                var parts = c.soldOn.split('/');
-                if (parts.length !== 3) continue;
-                var day = parseInt(parts[0],10), month = parseInt(parts[1],10), year = parseInt(parts[2],10);
-                if (isNaN(day) || isNaN(month) || isNaN(year)) continue;
-                var durMatch = c.warranty.match(/(\d+)/);
-                var durationDays = durMatch ? parseInt(durMatch[1],10) : 0;
-                if (durationDays <= 0) continue;
-                var soldDate = new Date(year, month-1, day);
-                var expirationDate = new Date(soldDate);
-                expirationDate.setDate(soldDate.getDate() + durationDays);
-                if (expirationDate >= today) validConsoles.push(c);
-              }
-              var unsoldConsoles = validConsoles.filter(function(c) { return !c.soldOn; });
-              var CFW_Count=0, qCFW_Count=0, HEN_Count=0, OFW_Count=0, DEX_Count=0;
-              for (var j=0; j<unsoldConsoles.length; j++) {
-                var type = unsoldConsoles[j].type;
-                if (!type) continue;
-                switch (type.toUpperCase()) {
-                  case 'CFW': CFW_Count++; break;
-                  case 'QCFW': qCFW_Count++; break;
-                  case 'HEN': HEN_Count++; break;
-                  case 'OFW': OFW_Count++; break;
-                  case 'DEX': DEX_Count++; break;
-                }
-              }
-              var stockBox = document.getElementById('stock-box');
-              if (stockBox) {
+  if (!consolesList) return;
+  
+  if (typeof window.servicePrices === 'undefined') {
+    window.servicePrices = {
+      option1: document.getElementById('hdd_replacement_option_1') ? parseInt(document.getElementById('hdd_replacement_option_1').innerText, 10) : 40,
+      option2: document.getElementById('hdd_replacement_option_2') ? parseInt(document.getElementById('hdd_replacement_option_2').innerText, 10) : 20,
+      option3: document.getElementById('hdd_replacement_option_3') ? parseInt(document.getElementById('hdd_replacement_option_3').innerText, 10) : 10
+    };
+  }
+  
+  function getPerthToday() {
+    var now = new Date();
+    var perthTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+    return new Date(perthTime.getFullYear(), perthTime.getMonth(), perthTime.getDate());
+  }
+  
+  var today = getPerthToday();
+  var validConsoles = [];
+  
+  // Phase 1: Filter Expired Warranties and Prepare Sorting Variables
+  for (var i = 0; i < consoles.length; i++) {
+    var c = consoles[i];
+    if (!c.soldOn) { validConsoles.push(c); continue; }
+    if (!c.warranty) continue;
+    var parts = c.soldOn.split('/');
+    if (parts.length !== 3) continue;
+    var day = parseInt(parts[0], 10), month = parseInt(parts[1], 10), year = parseInt(parts[2], 10);
+    if (isNaN(day) || isNaN(month) || isNaN(year)) continue;
+    var durMatch = c.warranty.match(/(\d+)/);
+    var durationDays = durMatch ? parseInt(durMatch[1], 10) : 0;
+    if (durationDays <= 0) continue;
+    var soldDate = new Date(year, month - 1, day);
+    var expirationDate = new Date(soldDate);
+    expirationDate.setDate(soldDate.getDate() + durationDays);
+    if (expirationDate >= today) validConsoles.push(c);
+  }
+
+  for (var x = 0; x < validConsoles.length; x++) {
+    validConsoles[x].originalIndex = x; 
+
+    var pStr = String(validConsoles[x].price || '').replace(/[^0-9.]/g, '');
+    validConsoles[x].parsedPrice = pStr ? parseFloat(pStr) : 999999; 
+
+    var listedTimestamp = 0;
+    if (validConsoles[x].listed_date && !validConsoles[x].soldOn) {
+      var lp = validConsoles[x].listed_date.split('/');
+      if (lp.length === 3) {
+        var ld = parseInt(lp[0], 10), lm = parseInt(lp[1], 10), ly = parseInt(lp[2], 10);
+        if (!isNaN(ld) && !isNaN(lm) && !isNaN(ly)) {
+          listedTimestamp = new Date(ly, lm - 1, ld).getTime();
+        }
+      }
+    }
+    validConsoles[x].parsedListedDate = listedTimestamp;
+  }
+
+  var unsoldConsoles = validConsoles.filter(function (c) { return !c.soldOn; });
+  var CFW_Count = 0, qCFW_Count = 0, HEN_Count = 0, OFW_Count = 0, DEX_Count = 0;
+  
+  for (var j = 0; j < unsoldConsoles.length; j++) {
+    var type = unsoldConsoles[j].type;
+    if (!type) continue;
+    switch (type.toUpperCase()) {
+      case 'CFW': CFW_Count++; break;
+      case 'QCFW': qCFW_Count++; break;
+      case 'HEN': HEN_Count++; break;
+      case 'OFW': OFW_Count++; break;
+      case 'DEX': DEX_Count++; break;
+    }
+  }
+  
+  var stockBox = document.getElementById('stock-box');
+  if (stockBox) {
     stockBox.style.position = 'relative';
-    var extraLeft = 20, rightExtension = 15;
+    var extraLeft = 15, rightExtension = 15;
     var soldCount = consoles.length - unsoldConsoles.length;
 
+    // --- UPDATED CSS: Left-aligned text with a red matching arrow ---
+    var filterCss = '<style>' +
+      '.cf-wrap { position: relative; margin-top: -7px; margin-bottom: 2px; font-family: sans-serif; font-size: 15px; z-index: 50; }' +
+      '.cf-btn { width: 100%; box-sizing: border-box; background: #222; color: #fff; border: 2px solid #dc3545; padding: 12px 15px; font-weight: bold; cursor: pointer; user-select: none; box-shadow: 2px 2px 6px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; }' +
+      '.cf-btn:hover { background: #333; }' +
+      
+      /* Added color: #dc3545 to make the main button arrow red */
+      '.cf-btn span { color: #dc3545; transition: transform 0.2s ease; display: inline-block; font-size: 14px; }' +
+      '.cf-btn.is-open span { transform: rotate(90deg); }' +
+      
+      '.cf-drop { display: none; position: absolute; background: #222; width: 220px; box-sizing: border-box; z-index: 100; border: 1px solid #dc3545; top: 0; left: 100%; box-shadow: 0 6px 12px rgba(0,0,0,0.6); margin-left: 4px; }' +
+      '.cf-item { position: relative; padding: 12px 18px; cursor: pointer; border-bottom: 1px solid #444; color: #fff; display: flex; justify-content: space-between; align-items: center; }' +
+      '.cf-item:hover { background: #333; }' +
+      '.cf-item::after { content: "▶"; font-size: 11px; color: #dc3545; display: inline-block; transition: transform 0.2s ease; }' +
+      '.cf-item.is-open::after { transform: rotate(90deg); }' +
+      '.cf-sub { display: none; position: absolute; left: 100%; top: -1px; background: #222; min-width: 190px; border: 1px solid #dc3545; z-index: 101; box-shadow: 0 6px 12px rgba(0,0,0,0.6); }' +
+      '.cf-sub-item { padding: 10px 15px; border-bottom: 1px solid #444; color: #fff; }' +
+      '.cf-sub-item:hover { background: #333; }' +
+      '.cf-sub-item label { display: flex; align-items: center; cursor: pointer; margin: 0; width: 100%; }' +
+      '.cf-sub-item input { margin-right: 12px; cursor: pointer; accent-color: #dc3545; transform: scale(1.1); }' +
+    '</style>';
+
+    var filterHtml = filterCss +
+      '<div class="cf-wrap">' +
+          '<div class="cf-btn">Filter & Sort <span>▲</span></div>' +
+          '<div class="cf-drop">' +
+              '<div class="cf-item">Console' +
+                  '<div class="cf-sub">' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" checked disabled> PS3</label></div>' +
+                  '</div>' +
+              '</div>' +
+              '<div class="cf-item">Console Type' +
+                  '<div class="cf-sub">' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" class="cf-type" value="DEX"> DEX</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" class="cf-type" value="CFW"> CFW</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" class="cf-type" value="QCFW"> qCFW</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" class="cf-type" value="HEN"> HEN</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="checkbox" class="cf-type" value="OFW"> OFW</label></div>' +
+                  '</div>' +
+              '</div>' +
+              '<div class="cf-item">Sort By' +
+                  '<div class="cf-sub">' +
+                      '<div class="cf-sub-item"><label><input type="radio" name="cf-sort" value="order" checked> Order Number</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="radio" name="cf-sort" value="priceAsc"> Price (Lowest to Highest)</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="radio" name="cf-sort" value="priceDesc"> Price (Highest to Lowest)</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="radio" name="cf-sort" value="newest"> Newest</label></div>' +
+                      '<div class="cf-sub-item"><label><input type="radio" name="cf-sort" value="oldest"> Oldest</label></div>' +
+                  '</div>' +
+              '</div>' +
+          '</div>' +
+      '</div>';
+
     stockBox.innerHTML = '<div id="top-line" style="border-bottom: 3px solid #dc3545; margin: -15px 0 6px 0;"></div>' +
-                         '<span id="title-line"><span style="color:#dc3545;">Available PS3s</span></span><br>' +
+                         filterHtml +
+                         '<span id="title-line"><span style="color:#dc3545; font-weight:bold;">Available PS3s</span></span><br>' +
                          'Total: ' + unsoldConsoles.length + 
-                         // Top separator (under Total)
                          '<div id="red-separator" style="border-bottom: 4px solid #dc3545; margin: 6px 0 5px 0;"></div>' +
-                         // Console Breakdown
                          '<div style="margin-bottom: 3px; margin-top: 5px">' +
                          'DEXs: ' + DEX_Count + '<br>' +
                          'CFWs: ' + CFW_Count + '<br>' +
                          'qCFWs: ' + qCFW_Count + '<br>' +
                          'HENs: ' + HEN_Count + '<br>' +
                          'OFWs: ' + OFW_Count + '</div>' +
-                         // Bottom separator (above Sold)
                          '<div id="red-separator-2" style="border-bottom: 4px solid #dc3545; margin: 5px 0 6px 0;"></div>' +
                          'Sold: ' + soldCount +
                          '<div id="bottom-line" style="border-bottom: 3px solid #dc3545; margin: 6px 0 -15px 0;"></div>';
     
     var titleEl = document.getElementById('title-line');
+    var filterWrap = stockBox.querySelector('.cf-wrap');
+    
     if (titleEl) {
         var lineWidth = titleEl.offsetWidth + extraLeft + rightExtension;
         
-        var ids = ['red-separator', 'red-separator-2', 'top-line', 'bottom-line'];
+        if (filterWrap) {
+            filterWrap.style.marginLeft = '-' + extraLeft + 'px'; 
+            filterWrap.style.width = (titleEl.offsetWidth + extraLeft + rightExtension) + 'px';
+        }
         
-        for (var j=0; j<ids.length; j++) {
-            var el = document.getElementById(ids[j]);
+        var ids = ['red-separator', 'red-separator-2', 'top-line', 'bottom-line'];
+        for (var l = 0; l < ids.length; l++) {
+            var el = document.getElementById(ids[l]);
             if (el) { 
                 el.style.width = lineWidth + 'px'; 
                 el.style.marginLeft = '-' + extraLeft + 'px'; 
             }
         }
+        
         var verticalLine = document.createElement('div');
         verticalLine.style.position = 'absolute';
         verticalLine.style.top = '0';
@@ -1048,185 +1138,291 @@ if (insideGameList) {
         verticalLine.style.left = (titleEl.offsetLeft + titleEl.offsetWidth + rightExtension) + 'px';
         stockBox.appendChild(verticalLine);
     }
-}
-              for (var k=0; k<validConsoles.length; k++) {
-                var c = validConsoles[k];
-                var li = document.createElement('li');
-                li.style.padding = '0';
-                li.style.margin = '0 0 10px 0';
-                var displayIssues = c.issues ? c.issues : 'None',
-                    displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!',
-                    displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
-                var infoHTML = '';
-                var titleText = 'PS3 #' + (k+1);
-                if (c.soldOn) {
-                  titleText += ' (Sold on: ' + c.soldOn;
-                  if (c.warranty) {
-                    var wParts = c.soldOn.split('/');
-                    if (wParts.length === 3) {
-                      var wDay = parseInt(wParts[0],10), wMonth = parseInt(wParts[1],10), wYear = parseInt(wParts[2],10);
-                      if (!isNaN(wDay) && !isNaN(wMonth) && !isNaN(wYear)) {
-                        var wSoldDate = new Date(wYear, wMonth-1, wDay);
-                        var durMatch = c.warranty.match(/(\d+)/);
-                        var durDays = durMatch ? parseInt(durMatch[1],10) : 0;
-                        if (durDays > 0) {
-                          var wExpDate = new Date(wSoldDate);
-                          wExpDate.setDate(wSoldDate.getDate() + durDays);
-                          var todayClean = getPerthToday();
-                          var diffTime = wExpDate.getTime() - todayClean.getTime();
-                          var daysLeft = Math.ceil(diffTime / (1000*60*60*24));
-                          if (daysLeft === 1) titleText += ' - Last day of warranty!';
-                          else if (daysLeft > 1) titleText += ' - Warranty: ' + daysLeft + ' days left';
-                        }
-                      }
-                    }
-                  }
-                  titleText += ')';
-                }
-                var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
-                
-                infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
-                infoHTML += 'Price: ' + displayPrice + '<br>';
-                infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')' + '<br>';
-                infoHTML += 'Firmware: ' + c.firmware + '<br>';
-                infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : 'Unknown, not set') + ' ' + (c.date_code !== '' ? '(date code: ' + c.date_code + ')' : c.manufacturing_date !== '' ? '(manufacturing date: ' + c.manufacturing_date + ')' : '') + '<br>';
-                infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
-                infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
-                infoHTML += 'PS2 Backwards Compatibility: ' + getBackwardsCompatibility(c.type, c.model, true) + '<br>';
-                infoHTML += (c.factory_firmware && c.factory_firmware !== '' ? ' ' : 'Estimated ') + 'Minimum Applicable Firmware Version: ' + FactoryFW + ' (Also Known As: Max Downgrade Version, Factory Firmware)' + '<br>';
-                infoHTML += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
-                infoHTML += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
-                infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
-                infoHTML += 'Replaced CMOS Battery: ' + c.replacedCMOS + '<br>';
-                infoHTML += 'Known issues: ' + displayIssues + '<br>';
-                infoHTML += 'Accessories: ' + displayAccessories + '<br>';
-                if (c.additionalInfo)
-                infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g,'<br>') + '<br>';
-                
-if (c.gameList && Object.keys(c.gameList).length > 0) {
-    // Initialize Grand Total Accumulators
-    var totalGames = 0;
-    var totalSpaceGB = 0;
-    var totalValue = 0;
-    var platformsHTML = "";
-    var isFirstPlatform = true;
 
-    // --- Pass 1: Gather Metrics and Construct Sub-lists ---
-    for (var platform in c.gameList) {
-        var games = c.gameList[platform];
-        var platformGameCount = games.length;
-        
-        var platformSpaceGB = 0;
-        var platformValue = 0;
-        var gamesHTML = "";
-        
-        // Ensure database profile exists for current platform
-        var platformExists = (typeof gameDatabase !== 'undefined' && gameDatabase && gameDatabase[platform]);
+    // --- UPDATED JS: Now toggles the 'is-open' class to trigger CSS arrow rotations ---
+    if (filterWrap) {
+      var mainBtn = filterWrap.querySelector('.cf-btn');
+      var mainDrop = filterWrap.querySelector('.cf-drop');
+      var cfItems = filterWrap.querySelectorAll('.cf-item');
 
-        for (var g = 0; g < games.length; g++) {
-            var gameName = games[g];
-            var lookupName = gameName.toLowerCase().trim();
+      if (mainBtn && mainDrop) {
+        mainBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var isShowing = mainDrop.style.display === 'block';
+          
+          if (isShowing) {
+            mainDrop.style.display = 'none';
+            mainBtn.classList.remove('is-open'); // Rotates arrow back to ▲
             
-            var sizeText = "Not in database";
-            var priceText = "Not in database";
-            
-            // Query match against Game_Sizes.txt dataset
-            if (platformExists && gameDatabase[platform][lookupName] !== undefined) {
-                var gameSizeGB = parseFloat(gameDatabase[platform][lookupName]);
-                var gamePrice = getPriceFromSize(gameSizeGB); // Connects to your HTML regex scraper
-                
-                platformSpaceGB += gameSizeGB;
-                platformValue += gamePrice;
-                
-                sizeText = formatSize(gameSizeGB); // Using your built-in function
-                priceText = "$" + gamePrice;
+            // Close all submenus when closing the main menu
+            for (var m = 0; m < cfItems.length; m++) {
+              var sMenu = cfItems[m].querySelector('.cf-sub');
+              if (sMenu) sMenu.style.display = 'none';
+              cfItems[m].classList.remove('is-open');
             }
-            
-            // Sub-item format: └ Pokemon - Blue Version (Size) (Value: price)
-            gamesHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">' +
-                         '└ ' + gameName + ' (Game Size: ' + sizeText + ') (Value: ' + priceText + ')</span>';
+          } else {
+            mainDrop.style.display = 'block';
+            mainBtn.classList.add('is-open'); // Rotates arrow to ▶
+          }
+        });
+
+        for (var n = 0; n < cfItems.length; n++) {
+          (function(item) {
+            item.addEventListener('click', function(e) {
+              e.stopPropagation(); 
+              var sub = item.querySelector('.cf-sub');
+              
+              if (sub) {
+                var isSubShowing = sub.style.display === 'block';
+                
+                // Close other submenus first
+                for (var o = 0; o < cfItems.length; o++) {
+                  if (cfItems[o] !== item) {
+                    var otherSub = cfItems[o].querySelector('.cf-sub');
+                    if (otherSub) otherSub.style.display = 'none';
+                    cfItems[o].classList.remove('is-open');
+                  }
+                }
+                
+                // Toggle clicked submenu
+                if (isSubShowing) {
+                  sub.style.display = 'none';
+                  item.classList.remove('is-open');
+                } else {
+                  sub.style.display = 'block';
+                  item.classList.add('is-open'); // Rotates submenu arrow ▶ to ▼
+                }
+              }
+            });
+
+            var subMenuBox = item.querySelector('.cf-sub');
+            if (subMenuBox) {
+              subMenuBox.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+            }
+          })(cfItems[n]);
         }
 
-        // Tally up grand metrics
-        totalGames += platformGameCount;
-        totalSpaceGB += platformSpaceGB;
-        totalValue += platformValue;
+        document.addEventListener('click', function(e) {
+          if (!filterWrap.contains(e.target)) {
+            mainDrop.style.display = 'none';
+            mainBtn.classList.remove('is-open');
+            for (var p = 0; p < cfItems.length; p++) {
+              var sMenu = cfItems[p].querySelector('.cf-sub');
+              if (sMenu) sMenu.style.display = 'none';
+              cfItems[p].classList.remove('is-open');
+            }
+          }
+        });
+      }
+    }
+  }
 
-        // Platform metrics translation
-        var platformSizeText = (platformSpaceGB > 0) ? formatSize(platformSpaceGB) : "Not in database"; // Using your built-in function
-        var platformValueText = (platformValue > 0) ? "$" + platformValue : "Not in database";
-        var topMargin = isFirstPlatform ? '4px' : '12px';
-        isFirstPlatform = false;
+  // Phase 2: Live Filter & Render function
+  function renderList() {
+    consolesList.innerHTML = '';
+    
+    var typeBoxes = document.querySelectorAll('.cf-type');
+    var selectedTypes = [];
+    if (typeBoxes.length > 0) {
+      for (var b = 0; b < typeBoxes.length; b++) {
+        if (typeBoxes[b].checked) selectedTypes.push(typeBoxes[b].value.toUpperCase());
+      }
+    }
+    
+    var sortRadio = document.querySelector('input[name="cf-sort"]:checked');
+    var sortValue = sortRadio ? sortRadio.value : 'order';
 
-        // Platform line format: Game Boy (Number Games) (Space Required: size) (Total Value: price)
-        platformsHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + 
-                         platform + ' (' + platformGameCount + ' Games) (Space Required/Used: ' + platformSizeText + ') (Total Value: ' + platformValueText + ')</span>';
-        platformsHTML += gamesHTML;
+    var displayConsoles = validConsoles.slice();
+    if (selectedTypes.length > 0) {
+      displayConsoles = displayConsoles.filter(function (c) {
+        var t = (c.type || '').toUpperCase();
+        return selectedTypes.indexOf(t) !== -1;
+      });
     }
 
-    var totalSpaceText = (totalSpaceGB > 0) ? formatSize(totalSpaceGB) : "Not in database"; // Using your built-in function
+    displayConsoles.sort(function(a, b) {
+      if (sortValue === 'priceAsc') return a.parsedPrice - b.parsedPrice;
+      if (sortValue === 'priceDesc') return b.parsedPrice - a.parsedPrice;
+      if (sortValue === 'newest') return b.parsedListedDate - a.parsedListedDate;
+      if (sortValue === 'oldest') return a.parsedListedDate - b.parsedListedDate;
+      return a.originalIndex - b.originalIndex; 
+    });
 
-    // --- Pass 2: Output Final UI Layout ---
-    infoHTML += '<div style="margin-top: 15px; background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">';
-    infoHTML += '<details>';
-    infoHTML += '<summary style="color:#fff; font-weight:bold; cursor:pointer; user-select:none; outline:none;">';
-    infoHTML += '<span style="color:#dc3545;">Included Games</span>';
-    infoHTML += '</summary>';
-    infoHTML += '<div style="margin-top: 10px;">';
-
-    // Grand Summary Header Lines
-    infoHTML += '<span class="spanned" style="margin-top: 5px; display:block; font-weight:bold; color:#dc3545;">Total Games: <span style="color:#fff;">' + totalGames + '</span></span>';
-    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Used: <span style="color:#fff;">' + totalSpaceText + ' (Not including Updates, DLC or Game Saves etc)' + '</span></span>';
-    infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Valued At: <span style="color:#fff;">$' + totalValue + ' (Based on my Services not actual game price)' + '</span></span><br>';
-
-    // Inject Platform Groups and Indented Child Nodes
-    infoHTML += platformsHTML;
-    
-    infoHTML += '</div>';
-    infoHTML += '</details>';
-    infoHTML += '</div>';
-}
-                infoHTML += '<br>';
-                if (c.warranty) {
-                  infoHTML += '<br>Warranty: ' + (c.warranty.replace('d',' Days')) + '<br>';
-                  if (c.warranty_note) {
-                    var warrantyNote = c.warranty_note.replace(/\\n/g,'<br>');
-                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_1\}/g, window.servicePrices.option1);
-                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_2\}/g, window.servicePrices.option2);
-                    warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_3\}/g, window.servicePrices.option3);
-                    infoHTML += warrantyNote + '<br>';
-                  }
-                }
-                infoHTML += '<div class="cons-slider-' + k + '"></div>';
-                var listedLine = 'Listed on: ' + (c.listed_date || 'unknown');
-                if (c.listed_date && !c.soldOn) {
-                  var listedParts = c.listed_date.split('/');
-                  if (listedParts.length === 3) {
-                    var lDay = parseInt(listedParts[0],10), lMonth = parseInt(listedParts[1],10), lYear = parseInt(listedParts[2],10);
-                    if (!isNaN(lDay) && !isNaN(lMonth) && !isNaN(lYear)) {
-                      var listedDate = new Date(lYear, lMonth-1, lDay);
-                      var todayClean = getPerthToday();
-                      var diffTime = todayClean.getTime() - listedDate.getTime();
-                      var daysListed = Math.floor(diffTime / (1000*60*60*24));
-                      if (daysListed < 0) daysListed = 0;
-                      listedLine += ' (Up for: ' + daysListed + ' Days)';
-                    }
-                  }
-                }
-                infoHTML += listedLine + '<br>';
-                var infoBox = document.createElement('div');
-                infoBox.style.background = '#222';
-                infoBox.style.borderLeft = '5px solid #dc3545';
-                infoBox.style.padding = '15px';
-                infoBox.style.color = '#fff';
-                infoBox.style.marginBottom = '0';
-                infoBox.innerHTML = infoHTML;
-                li.appendChild(infoBox);
-                consolesList.appendChild(li);
-                var sliderContainer = infoBox.querySelector('.cons-slider-' + k);
-                createConsoleSlider(sliderContainer, c.images);
+    for (var k = 0; k < displayConsoles.length; k++) {
+      var c = displayConsoles[k];
+      var origIndex = c.originalIndex; 
+      
+      var li = document.createElement('li');
+      li.style.padding = '0';
+      li.style.margin = '0 0 10px 0';
+      
+      var displayIssues = c.issues ? c.issues : 'None',
+          displayPrice = (c.price && c.price !== '?') ? c.price : 'not set yet!',
+          displayAccessories = (c.accessories && c.accessories !== '?') ? c.accessories : 'None Console Only!';
+      var infoHTML = '';
+      
+      var titleText = 'PS3 #' + (origIndex + 1); 
+      
+      if (c.soldOn) {
+        titleText += ' (Sold on: ' + c.soldOn;
+        if (c.warranty) {
+          var wParts = c.soldOn.split('/');
+          if (wParts.length === 3) {
+            var wDay = parseInt(wParts[0], 10), wMonth = parseInt(wParts[1], 10), wYear = parseInt(wParts[2], 10);
+            if (!isNaN(wDay) && !isNaN(wMonth) && !isNaN(wYear)) {
+              var wSoldDate = new Date(wYear, wMonth - 1, wDay);
+              var durMatch = c.warranty.match(/(\d+)/);
+              var durDays = durMatch ? parseInt(durMatch[1], 10) : 0;
+              if (durDays > 0) {
+                var wExpDate = new Date(wSoldDate);
+                wExpDate.setDate(wSoldDate.getDate() + durDays);
+                var todayClean = getPerthToday();
+                var diffTime = wExpDate.getTime() - todayClean.getTime();
+                var daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (daysLeft === 1) titleText += ' - Last day of warranty!';
+                else if (daysLeft > 1) titleText += ' - Warranty: ' + daysLeft + ' days left';
               }
             }
+          }
+        }
+        titleText += ')';
+      }
+      
+      var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
+      
+      infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
+      infoHTML += 'Price: ' + displayPrice + '<br>';
+      infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')<br>';
+      infoHTML += 'Firmware: ' + c.firmware + '<br>';
+      infoHTML += 'Model Number: ' + (c.model ? c.model.toUpperCase() : 'Unknown, not set') + ' ' + (c.date_code !== '' ? '(date code: ' + c.date_code + ')' : c.manufacturing_date !== '' ? '(manufacturing date: ' + c.manufacturing_date + ')' : '') + '<br>';
+      infoHTML += 'Flash Memory Type: ' + getFlashType(c.model) + '<br>';
+      infoHTML += 'Model: ' + getPS3Model(c.model) + '<br>';
+      infoHTML += 'PS2 Backwards Compatibility: ' + getBackwardsCompatibility(c.type, c.model, true) + '<br>';
+      infoHTML += (c.factory_firmware && c.factory_firmware !== '' ? ' ' : 'Estimated ') + 'Minimum Applicable Firmware Version: ' + FactoryFW + ' (Also Known As: Max Downgrade Version, Factory Firmware)<br>';
+      infoHTML += 'Hard Drive: ' + (c.hardDrive || '?') + '<br>';
+      infoHTML += 'Replaced Thermal Paste: ' + c.replacedThermalPaste + '<br>';
+      infoHTML += 'Replaced Hard Drive: ' + c.replacedHardDrive + '<br>';
+      infoHTML += 'Replaced CMOS Battery: ' + c.replacedCMOS + '<br>';
+      infoHTML += 'Known issues: ' + displayIssues + '<br>';
+      infoHTML += 'Accessories: ' + displayAccessories + '<br>';
+      
+      if (c.additionalInfo)
+        infoHTML += '<br>Additional Info:<br>' + c.additionalInfo.replace(/\\n/g, '<br>') + '<br>';
+      
+      if (c.gameList && Object.keys(c.gameList).length > 0) {
+        var totalGames = 0, totalSpaceGB = 0, totalValue = 0;
+        var platformsHTML = "", isFirstPlatform = true;
+        
+        for (var platform in c.gameList) {
+          var games = c.gameList[platform];
+          var platformGameCount = games.length;
+          var platformSpaceGB = 0, platformValue = 0;
+          var gamesHTML = "";
+          var platformExists = (typeof gameDatabase !== 'undefined' && gameDatabase && gameDatabase[platform]);
+
+          for (var g = 0; g < games.length; g++) {
+            var gameName = games[g];
+            var lookupName = gameName.toLowerCase().trim();
+            var sizeText = "Not in database", priceText = "Not in database";
+            
+            if (platformExists && gameDatabase[platform][lookupName] !== undefined) {
+              var gameSizeGB = parseFloat(gameDatabase[platform][lookupName]);
+              var gamePrice = getPriceFromSize(gameSizeGB);
+              platformSpaceGB += gameSizeGB;
+              platformValue += gamePrice;
+              sizeText = formatSize(gameSizeGB);
+              priceText = "$" + gamePrice;
+            }
+            gamesHTML += '<span class="spanned" style="margin-left: 15px; display:block; color:#fff;">' +
+                         '└ ' + gameName + ' (Game Size: ' + sizeText + ') (Value: ' + priceText + ')</span>';
+          }
+          
+          totalGames += platformGameCount;
+          totalSpaceGB += platformSpaceGB;
+          totalValue += platformValue;
+          
+          var platformSizeText = (platformSpaceGB > 0) ? formatSize(platformSpaceGB) : "Not in database";
+          var platformValueText = (platformValue > 0) ? "$" + platformValue : "Not in database";
+          var topMargin = isFirstPlatform ? '4px' : '12px';
+          isFirstPlatform = false;
+          
+          platformsHTML += '<span class="spanned" style="margin-top: ' + topMargin + '; display:block; font-weight:bold; color:#dc3545;">' + 
+                           platform + ' (' + platformGameCount + ' Games) (Space Required/Used: ' + platformSizeText + ') (Total Value: ' + platformValueText + ')</span>';
+          platformsHTML += gamesHTML;
+        }
+        
+        var totalSpaceText = (totalSpaceGB > 0) ? formatSize(totalSpaceGB) : "Not in database";
+        
+        infoHTML += '<div style="margin-top: 15px; background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">';
+        infoHTML += '<details><summary style="color:#fff; font-weight:bold; cursor:pointer; user-select:none; outline:none;">';
+        infoHTML += '<span style="color:#dc3545;">Included Games</span></summary>';
+        infoHTML += '<div style="margin-top: 10px;">';
+        infoHTML += '<span class="spanned" style="margin-top: 5px; display:block; font-weight:bold; color:#dc3545;">Total Games: <span style="color:#fff;">' + totalGames + '</span></span>';
+        infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Total Space Used: <span style="color:#fff;">' + totalSpaceText + ' (Not including Updates, DLC or Game Saves etc)' + '</span></span>';
+        infoHTML += '<span class="spanned" style="margin-top: 3px; display:block; font-weight:bold; color:#dc3545;">Valued At: <span style="color:#fff;">$' + totalValue + ' (Based on my Services not actual game price)' + '</span></span><br>';
+        infoHTML += platformsHTML + '</div></details></div>';
+      }
+      
+      infoHTML += '<br>';
+      if (c.warranty) {
+        infoHTML += '<br>Warranty: ' + (c.warranty.replace('d', ' Days')) + '<br>';
+        if (c.warranty_note) {
+          var warrantyNote = c.warranty_note.replace(/\\n/g, '<br>');
+          warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_1\}/g, window.servicePrices.option1);
+          warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_2\}/g, window.servicePrices.option2);
+          warrantyNote = warrantyNote.replace(/\{hdd_replacement_option_3\}/g, window.servicePrices.option3);
+          infoHTML += warrantyNote + '<br>';
+        }
+      }
+      
+      infoHTML += '<div class="cons-slider-' + origIndex + '"></div>';
+      
+      var listedLine = 'Listed on: ' + (c.listed_date || 'unknown');
+      if (c.listed_date && !c.soldOn) {
+        var listedParts = c.listed_date.split('/');
+        if (listedParts.length === 3) {
+          var lDay = parseInt(listedParts[0], 10), lMonth = parseInt(listedParts[1], 10), lYear = parseInt(listedParts[2], 10);
+          if (!isNaN(lDay) && !isNaN(lMonth) && !isNaN(lYear)) {
+            var listedDateDate = new Date(lYear, lMonth - 1, lDay);
+            var todayCleanDate = getPerthToday();
+            var diffTime2 = todayCleanDate.getTime() - listedDateDate.getTime();
+            var daysListed = Math.floor(diffTime2 / (1000 * 60 * 60 * 24));
+            if (daysListed < 0) daysListed = 0;
+            listedLine += ' (Up for: ' + daysListed + ' Days)';
+          }
+        }
+      }
+      
+      infoHTML += listedLine + '<br>';
+      
+      var infoBox = document.createElement('div');
+      infoBox.style.background = '#222';
+      infoBox.style.borderLeft = '5px solid #dc3545';
+      infoBox.style.padding = '15px';
+      infoBox.style.color = '#fff';
+      infoBox.style.marginBottom = '0';
+      infoBox.innerHTML = infoHTML;
+      
+      li.appendChild(infoBox);
+      consolesList.appendChild(li);
+      
+      var sliderContainer = infoBox.querySelector('.cons-slider-' + origIndex);
+      if (sliderContainer && typeof createConsoleSlider === 'function') {
+        createConsoleSlider(sliderContainer, c.images);
+      }
+    }
+  }
+
+  // Phase 3: Mount Listeners & Initialize First Render
+  var inputs = document.querySelectorAll('.cf-type, input[name="cf-sort"]');
+  for (var fn = 0; fn < inputs.length; fn++) {
+      inputs[fn].addEventListener('change', renderList);
+  }
+  
+  renderList();
+}
             var xhr = new XMLHttpRequest();
             xhr.open('GET', REMOTE_URL, true);
             xhr.onreadystatechange = function() {
