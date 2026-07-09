@@ -923,6 +923,13 @@ function fallbackCopyEngine(text) {
                 box.addEventListener('touchstart', startDrag, { passive: false });
                 document.addEventListener('touchmove', moveDrag, { passive: false });
                 document.addEventListener('touchend', stopDrag);
+                
+                // --- NEW: Kills the native mobile popups! ---
+                box.style.webkitTouchCallout = 'none'; // Blocks the iOS share/download popup
+                box.style.webkitUserSelect = 'none';   // Blocks text highlighting
+                box.addEventListener('contextmenu', function(e) {
+                  e.preventDefault(); // Blocks the Android right-click menu entirely
+                });
               });
         function addGameToCart(title, platform, price) {
             var cartContainer = document.getElementById('gameCartContainer');
@@ -996,7 +1003,7 @@ function fallbackCopyEngine(text) {
     <!-- ==================== MAIN SCRIPT ==================== -->
     <script>
       (function() {
-        var CURRENT_VERSION = "1.0";
+        var CURRENT_VERSION = "1.01";
         if (!window.isPS3) {
           if (window.top === window.self && navigator.cookieEnabled) {
             (function() {
