@@ -570,46 +570,52 @@
 
     <!-- ==================== ZOOM SCRIPTS ==================== -->
     <script>
-      // Toggle the display state of the checkout selection window dynamically based on screen space
+      // Smart Menu Positioning Logic - dynamically calculates space
+function updateCheckoutMenuPosition() {
+  var menu = document.getElementById('checkout-options-menu');
+  var box = document.getElementById('sticky-total-box');
+  
+  // Only run the math if the menu is actually open
+  if (!menu || !box || menu.style.display === 'none' || menu.style.display === '') return;
+  
+  var boxRect = box.getBoundingClientRect();
+  var spaceAbove = boxRect.top;
+  var spaceBelow = window.innerHeight - boxRect.bottom;
+  
+  // Reset alignment bounds
+  menu.style.top = 'auto';
+  menu.style.bottom = 'auto';
+  menu.style.left = 'auto';
+  menu.style.right = '0';
+  
+  // Vertical Flip Logic
+  if (spaceAbove < 150 && spaceBelow > spaceAbove) {
+    menu.style.top = '105%'; 
+    menu.style.boxShadow = '0 4px 15px rgba(0,0,0,0.8)';
+  } else {
+    menu.style.bottom = '105%'; 
+    menu.style.boxShadow = '0 -4px 15px rgba(0,0,0,0.8)';
+  }
+  
+  // Horizontal Flip Logic
+  if (boxRect.right < 240) {
+    menu.style.right = 'auto';
+    menu.style.left = '0';
+  }
+}
+
+// Toggle the display state of the checkout selection window
 function toggleCheckoutMenu(event) {
   if (event) {
     event.stopPropagation();
     event.preventDefault();
   }
   var menu = document.getElementById('checkout-options-menu');
-  var box = document.getElementById('sticky-total-box');
-  if (!menu || !box) return;
+  if (!menu) return;
   
   if (menu.style.display === 'none' || menu.style.display === '') {
-    // 1. Get the current position of the floating box and the screen size
-    var boxRect = box.getBoundingClientRect();
-    var spaceAbove = boxRect.top;
-    var spaceBelow = window.innerHeight - boxRect.bottom;
-    
-    // 2. Clear out any previous positioning rules
-    menu.style.top = 'auto';
-    menu.style.bottom = 'auto';
-    menu.style.left = 'auto';
-    menu.style.right = '0'; // Default to aligning with the right edge
-    
-    // 3. Vertical Positioning (Top vs Bottom Priority)
-    // The menu is roughly 140px tall. If there's not enough room above, but plenty below, flip it down!
-    if (spaceAbove < 150 && spaceBelow > spaceAbove) {
-      menu.style.top = '105%'; // Spawns below the box
-      menu.style.boxShadow = '0 4px 15px rgba(0,0,0,0.8)'; // Shadow points down
-    } else {
-      menu.style.bottom = '105%'; // Spawns above the box
-      menu.style.boxShadow = '0 -4px 15px rgba(0,0,0,0.8)'; // Shadow points up
-    }
-    
-    // 4. Horizontal Positioning (Left vs Right Fallback)
-    // If they drag it too far left on the screen (less than the menu's 230px width), align it to the left side
-    if (boxRect.right < 240) {
-      menu.style.right = 'auto';
-      menu.style.left = '0';
-    }
-    
     menu.style.display = 'flex';
+    updateCheckoutMenuPosition(); // Calculate position immediately when opened
   } else {
     menu.style.display = 'none';
   }
@@ -882,7 +888,6 @@ function fallbackCopyEngine(text) {
                   }
                   
                   if (!isDragging) return;
-                  
                   e.preventDefault(); // Stop the screen from scrolling while dragging the box
                   
                   var clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -890,6 +895,11 @@ function fallbackCopyEngine(text) {
 
                   box.style.left = (clientX - offsetX) + 'px';
                   box.style.top = (clientY - offsetY) + 'px';
+                  
+                  // --- NEW: Update menu position live while dragging! ---
+                  if (typeof updateCheckoutMenuPosition === 'function') {
+                    updateCheckoutMenuPosition();
+                  }
                 }
 
                 function stopDrag() {
