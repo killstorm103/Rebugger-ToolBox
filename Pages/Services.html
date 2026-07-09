@@ -7,7 +7,27 @@
     <title>Rebugger - ToolBox</title>
     <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
-    <style></style>
+    <style>
+        /* Clean up the dropdowns */
+            .srv-dropdown > summary { list-style: none; outline: none; }
+            .srv-dropdown > summary::-webkit-details-marker { display: none; }
+            .srv-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #444; }
+            .srv-row:last-child { border-bottom: none; }
+            
+            /* Animated Arrow */
+            .srv-arrow { display: inline-block; transition: transform 0.2s ease; font-size: 14px; }
+            .srv-dropdown[open] summary .srv-arrow { transform: rotate(180deg); }
+            
+            /* Big Custom Mobile-Friendly Buttons */
+            .qty-controls { display: flex; align-items: center; gap: 8px; }
+            .qty-btn { width: 36px; height: 36px; background: #dc3545; color: #fff; border: none; border-radius: 4px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; user-select: none; touch-action: manipulation; padding: 0; line-height: 1; }
+            .qty-btn:hover { background: #b02a37; }
+            .qty-btn:active { transform: scale(0.95); }
+            
+            /* Hide the default tiny browser arrows */
+            .srv-qty { width: 45px; background: #111; color: #fff; border: 1px solid #dc3545; border-radius: 4px; padding: 8px 0; text-align: center; font-weight: bold; font-size: 16px; outline: none; -moz-appearance: textfield; margin: 0; }
+            .srv-qty::-webkit-outer-spin-button, .srv-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    </style>
   </head>
 
   <body>
@@ -90,15 +110,33 @@
 
           <!-- Service list items -->
           <ul>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+            <!-- ==================== FLOATING ESTIMATOR TOTAL ==================== -->
+            <div id="sticky-total-box" style="position: fixed; bottom: 20px; right: 20px; background: #1a1a1a; border: 2px solid #dc3545; padding: 12px 20px; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.8); z-index: 9999; color: #fff; font-family: sans-serif; display: flex; align-items: center; gap: 15px; cursor: grab; user-select: none; touch-action: none; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+  <div style="text-align: right; pointer-events: none;">
+    <div style="font-size: 13px; color: #f79452; font-weight: bold; text-transform: uppercase;">Service Estimate</div>
+    <div style="font-size: 24px; font-weight: bold;">Total: <span id="floating-total-price" style="color: #28a745;">$0</span></div>
+  </div>
+  
+  <button id="checkout-btn" onclick="toggleCheckoutMenu(event)" style="background: #dc3545; color: #fff; border: none; padding: 8px 14px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background 0.2s;">
+    Checkout
+  </button>
+
+  <div id="checkout-options-menu" style="display: none; position: absolute; bottom: 105%; right: 0; background: #141414; border: 2px solid #dc3545; border-radius: 6px; padding: 10px; width: 230px; box-shadow: 0 -4px 15px rgba(0,0,0,0.8); flex-direction: column; gap: 8px; z-index: 10000; cursor: default;">
+    <div style="font-size: 11px; color: #f79452; text-align: center; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; tracking-letter: 0.5px;">Select Output Format</div>
+    
+    <button onclick="executeEstimateCheckout('copy')" style="background: #222; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 10px; width: 100%; transition: background 0.2s;" onmouseenter="this.style.background='#333'" onmouseleave="this.style.background='#222'">
+      <span style="font-size: 16px;">📋</span> Copy to Clipboard
+    </button>
+    
+    <button onclick="executeEstimateCheckout('download')" style="background: #222; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 4px; cursor: pointer; text-align: left; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 10px; width: 100%; transition: background 0.2s;" onmouseenter="this.style.background='#333'" onmouseleave="this.style.background='#222'">
+      <span style="font-size: 16px;">💾</span> Download .TXT File
+    </button>
+  </div>
+</div>  
+              
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:-10px;">Jailbreaking (CFW or HEN: Started: 50$, Basic: 60$, Full: 100$) (qCFW: currently not offered)</strong><br>
-                
-                <!--
-                <span class="spanned">└ Info CFW is always available for compatible PS3's with the NOR flash memory type! (i'm not reliant on the new way of jailbreaking!)</span><br>
-                 <span class="spanned">└ If a new firmware has came out and its not possible to easily jailbreak and i have to manually back up and patch the flash memory there is a additional Fee that automatically gets added on top of the price/cost of jailbreaking, because of how much bullshit i have to do to do this, taking apart the Whole PS3 and then using the E3 NOR Flasher which can be a Bitch to work with i have to charge a Fee of: + 50% of the price/cost of jailbreaking!, this is Only for If your wanting CFW this is more for if you wanting CFW Urgently!</span><br>
-                 
-                !-->
                 <span class="spanned">└ Go down to the Console Information section to enter in your PS3's Model number to check if it can take CFW and what the Flash memory type is!</span><br>
                 <span class="spanned">└ Recommendation: replace the old hard drive before jailbreaking, Read PS3 Information for Recommended HDD/SSD replacements</span><br>
                 <span class="spanned">└ Read the Console Information section to read about the differences between the jailbreaks.</span><br>
@@ -106,44 +144,183 @@
                 <span class="spanned">└ Basic: Started + i configure somethings for you and i make sure you can go online(If its console banned you must provide the new CID)</span><br>
                 <span class="spanned">└ Full: Basic + i set you up with my toolbox and any other homebrew tools/apps you'll need!</span><br>
                 <span class="spanned">└ Info: bring a USB and i'll give you a copy of your Flash Memory BackUp for free</span>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Jailbreak Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>Started ($50)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="50" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Basic ($60)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="60" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Full ($100)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="100" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:-10px;">Switching Firmwares (HEN ----> CFW or Switching to a differnt/newer Firmware: 20$)</strong><br>
                 <span class="spanned">└ Options:</span><br>
-                <span class="spanned">└ 1: Evilnat 4.91.2 - 4.93 (CEX, PEX or D-PEX)</span><br>
+                <span class="spanned">└ 1: Evilnat 4.91.2 - 4.93 (CEX, DEX, PEX or D-PEX)</span><br>
                 <span class="spanned">└ 2: Rebug (4.21.2 REX, 4.82.2 REX or D-REX, 4.84.2 REX or D-REX or D-REX OverClocked)</span><br>
                 <span class="spanned">└ 3: Rebug 4.84.7 D-REX Cobra 8.3 By DEVX (Not official Rebug its not made by the Rebug Team)</span><br>
-                <span class="spanned">└ 4: HFW: 4.92.1, 4.93.1</span><br>
-                <span class="spanned">└ 5: Original/Official Firmware: 3.55, 4.92, 4.93</span><br>
+                <span class="spanned">└ 4: PASTA 4.84 DEX CFW (With or Without Cobra)</span><br>
+                <span class="spanned">└ 5: HFW: 4.84.1 Dual Boot DEX, 4.92.1, 4.93.1</span><br>
+                <span class="spanned">└ 6: Original/Official Firmware: 4.92, 4.93</span><br>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Firmware Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>Switch Firmware ($20)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="20" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:0x;">Homebrew Installation (5-10$)</strong><br>
                 <span class="spanned">└ i'll install homebrew and set it up for you</span><br>
                 <span class="spanned">└ 5$ for anything up to 2GB, 10$ for anything more than 2GB</span><br>
                 <span class="spanned">└ Note: contact me about what homebrew you want first to make sure i know how to set it up and price is per homebrew!</span>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Homebrew Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>Homebrew Up to 2GB ($5)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="5" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Homebrew Over 2GB ($10)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="10" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:0x;">Custom Boot Up (Aka Coldboot) (5-10$)</strong><br>
                 <span class="spanned">└ 5$ if you only want a image and no custom sound or if you come with a editted audio file thats 8 seconds long at most and ready to be used or if you want one that i've already got pre made!</span><br>
                 <span class="spanned">└ 10$ if the custom sound you want isn't ready and i have to edit/cut it down to 8 seconds!</span><br>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Custom Boot Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>Standard / Pre-Made ($5)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="5" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Requires Audio Edit ($10)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="10" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:0x;">Opening and Cleaning (1: 20$, 2: 35$, 3: 50$)</strong><br>
                 <span class="spanned">└ 1: Just a basic normal open and cleaning</span><br>
                 <span class="spanned">└ 2: 1 + Thermal paste replacement (You Must Provide the Thermal Paste)</span><br>
                 <span class="spanned">└ 3: 2, alot of slim models motherboards get stuck cause of the old dried up thermal paste that glues it in place this requires a heat gun and more time to get the motherboard out safely so i'm charging a little bit more because of this!</span>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Cleaning Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>1: Basic Clean ($20)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="20" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>2: Clean + Thermal Paste ($35)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="35" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>3: Clean + Paste + Stuck Board ($50)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="50" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:0x;">Games (Install games on your ps3s Hard Drive) (5-50$)</strong><br>
                 <span class="spanned">└ PS1 &amp; 2 &amp; 3, PSP &amp; Any Game for the following consoles/platforms: Game Boy & Game Boy Color & GameBoy Advance & NES & SNES & Genesis & Neo Geo Pocket & WonderSwan & PC & Atari 2600/7800/Lynx & Arcade and Maybe some others!, You Do Not get a physical copy!</span><br>
                 <span class="spanned">└ Prices are per game!</span><br>
@@ -159,25 +336,26 @@
                  <span class="spanned">└ Note this Compatibility list is by the Community not me and can be wrong!</span><br>
                  <span class="spanned">└ Examples: Spider Man 3 (PSP) is unplayable because of slow frames but it gets a little better if you switch to a differnt Emulator/Launcher (at least on the first level i didn't test past that)!, Spider Man 2 (PSP) is marked as Playable but you can't save the game and have to finish it in 1 sitting!</span><br>
                  <span class="spanned">└ You have to pay me to install and setup homebrew apps for Emulating: PSP (2 Apps) & for Game Boy and others like it (1 App) If you don't have them already!</span><br>
-                <!-- Game Price Calculator - dynamic platform dropdown -->
-                <!-- border-bottom: 4px solid #dc3545; margin: 5px 0 6px 0; 
-                
-                -->
+        
                 <div style="margin-top: 15px; padding-top: 10px; border-top: 4px solid #dc3545; margin-left: -15px; margin-right: -15px; padding-left: 15px; padding-right: 15px;">
                   <strong>🎮 Game Price Calculator</strong><br>
                   <span style="color: #f79452;">Select platform and type game name:</span><br>
                   <select id="gamePlatformSelect" style="margin-top:5px; padding:5px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;">
-                    <!-- options will be filled from Game_Sizes.txt -->
                   </select>
                   <input type="text" id="gameTitleInput" placeholder="Start typing to see matching games" style="margin-top:5px; margin-left:5px; padding:5px; width:250px; background:#333; color:#fff; border:1px solid #555; border-radius:4px;" list="gameDatalist">
                   <datalist id="gameDatalist"></datalist>
                   <button id="calcGamePriceBtn" style="margin-left:5px; padding:5px 15px; background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Get Price</button>
                   <div id="gamePriceResult" style="margin-top:8px; font-weight:bold;"></div>
+                  <div id="gameCartContainer" style="display:none; margin-top:15px; border-top: 1px dashed #555; padding-top: 12px;">
+                    <strong style="color: #f79452; font-size:15px;">Games Added to Estimate:</strong>
+                    <div id="gameCartList"></div>
+                  </div>
                 </div>
               </div>
             </li>
-            <li style="padding:0; margin:0;">
-              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
+
+            <li style="padding:0; margin:0; margin-bottom: 15px;">
+              <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff;">
                 <strong style="display:block; margin-bottom:0x;">Replacement Hard drive Service (10-40$)</strong><br>
                 <span class="spanned">└ Note: You Must Provide the HDD/SSD Replacement</span><br>
                 <span class="spanned">└ Go down to PS3 Information to read Recommended Hard Drive Replacements</span><br>
@@ -185,8 +363,46 @@
                 <span class="spanned">└ Install the new HDD/SSD and reinstall CFW/HEN/qCFW and reinstall basic homebrew applications <span id="hdd_replacement_option_2">20</span>$</span><br>
                 <span class="spanned" style="margin-top: 10px">└ Remove the old HDD/SSD and replace it with the new HDD/SSD and install OFW/HFW/qCFW/CFW (<span id="hdd_replacement_option_3">10</span>$)</span><br>
                 <span class="spanned">└ You must bring the ps3 with the old HDD/SSD inside it or be able to show proof that it was already jailbroken or otherwise i'll have to charge you for jailbreaking it if your wanting HFW/qCFW/CFW Installed!</span>
+                
+                <details class="srv-dropdown" style="margin-top:12px; border:1px solid #555; border-radius:4px; background:#333;">
+                  <summary style="padding:10px; cursor:pointer; font-weight:bold; color:#f79452; background:#2a2a2a; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🛒 Click to Add Hard Drive Services</span>
+                    <span class="srv-arrow">▲</span>
+                  </summary>
+                  <div style="padding:10px 15px; border-top:1px solid #555;">
+                    <div class="srv-row">
+                      <span>Cloning old drive ($40)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="40" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Install new + Setup ($20)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="20" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                    <div class="srv-row">
+                      <span>Replace drive + Firmware ($10)</span> 
+                      <div class="qty-controls">
+                        <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>
+                        <input type="number" class="srv-qty" data-price="10" min="0" value="0" >
+                        <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
               </div>
             </li>
+            
+            
+            
+            
+            
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="display:block; margin-bottom:0x;">Delidding (?) (Risky repair!)</strong><br>
@@ -354,6 +570,402 @@
 
     <!-- ==================== ZOOM SCRIPTS ==================== -->
     <script>
+      // Toggle the display state of the checkout selection window dynamically based on screen space
+function toggleCheckoutMenu(event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  var menu = document.getElementById('checkout-options-menu');
+  var box = document.getElementById('sticky-total-box');
+  if (!menu || !box) return;
+  
+  if (menu.style.display === 'none' || menu.style.display === '') {
+    // 1. Get the current position of the floating box and the screen size
+    var boxRect = box.getBoundingClientRect();
+    var spaceAbove = boxRect.top;
+    var spaceBelow = window.innerHeight - boxRect.bottom;
+    
+    // 2. Clear out any previous positioning rules
+    menu.style.top = 'auto';
+    menu.style.bottom = 'auto';
+    menu.style.left = 'auto';
+    menu.style.right = '0'; // Default to aligning with the right edge
+    
+    // 3. Vertical Positioning (Top vs Bottom Priority)
+    // The menu is roughly 140px tall. If there's not enough room above, but plenty below, flip it down!
+    if (spaceAbove < 150 && spaceBelow > spaceAbove) {
+      menu.style.top = '105%'; // Spawns below the box
+      menu.style.boxShadow = '0 4px 15px rgba(0,0,0,0.8)'; // Shadow points down
+    } else {
+      menu.style.bottom = '105%'; // Spawns above the box
+      menu.style.boxShadow = '0 -4px 15px rgba(0,0,0,0.8)'; // Shadow points up
+    }
+    
+    // 4. Horizontal Positioning (Left vs Right Fallback)
+    // If they drag it too far left on the screen (less than the menu's 230px width), align it to the left side
+    if (boxRect.right < 240) {
+      menu.style.right = 'auto';
+      menu.style.left = '0';
+    }
+    
+    menu.style.display = 'flex';
+  } else {
+    menu.style.display = 'none';
+  }
+}
+
+// Master checkout handling execution script
+function executeEstimateCheckout(mode) {
+  var inputs = document.querySelectorAll('.srv-qty');
+  var selectedConsoles = [];
+  var selectedServices = [];
+  var gamesByPlatform = {};
+  var runningTotal = 0;
+  var hasGames = false;
+
+  inputs.forEach(function(input) {
+    var qty = parseInt(input.value, 10) || 0;
+    if (qty > 0) {
+      var price = parseFloat(input.getAttribute('data-price')) || 0;
+      var subtotal = qty * price;
+      runningTotal += subtotal;
+
+      // Check if this input belongs to a game inside the Game Cart
+      var gameCartRow = input.closest('[id^="game-item-"]');
+      
+      if (gameCartRow) {
+        hasGames = true;
+        
+        // Extract the raw text from the game row (e.g., "🎮 Game Title (PS3)")
+        var nameSpan = gameCartRow.querySelector('span');
+        var rawText = nameSpan ? (nameSpan.innerText || nameSpan.textContent) : "";
+        var cleanText = rawText.replace('🎮', '').trim();
+        
+        // Isolate the platform in the brackets at the end of the text
+        var platform = "Unknown Platform";
+        var title = cleanText;
+        var lastOpenBracket = cleanText.lastIndexOf('(');
+        var lastCloseBracket = cleanText.lastIndexOf(')');
+        
+        if (lastOpenBracket !== -1 && lastCloseBracket !== -1) {
+          platform = cleanText.substring(lastOpenBracket + 1, lastCloseBracket).trim();
+          title = cleanText.substring(0, lastOpenBracket).trim();
+        }
+        
+        if (!gamesByPlatform[platform]) {
+          gamesByPlatform[platform] = [];
+        }
+        
+        gamesByPlatform[platform].push("- " + title + " ($" + price + ") (Qty: " + qty + ") [Subtotal: $" + subtotal + "]");
+        
+      } else {
+        // It is a standard Service or Console listing
+        var itemName = "";
+        var isConsoleListing = false;
+
+        if (input.hasAttribute('data-name')) {
+          itemName = input.getAttribute('data-name');
+          // If this is a console setup, mark it and clean up the label string
+          if (itemName.indexOf("Console Sale: ") === 0) {
+            isConsoleListing = true;
+            itemName = itemName.replace("Console Sale: ", "");
+          }
+        } else {
+          var row = input.closest('.srv-row');
+          if (row) {
+            var labelSpan = row.querySelector('span');
+            if (labelSpan) {
+              itemName = labelSpan.textContent.trim();
+            }
+          }
+        }
+        
+        if (!itemName) itemName = "Unspecified Service Portfolio Item";
+        
+        var formattedLine = "- " + itemName + " ($" + price + ") (Qty: " + qty + ") [Subtotal: $" + subtotal + "]";
+        
+        if (isConsoleListing) {
+          selectedConsoles.push(formattedLine);
+        } else {
+          selectedServices.push(formattedLine);
+        }
+      }
+    }
+  });
+
+  // Stop if nothing is selected across all configurations
+  if (selectedConsoles.length === 0 && selectedServices.length === 0 && !hasGames) {
+    alert("Your estimate is currently empty. Please select services, games, or a console first!");
+    toggleCheckoutMenu();
+    return;
+  }
+
+  // Format the text engine document layout
+  var stamp = new Date().toLocaleString('en-AU', { timeZone: 'Australia/Perth' });
+  var manifestParts = [
+    "==================================================",
+    "             Dillans SERVICE ESTIMATE             ",
+    "==================================================",
+    "Generated: " + stamp + " (AWST)",
+    "--------------------------------------------------\n"
+  ];
+
+  // 1. Add Consoles (if any) - ALWAYS AT THE VERY TOP
+  if (selectedConsoles.length > 0) {
+    manifestParts.push("CONSOLES:");
+    manifestParts.push(selectedConsoles.join("\n"));
+    manifestParts.push(""); // Blank line spacer
+  }
+
+  // 2. Add Services (if any)
+  if (selectedServices.length > 0) {
+    if (selectedConsoles.length > 0) {
+      manifestParts.push("--------------------------------------------------");
+    }
+    manifestParts.push("SELECTED SERVICES:");
+    manifestParts.push(selectedServices.join("\n"));
+    manifestParts.push(""); // Blank line spacer
+  }
+
+  // 3. Add Games grouped by platform (if any)
+  if (hasGames) {
+    if (selectedConsoles.length > 0 || selectedServices.length > 0) {
+      manifestParts.push("--------------------------------------------------");
+    }
+    manifestParts.push("SELECTED GAMES:");
+    for (var plat in gamesByPlatform) {
+      manifestParts.push(plat + ":");
+      for (var i = 0; i < gamesByPlatform[plat].length; i++) {
+         manifestParts.push(gamesByPlatform[plat][i]);
+      }
+      manifestParts.push(""); // Blank line spacer after each platform list
+    }
+  }
+
+  // 4. Add Totals & Footer
+  manifestParts.push("--------------------------------------------------");
+  manifestParts.push("ESTIMATED TOTAL: $" + runningTotal);
+  manifestParts.push("==================================================");
+  manifestParts.push("\nNote: Please copy this or forward this file");
+  manifestParts.push("directly to Dillan to book your appointment.");
+
+  var manifestText = manifestParts.join("\n");
+
+  // Output execution routes
+  if (mode === 'copy') {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(manifestText).then(function() {
+        alert("Estimate copied successfully to clipboard!");
+      }).catch(function() {
+        fallbackCopyEngine(manifestText);
+      });
+    } else {
+      fallbackCopyEngine(manifestText);
+    }
+  } else if (mode === 'download') {
+    try {
+      var blob = new Blob([manifestText], { type: 'text/plain;charset=utf-8;' });
+      var link = document.createElement("a");
+      var url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Dillans_Service_Estimate.txt");
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Error generating download link.");
+    }
+  }
+  
+  toggleCheckoutMenu();
+}
+
+// Legacy selector fallback routing for strict execution environments
+function fallbackCopyEngine(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed"; 
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    alert("Estimate manifest copied successfully to clipboard!");
+  } catch (err) {
+    alert("Failed to access system clipboard structure storage components.");
+  }
+  document.body.removeChild(textArea);
+}
+        
+      function changeQty(btn, delta) {
+              var input = btn.parentElement.querySelector('.srv-qty');
+              var newVal = (parseInt(input.value, 10) || 0) + delta;
+              if (newVal < 0) newVal = 0;
+              input.value = newVal;
+              // Tell the rest of the page that the price changed
+              input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+      document.addEventListener('DOMContentLoaded', function() {
+                var floatingTotal = document.getElementById('floating-total-price');
+
+                // --- 1. THE CALCULATION ENGINE ---
+                window.forceUpdateTotal = function() {
+                  var qtyInputs = document.querySelectorAll('.srv-qty'); 
+                  var total = 0;
+                  
+                  for (var i = 0; i < qtyInputs.length; i++) {
+                    var qty = parseInt(qtyInputs[i].value, 10) || 0;
+                    if (qty < 0) {
+                      qty = 0;
+                      qtyInputs[i].value = 0;
+                    }
+                    var price = parseInt(qtyInputs[i].getAttribute('data-price'), 10) || 0;
+                    total += (qty * price);
+                  }
+                  
+                  if (floatingTotal) {
+                    floatingTotal.innerText = '$' + total;
+                  }
+                };
+
+                document.body.addEventListener('input', function(e) {
+                  if (e.target && e.target.classList.contains('srv-qty')) window.forceUpdateTotal();
+                });
+                document.body.addEventListener('change', function(e) {
+                  if (e.target && e.target.classList.contains('srv-qty')) window.forceUpdateTotal();
+                });
+
+                // --- 2. THE DRAG AND DROP ENGINE ---
+                var box = document.getElementById('sticky-total-box');
+                var isDragging = false;
+                var holdTimer = null;
+                var offsetX = 0;
+                var offsetY = 0;
+                
+                // Set the hold delay here! (1000 = 1 second. Change to 2000 for 2 seconds)
+                var holdDuration = 200; 
+
+                function startDrag(e) {
+                  if (e.button && e.button !== 0) return; // Only allow left-clicks
+                  if (isDragging) return;
+
+                  var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                  var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                  // Start the hold timer
+                  holdTimer = setTimeout(function() {
+                    isDragging = true;
+                    box.style.cursor = 'grabbing';
+                    box.style.transform = 'scale(1.05)';
+                    box.style.boxShadow = '0 8px 25px rgba(220, 53, 69, 0.6)';
+
+                    // Lock the current position before switching to Top/Left coordinates
+                    var rect = box.getBoundingClientRect();
+                    box.style.bottom = 'auto';
+                    box.style.right = 'auto';
+                    box.style.left = rect.left + 'px';
+                    box.style.top = rect.top + 'px';
+
+                    offsetX = clientX - rect.left;
+                    offsetY = clientY - rect.top;
+                  }, holdDuration);
+                }
+
+                function moveDrag(e) {
+                  // If the user moves the mouse/finger before the timer finishes, cancel the hold
+                  if (holdTimer && !isDragging) {
+                    clearTimeout(holdTimer);
+                    holdTimer = null;
+                  }
+                  
+                  if (!isDragging) return;
+                  
+                  e.preventDefault(); // Stop the screen from scrolling while dragging the box
+                  
+                  var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                  var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                  box.style.left = (clientX - offsetX) + 'px';
+                  box.style.top = (clientY - offsetY) + 'px';
+                }
+
+                function stopDrag() {
+                  if (holdTimer) clearTimeout(holdTimer);
+                  holdTimer = null;
+                  
+                  if (isDragging) {
+                    isDragging = false;
+                    box.style.cursor = 'grab';
+                    box.style.transform = 'scale(1)';
+                    box.style.boxShadow = '0 4px 15px rgba(0,0,0,0.8)';
+                  }
+                }
+
+                // Attach Mouse Events (For PC)
+                box.addEventListener('mousedown', startDrag);
+                document.addEventListener('mousemove', moveDrag);
+                document.addEventListener('mouseup', stopDrag);
+
+                // Attach Touch Events (For Mobile Phones)
+                box.addEventListener('touchstart', startDrag, { passive: false });
+                document.addEventListener('touchmove', moveDrag, { passive: false });
+                document.addEventListener('touchend', stopDrag);
+              });
+        function addGameToCart(title, platform, price) {
+            var cartContainer = document.getElementById('gameCartContainer');
+            var cartList = document.getElementById('gameCartList');
+            var rowId = 'game-item-' + title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+            
+            var existingRow = document.getElementById(rowId);
+            
+            // If the game is already in the cart, just bump up the quantity!
+            if (existingRow) {
+                var qtyInput = existingRow.querySelector('.srv-qty');
+                if (qtyInput) {
+                    qtyInput.value = (parseInt(qtyInput.value, 10) || 0) + 1;
+                }
+                if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
+                return;
+            }
+
+            // Otherwise, show the cart container and append a brand new row
+            cartContainer.style.display = 'block';
+            
+            var row = document.createElement('div');
+            row.id = rowId;
+            row.style.cssText = 'display: flex; justify-content: space-between; align-items:center; background: #333; padding: 8px 12px; margin-top: 6px; border: 1px solid #555; border-radius: 4px; font-size: 14px;';
+            
+            // Replaced button/input sizes here to match the beautiful big service inputs!
+            row.innerHTML = '<span>🎮 ' + title + ' <span style="color:#aaa;">(' + platform + ')</span></span>' +
+                            '<div style="display:flex; align-items:center; gap:12px;">' +
+                            '<span style="color:#28a745; font-weight:bold;">$' + price + ' ea</span>' +
+                            '<div class="qty-controls">' +
+                                '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="changeQty(this, -1)">-</button>' +
+                                '<input type="number" class="srv-qty" value="1" data-price="' + price + '" min="1" style="width:45px; padding:8px 0; font-size:16px; background:#111; color:#fff; border:1px solid #dc3545; border-radius:4px; text-align:center; outline:none; -moz-appearance:textfield; margin:0;">' + 
+                                '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="changeQty(this, 1)">+</button>' +
+                            '</div>' +
+                            '<button onclick="removeGameFromCart(\'' + rowId + '\')" style="background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; padding:0 12px; font-weight:bold; height:36px; display:flex; align-items:center; justify-content:center;">X</button></div>';
+            
+            cartList.appendChild(row);
+            
+            if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
+        }
+
+                    function removeGameFromCart(rowId) {
+                      var row = document.getElementById(rowId);
+                      if (row) row.parentNode.removeChild(row);
+                      
+                      // Automatically hide the cart header if they delete everything
+                      if (document.getElementById('gameCartList').children.length === 0) {
+                        document.getElementById('gameCartContainer').style.display = 'none';
+                      }
+                      
+                      if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
+                    }
+        
       function zoomImage(src) {
         var overlay = document.getElementById('image-overlay');
         var img = document.getElementById('zoom-img');
@@ -374,7 +986,7 @@
     <!-- ==================== MAIN SCRIPT ==================== -->
     <script>
       (function() {
-        var CURRENT_VERSION = "7.8";
+        var CURRENT_VERSION = "1.0";
         if (!window.isPS3) {
           if (window.top === window.self && navigator.cookieEnabled) {
             (function() {
@@ -740,9 +1352,19 @@
             var foundSize = gameDatabase[platform][lowerTitle];
             var price = getPriceFromSize(foundSize);
             var sizeDisplay = formatSize(foundSize);
-            resultDiv.innerHTML = '<span style="color:#28a745;">✅ "' + title + '" (' + platform + ') is ' + sizeDisplay + ' → Price: $' + price + '</span>';
+            
+            // Inject the success message AND the Add to Cart button
+            resultDiv.innerHTML = '<div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">' +
+                                  '<span style="color:#28a745;">✅ "' + title + '" (' + platform + ') is ' + sizeDisplay + ' → Price: $' + price + '</span>' +
+                                  '<button id="addGameToCartBtn" style="padding:4px 12px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">+ Add to Estimate</button>' +
+                                  '</div>';
+            
+            // Make the button functional
+            document.getElementById('addGameToCartBtn').onclick = function() {
+              addGameToCart(title, platform, price);
+            };
           } else {
-            resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in  database, contact me to find out its size.</span>';
+            resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in database, contact me to find out its size.</span>';
           }
         }
 
@@ -1293,6 +1915,23 @@ if (insideGameList) {
       var FactoryFW = (c.factory_firmware && c.factory_firmware !== '') ? c.factory_firmware : getMaxDowngradeFirmware(c.model, c.date_code, c.manufacturing_date);
       
       infoHTML += '<strong style="color:#dc3545;">' + titleText + '</strong><br>';
+      if (!c.soldOn)
+      {
+        infoHTML += '<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 8px;">';
+        infoHTML += '  <strong style="color: #f79452; font-size: 16px;">🛒 Add to Estimate:</strong>';
+        infoHTML += '  <div class="qty-controls">';
+        infoHTML += '    <button type="button" class="qty-btn" onclick="changeQty(this, -1)">-</button>';
+        infoHTML += '    <input type="number" class="srv-qty" data-name="Console Sale: ' + titleText + '" data-price="' + displayPrice + '" min="0" max="1" value="0" oninput="if(parseInt(this.value,10)>1){this.value=1;} if(typeof window.forceUpdateTotal === \'function\') window.forceUpdateTotal();">';
+        
+        infoHTML += '    <button type="button" class="qty-btn" onclick="var inp=this.parentNode.querySelector(\'.srv-qty\'); if((parseInt(inp.value,10)||0)<1){ changeQty(this, 1); }">+</button>';
+        infoHTML += '  </div>';
+        infoHTML += '</div>';
+        infoHTML += '<div style="border-bottom: 4px solid #dc3545; margin: 6px -15px 12px -15px;"></div>';
+      }
+      
+        
+        
+        
       infoHTML += 'Price: ' + displayPrice + '<br>';
       infoHTML += 'Console Type: ' + c.type + ' (Jailbroken: ' + (c.type == "OFW" ? "No" : "Yes") + ')<br>';
       infoHTML += 'Firmware: ' + c.firmware + '<br>';
@@ -1376,7 +2015,6 @@ if (insideGameList) {
           infoHTML += warrantyNote + '<br>';
         }
       }
-      
       infoHTML += '<div class="cons-slider-' + origIndex + '"></div>';
       
       var listedLine = 'Listed on: ' + (c.listed_date || 'unknown');
@@ -1422,6 +2060,22 @@ if (insideGameList) {
   }
   
   renderList();
+  
+  // --  Midnight Auto-Updater ---
+  // Clears any existing timers to prevent duplicates if the function runs multiple times
+  if (window.midnightTimer) clearInterval(window.midnightTimer);
+  
+  var currentDayTracker = getPerthToday().getTime();
+  
+  window.midnightTimer = setInterval(function() {
+    var newDayCheck = getPerthToday().getTime();
+    
+    // If Perth time has officially crossed midnight, rebuild the UI automatically!
+    if (newDayCheck !== currentDayTracker)
+    {
+      initConsoleStock();
+    }
+  }, 60000); // Checks the clock in the background every 60 seconds
 }
             var xhr = new XMLHttpRequest();
             xhr.open('GET', REMOTE_URL, true);
@@ -1755,8 +2409,8 @@ if (insideGameList) {
         var cfwColor = '#28a745'; if (cfw.indexOf('Maybe')===0) cfwColor='#ffa500'; if (cfw.indexOf('No')===0) cfwColor='#dc3545';
         var qcfwColor = (qcfw.indexOf('No')===0) ? '#dc3545' : '#28a745';
         var html = '';
-        html += '<span style="color:'+cfwColor+';">CFW: '+cfw+'</span><br>';
-        html += '<span style="color:'+qcfwColor+';">qCFW: '+qcfw+'</span><br>';
+        html += '<span style="color:'+cfwColor+';">CFW: ' + cfw + '</span><br>';
+        html += '<span style="color:'+qcfwColor+';">qCFW: ' + qcfw + '</span><br>';
         html += '<span style="color:#28a745;">HEN: Yes</span><br><br>';
         html += 'Model Number: '+displayModel+'<br>';
         html += 'Model: '+modelType+'<br>';
