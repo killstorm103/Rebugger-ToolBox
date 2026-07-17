@@ -8,25 +8,7 @@
     <link rel="stylesheet" href="https://raw.githack.com/killstorm103/Rebugger-ToolBox/dev/CSS/Style.css">
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox/dev/Scripts/Platform_Checker.js"></script>
     <style>
-        /* Clean up the dropdowns */
-            .srv-dropdown > summary { list-style: none; outline: none; }
-            .srv-dropdown > summary::-webkit-details-marker { display: none; }
-            .srv-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #444; }
-            .srv-row:last-child { border-bottom: none; }
-            
-            /* Animated Arrow */
-            .srv-arrow { display: inline-block; transition: transform 0.2s ease; font-size: 14px; }
-            .srv-dropdown[open] summary .srv-arrow { transform: rotate(180deg); }
-            
-            /* Big Custom Mobile-Friendly Buttons */
-            .qty-controls { display: flex; align-items: center; gap: 8px; }
-            .qty-btn { width: 36px; height: 36px; background: #dc3545; color: #fff; border: none; border-radius: 4px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; user-select: none; touch-action: manipulation; padding: 0; line-height: 1; }
-            .qty-btn:hover { background: #b02a37; }
-            .qty-btn:active { transform: scale(0.95); }
-            
-            /* Hide the default tiny browser arrows */
-            .srv-qty { width: 45px; background: #111; color: #fff; border: 1px solid #dc3545; border-radius: 4px; padding: 8px 0; text-align: center; font-weight: bold; font-size: 16px; outline: none; -moz-appearance: textfield; margin: 0; }
-            .srv-qty::-webkit-outer-spin-button, .srv-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    
     </style>
   </head>
 
@@ -40,10 +22,13 @@
       <div class="nav-container"></div>
     </div>
     <div id="mainContainer" class="container">
+        
       <ul class="main">
         <li class="bloc">
           <!-- Information section -->
           <ul>
+             
+              
             <li style="padding:0; margin:0;">
               <div style="background:#222; border-left:5px solid #dc3545; padding:15px; color:#fff; margin-bottom:0px;">
                 <strong style="font-size: 25px; display:block; margin-bottom: -5px; margin-top: -5px">Information</strong>
@@ -932,44 +917,46 @@ function fallbackCopyEngine(text) {
                 });
               });
         function addGameToCart(title, platform, price) {
-            var cartContainer = document.getElementById('gameCartContainer');
-            var cartList = document.getElementById('gameCartList');
-            var rowId = 'game-item-' + title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-            
-            var existingRow = document.getElementById(rowId);
-            
-            // If the game is already in the cart, just bump up the quantity!
-            if (existingRow) {
-                var qtyInput = existingRow.querySelector('.srv-qty');
-                if (qtyInput) {
-                    qtyInput.value = (parseInt(qtyInput.value, 10) || 0) + 1;
-                }
-                if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
-                return;
-            }
+  var cartContainer = document.getElementById('gameCartContainer');
+  var cartList = document.getElementById('gameCartList');
+  var rowId = 'game-item-' + title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+  
+  var existingRow = document.getElementById(rowId);
+  
+  // If the game is already in the cart, just bump up the quantity!
+  if (existingRow) {
+      var qtyInput = existingRow.querySelector('.srv-qty');
+      if (qtyInput) {
+          qtyInput.value = (parseInt(qtyInput.value, 10) || 0) + 1;
+      }
+      if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
+      return;
+  }
 
-            // Otherwise, show the cart container and append a brand new row
-            cartContainer.style.display = 'block';
-            
-            var row = document.createElement('div');
-            row.id = rowId;
-            row.style.cssText = 'display: flex; justify-content: space-between; align-items:center; background: #333; padding: 8px 12px; margin-top: 6px; border: 1px solid #555; border-radius: 4px; font-size: 14px;';
-            
-            // Replaced button/input sizes here to match the beautiful big service inputs!
-            row.innerHTML = '<span>🎮 ' + title + ' <span style="color:#aaa;">(' + platform + ')</span></span>' +
-                            '<div style="display:flex; align-items:center; gap:12px;">' +
-                            '<span style="color:#28a745; font-weight:bold;">$' + price + ' ea</span>' +
-                            '<div class="qty-controls">' +
-                                '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="changeQty(this, -1)">-</button>' +
-                                '<input type="number" class="srv-qty" value="1" data-price="' + price + '" min="1" style="width:45px; padding:8px 0; font-size:16px; background:#111; color:#fff; border:1px solid #dc3545; border-radius:4px; text-align:center; outline:none; -moz-appearance:textfield; margin:0;">' + 
-                                '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="changeQty(this, 1)">+</button>' +
-                            '</div>' +
-                            '<button onclick="removeGameFromCart(\'' + rowId + '\')" style="background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; padding:0 12px; font-weight:bold; height:36px; display:flex; align-items:center; justify-content:center;">X</button></div>';
-            
-            cartList.appendChild(row);
-            
-            if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
-        }
+  // Otherwise, show the cart container and append a brand new row
+  cartContainer.style.display = 'block';
+  
+  var row = document.createElement('div');
+  row.id = rowId;
+  row.style.cssText = 'display: flex; justify-content: space-between; align-items:center; background: #333; padding: 8px 12px; margin-top: 6px; border: 1px solid #555; border-radius: 4px; font-size: 14px;';
+  
+  // THE FIX: 
+  // 1. The minus button now checks if the value is > 1 before firing.
+  // 2. The input field has an 'onchange' fallback so if a user manually types "0" or "-5", it snaps back to 1.
+  row.innerHTML = '<span>🎮 ' + title + ' <span style="color:#aaa;">(' + platform + ')</span></span>' +
+                  '<div style="display:flex; align-items:center; gap:12px;">' +
+                  '<span style="color:#28a745; font-weight:bold;">$' + price + ' ea</span>' +
+                  '<div class="qty-controls">' +
+                      '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="if(this.nextElementSibling.value > 1) changeQty(this, -1);">-</button>' +
+                      '<input type="number" class="srv-qty" value="1" data-price="' + price + '" min="1" style="width:45px; padding:8px 0; font-size:16px; background:#111; color:#fff; border:1px solid #dc3545; border-radius:4px; text-align:center; outline:none; -moz-appearance:textfield; margin:0;" onchange="if(this.value < 1) { this.value = 1; forceUpdateTotal(); }">' + 
+                      '<button type="button" class="qty-btn" style="width:36px; height:36px; font-size:24px;" onclick="changeQty(this, 1)">+</button>' +
+                  '</div>' +
+                  '<button onclick="removeGameFromCart(\'' + rowId + '\')" style="background:#dc3545; color:#fff; border:none; border-radius:4px; cursor:pointer; padding:0 12px; font-weight:bold; height:36px; display:flex; align-items:center; justify-content:center;">X</button></div>';
+  
+  cartList.appendChild(row);
+  
+  if (typeof window.forceUpdateTotal === 'function') window.forceUpdateTotal();
+}
 
                     function removeGameFromCart(rowId) {
                       var row = document.getElementById(rowId);
@@ -1350,12 +1337,20 @@ function fallbackCopyEngine(text) {
               datalist.appendChild(option);
             }
           }
+          
+          // --- NEW: Clear input and previous results when switching platforms ---
+          var titleInput = document.getElementById('gameTitleInput');
+          if (titleInput) titleInput.value = '';
+          var resultDiv = document.getElementById('gamePriceResult');
+          if (resultDiv) resultDiv.innerHTML = ''; 
         }
 
         function showGamePrice() {
-          var title = document.getElementById('gameTitleInput').value.trim();
+          var titleInput = document.getElementById('gameTitleInput'); // Grabbed the actual input element
+          var title = titleInput.value.trim();
           var platform = document.getElementById('gamePlatformSelect').value;
           var resultDiv = document.getElementById('gamePriceResult');
+          
           if (title === '') {
             resultDiv.innerHTML = '<span style="color:#ffa500;">Please enter a game title.</span>';
             return;
@@ -1364,7 +1359,9 @@ function fallbackCopyEngine(text) {
             resultDiv.innerHTML = '<span style="color:#ffa500;">No data for this platform yet.</span>';
             return;
           }
+          
           var lowerTitle = title.toLowerCase();
+          
           if (gameDatabase[platform][lowerTitle]) {
             var foundSize = gameDatabase[platform][lowerTitle];
             var price = getPriceFromSize(foundSize);
@@ -1375,13 +1372,20 @@ function fallbackCopyEngine(text) {
                                   '<span style="color:#28a745;">✅ "' + title + '" (' + platform + ') is ' + sizeDisplay + ' → Price: $' + price + '</span>' +
                                   '<button id="addGameToCartBtn" style="padding:4px 12px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">+ Add to Estimate</button>' +
                                   '</div>';
-            
+                                  
             // Make the button functional
             document.getElementById('addGameToCartBtn').onclick = function() {
               addGameToCart(title, platform, price);
             };
+
+            // --- NEW: Clear the input box after a successful search ---
+            titleInput.value = '';
+
           } else {
             resultDiv.innerHTML = '<span style="color:#f79452;">❌ Game not found in database, contact me to find out its size.</span>';
+            
+            // --- NEW: Clear the input box even if the search fails ---
+            titleInput.value = '';
           }
         }
 
@@ -2077,7 +2081,7 @@ if (insideGameList) {
   }
   
   renderList();
-  
+  if (typeof window.restoreDynamicConsoles === 'function') window.restoreDynamicConsoles();
   // --  Midnight Auto-Updater ---
   // Clears any existing timers to prevent duplicates if the function runs multiple times
   if (window.midnightTimer) clearInterval(window.midnightTimer);
@@ -2500,6 +2504,113 @@ if (insideGameList) {
           };
         }
       }
+    </script>
+    <script>
+        // --- CART MEMORY ENGINE ---
+                window.saveCartState = function() {
+                  var cartData = { services: [], consoles: {}, gamesHTML: '' };
+                  
+                  // 1. Save standard static services (Jailbreaks, Thermal Paste, etc.)
+                  var serviceInputs = document.querySelectorAll('.srv-dropdown .srv-qty');
+                  serviceInputs.forEach(function(input) {
+                    cartData.services.push(input.value);
+                  });
+
+                  // 2. Save Consoles (Linked specifically to their name so it doesn't break if stock shifts!)
+                  var consoleInputs = document.querySelectorAll('#consoles-list .srv-qty');
+                  consoleInputs.forEach(function(input) {
+                    var name = input.getAttribute('data-name');
+                    if (name) cartData.consoles[name] = input.value;
+                  });
+
+                  // 3. Save Custom Game Cart HTML
+                  var gameCartList = document.getElementById('gameCartList');
+                  if (gameCartList) cartData.gamesHTML = gameCartList.innerHTML;
+
+                  localStorage.setItem('dillans_cart_state', JSON.stringify(cartData));
+                };
+
+                window.restoreStaticCartState = function() {
+                  var saved = localStorage.getItem('dillans_cart_state');
+                  if (!saved) return;
+                  try {
+                    var cartData = JSON.parse(saved);
+                    
+                    // Restore standard services
+                    if (cartData.services) {
+                      var serviceInputs = document.querySelectorAll('.srv-dropdown .srv-qty');
+                      for (var i = 0; i < serviceInputs.length; i++) {
+                        if (cartData.services[i]) serviceInputs[i].value = cartData.services[i];
+                      }
+                    }
+
+                    // Restore Games
+                    if (cartData.gamesHTML && cartData.gamesHTML.trim() !== '') {
+                      var gameCartList = document.getElementById('gameCartList');
+                      var gameCartContainer = document.getElementById('gameCartContainer');
+                      if (gameCartList && gameCartContainer) {
+                        gameCartList.innerHTML = cartData.gamesHTML;
+                        gameCartContainer.style.display = 'block';
+                      }
+                    }
+                    window.forceUpdateTotal();
+                  } catch(e) { console.error("Error restoring static cart"); }
+                };
+
+                window.restoreDynamicConsoles = function() {
+                  var saved = localStorage.getItem('dillans_cart_state');
+                  if (!saved) return;
+                  try {
+                    var cartData = JSON.parse(saved);
+                    if (cartData.consoles) {
+                      var consoleInputs = document.querySelectorAll('#consoles-list .srv-qty');
+                      consoleInputs.forEach(function(input) {
+                        var name = input.getAttribute('data-name');
+                        if (name && cartData.consoles[name]) {
+                          input.value = cartData.consoles[name];
+                        }
+                      });
+                    }
+                    window.forceUpdateTotal();
+                  } catch(e) { console.error("Error restoring console cart"); }
+                };
+
+                // --- 1. THE CALCULATION ENGINE ---
+                window.forceUpdateTotal = function() {
+                  var qtyInputs = document.querySelectorAll('.srv-qty'); 
+                  var total = 0;
+                  
+                  for (var i = 0; i < qtyInputs.length; i++) {
+                    var qty = parseInt(qtyInputs[i].value, 10) || 0;
+                  
+                    if (qty < 0) {
+                      qty = 0;
+                      qtyInputs[i].value = 0;
+                    }
+                    var price = parseInt(qtyInputs[i].getAttribute('data-price'), 10) || 0;
+                    total += (qty * price);
+                  }
+                  
+                  var floatingTotal = document.getElementById('floating-total-price');
+                  if (floatingTotal) {
+                    floatingTotal.innerText = '$' + total;
+                  }
+                  
+                  // NEW: Saves the cart silently in the background every single time the math finishes!
+                  if (typeof window.saveCartState === 'function') window.saveCartState();
+                };
+
+                // Trigger the static load immediately when the basic page is ready
+                window.restoreStaticCartState();
+
+                document.body.addEventListener('input', function(e) {
+                  if (e.target && e.target.classList.contains('srv-qty')) window.forceUpdateTotal();
+                });
+                document.body.addEventListener('change', function(e) {
+                  if (e.target && e.target.classList.contains('srv-qty')) window.forceUpdateTotal();
+                });
+        
+        
     </script>
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Auto_Buttons.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/killstorm103/Rebugger-ToolBox@dev/Scripts/Correction.js"></script>
