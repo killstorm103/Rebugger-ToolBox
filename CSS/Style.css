@@ -210,3 +210,22 @@
             top: 0;
             margin-left: 10px;
         }
+/* Clean up the dropdowns */
+            .srv-dropdown > summary { list-style: none; outline: none; }
+            .srv-dropdown > summary::-webkit-details-marker { display: none; }
+            .srv-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #444; }
+            .srv-row:last-child { border-bottom: none; }
+            
+            /* Animated Arrow */
+            .srv-arrow { display: inline-block; transition: transform 0.2s ease; font-size: 14px; }
+            .srv-dropdown[open] summary .srv-arrow { transform: rotate(180deg); }
+            
+            /* Big Custom Mobile-Friendly Buttons */
+            .qty-controls { display: flex; align-items: center; gap: 8px; }
+            .qty-btn { width: 36px; height: 36px; background: #dc3545; color: #fff; border: none; border-radius: 4px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; user-select: none; touch-action: manipulation; padding: 0; line-height: 1; }
+            .qty-btn:hover { background: #b02a37; }
+            .qty-btn:active { transform: scale(0.95); }
+            
+            /* Hide the default tiny browser arrows */
+            .srv-qty { width: 45px; background: #111; color: #fff; border: 1px solid #dc3545; border-radius: 4px; padding: 8px 0; text-align: center; font-weight: bold; font-size: 16px; outline: none; -moz-appearance: textfield; margin: 0; }
+            .srv-qty::-webkit-outer-spin-button, .srv-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
