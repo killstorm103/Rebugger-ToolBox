@@ -17,7 +17,7 @@ Game Boy Color
 NES
   Mega Man.nes: 128.02 KB
 
-PS1:
+PS1
   Alone in the Dark - The New Nightmare: 615.30 MB
   Blade: 596.04 MB
   Crash Bandicoot: 602.80 MB
@@ -59,6 +59,15 @@ PS2
   The Incredibles - Rise of the Underminer: 1.45GB
   The Simpsons Hit and Run: 1.54GB
   The Simpsons Road Rage: 2.32GB
+  DreamWorks Flushed Away: 1.68GB
+  DreamWorks Over the Hedge: 1.56GB
+  DreamWorks Shark Tale: 1.28GB
+  The Hobbit - The Prelude to the Lord of the Rings: 2.14GB
+  The Lord of the Rings - The Fellowship of the Ring: 2.24GB
+  The Lord of the Rings - The Return of the King: 4.24GB
+  The Lord of the Rings - The Third Age: 4.28GB
+  Wallace & Gromit - The Curse of the Were-Rabbit: 3.87GB
+  Wallace & Gromit in Project Zoo: 2.37GB
 
 PS3
   Ben 10 - Omniverse: 3.06GB
@@ -77,6 +86,17 @@ PS3
   The Godfather The Don's Edition: 8.93GB
   The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.33GB
   The Simpsons Game: 11.01GB
+  inFamous - Festival of Blood: 3.02GB
+  2014 FIFA World Cup Brazil: 6.82GB
+  Destroy All Humans! Path of the Furon: 7.87GB
+  DreamWorks Megamind - Ultimate Showdown: 2.64GB
+  FIFA 08: 7.24GB
+  FIFA 10: 9.62GB
+  FIFA 12: 9.16GB
+  inFamous 2: 14.27GB
+  Sleeping Dogs: 7.20GB
+  The Lord of the Rings - Aragorn’s Quest: 8.62GB
+  The Lord of the Rings - War in the North: 6.58GB
 
 PSP
   Spider-Man 2: 556.50MB
