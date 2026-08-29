@@ -15,7 +15,7 @@ Game Boy Color
   Quest for Camelot: 1.00MB
 
 NES
-  Mega Man.nes: 128.02 KB
+  Mega Man: 128.02KB
 
 PS1
   Alone in the Dark - The New Nightmare: 615.30 MB
@@ -68,6 +68,8 @@ PS2
   The Lord of the Rings - The Third Age: 4.28GB
   Wallace & Gromit - The Curse of the Were-Rabbit: 3.87GB
   Wallace & Gromit in Project Zoo: 2.37GB
+  God of War: 7.47GB
+  God of War II: 7.81GB
 
 PS3
   Ben 10 - Omniverse: 3.06GB
@@ -82,18 +84,19 @@ PS3
   Grand Theft Auto - San Andreas: 2.32GB
   Kane & Lynch 2 - Dog Days: 8.26GB
   Pirates of the Caribbean - At World's End: 5.30GB
-  The Godfather II: 10.60GB
   The Godfather The Don's Edition: 8.93GB
+  The Godfather II: 10.60GB
   The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.33GB
   The Simpsons Game: 11.01GB
+  inFamous: 7.12GB
+  inFamous 2: 14.27GB
   inFamous - Festival of Blood: 3.02GB
-  2014 FIFA World Cup Brazil: 6.82GB
   Destroy All Humans! Path of the Furon: 7.87GB
   DreamWorks Megamind - Ultimate Showdown: 2.64GB
   FIFA 08: 7.24GB
   FIFA 10: 9.62GB
   FIFA 12: 9.16GB
-  inFamous 2: 14.27GB
+  2014 FIFA World Cup Brazil: 6.82GB
   Sleeping Dogs: 7.20GB
   The Lord of the Rings - Aragorn’s Quest: 8.62GB
   The Lord of the Rings - War in the North: 6.58GB
