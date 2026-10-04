@@ -1,56 +1,3 @@
-PSP
-  Spider-Man 2: 556.50MB
-  Spider-Man 3: 1.57GB
-
-Game Boy
-  Pokemon - Blue Version: 1.00MB
-  Pokemon - Red Version: 1.00MB
-  Pokemon - Yellow Version - Special Pikachu Edition: 1.00MB
-
-NES
-  Mega Man: 128.02KB
-
-PS3
-  inFamous - Festival of Blood: 3.02GB
-  2014 FIFA World Cup Brazil: 6.82GB
-  Ben 10 - Omniverse 2: 2.20GB
-  Ben 10 - Omniverse: 3.06GB
-  Bolt: 5.59GB
-  Brave: 2.87GB
-  Dead Space 2: 13.82GB
-  Dead Space 3: 12.27GB
-  Dead Space: 7.72GB
-  Destroy All Humans! Path of the Furon: 7.87GB
-  DreamWorks Kung Fu Panda - Showdown of Legendary Legends: 1.73GB
-  DreamWorks Kung Fu Panda 2: 2.14GB
-  DreamWorks Kung Fu Panda: 5.56GB
-  DreamWorks Megamind - Ultimate Showdown: 2.64GB
-  DreamWorks Turbo - Super Stunt Squad: 1.53GB
-  Family Guy - Back to the Multiverse: 4.91GB
-  FIFA 08: 7.24GB
-  FIFA 10: 9.62GB
-  FIFA 12: 9.16GB
-  God of War - Ascension: 36.58GB
-  God of War - Origins Collection: 22.39GB
-  God of War Collection: 23.27GB
-  Grand Theft Auto - San Andreas: 2.32GB
-  inFamous 2: 14.27GB
-  inFamous: 7.12GB
-  Kane & Lynch 2 - Dog Days: 8.26GB
-  Pirates of the Caribbean - At World's End: 5.30GB
-  Sleeping Dogs: 7.20GB
-  The Godfather II: 10.60GB
-  The Godfather The Don's Edition: 8.93GB
-  The Lord of the Rings - Aragorn’s Quest: 8.62GB
-  The Lord of the Rings - War in the North: 6.58GB
-  The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.33GB
-  The Simpsons Game: 11.01GB
-  X-Men Origins - Wolverine - Uncaged Edition: 6.40GB
-
-Sega Genesis
-  Aladdin: 2.00MB
-  Bubble and Squeak: 512.00KB
-
 PS1
   Alone in the Dark - The New Nightmare: 615.30MB
   Blade: 596.04MB
@@ -117,18 +64,70 @@ PS2
   Shadow of the Colossus: 2.51GB
   Backyard Baseball 09: 1.47GB
 
+PS3
+  inFamous - Festival of Blood: 3.02GB
+  2014 FIFA World Cup Brazil: 6.82GB
+  Ben 10 - Omniverse 2: 2.20GB
+  Ben 10 - Omniverse: 3.06GB
+  Bolt: 5.59GB
+  Brave: 2.87GB
+  Dead Space 2: 13.82GB
+  Dead Space 3: 12.27GB
+  Dead Space: 7.72GB
+  Destroy All Humans! Path of the Furon: 7.87GB
+  DreamWorks Kung Fu Panda - Showdown of Legendary Legends: 1.73GB
+  DreamWorks Kung Fu Panda 2: 2.14GB
+  DreamWorks Kung Fu Panda: 5.56GB
+  DreamWorks Megamind - Ultimate Showdown: 2.64GB
+  DreamWorks Turbo - Super Stunt Squad: 1.53GB
+  Family Guy - Back to the Multiverse: 4.91GB
+  FIFA 08: 7.24GB
+  FIFA 10: 9.62GB
+  FIFA 12: 9.16GB
+  God of War - Ascension: 36.58GB
+  God of War - Origins Collection: 22.39GB
+  God of War Collection: 23.27GB
+  Grand Theft Auto - San Andreas: 2.32GB
+  inFamous 2: 14.27GB
+  inFamous: 7.12GB
+  Kane & Lynch 2 - Dog Days: 8.26GB
+  Pirates of the Caribbean - At World's End: 5.30GB
+  Sleeping Dogs: 7.20GB
+  The Godfather II: 10.60GB
+  The Godfather The Don's Edition: 8.93GB
+  The Lord of the Rings - Aragorn’s Quest: 8.62GB
+  The Lord of the Rings - War in the North: 6.58GB
+  The Penguins of Madagascar - Dr. Blowhole Returns - Again!: 2.33GB
+  The Simpsons Game: 11.01GB
+  X-Men Origins - Wolverine - Uncaged Edition: 6.40GB
+
+PSP
+  Spider-Man 2: 556.50MB
+  Spider-Man 3: 1.57GB
+
+Super Nintendo
+  Donkey Kong Country 2 - Diddy's Kong Quest: 4.00MB
+  Super Mario All-Stars: 2.00MB
+
+Game Boy
+  Pokemon - Blue Version: 1.00MB
+  Pokemon - Red Version: 1.00MB
+  Pokemon - Yellow Version - Special Pikachu Edition: 1.00MB
+
 Game Boy Color
   Pokemon - Crystal Version: 2.00MB
   Pokemon - Gold Version: 2.00MB
   Pokemon - Silver Version: 2.00MB
   Quest for Camelot: 1.00MB
 
-Super Nintendo
-  Donkey Kong Country 2 - Diddy's Kong Quest: 4.00MB
-  Super Mario All-Stars: 2.00MB
-
 Game Boy Advance
   Pokemon - Emerald Version: 16.00MB
   Pokemon - Ruby Version: 16.00MB
   Pokemon - Sapphire Version: 16.00MB
 
+NES
+  Mega Man: 128.02KB
+
+Sega Genesis
+  Aladdin: 2.00MB
+  Bubble and Squeak: 512.00KB
