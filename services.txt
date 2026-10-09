@@ -1,6 +1,6 @@
 service availability status: Unavailable
 opening-hours: Monday-Saturdays: 6-9:30 PM
-availability-note: none
+availability-note: Should be available from 26/10/2026 if not sooner
 consoles:
   PS3:
     console-1:
