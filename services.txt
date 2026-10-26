@@ -1,4 +1,4 @@
-service availability status: Unavailable
+service availability status: Available
 opening-hours: Monday-Saturdays: 6-9:30 PM
 availability-note: Should be available from 26/10/2026 if not sooner
 consoles:
